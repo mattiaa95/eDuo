@@ -23,10 +23,10 @@ no AI touched it.
 
 ## What eDuo adds on top of melonDS
 
-- A native SwiftUI/UIKit iOS frontend: ROM library (with each cartridge's
+- A native SwiftUI/UIKit iOS frontend: game library (with each game's
   real banner icon), dual-screen layouts, an on-screen controller with a
   visual layout/style editor, pause menu, save states and auto-save.
-- Real microphone input (blow/speak) resampled to the DS mic rate.
+- Real microphone input (blow/speak) resampled to the emulated mic rate.
 - External display / AirPlay support (TV shows the top screen, the device
   becomes the touch screen + controls).
 - Game Controller framework + hardware keyboard support with remapping.
