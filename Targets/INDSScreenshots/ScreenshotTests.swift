@@ -284,6 +284,59 @@ final class ScreenshotTests: XCTestCase {
         shoot("controls")
     }
 
+    /// Reel for the App Preview: no shots, it only drives the app at a human pace
+    /// while `simctl io recordVideo` films it. The edit picks the seconds later.
+    @MainActor
+    func test20_Reel() throws {
+        let app = launchApp()
+        sleep(3)
+        bootJamClown(app)
+        // play: tap the three targets on the touch screen
+        for i in 0..<12 {
+            app.coordinate(withNormalizedOffset: CGVector(dx: [0.18, 0.5, 0.82][i % 3], dy: 0.44)).tap()
+            usleep(600_000)
+        }
+        // fast forward from the HUD, a few seconds, then back to normal
+        let ff = app.buttons["hud.fastForward"]
+        if ff.waitForExistence(timeout: 2) { ff.tap() }
+        sleep(5)
+        if ff.exists { ff.tap() }
+        sleep(1)
+        openPauseMenu(app)
+        tapAny(app, labels: ["Cheats"])
+        sleep(3)
+        let toggle = app.switches.element(boundBy: max(0, app.switches.count - 1))
+        if toggle.exists { toggle.tap() }
+        sleep(3)
+        app.swipeDown()
+        sleep(2)
+        openSaveStateSheet(app)
+        sleep(2)
+        let slot1 = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", "Slot 1")).firstMatch
+        if slot1.waitForExistence(timeout: 4) { slot1.tap() }
+        let overwrite = app.buttons["Overwrite"].firstMatch
+        if overwrite.waitForExistence(timeout: 2) { overwrite.tap() }
+        sleep(3)
+        if !app.buttons["Save State"].firstMatch.waitForExistence(timeout: 2) { openPauseMenu(app) }
+        openSaveStateSheet(app)
+        sleep(5)
+        app.terminate()
+        let again = launchApp()
+        sleep(3)
+        tapAny(again, labels: ["Settings", "gearshape"])
+        sleep(1)
+        tapAny(again, labels: ["Controls"])
+        sleep(1)
+        tapAny(again, labels: ["Customize Layout"])
+        sleep(3)
+        let a = again.buttons["layout-editor-a"].firstMatch
+        if a.waitForExistence(timeout: 3) {
+            let start = a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            start.press(forDuration: 0.3, thenDragTo: start.withOffset(CGVector(dx: -60, dy: -80)), withVelocity: .slow, thenHoldForDuration: 0.6)
+        }
+        sleep(4)
+    }
+
     private func tapAny(_ app: XCUIApplication, labels: [String]) {
         for label in labels {
             let b = app.buttons[label].firstMatch
