@@ -131,6 +131,17 @@ std::unique_ptr<u8[]> ReadFileOwned(const std::string& path, u32& outLength) {
 // smaller costs at most one realloc for an unusually large state.
 constexpr u32 kSavestateInitialSize = 8 * 1024 * 1024;
 
+// Rewind, same shape as the GBA app's RewindManager: a ring of in-memory
+// states, one every 3.5 s of game time, 10 of them ≈ 35 s of history, and
+// each rewind jumps 3 captures (~10 s) back — three jumps in a row, which is
+// what the GBA testers asked for. A DS state is ~6 MB against ~0.6 MB on
+// GBA, so the captures are spaced wider instead of kept as many: ~60 MB,
+// allocated on the first capture and dropped on every clear. That RAM is
+// why it can be switched off in Settings.
+constexpr int kRewindCaptureFrames = 210;
+constexpr int kRewindMaxSlots = 10;
+constexpr int kRewindJumpSlots = 3;
+
 // How long the mic capture pipeline outlives the game's mic window. The DS
 // mic has no explicit open/close: the core closes it two frames after the
 // last TSC AUX sample and reopens it on the next one (Mic.cpp Advance /
@@ -225,6 +236,16 @@ struct Runtime {
 
     // Fast-forward multiplier, read once per paced tick.
     std::atomic<double> speed{1.0};
+
+    // Rewind ring (see kRewindCaptureFrames). Written on the emulation
+    // thread right after RunFrame, read/cleared from the main thread; the
+    // mutex only ever guards a memcpy or a vector swap.
+    std::atomic<bool> rewindEnabled{true};
+    std::mutex rewindMutex;
+    std::vector<std::vector<u8>> rewindSlots;
+    int rewindHead = -1;  // newest capture
+    int rewindCount = 0;
+    int rewindFrames = 0; // frames since the last capture
 
     // Presentation double-buffer: the emulation thread copies melonDS's raw
     // framebuffer pointers into fbSlots[fbWriteNext] *without* holding
@@ -330,6 +351,36 @@ void PublishFramebuffer(Runtime *r) {
     r->fbWriteNext ^= 1;
 }
 
+void ClearRewind(Runtime *r) {
+    std::lock_guard<std::mutex> lock(r->rewindMutex);
+    std::vector<std::vector<u8>>().swap(r->rewindSlots);
+    r->rewindHead = -1;
+    r->rewindCount = 0;
+    r->rewindFrames = 0;
+}
+
+// Emulation thread, between frames — the core is not mid-RunFrame, so
+// serializing here needs no pause.
+void CaptureRewindIfDue(Runtime *r, int frames) {
+    if (!r->rewindEnabled.load()) return;
+    {
+        std::lock_guard<std::mutex> lock(r->rewindMutex);
+        r->rewindFrames += frames;
+        if (r->rewindFrames < kRewindCaptureFrames) return;
+        r->rewindFrames = 0;
+    }
+    melonDS::Savestate state(kSavestateInitialSize);
+    if (state.Error || !r->nds->DoSavestate(&state) || state.Error) return;
+    const u8 *bytes = static_cast<const u8 *>(state.Buffer());
+
+    std::lock_guard<std::mutex> lock(r->rewindMutex);
+    if (r->rewindSlots.empty()) r->rewindSlots.resize(kRewindMaxSlots);
+    const int next = (r->rewindHead + 1) % kRewindMaxSlots;
+    r->rewindSlots[next].assign(bytes, bytes + state.Length());
+    r->rewindHead = next;
+    if (r->rewindCount < kRewindMaxSlots) r->rewindCount++;
+}
+
 void EmuThreadMain(Runtime *r) {
     // Best-effort: run the emulation loop at a high, interactive QoS so it
     // isn't starved by background work. Not fatal if unsupported.
@@ -396,6 +447,7 @@ void EmuThreadMain(Runtime *r) {
             }
             if (framesThisTick > 0) {
                 PublishFramebuffer(r);
+                CaptureRewindIfDue(r, framesThisTick);
             }
         }
 
@@ -1056,6 +1108,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
     nds->Start();
 
     _runtime->nds = std::move(nds);
+    ClearRewind(_runtime); // another game's states must never load into this one
     _runtime->savePath = savePath;
     _runtime->romFileName = romFileNameStd;
     _runtime->romBaseName = baseName.UTF8String;
@@ -1355,6 +1408,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
         _runtime->nds->Stop();
         _runtime->nds.reset();
     }
+    ClearRewind(_runtime);
     // After the core is gone, so anything it wrote on the way out is
     // included: this is the exit path, and -dealloc deletes the Runtime
     // right after.
@@ -1369,6 +1423,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
     _runtime->nds->Reset();
     _runtime->nds->SetupDirectBoot(_runtime->romFileName);
     _runtime->nds->Start();
+    ClearRewind(_runtime);
     {
         std::lock_guard<std::mutex> lock(_runtime->fbMutex);
         _runtime->fbLatest = -1;
@@ -1955,6 +2010,8 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
         // Discard whatever was queued from before the jump so playback
         // doesn't glitch on stale pre-load audio.
         _runtime->nds->SPU.DrainOutput();
+        // Rewinding past a load would silently undo it.
+        ClearRewind(_runtime);
     }
     {
         std::lock_guard<std::mutex> lock(_runtime->fbMutex);
@@ -1972,6 +2029,65 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
         return NO;
     }
     return YES;
+}
+
+#pragma mark - Rewind
+
+- (BOOL)rewindEnabled {
+    return _runtime->rewindEnabled.load();
+}
+
+- (void)setRewindEnabled:(BOOL)rewindEnabled {
+    _runtime->rewindEnabled.store(rewindEnabled);
+    if (!rewindEnabled) ClearRewind(_runtime); // give the ~60 MB back now
+}
+
+- (BOOL)canRewind {
+    std::lock_guard<std::mutex> lock(_runtime->rewindMutex);
+    return _runtime->nds && _runtime->rewindCount > 0;
+}
+
+- (void)clearRewindHistory {
+    ClearRewind(_runtime);
+}
+
+- (BOOL)rewindTenSeconds {
+    if (!_runtime->nds) return NO;
+    bool wasActive = PauseAndWaitIdle(_runtime);
+    // Same reason as -loadStateFromPath:error: — the jump flushes the
+    // state's SRAM, and what the game wrote before must land first.
+    [self flushPendingSaveWrites];
+
+    bool ok = false;
+    {
+        std::lock_guard<std::mutex> lock(_runtime->rewindMutex);
+        if (_runtime->rewindCount > 0) {
+            const int back = std::min(kRewindJumpSlots, _runtime->rewindCount - 1);
+            const int target = ((_runtime->rewindHead - back) % kRewindMaxSlots + kRewindMaxSlots) % kRewindMaxSlots;
+            std::vector<u8> &slot = _runtime->rewindSlots[target];
+            melonDS::Savestate state(slot.data(), static_cast<u32>(slot.size()), false);
+            ok = !state.Error && _runtime->nds->DoSavestate(&state) && !state.Error;
+            if (ok) {
+                // The restored capture stays as the newest, so the next
+                // rewind keeps stepping further back.
+                _runtime->rewindCount -= back;
+                _runtime->rewindHead = target;
+                _runtime->rewindFrames = 0;
+                NSLog(@"[Rewind] Jumped back %d captures, %d left", back, _runtime->rewindCount);
+            }
+        }
+    }
+    if (ok) {
+        _runtime->nds->SPU.DrainOutput();
+        std::lock_guard<std::mutex> lock(_runtime->fbMutex);
+        _runtime->fbLatest = -1;
+    } else {
+        // A capture that fails to load half-way leaves nothing worth keeping.
+        ClearRewind(_runtime);
+    }
+    [self flushPendingSaveWrites];
+    ResumeIfNeeded(_runtime, wasActive);
+    return ok;
 }
 
 #pragma mark - Battery saves

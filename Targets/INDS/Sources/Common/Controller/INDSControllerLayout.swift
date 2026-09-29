@@ -1,6 +1,6 @@
 //
 //  INDSControllerLayout.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's CustomControllerLayout.swift.
 //  Data model for the on-screen controller overlay: which buttons exist, where

@@ -1,6 +1,6 @@
 //
 //  INDSBackgroundSkinStore.swift
-//  eNDS
+//  eDuo
 //
 //  Custom background images for the emulation screen, one per orientation.
 //  Ported from iGBA's "controller skin" (`SettingsView.backgroundImagePicker`
@@ -13,7 +13,7 @@
 //    * imports are downsampled to `maxDimension` first. iGBA stores whatever
 //      the picker handed it, so a modern camera roll photo means a ~20MB PNG
 //      re-decoded on every rotation.
-//    * the unlock is PRO-only. iGBA offers "watch an ad instead", but eNDS
+//    * the unlock is PRO-only. iGBA offers "watch an ad instead", but eDuo
 //      ships with no ad SDK at all (see docs/LEGAL.md), so there is no ad to
 //      watch — the first-48h honeymoon covers "let me try it before I buy".
 //

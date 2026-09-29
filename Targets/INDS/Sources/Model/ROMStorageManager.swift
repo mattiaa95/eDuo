@@ -90,7 +90,7 @@ enum ROMStorageError: LocalizedError {
 }
 
 /// What to do when an imported ROM's name is already in the library.
-/// `ifSameGame` is the external "Open in eNDS" policy: a byte-identical
+/// `ifSameGame` is the external "Open in eDuo" policy: a byte-identical
 /// header and size is the same game re-imported and can replace silently;
 /// anything else (a hack or a different game that happens to share the
 /// filename) asks first, because the existing save states would otherwise
@@ -437,7 +437,7 @@ enum ROMStorageManager {
         // Note: knowingly a lower bound — an archive that expands to much
         // more can still fill tmp and will fail with the extractor's raw
         // error, exactly as before.
-        // A picker/"Open in eNDS" URL is unreadable outside its security
+        // A picker/"Open in eDuo" URL is unreadable outside its security
         // scope: without opening it here the stat fails and 0 always "fits".
         let didStartAccess = sourceURL.startAccessingSecurityScopedResource()
         let archiveSize = ((try? fileManager.attributesOfItem(atPath: sourceURL.path))?[.size] as? Int64) ?? 0
@@ -624,7 +624,7 @@ enum ROMStorageManager {
 
     static func copyItem(from sourceURL: URL, to destinationURL: URL, replaceExisting: Bool) throws {
         let fileManager = FileManager.default
-        // Opening a file from our own Files folder ("On My iPhone/eNDS/ROMs")
+        // Opening a file from our own Files folder ("On My iPhone/eDuo/ROMs")
         // hands us source == destination (with a /private prefix). Removing
         // the destination first would delete the only copy — nothing to do.
         if sourceURL.standardizedFileURL.resolvingSymlinksInPath() == destinationURL.standardizedFileURL.resolvingSymlinksInPath() {

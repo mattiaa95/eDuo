@@ -1,6 +1,6 @@
 //
 //  PurchaseProductDetails.swift
-//  eNDS
+//  eDuo
 //
 //  Ported verbatim from iGBA
 //  (App/SwiftUI/Common/PurchaseManager/PurchaseProductDetails.swift) — a

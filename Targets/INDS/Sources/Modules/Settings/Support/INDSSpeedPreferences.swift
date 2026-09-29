@@ -1,6 +1,6 @@
 //
 //  INDSSpeedPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  The speed ladder, in one place. Two different things live here and they
 //  are deliberately not the same list:
@@ -18,13 +18,14 @@
 import Foundation
 
 enum INDSSpeedPreferences {
-    /// Pause-menu slider steps.
-    static let speeds: [Double] = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    /// Pause-menu slider steps. 4x is the core's ceiling
+    /// (`MelonDSCoreBridge` clamps there) and the GBA app's top step.
+    static let speeds: [Double] = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0]
 
-    /// Fast Forward rates. Not the slider's ladder: fast forward slower than
-    /// 2x is what the slider is for, and 4x is the rate the GBA app has
-    /// always used for this same button.
-    static let fastForwardSpeeds: [Double] = [2.0, 3.0, 4.0]
+    /// Fast Forward rates. Players asked for 1.5x and 2.5x next to 2x, 3x and
+    /// 4x, and the core already runs any rate up to 4x, so every half step
+    /// is offered. The GBA app has the same ladder.
+    static let fastForwardSpeeds: [Double] = [1.5, 2.0, 2.5, 3.0, 4.0]
 
     static let defaultFastForwardSpeed: Double = 4.0
 

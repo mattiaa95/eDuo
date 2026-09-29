@@ -1,6 +1,6 @@
 //
 //  INDSBatterySaverPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  UserDefaults-backed preferences for Settings > Battery. Both toggles
 //  default `true` (same "absent key means on" idiom as `INDSHaptics.isEnabled`

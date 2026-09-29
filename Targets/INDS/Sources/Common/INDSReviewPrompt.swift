@@ -1,6 +1,6 @@
 //
 //  INDSReviewPrompt.swift
-//  eNDS
+//  eDuo
 //
 //  When to ask for a rating without becoming a nuisance.
 //

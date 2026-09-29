@@ -70,7 +70,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
     private static let supportedExternalExtensions: Set<String> = ["nds", "zip", "7z", "gz", "sav"]
 
-    /// Routes a file opened externally ("Open in eNDS" from Files/Safari, or
+    /// Routes a file opened externally ("Open in eDuo" from Files/Safari, or
     /// a plain double-tap on a `.nds`/`.zip`/`.7z`/`.sav`) through the same import
     /// dispatcher the in-app "+" picker uses.
     ///
@@ -90,7 +90,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
         // SwiftUI's `onOpenURL` and `application(_:open:)` can both fire for
-        // one "Open in eNDS"; two concurrent imports of the same URL would
+        // one "Open in eDuo"; two concurrent imports of the same URL would
         // race on the security scope and on the destination file.
         guard inFlight.insert(url).inserted else { return }
 

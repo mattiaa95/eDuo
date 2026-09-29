@@ -1,10 +1,10 @@
 //
 //  ProfileSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings > Profile — the name and language the console itself carries, in
 //  the firmware's user settings. A real DS asks for both once, on its very
-//  first boot; eNDS direct-boots straight into the game, so this page is
+//  first boot; eDuo direct-boots straight into the game, so this page is
 //  where that answer lives instead. Without it, melonDS's own defaults show
 //  through: every player is called "melonDS", in English.
 //

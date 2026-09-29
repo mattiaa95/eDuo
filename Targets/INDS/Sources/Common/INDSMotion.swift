@@ -1,6 +1,6 @@
 //
 //  INDSMotion.swift
-//  eNDS
+//  eDuo
 //
 //  Shared motion tokens + Reduce-Motion-aware helpers for the UX/animation
 //  pass. Every *new* animation introduced by that pass routes through this

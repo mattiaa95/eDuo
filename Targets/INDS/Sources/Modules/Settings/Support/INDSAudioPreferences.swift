@@ -1,6 +1,6 @@
 //
 //  INDSAudioPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  UserDefaults-backed preference shared between `AudioSettingsView` and
 //  `NDSRomViewController` for "Mute game while other audio plays" — unlike

@@ -50,7 +50,7 @@ struct ROMListView: View {
                     libraryContent
                 }
             }
-            .navigationTitle("eNDS")
+            .navigationTitle("eDuo")
             .navigationBarTitleDisplayMode(.inline)
             .overlay(alignment: .top) {
                 importSuccessToast
@@ -202,7 +202,7 @@ struct ROMListView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .romImported)) { notification in
             viewModel.reload()
-            // "Open in eNDS" from Files/AirDrop: same toast + highlight as
+            // "Open in eDuo" from Files/AirDrop: same toast + highlight as
             // the in-app picker, otherwise the library just silently reloads.
             presentImportSuccess(filenames: notification.userInfo?["filenames"] as? [String] ?? [])
         }
@@ -380,7 +380,7 @@ struct ROMListView: View {
             VStack(spacing: 8) {
                 Text("Add your first game")
                     .font(.title2.bold())
-                Text("Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eNDS library.")
+                Text("Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)

@@ -1,6 +1,6 @@
 //
 //  INDSButtonStyleEditorSheet.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ButtonStyleEditorSheet.swift. Sheet for
 //  editing one button's visual style: label, font, colors
@@ -10,7 +10,7 @@
 //  width / corner radius).
 //
 //  Adaptations vs. iGBA:
-//   - No "Type" picker and no image import (PhotosUI) flow — eNDS ships no
+//   - No "Type" picker and no image import (PhotosUI) flow — eDuo ships no
 //     skin artwork, so every button is the vector `.text` look; this sheet
 //     only ever writes `.text` styles (see `loadInitial`).
 //   - No "Apply to all action buttons" — out of scope for this port; every

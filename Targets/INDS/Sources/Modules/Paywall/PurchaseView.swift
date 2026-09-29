@@ -1,6 +1,6 @@
 //
 //  PurchaseView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported from iGBA's redesigned paywall
 //  (App/SwiftUI/Modules/PurchaseView/PurchaseView.swift) — same structure and
@@ -16,21 +16,21 @@
 //     (`shouldOfferLifetime`) — everyone else sees a pure subscription
 //     paywall, plus a "See all plans" reveal.
 //   - Zero invented reviews/badges/testimonials.
-//   - Restore Purchases + tappable Privacy Policy and Terms of Use (eNDS's
+//   - Restore Purchases + tappable Privacy Policy and Terms of Use (eDuo's
 //     own pages, `INDSConstants`) + an auto-renewal / cancel-anytime
 //     disclosure under the CTA.
 //
 //  Adaptations vs. iGBA:
-//   - Brand gradient uses eNDS's own crimson (`Color.indsCrimsonLight` /
+//   - Brand gradient uses eDuo's own crimson (`Color.indsCrimsonLight` /
 //     `indsCrimsonDark`, from SplashScreenView.swift) instead of iGBA's
-//     orange/red, for visual continuity with eNDS's splash and onboarding.
-//   - Feature list is eNDS's actual v1 Pro benefit set (4 rows) instead of
+//     orange/red, for visual continuity with eDuo's splash and onboarding.
+//   - Feature list is eDuo's actual v1 Pro benefit set (4 rows) instead of
 //     iGBA's 6.
 //   - `iNDSPRO` is a WEEKLY plan (iGBA's short-cycle plan is monthly) — the
 //     "full price" / "SAVE %" math under the yearly plan annualizes at ×52,
 //     not ×12, and detects the short plan via `.contains("week")` instead of
 //     an exact `"month"` match.
-//   - No "Includes Family Sharing" footer line — not a claim eNDS's
+//   - No "Includes Family Sharing" footer line — not a claim eDuo's
 //     StoreKit products (or App Store Connect config) actually make yet.
 //   - No `NumberFormatter.localizedCurrencyFormatter()` helper (an iGBA-only
 //     extension) — uses a plain inline `NumberFormatter` instead, matching
@@ -113,7 +113,7 @@ struct PurchaseView: View {
         if let hasTrial = purchaseModel.productDetails.first(where: { $0.productId == selectedProductId })?.hasTrial, hasTrial {
             return NSLocalizedString("Start Free Trial", comment: "")
         }
-        return NSLocalizedString("Unlock eNDS PRO", comment: "Purchase CTA button")
+        return NSLocalizedString("Unlock eDuo PRO", comment: "Purchase CTA button")
     }
 
     /// A year of the weekly plan, for the "you'd otherwise pay X" comparison.
@@ -257,7 +257,7 @@ struct PurchaseView: View {
                 .font(.system(size: celebrationIconSize))
                 .foregroundStyle(brandGradient)
 
-            Text(NSLocalizedString("Welcome to eNDS PRO!", comment: "Purchase success title"))
+            Text(NSLocalizedString("Welcome to eDuo PRO!", comment: "Purchase success title"))
                 .font(.system(size: celebrationTitleSize, weight: .bold, design: .rounded))
                 .foregroundStyle(brandGradient)
 
@@ -334,7 +334,7 @@ struct PurchaseView: View {
             .opacity(heroOpacity)
 
             VStack(spacing: 6) {
-                Text("eNDS PRO")
+                Text("eDuo PRO")
                     .font(.system(size: heroTitleSize, weight: .bold, design: .rounded))
                     .foregroundStyle(brandGradient)
 
@@ -361,7 +361,7 @@ struct PurchaseView: View {
                         .padding(.top, 4)
                         .padding(.horizontal, 12)
                 } else {
-                    Text(NSLocalizedString("Built with care by an independent developer.\nYour support keeps eNDS moving forward.", comment: "Paywall personal message"))
+                    Text(NSLocalizedString("Built with care by an independent developer.\nYour support keeps eDuo moving forward.", comment: "Paywall personal message"))
                         .font(.caption)
                         .foregroundColor(.secondary.opacity(0.8))
                         .multilineTextAlignment(.center)
@@ -399,7 +399,7 @@ struct PurchaseView: View {
             Divider().padding(.leading, 52)
             featureRow(icon: "heart.fill", iconColor: .pink,
                        title: NSLocalizedString("Support development", comment: ""),
-                       subtitle: NSLocalizedString("Keep eNDS independent", comment: ""),
+                       subtitle: NSLocalizedString("Keep eDuo independent", comment: ""),
                        index: 4)
         }
         .padding(.vertical, 12)
@@ -735,7 +735,7 @@ struct PurchaseView: View {
                     }
                 }
             } message: {
-                Text(NSLocalizedString("eNDS PRO has been restored. Enjoy!", comment: "Restore success message"))
+                Text(NSLocalizedString("eDuo PRO has been restored. Enjoy!", comment: "Restore success message"))
             }
 
             // Legal links — same support site as iGBA (one hub for the

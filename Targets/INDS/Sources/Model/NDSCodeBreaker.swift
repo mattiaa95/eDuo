@@ -1,6 +1,6 @@
 //
 //  NDSCodeBreaker.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent). Translates CodeBreaker DS codes — the format
 //  Cyber Gadget's CodeFreak DS shares, which is what Japanese code lists

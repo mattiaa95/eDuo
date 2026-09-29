@@ -1,7 +1,7 @@
 #if DEBUG
 //
 //  INDSLayoutSweep.swift
-//  eNDS
+//  eDuo
 //
 //  Geometry sweep behind the `-iNDSLayoutSweep` launch argument: validates
 //  the default layouts and the DS screens across a matrix of arbitrary
@@ -37,11 +37,17 @@ enum INDSLayoutSweep {
             (CGSize(width: 393, height: 852), true),
             (CGSize(width: 430, height: 932), true),
             (CGSize(width: 440, height: 956), true),
-            // iPhone Duo, Apple's own numbers: 626x890pt inner, 466x678pt
-            // outer. The inner screenshot spec (2007x2853 px) is 669x951pt at
-            // 3x, which is not the same figure, so both candidates are here.
+            // iPhone Duo. Measured on the simulator 21-sep-2026: the inner
+            // display is 2007x2853 px @3 = **669x951 pt** and the outer
+            // 1398x2034 = 466x678. The 626x890 Apple's page quotes is not a
+            // display this device has; it stays here only as a regression
+            // guard, since the geometry must hold at any container size.
             (CGSize(width: 626, height: 890), true),
             (CGSize(width: 669, height: 951), true),
+            // What a build made with an SDK older than 27.1 is actually given:
+            // the system keeps the 82 pt strip at the top and hands the app
+            // 669×871, with no way to see the rest.
+            (CGSize(width: 669, height: 871), true),
             (CGSize(width: 466, height: 678), true),
             // Unfolded foldable: 4:3-ish / near-square aspects
             (CGSize(width: 600, height: 700), true),
@@ -88,7 +94,8 @@ enum INDSLayoutSweep {
         // Unfolded iPhone Duo: the layout that straddles the hinge. Both
         // published inner sizes, both orientations.
         for size in [CGSize(width: 626, height: 890), CGSize(width: 890, height: 626),
-                     CGSize(width: 669, height: 951), CGSize(width: 951, height: 669)] {
+                     CGSize(width: 669, height: 951), CGSize(width: 951, height: 669),
+                     CGSize(width: 669, height: 871), CGSize(width: 871, height: 669)] {
             total += 1
             let problems = validateFoldable(containerSize: size)
             let tag = "\(Int(size.width))x\(Int(size.height)) unfolded"
@@ -149,15 +156,26 @@ enum INDSLayoutSweep {
         guard let foldable = DSFoldableLayout.current(in: size, mode: mode, idiom: .phone) else {
             return problems + ["no hinge layout for an unfolded phone"]
         }
+        // The hinge is a 40 pt band, not a line (measured: the division region
+        // is 669×40 centred on the display's middle), so each panel has to sit
+        // against its EDGE — 20 pt out from the centre — and leave the band
+        // itself empty.
         let fold = ((isPortrait ? size.height : size.width) / 2).rounded()
+        let half: CGFloat = 20
         let againstHinge = isPortrait
-            ? abs(foldable.top.maxY - fold) <= 1 && abs(foldable.bottom.minY - fold) <= 1
-            : abs(foldable.top.maxX - fold) <= 1 && abs(foldable.bottom.minX - fold) <= 1
+            ? abs(foldable.top.maxY - (fold - half)) <= 1 && abs(foldable.bottom.minY - (fold + half)) <= 1
+            : abs(foldable.top.maxX - (fold - half)) <= 1 && abs(foldable.bottom.minX - (fold + half)) <= 1
         if !againstHinge {
             problems.append("a panel does not sit against the hinge: \(foldable.top) \(foldable.bottom)")
         }
         if min(foldable.top.width, foldable.bottom.width) < 192 {
             problems.append("a panel is under 0.75x native: \(foldable.top.size) \(foldable.bottom.size)")
+        }
+        // A DS is the same panel twice. If the two ever drift apart it stops
+        // looking like the console and starts looking like a phone app.
+        if abs(foldable.top.width - foldable.bottom.width) > 1
+            || abs(foldable.top.height - foldable.bottom.height) > 1 {
+            problems.append("the two panels are not the same size: \(foldable.top.size) \(foldable.bottom.size)")
         }
 
         guard UIDevice.current.userInterfaceIdiom == .phone else { return problems }

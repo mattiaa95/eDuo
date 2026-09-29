@@ -1,9 +1,9 @@
 //
 //  INDSDPadShapeView.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent): iGBA's D-pad rendered a bundled xcassets image
-//  ("DPAD.png"); eNDS ships with no controller-skin artwork at all, so this
+//  ("DPAD.png"); eDuo ships with no controller-skin artwork at all, so this
 //  draws an equivalent translucent cross purely with CAShapeLayer, matching
 //  the same dark-fill / light-border language as `INDSStyledButtonView`.
 //  Purely decorative — `NDSControllerView` still owns 9-zone hit testing over

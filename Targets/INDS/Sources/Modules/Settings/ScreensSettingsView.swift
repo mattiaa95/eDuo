@@ -1,6 +1,6 @@
 //
 //  ScreensSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Screens (new — no iGBA equivalent, GBA has a single screen).
 //  Default portrait/landscape layout mode and screen swap, backed by the
@@ -59,7 +59,7 @@ struct ScreensSettingsView: View {
                         DSScreenLayoutPreferences.swapEnabled = newValue
                     }
             } footer: {
-                Text("These are the defaults used the next time you open a game that has no layout of its own yet. You can always change the layout in-game from the pause menu or the HUD's layout button — eNDS remembers your choice per game.")
+                Text("These are the defaults used the next time you open a game that has no layout of its own yet. You can always change the layout in-game from the pause menu or the HUD's layout button — eDuo remembers your choice per game.")
             }
 
             Section {

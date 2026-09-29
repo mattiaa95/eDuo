@@ -5,7 +5,7 @@ import SwiftUI
 /// Adapted from iGBA's `ROMGridCell` — dark card look, shadow + corner
 /// radius — but art is the cartridge's own banner icon (crisper at cell size
 /// than a gameplay screenshot) instead of a screenshot, and there's no
-/// platform badge since eNDS only ever shows NGame ROMs.
+/// platform badge since eDuo only ever shows NGame ROMs.
 struct ROMGridCell: View {
     let rom: ROMFile
     let onFavoriteToggle: () -> Void

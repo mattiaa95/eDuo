@@ -1,6 +1,6 @@
 //
 //  INDSHaptics.swift
-//  eNDS
+//  eDuo
 //
 //  Small shared helper so the controller overlay and the pause menu agree on
 //  a single persisted haptics toggle ("eNDSHapticsEnabled", default ON) and

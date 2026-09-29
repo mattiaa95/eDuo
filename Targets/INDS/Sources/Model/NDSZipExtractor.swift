@@ -6,7 +6,7 @@ import Foundation
 /// `IGBASaveBundle.extractEntriesFromZipAtURL:matchingExtensions:toDirectory:`
 /// — same algorithm, called directly from Swift instead of through an
 /// Objective-C wrapper since `unzip.h`'s plain C API is already visible to
-/// Swift once it's in the bridging header. eNDS only ever *reads* ZIPs (ROM
+/// Swift once it's in the bridging header. eDuo only ever *reads* ZIPs (ROM
 /// import), so `zip.c`/`zip.h` (archive creation) were left out of the vendor
 /// copy.
 enum NDSZipExtractor {

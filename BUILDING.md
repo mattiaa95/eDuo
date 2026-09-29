@@ -1,4 +1,4 @@
-# Building eNDS
+# Building eDuo
 
 Requirements: Xcode 16 or newer, CMake (`brew install cmake`). The Xcode
 project in this repo is already generated; [Tuist 3.12](https://tuist.io) is
@@ -13,7 +13,7 @@ git submodule update --init Vendor/melonDS
 ```
 
 `Vendor/melonDS` is unmodified upstream melonDS, pinned to the exact commit
-each eNDS release builds against.
+each eDuo release builds against.
 
 ## 2. Build the melonDS static libraries
 

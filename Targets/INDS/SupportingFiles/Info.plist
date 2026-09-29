@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>eNDS</string>
+	<string>eDuo</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -67,13 +67,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>eNDS</string>
+	<string>eDuo</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>39</string>
+	<string>40</string>
 	<key>GCSupportedGameControllers</key>
 	<array>
 		<dict>
@@ -88,9 +88,9 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>eNDS uses the microphone only to let DS games hear you — blowing or speaking when a game asks for it. Audio never leaves your device.</string>
+	<string>eDuo uses the microphone only to let games hear you — blowing or speaking when a game asks for it. Audio never leaves your device.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>eNDS asks only when you choose to save a gameplay clip, so the video lands in your photo library. It never reads or browses your photos.</string>
+	<string>eDuo asks only when you choose to save a gameplay clip, so the video lands in your photo library. It never reads or browses your photos.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

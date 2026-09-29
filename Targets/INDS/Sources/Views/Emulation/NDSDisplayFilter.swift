@@ -1,6 +1,6 @@
 //
 //  NDSDisplayFilter.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent — GBA's single-screen renderer has its own,
 //  differently-scoped filter set). How the DS framebuffers are scaled/

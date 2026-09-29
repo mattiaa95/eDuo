@@ -1,6 +1,6 @@
 //
 //  DateTimeSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings > Date & Time — the console's own clock, which plenty of DS games
 //  read: life-sim games run on it entirely, monster-raising games grow berries and

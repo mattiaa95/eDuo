@@ -1,6 +1,6 @@
 //
 //  DSDualScreenView.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent — GBA has a single screen). Owns the two DS
 //  framebuffer views and positions them per `DSScreenLayoutMode`. Screen
@@ -140,8 +140,11 @@ final class DSDualScreenView: UIView {
         // both put one panel above the other, but only this one knows the
         // hinge is there (`DSFoldableLayout`). It is nil on every container
         // any current device can produce.
-        let foldable = DSFoldableLayout.current(in: content.size, mode: mode, stretch: stretch,
-                                                controlsReserved: reservesControlBand)
+        let foldable = DSFoldableLayout.current(
+            in: content.size, mode: mode, stretch: stretch,
+            controlsReserved: reservesControlBand,
+            fold: DSFoldableLayout.fold(for: self, content: content,
+                                        vertical: content.height >= content.width))
         let console = foldable == nil && reservesControlBand
             ? DSConsoleLayout.current(in: content.size, mode: mode, stretch: stretch) : nil
         let contentOrigin = content.origin

@@ -1,9 +1,9 @@
 //
 //  INDSRTCPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  Settings > Date & Time. The DS has its own real-time clock, and melonDS
-//  boots it at 2000-01-01 00:00:00 unless the frontend seeds it — eNDS never
+//  boots it at 2000-01-01 00:00:00 unless the frontend seeds it — eDuo never
 //  did, so every game that reads the date/time (life sims, day/night
 //  cycles, berry growth, daily events) has been living in the year 2000.
 //

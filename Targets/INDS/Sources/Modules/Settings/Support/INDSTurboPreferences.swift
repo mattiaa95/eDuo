@@ -1,6 +1,6 @@
 //
 //  INDSTurboPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  Which buttons auto-fire while held. This is a preference, not a property
 //  of the controller layout: it applies equally to the touch overlay, to a

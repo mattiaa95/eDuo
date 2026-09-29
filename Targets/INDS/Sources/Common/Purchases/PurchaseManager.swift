@@ -1,10 +1,10 @@
 //
 //  PurchaseManager.swift
-//  eNDS
+//  eDuo
 //
 //  Ported from iGBA
 //  (App/SwiftUI/Common/PurchaseManager/PurchaseManager.swift). StoreKit 2
-//  product loading + purchase/restore, unchanged apart from eNDS's own
+//  product loading + purchase/restore, unchanged apart from eDuo's own
 //  product IDs. Owns the revocation-safe entitlement bookkeeping alongside
 //  `EntitlementManager` (see that file's header for the bug this guards).
 //

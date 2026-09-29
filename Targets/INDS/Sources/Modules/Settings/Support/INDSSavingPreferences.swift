@@ -1,6 +1,6 @@
 //
 //  INDSSavingPreferences.swift
-//  eNDS
+//  eDuo
 //
 //  UserDefaults-backed preferences for Settings → Saving. Same idiom as
 //  `INDSHaptics.isEnabled` (Common/Controller) throughout: default `true`
@@ -23,6 +23,7 @@ enum INDSSavingPreferences {
     private static let autoSaveOnExitKey = "eNDSAutoSaveEnabled"
     private static let autoResumeKey = "eNDSAutoResume"
     private static let showSaveIndicatorKey = "eNDSShowSaveIndicator"
+    private static let rewindKey = "eNDSRewindEnabled"
 
     static var autoSaveOnExitEnabled: Bool {
         get {
@@ -46,5 +47,14 @@ enum INDSSavingPreferences {
             return UserDefaults.standard.bool(forKey: showSaveIndicatorKey)
         }
         set { UserDefaults.standard.set(newValue, forKey: showSaveIndicatorKey) }
+    }
+
+    /// Keeps ~35 s of in-memory history for the pause menu's Rewind (~60 MB).
+    static var rewindEnabled: Bool {
+        get {
+            if UserDefaults.standard.object(forKey: rewindKey) == nil { return true }
+            return UserDefaults.standard.bool(forKey: rewindKey)
+        }
+        set { UserDefaults.standard.set(newValue, forKey: rewindKey) }
     }
 }

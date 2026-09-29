@@ -1,6 +1,6 @@
 //
 //  NDSSaveStateSlotsView.swift
-//  eNDS
+//  eDuo
 //
 //  New (no direct iGBA equivalent — iGBA's save-state UI is a separate legacy
 //  screen not in scope for this port). Small slot picker presented as a

@@ -1,6 +1,6 @@
 //
 //  AboutSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → About. Version/build, melonDS license note, and the
 //  Rate/Support/Privacy rows iGBA's own About-flavored footer covers
@@ -37,7 +37,7 @@ struct AboutSettingsView: View {
                 Button {
                     requestReview()
                 } label: {
-                    Label("Rate eNDS", systemImage: "star.fill")
+                    Label("Rate eDuo", systemImage: "star.fill")
                 }
                 Link(destination: INDSConstants.supportURL) {
                     Label("Support", systemImage: "questionmark.circle")
@@ -79,7 +79,7 @@ struct AboutSettingsView: View {
             } header: {
                 Text("Open Source")
             } footer: {
-                Text("eNDS is open-source software licensed under the GNU General Public License v3 (GPLv3). It is powered by the melonDS emulation core, © Arisotura and the melonDS team, also GPLv3. eNDS is not affiliated with or endorsed by the melonDS team or by any console manufacturer.")
+                Text("eDuo is open-source software licensed under the GNU General Public License v3 (GPLv3). It is powered by the melonDS emulation core, © Arisotura and the melonDS team, also GPLv3. eDuo is not affiliated with or endorsed by the melonDS team or by any console manufacturer.")
             }
         }
         .navigationTitle("About")

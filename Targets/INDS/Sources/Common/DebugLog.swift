@@ -2,6 +2,6 @@ import Foundation
 
 func debugLog(_ message: String) {
     #if DEBUG
-    print("[eNDS] \(message)")
+    print("[eDuo] \(message)")
     #endif
 }

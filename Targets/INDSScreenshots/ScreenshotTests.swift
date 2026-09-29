@@ -199,9 +199,31 @@ final class ScreenshotTests: XCTestCase {
         sleep(2)
         tapAny(app, labels: ["Settings", "gearshape"])
         sleep(1)
-        tapAny(app, labels: ["eNDS PRO"])
+        tapAny(app, labels: ["eDuo PRO"])
         sleep(3)
         shoot("paywall")
+    }
+
+    /// The App Review screenshot of the three in-app purchases: all plans
+    /// revealed and scrolled so the prices, the button and the renewal terms
+    /// share one frame. Retake it whenever the paywall changes — the old one
+    /// sat in App Store Connect for weeks describing a paywall that no longer
+    /// existed.
+    @MainActor
+    func test16_PaywallReview() throws {
+        let app = launchApp()
+        sleep(2)
+        tapAny(app, labels: ["Settings", "gearshape"])
+        sleep(1)
+        tapAny(app, labels: ["eDuo PRO"])
+        sleep(4)
+        tapAny(app, labels: ["See all plans"])
+        sleep(2)
+        let start = app.scrollViews.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.6))
+        start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -220)),
+                    withVelocity: .slow, thenHoldForDuration: 0.5)
+        sleep(2)
+        shoot("paywall-review")
     }
 
     @MainActor
@@ -397,5 +419,29 @@ final class ScreenshotTests: XCTestCase {
         // or a session replaced by the library during the transition.
         app.buttons["hud.pause"].tap()
         XCTAssertTrue(app.buttons["Resume"].waitForExistence(timeout: 5))
+    }
+
+    /// Requires JamClown.nds in Documents/ROMs. Rewind shows up once the
+    /// first capture exists (3.5 s of play) and jumps back without leaving
+    /// the game stuck paused; three jumps in a row must all land.
+    @MainActor
+    func test17_Rewind() throws {
+        continueAfterFailure = false
+        let app = launchApp(extraArgs: [])
+        bootJamClown(app)
+        XCTAssertTrue(app.buttons["hud.pause"].waitForExistence(timeout: 10))
+        Thread.sleep(forTimeInterval: 15)
+        for _ in 0..<3 {
+            app.buttons["hud.pause"].tap()
+            XCTAssertTrue(app.buttons["Rewind"].waitForExistence(timeout: 5))
+            app.buttons["Rewind"].tap()
+            XCTAssertTrue(app.buttons["hud.pause"].waitForExistence(timeout: 5))
+            XCTAssertFalse(app.buttons["Resume"].exists)
+            Thread.sleep(forTimeInterval: 1)
+        }
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = "after-rewind"
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 }

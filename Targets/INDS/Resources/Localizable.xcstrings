@@ -1801,7 +1801,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "矢印キーで移動、その他のDSのボタンも隣接するキーに割り当て済みです。"
+            "value" : "矢印キーで移動、その他のボタンも隣接するキーに割り当て済みです。"
           }
         },
         "ko" : {
@@ -2595,60 +2595,60 @@
         }
       }
     },
-    "BIOS/firmware files are optional. eNDS can boot and run almost any game using a built-in compatibility BIOS. Importing real dumps from your own console can improve compatibility for a few games. eNDS does not include or download BIOS files." : {
+    "BIOS/firmware files are optional. eDuo can boot and run almost any game using a built-in compatibility BIOS. Importing real dumps from your own console can improve compatibility for a few games. eDuo does not include or download BIOS files." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS-/Firmware-Dateien sind optional. eNDS kann mithilfe eines integrierten Kompatibilitäts-BIOS fast jedes Spiel starten und ausführen. Das Importieren echter Dumps von deiner eigenen Konsole kann die Kompatibilität für einige Spiele verbessern. eNDS enthält keine BIOS-Dateien und lädt diese auch nicht herunter."
+            "value" : "BIOS-/Firmware-Dateien sind optional. eDuo kann mithilfe eines integrierten Kompatibilitäts-BIOS fast jedes Spiel starten und ausführen. Das Importieren echter Dumps von deiner eigenen Konsole kann die Kompatibilität für einige Spiele verbessern. eDuo enthält keine BIOS-Dateien und lädt diese auch nicht herunter."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los archivos de BIOS/firmware son opcionales. eNDS puede arrancar y ejecutar casi cualquier juego utilizando una BIOS de compatibilidad integrada. Importar volcados reales desde tu propia consola puede mejorar la compatibilidad con algunos juegos. eNDS no incluye ni descarga archivos de BIOS."
+            "value" : "Los archivos de BIOS/firmware son opcionales. eDuo puede arrancar y ejecutar casi cualquier juego utilizando una BIOS de compatibilidad integrada. Importar volcados reales desde tu propia consola puede mejorar la compatibilidad con algunos juegos. eDuo no incluye ni descarga archivos de BIOS."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les fichiers BIOS/firmware sont facultatifs. eNDS peut démarrer et exécuter presque tous les jeux grâce à un BIOS de compatibilité intégré. L'importation de sauvegardes réelles depuis votre propre console peut améliorer la compatibilité pour certains jeux. eNDS n'inclut ni ne télécharge de fichiers BIOS."
+            "value" : "Les fichiers BIOS/firmware sont facultatifs. eDuo peut démarrer et exécuter presque tous les jeux grâce à un BIOS de compatibilité intégré. L'importation de sauvegardes réelles depuis votre propre console peut améliorer la compatibilité pour certains jeux. eDuo n'inclut ni ne télécharge de fichiers BIOS."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I file BIOS/firmware sono facoltativi. eNDS è in grado di avviare ed eseguire quasi tutti i giochi grazie a un BIOS di compatibilità integrato. L'importazione di dump originali dalla propria console può migliorare la compatibilità per alcuni giochi. eNDS non include né scarica file BIOS."
+            "value" : "I file BIOS/firmware sono facoltativi. eDuo è in grado di avviare ed eseguire quasi tutti i giochi grazie a un BIOS di compatibilità integrato. L'importazione di dump originali dalla propria console può migliorare la compatibilità per alcuni giochi. eDuo non include né scarica file BIOS."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS/ファームウェアファイルは任意です。eNDSは、内蔵の互換BIOSを使用して、ほぼすべてのゲームを起動・実行できます。お手持ちのコンソールから実際のダンプデータをインポートすることで、一部のゲームの互換性が向上する場合があります。eNDSにはBIOSファイルは含まれておらず、BIOSファイルのダウンロードも行いません。"
+            "value" : "BIOS/ファームウェアファイルは任意です。eDuoは、内蔵の互換BIOSを使用して、ほぼすべてのゲームを起動・実行できます。お手持ちのコンソールから実際のダンプデータをインポートすることで、一部のゲームの互換性が向上する場合があります。eDuoにはBIOSファイルは含まれておらず、BIOSファイルのダウンロードも行いません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS/펌웨어 파일은 선택 사항입니다. eNDS는 내장된 호환성 BIOS를 사용하여 거의 모든 게임을 부팅하고 실행할 수 있습니다. 본인의 콘솔에서 실제 덤프 파일을 가져오면 일부 게임의 호환성이 향상될 수 있습니다. eNDS는 BIOS 파일을 포함하거나 다운로드하지 않습니다."
+            "value" : "BIOS/펌웨어 파일은 선택 사항입니다. eDuo는 내장된 호환성 BIOS를 사용하여 거의 모든 게임을 부팅하고 실행할 수 있습니다. 본인의 콘솔에서 실제 덤프 파일을 가져오면 일부 게임의 호환성이 향상될 수 있습니다. eDuo는 BIOS 파일을 포함하거나 다운로드하지 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os ficheiros de BIOS/firmware são opcionais. O eNDS consegue arrancar e executar praticamente qualquer jogo utilizando uma BIOS de compatibilidade integrada. A importação de dumps reais da sua própria consola pode melhorar a compatibilidade com alguns jogos. O eNDS não inclui nem descarrega ficheiros de BIOS."
+            "value" : "Os ficheiros de BIOS/firmware são opcionais. O eDuo consegue arrancar e executar praticamente qualquer jogo utilizando uma BIOS de compatibilidade integrada. A importação de dumps reais da sua própria consola pode melhorar a compatibilidade com alguns jogos. O eDuo não inclui nem descarrega ficheiros de BIOS."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Файлы BIOS/прошивки не являются обязательными. eNDS может загружать и запускать практически любую игру с помощью встроенного BIOS-модуля, обеспечивающего совместимость. Импорт реальных дампов с вашей собственной консоли может улучшить совместимость с некоторыми играми. eNDS не содержит и не загружает файлы BIOS."
+            "value" : "Файлы BIOS/прошивки не являются обязательными. eDuo может загружать и запускать практически любую игру с помощью встроенного BIOS-модуля, обеспечивающего совместимость. Импорт реальных дампов с вашей собственной консоли может улучшить совместимость с некоторыми играми. eDuo не содержит и не загружает файлы BIOS."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS/固件文件为可选。eNDS 可以利用内置的兼容性 BIOS 启动并运行几乎所有游戏。从您自己的游戏机导入真实的转储文件，可以提高部分游戏的兼容性。eNDS 不包含也不下载 BIOS 文件。"
+            "value" : "BIOS/固件文件为可选。eDuo 可以利用内置的兼容性 BIOS 启动并运行几乎所有游戏。从您自己的游戏机导入真实的转储文件，可以提高部分游戏的兼容性。eDuo 不包含也不下载 BIOS 文件。"
           }
         }
       }
@@ -3365,61 +3365,61 @@
         }
       }
     },
-    "Built with care by an independent developer.\nYour support keeps eNDS moving forward." : {
+    "Built with care by an independent developer.\nYour support keeps eDuo moving forward." : {
       "comment" : "Paywall personal message",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit Sorgfalt von einem unabhängigen Entwickler gebaut.\nDeine Unterstützung bringt eNDS voran."
+            "value" : "Mit Sorgfalt von einem unabhängigen Entwickler gebaut.\nDeine Unterstützung bringt eDuo voran."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Creada con esmero por un desarrollador independiente.\nTu apoyo hace que eNDS siga avanzando."
+            "value" : "Creada con esmero por un desarrollador independiente.\nTu apoyo hace que eDuo siga avanzando."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conçu avec soin par un développeur indépendant.\nVotre soutien fait avancer eNDS."
+            "value" : "Conçu avec soin par un développeur indépendant.\nVotre soutien fait avancer eDuo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Creato con cura da uno sviluppatore indipendente.\nIl tuo supporto fa crescere eNDS."
+            "value" : "Creato con cura da uno sviluppatore indipendente.\nIl tuo supporto fa crescere eDuo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "個人開発者が丹精込めて作っています。\nあなたのサポートが eNDS を前へ進めます。"
+            "value" : "個人開発者が丹精込めて作っています。\nあなたのサポートが eDuo を前へ進めます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "독립 개발자가 정성껏 만들었습니다.\n여러분의 지원이 eNDS를 발전시킵니다."
+            "value" : "독립 개발자가 정성껏 만들었습니다.\n여러분의 지원이 eDuo를 발전시킵니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Criada com cuidado por um programador independente.\nO seu apoio faz o eNDS avançar."
+            "value" : "Criada com cuidado por um programador independente.\nO seu apoio faz o eDuo avançar."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сделано с заботой независимым разработчиком.\nВаша поддержка помогает eNDS развиваться."
+            "value" : "Сделано с заботой независимым разработчиком.\nВаша поддержка помогает eDuo развиваться."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "由独立开发者用心打造。\n你的支持让 eNDS 不断前进。"
+            "value" : "由独立开发者用心打造。\n你的支持让 eDuo 不断前进。"
           }
         }
       }
@@ -3453,7 +3453,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSボタン／アクション → コントローラーボタン"
+            "value" : "ボタン／アクション → コントローラーボタン"
           }
         },
         "ko" : {
@@ -4331,7 +4331,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MFiやBluetoothのゲームパッドを接続するだけ。ボタンは本物のDSの配置に自動で割り当てられます。"
+            "value" : "MFiやBluetoothのゲームパッドを接続するだけ。ボタンは本来の配置に自動で割り当てられます。"
           }
         },
         "ko" : {
@@ -5059,6 +5059,65 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法加载状态：%@"
+          }
+        }
+      }
+    },
+    "Couldn't rewind" : {
+      "comment" : "Rewind failed toast",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurückspulen nicht möglich"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo rebobinar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de revenir en arrière"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile riavvolgere"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "巻き戻せませんでした"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "되감기에 실패했습니다"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível rebobinar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось перемотать назад"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法倒带"
           }
         }
       }
@@ -7204,7 +7263,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "プレイ中に、2つのDS画面の周囲や間のスペースを埋めます。次回ゲームを起動した際に適用されます。"
+            "value" : "プレイ中に、2つの画面の周囲や間のスペースを埋めます。次回ゲームを起動した際に適用されます。"
           }
         },
         "ko" : {
@@ -7228,7 +7287,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在游戏过程中，会填充两块DS屏幕周围及之间的空白区域。下次打开游戏时生效。"
+            "value" : "在游戏过程中，会填充两块屏幕周围及之间的空白区域。下次打开游戏时生效。"
           }
         }
       }
@@ -7684,7 +7743,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSゲームは本体の時計を読み取ります。昼夜のサイクル、毎日のイベント、1日1回の解放はすべてこの時計で動きます。次にゲームを開いたときに適用されます。"
+            "value" : "ゲームは本体の時計を読み取ります。昼夜のサイクル、毎日のイベント、1日1回の解放はすべてこの時計で動きます。次にゲームを開いたときに適用されます。"
           }
         },
         "ko" : {
@@ -7708,7 +7767,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DS游戏会读取主机自身的时钟——昼夜循环、每日事件和每天一次的解锁都依赖它。下次打开游戏时生效。"
+            "value" : "游戏会读取主机自身的时钟——昼夜循环、每日事件和每天一次的解锁都依赖它。下次打开游戏时生效。"
           }
         }
       }
@@ -7802,7 +7861,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PROにアップグレードすると、DSの画面の後ろに好きな写真を設定できます。縦向きと横向きで別々の背景を使えます。"
+            "value" : "PROにアップグレードすると、画面の後ろに好きな写真を設定できます。縦向きと横向きで別々の背景を使えます。"
           }
         },
         "ko" : {
@@ -8187,60 +8246,60 @@
         }
       }
     },
-    "If your device starts running hot, eNDS automatically caps speed at 1x. If it keeps heating up, eNDS also lowers the screen's refresh rate to help it cool down." : {
+    "If your device starts running hot, eDuo automatically caps speed at 1x. If it keeps heating up, eDuo also lowers the screen's refresh rate to help it cool down." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sollte sich dein Gerät überhitzen, begrenzt eNDS die Geschwindigkeit automatisch auf 1x. Sollte sich das Gerät weiterhin überhitzen, senkt eNDS zudem die Bildwiederholfrequenz des Bildschirms, um die Abkühlung zu unterstützen."
+            "value" : "Sollte sich dein Gerät überhitzen, begrenzt eDuo die Geschwindigkeit automatisch auf 1x. Sollte sich das Gerät weiterhin überhitzen, senkt eDuo zudem die Bildwiederholfrequenz des Bildschirms, um die Abkühlung zu unterstützen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si tu dispositivo empieza a calentarse, eNDS limita automáticamente la velocidad a 1x. Si sigue calentándose, eNDS también reduce la frecuencia de actualización de la pantalla para ayudar a que se enfríe."
+            "value" : "Si tu dispositivo empieza a calentarse, eDuo limita automáticamente la velocidad a 1x. Si sigue calentándose, eDuo también reduce la frecuencia de actualización de la pantalla para ayudar a que se enfríe."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si votre appareil commence à chauffer, eNDS limite automatiquement la vitesse à 1x. S'il continue à chauffer, eNDS réduit également la fréquence de rafraîchissement de l'écran pour faciliter son refroidissement."
+            "value" : "Si votre appareil commence à chauffer, eDuo limite automatiquement la vitesse à 1x. S'il continue à chauffer, eDuo réduit également la fréquence de rafraîchissement de l'écran pour faciliter son refroidissement."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se il dispositivo inizia a surriscaldarsi, eNDS limita automaticamente la velocità a 1x. Se il surriscaldamento persiste, eNDS riduce anche la frequenza di aggiornamento dello schermo per favorire il raffreddamento."
+            "value" : "Se il dispositivo inizia a surriscaldarsi, eDuo limita automaticamente la velocità a 1x. Se il surriscaldamento persiste, eDuo riduce anche la frequenza di aggiornamento dello schermo per favorire il raffreddamento."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "端末の温度が上昇し始めた場合、eNDSは自動的に速度を1xに制限します。それでも温度が上がり続ける場合は、eNDSは冷却を助けるために画面のリフレッシュレートも下げます。"
+            "value" : "端末の温度が上昇し始めた場合、eDuoは自動的に速度を1xに制限します。それでも温度が上がり続ける場合は、eDuoは冷却を助けるために画面のリフレッシュレートも下げます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "기기가 과열되기 시작하면, eNDS는 자동으로 속도를 1x로 제한합니다. 과열 현상이 계속되면, eNDS는 기기가 식을 수 있도록 화면의 재생 빈도도 낮춥니다."
+            "value" : "기기가 과열되기 시작하면, eDuo는 자동으로 속도를 1x로 제한합니다. 과열 현상이 계속되면, eDuo는 기기가 식을 수 있도록 화면의 재생 빈도도 낮춥니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se o seu dispositivo começar a aquecer, o eNDS limita automaticamente a velocidade para 1x. Se continuar a aquecer, o eNDS também reduz a taxa de atualização do ecrã para ajudar a arrefecê-lo."
+            "value" : "Se o seu dispositivo começar a aquecer, o eDuo limita automaticamente a velocidade para 1x. Se continuar a aquecer, o eDuo também reduz a taxa de atualização do ecrã para ajudar a arrefecê-lo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Если ваше устройство начнёт перегреваться, eNDS автоматически ограничит скорость до 1x. Если перегрев продолжается, eNDS также снизит частоту обновления экрана, чтобы помочь устройству остыть."
+            "value" : "Если ваше устройство начнёт перегреваться, eDuo автоматически ограничит скорость до 1x. Если перегрев продолжается, eDuo также снизит частоту обновления экрана, чтобы помочь устройству остыть."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果您的设备开始发热，eNDS 会自动将运行速度限制在 1x。如果设备持续发热，eNDS 还会降低屏幕刷新率，以帮助设备散热。"
+            "value" : "如果您的设备开始发热，eDuo 会自动将运行速度限制在 1x。如果设备持续发热，eDuo 还会降低屏幕刷新率，以帮助设备散热。"
           }
         }
       }
@@ -8539,60 +8598,60 @@
         }
       }
     },
-    "Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eNDS library." : {
+    "Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importiere legale .nds-Backups — oder .zip/.7z-Archive mit ihnen — aus der Dateien-App und baue deine eNDS-Bibliothek auf."
+            "value" : "Importiere legale .nds-Backups — oder .zip/.7z-Archive mit ihnen — aus der Dateien-App und baue deine eDuo-Bibliothek auf."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa copias legales .nds — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eNDS."
+            "value" : "Importa copias legales .nds — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eDuo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importez des sauvegardes .nds légales — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eNDS."
+            "value" : "Importez des sauvegardes .nds légales — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eDuo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa backup legali .nds — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eNDS."
+            "value" : "Importa backup legali .nds — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eDuo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "合法的な .nds バックアップ（.zip/.7z も可）をファイルアプリから読み込んで、eNDS ライブラリを作りましょう。"
+            "value" : "合法的な .nds バックアップ（.zip/.7z も可）をファイルアプリから読み込んで、eDuo ライブラリを作りましょう。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "합법적인 .nds 백업 — 또는 .zip/.7z 아카이브 — 을 파일 앱에서 가져와 eNDS 라이브러리를 시작하세요."
+            "value" : "합법적인 .nds 백업 — 또는 .zip/.7z 아카이브 — 을 파일 앱에서 가져와 eDuo 라이브러리를 시작하세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importe cópias legais .nds — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eNDS."
+            "value" : "Importe cópias legais .nds — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eDuo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Импортируйте легальные копии .nds — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eNDS."
+            "value" : "Импортируйте легальные копии .nds — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eDuo."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从“文件”App 导入你合法拥有的 .nds 备份（或 .zip/.7z 压缩包），开始搭建你的 eNDS 游戏库。"
+            "value" : "从“文件”App 导入你合法拥有的 .nds 备份（或 .zip/.7z 压缩包），开始搭建你的 eDuo 游戏库。"
           }
         }
       }
@@ -8745,7 +8804,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無効なNDS ROMです。%1$@"
+            "value" : "無効なROMです。%1$@"
           }
         },
         "ko" : {
@@ -8832,60 +8891,118 @@
         }
       }
     },
-    "Keep eNDS independent" : {
+    "Keep eDuo independent" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Halte eNDS unabhängig"
+            "value" : "Halte eDuo unabhängig"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantén eNDS independiente"
+            "value" : "Mantén eDuo independiente"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gardez eNDS indépendant"
+            "value" : "Gardez eDuo indépendant"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantieni eNDS indipendente"
+            "value" : "Mantieni eDuo indipendente"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS の独立を支える"
+            "value" : "eDuo の独立を支える"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS의 독립을 지켜주세요"
+            "value" : "eDuo의 독립을 지켜주세요"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantenha o eNDS independente"
+            "value" : "Mantenha o eDuo independente"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Поддержите независимость eNDS"
+            "value" : "Поддержите независимость eDuo"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "让 eNDS 保持独立"
+            "value" : "让 eDuo 保持独立"
+          }
+        }
+      }
+    },
+    "Keeps the last 35 seconds of play in memory, so Rewind in the pause menu can jump about 10 seconds back, up to three times in a row. Turn it off to free that memory on older devices." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behält die letzten 35 Sekunden Spielzeit im Speicher, damit „Zurückspulen“ im Pausenmenü etwa 10 Sekunden zurückspringen kann, bis zu dreimal hintereinander. Schalte es aus, um auf älteren Geräten diesen Speicher freizugeben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda en memoria los últimos 35 segundos de partida, para que «Rebobinar» en el menú de pausa pueda volver unos 10 segundos atrás, hasta tres veces seguidas. Desactívalo para liberar esa memoria en dispositivos antiguos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garde en mémoire les 35 dernières secondes de jeu, pour que « Retour en arrière » dans le menu pause puisse revenir d’environ 10 secondes, jusqu’à trois fois de suite. Désactivez-le pour libérer cette mémoire sur les appareils plus anciens."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiene in memoria gli ultimi 35 secondi di gioco, così «Riavvolgi» nel menu di pausa può tornare indietro di circa 10 secondi, fino a tre volte di seguito. Disattivalo per liberare quella memoria sui dispositivi più vecchi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直近35秒間のプレイをメモリに保持し、ポーズメニューの「巻き戻し」で約10秒前に戻れます（最大3回連続）。古いデバイスでメモリを空けたい場合はオフにしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최근 35초 분량의 플레이를 메모리에 보관해, 일시정지 메뉴의 되감기로 약 10초 전으로 최대 세 번 연속 돌아갈 수 있습니다. 오래된 기기에서 메모리를 확보하려면 끄세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantém em memória os últimos 35 segundos de jogo, para que «Rebobinar» no menu de pausa possa recuar cerca de 10 segundos, até três vezes seguidas. Desative para libertar essa memória em dispositivos mais antigos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранит в памяти последние 35 секунд игры, чтобы «Перемотка назад» в меню паузы могла вернуть примерно на 10 секунд, до трёх раз подряд. Отключите, чтобы освободить эту память на старых устройствах."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在内存中保留最近 35 秒的游戏进度，暂停菜单中的“倒带”可回退约 10 秒，最多连续三次。在较旧的设备上可关闭以释放这部分内存。"
           }
         }
       }
@@ -9301,60 +9418,60 @@
         }
       }
     },
-    "Lets games listen — blowing into the mic in some games, or speaking in others. eNDS only asks for microphone access the first time a game actually needs it, never at launch, and audio never leaves your device. Turn this off to keep the mic silent." : {
+    "Lets games listen — blowing into the mic in some games, or speaking in others. eDuo only asks for microphone access the first time a game actually needs it, never at launch, and audio never leaves your device. Turn this off to keep the mic silent." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lässt Spiele zuhören – in manchen Spielen pustet man ins Mikrofon, in anderen spricht man. eNDS fragt erst dann nach Mikrofonzugriff, wenn ein Spiel ihn wirklich braucht, nie beim Start, und Audio verlässt dein Gerät nie. Schalte dies aus, um das Mikrofon stumm zu halten."
+            "value" : "Lässt Spiele zuhören – in manchen Spielen pustet man ins Mikrofon, in anderen spricht man. eDuo fragt erst dann nach Mikrofonzugriff, wenn ein Spiel ihn wirklich braucht, nie beim Start, und Audio verlässt dein Gerät nie. Schalte dies aus, um das Mikrofon stumm zu halten."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite que los juegos escuchen: soplar al micrófono en algunos juegos, o hablar en otros. eNDS solo pide acceso al micrófono la primera vez que un juego lo necesita de verdad, nunca al arrancar, y el audio nunca sale de tu dispositivo. Desactívalo para mantener el micrófono en silencio."
+            "value" : "Permite que los juegos escuchen: soplar al micrófono en algunos juegos, o hablar en otros. eDuo solo pide acceso al micrófono la primera vez que un juego lo necesita de verdad, nunca al arrancar, y el audio nunca sale de tu dispositivo. Desactívalo para mantener el micrófono en silencio."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permet aux jeux d'écouter — souffler dans le micro dans certains jeux, ou parler dans d'autres. eNDS ne demande l'accès au micro que la première fois qu'un jeu en a vraiment besoin, jamais au lancement, et l'audio ne quitte jamais votre appareil. Désactivez cette option pour garder le micro silencieux."
+            "value" : "Permet aux jeux d'écouter — souffler dans le micro dans certains jeux, ou parler dans d'autres. eDuo ne demande l'accès au micro que la première fois qu'un jeu en a vraiment besoin, jamais au lancement, et l'audio ne quitte jamais votre appareil. Désactivez cette option pour garder le micro silencieux."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permette ai giochi di ascoltare: soffiare nel microfono in alcuni giochi o parlare in altri. eNDS chiede l'accesso al microfono solo la prima volta che un gioco ne ha davvero bisogno, mai all'avvio, e l'audio non lascia mai il tuo dispositivo. Disattivalo per tenere in silenzio il microfono."
+            "value" : "Permette ai giochi di ascoltare: soffiare nel microfono in alcuni giochi o parlare in altri. eDuo chiede l'accesso al microfono solo la prima volta che un gioco ne ha davvero bisogno, mai all'avvio, e l'audio non lascia mai il tuo dispositivo. Disattivalo per tenere in silenzio il microfono."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSゲームが音を聞けるようになります。ゲームによってはマイクに息を吹きかけたり、話しかけたりします。eNDSがマイクへのアクセスを求めるのは、ゲームが実際に必要とする最初の時だけで、起動時には求めません。音声が端末の外に出ることはありません。オフにするとDSのマイクは無音になります。"
+            "value" : "ゲームが音を聞けるようになります。ゲームによってはマイクに息を吹きかけたり、話しかけたりします。eDuoがマイクへのアクセスを求めるのは、ゲームが実際に必要とする最初の時だけで、起動時には求めません。音声が端末の外に出ることはありません。オフにするとマイクは無音になります。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임이 소리를 들을 수 있게 합니다. 어떤 게임에서는 마이크에 숨을 불고, 다른 게임에서는 말을 합니다. eNDS는 게임이 실제로 필요로 하는 첫 순간에만 마이크 접근을 요청하며, 실행 시에는 요청하지 않습니다. 오디오는 절대 기기를 떠나지 않습니다. 끄면 마이크가 무음이 됩니다."
+            "value" : "게임이 소리를 들을 수 있게 합니다. 어떤 게임에서는 마이크에 숨을 불고, 다른 게임에서는 말을 합니다. eDuo는 게임이 실제로 필요로 하는 첫 순간에만 마이크 접근을 요청하며, 실행 시에는 요청하지 않습니다. 오디오는 절대 기기를 떠나지 않습니다. 끄면 마이크가 무음이 됩니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite que os jogos ouçam — soprar para o microfone nalguns jogos, ou falar noutros. O eNDS só pede acesso ao microfone na primeira vez que um jogo precisa mesmo dele, nunca no arranque, e o áudio nunca sai do seu dispositivo. Desative para manter o microfone em silêncio."
+            "value" : "Permite que os jogos ouçam — soprar para o microfone nalguns jogos, ou falar noutros. O eDuo só pede acesso ao microfone na primeira vez que um jogo precisa mesmo dele, nunca no arranque, e o áudio nunca sai do seu dispositivo. Desative para manter o microfone em silêncio."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Позволяет играм слышать вас: в одних играх нужно дуть в микрофон, в других — говорить. eNDS запрашивает доступ к микрофону только тогда, когда игра впервые действительно в нём нуждается, никогда при запуске, и звук никогда не покидает ваше устройство. Отключите, чтобы микрофон молчал."
+            "value" : "Позволяет играм слышать вас: в одних играх нужно дуть в микрофон, в других — говорить. eDuo запрашивает доступ к микрофону только тогда, когда игра впервые действительно в нём нуждается, никогда при запуске, и звук никогда не покидает ваше устройство. Отключите, чтобы микрофон молчал."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "让DS游戏能听到你——有的游戏对麦克风吹气，有的游戏对它说话。eNDS只会在游戏第一次真正需要时请求麦克风权限，绝不会在启动时请求，音频也绝不会离开你的设备。关闭后DS麦克风将保持静音。"
+            "value" : "让游戏能听到你——有的游戏对麦克风吹气，有的游戏对它说话。eDuo只会在游戏第一次真正需要时请求麦克风权限，绝不会在启动时请求，音频也绝不会离开你的设备。关闭后麦克风将保持静音。"
           }
         }
       }
@@ -9857,7 +9974,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DS専用"
+            "value" : "2画面専用"
           }
         },
         "ko" : {
@@ -9881,7 +9998,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "专为DS打造"
+            "value" : "专为双屏打造"
           }
         }
       }
@@ -10269,7 +10386,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSのマイク"
+            "value" : "マイク"
           }
         },
         "ko" : {
@@ -10386,7 +10503,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSのソフトの多くは、欧州の全言語をカートリッジに収録していて、たずねる代わりにこの設定から言語を選びます。日本語版のソフトはそもそも選択肢がないことがほとんどです。\n\nどちらも次にゲームを開いたときから有効になります（本体が起動時に一度だけ読み込むため）。"
+            "value" : "ソフトの多くは、欧州の全言語をカートリッジに収録していて、たずねる代わりにこの設定から言語を選びます。日本語版のソフトはそもそも選択肢がないことがほとんどです。\n\nどちらも次にゲームを開いたときから有効になります（本体が起動時に一度だけ読み込むため）。"
           }
         },
         "ko" : {
@@ -12234,60 +12351,60 @@
         }
       }
     },
-    "Optional — eNDS boots games without BIOS files; add them only if a specific game needs them." : {
+    "Optional — eDuo boots games without BIOS files; add them only if a specific game needs them." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Optional – eNDS startet Spiele ohne BIOS-Dateien; füge diese nur hinzu, wenn ein bestimmtes Spiel sie benötigt."
+            "value" : "Optional – eDuo startet Spiele ohne BIOS-Dateien; füge diese nur hinzu, wenn ein bestimmtes Spiel sie benötigt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opcional: eNDS inicia los juegos sin archivos BIOS; añádelos solo si un juego concreto los necesita."
+            "value" : "Opcional: eDuo inicia los juegos sin archivos BIOS; añádelos solo si un juego concreto los necesita."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Facultatif — eNDS lance les jeux sans fichiers BIOS ; n'ajoutez-les que si un jeu spécifique en a besoin."
+            "value" : "Facultatif — eDuo lance les jeux sans fichiers BIOS ; n'ajoutez-les que si un jeu spécifique en a besoin."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opzionale — eNDS avvia i giochi senza i file BIOS; aggiungili solo se un gioco specifico ne ha bisogno."
+            "value" : "Opzionale — eDuo avvia i giochi senza i file BIOS; aggiungili solo se un gioco specifico ne ha bisogno."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オプション — eNDSはBIOSファイルがなくてもゲームを起動します。特定のゲームでBIOSファイルが必要な場合にのみ、それらを追加してください。"
+            "value" : "オプション — eDuoはBIOSファイルがなくてもゲームを起動します。特定のゲームでBIOSファイルが必要な場合にのみ、それらを追加してください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "선택 사항 — eNDS는 BIOS 파일 없이도 게임을 실행합니다. 특정 게임에서 BIOS 파일이 필요한 경우에만 추가하십시오."
+            "value" : "선택 사항 — eDuo는 BIOS 파일 없이도 게임을 실행합니다. 특정 게임에서 BIOS 파일이 필요한 경우에만 추가하십시오."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opcional — o eNDS inicia jogos sem ficheiros BIOS; adicione-os apenas se um jogo específico os necessitar."
+            "value" : "Opcional — o eDuo inicia jogos sem ficheiros BIOS; adicione-os apenas se um jogo específico os necessitar."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Необязательно — eNDS запускает игры без файлов BIOS; добавляйте их только в том случае, если они требуются для конкретной игры."
+            "value" : "Необязательно — eDuo запускает игры без файлов BIOS; добавляйте их только в том случае, если они требуются для конкретной игры."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可选 — eNDS 可在不使用 BIOS 文件的情况下启动游戏；仅当特定游戏需要时才添加这些文件。"
+            "value" : "可选 — eDuo 可在不使用 BIOS 文件的情况下启动游戏；仅当特定游戏需要时才添加这些文件。"
           }
         }
       }
@@ -12734,7 +12851,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSの画面とコントローラーの後ろに表示する写真を選べます。縦向きと横向きで別々の画像を設定でき、端末を回すとすぐに切り替わります。画像を設定していない向きでは、上の背景色が表示されます。"
+            "value" : "画面とコントローラーの後ろに表示する写真を選べます。縦向きと横向きで別々の画像を設定でき、端末を回すとすぐに切り替わります。画像を設定していない向きでは、上の背景色が表示されます。"
           }
         },
         "ko" : {
@@ -13877,61 +13994,61 @@
         }
       }
     },
-    "Rate eNDS" : {
+    "Rate eDuo" : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS bewerten"
+            "value" : "eDuo bewerten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Valorar eNDS"
+            "value" : "Valorar eDuo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noter eNDS"
+            "value" : "Noter eDuo"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Valuta eNDS"
+            "value" : "Valuta eDuo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSを評価する"
+            "value" : "eDuoを評価する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 평가하기"
+            "value" : "eDuo 평가하기"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avaliar o eNDS"
+            "value" : "Avaliar o eDuo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Оценить eNDS"
+            "value" : "Оценить eDuo"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "为 eNDS 评分"
+            "value" : "为 eDuo 评分"
           }
         }
       }
@@ -15632,6 +15749,64 @@
         }
       }
     },
+    "Rewind" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurückspulen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rebobinar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour en arrière"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvolgi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "巻き戻し"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "되감기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rebobinar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемотка назад"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "倒带"
+          }
+        }
+      }
+    },
     "Right" : {
       "comment" : "Mapping target",
       "localizations" : {
@@ -16835,13 +17010,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "一度設定すれば、そこから進み続けます。本体の時計は自動で進むので、この時刻で止まることはありません。DSが保存できるのは2000年から2099年までです。"
+            "value" : "一度設定すれば、そこから進み続けます。本体の時計は自動で進むので、この時刻で止まることはありません。本体が保存できるのは2000年から2099年までです。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "한 번만 설정하면 거기서부터 계속 흘러갑니다. 본체 시계는 스스로 나아가며 이 순간에 멈추지 않습니다. DS는 2000년부터 2099년까지만 저장할 수 있습니다."
+            "value" : "한 번만 설정하면 거기서부터 계속 흘러갑니다. 본체 시계는 스스로 나아가며 이 순간에 멈추지 않습니다. 본체는 2000년부터 2099년까지만 저장할 수 있습니다."
           }
         },
         "pt-PT" : {
@@ -16864,37 +17039,37 @@
         }
       }
     },
-    "Set your own photo behind the screens and the controls, with a separate image for portrait and landscape. Included in eNDS PRO." : {
+    "Set your own photo behind the screens and the controls, with a separate image for portrait and landscape. Included in eDuo PRO." : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lege ein eigenes Foto hinter die Bildschirme und die Bedienelemente – mit getrennten Bildern für Hoch- und Querformat. In eNDS PRO enthalten."
+            "value" : "Lege ein eigenes Foto hinter die Bildschirme und die Bedienelemente – mit getrennten Bildern für Hoch- und Querformat. In eDuo PRO enthalten."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pon tu propia foto detrás de las pantallas y de los controles, con una imagen distinta para vertical y horizontal. Incluido en eNDS PRO."
+            "value" : "Pon tu propia foto detrás de las pantallas y de los controles, con una imagen distinta para vertical y horizontal. Incluido en eDuo PRO."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Placez votre propre photo derrière les écrans et les commandes, avec une image distincte en portrait et en paysage. Inclus dans eNDS PRO."
+            "value" : "Placez votre propre photo derrière les écrans et les commandes, avec une image distincte en portrait et en paysage. Inclus dans eDuo PRO."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Metti una tua foto dietro agli schermi e ai comandi, con un'immagine separata per verticale e orizzontale. Incluso in eNDS PRO."
+            "value" : "Metti una tua foto dietro agli schermi e ai comandi, con un'immagine separata per verticale e orizzontale. Incluso in eDuo PRO."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSの画面とコントローラーの後ろに好きな写真を設定できます。縦向きと横向きで別々の画像を使えます。eNDS PROに含まれます。"
+            "value" : "画面とコントローラーの後ろに好きな写真を設定できます。縦向きと横向きで別々の画像を使えます。eDuo PROに含まれます。"
           }
         },
         "ko" : {
@@ -16906,13 +17081,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coloque a sua própria fotografia por trás dos ecrãs e dos controlos, com uma imagem diferente para vertical e horizontal. Incluído no eNDS PRO."
+            "value" : "Coloque a sua própria fotografia por trás dos ecrãs e dos controlos, com uma imagem diferente para vertical e horizontal. Incluído no eDuo PRO."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Поставьте свою фотографию за экранами и элементами управления — с отдельным изображением для вертикальной и горизонтальной ориентации. Входит в eNDS PRO."
+            "value" : "Поставьте свою фотографию за экранами и элементами управления — с отдельным изображением для вертикальной и горизонтальной ориентации. Входит в eDuo PRO."
           }
         },
         "zh-Hans" : {
@@ -16923,60 +17098,60 @@
         }
       }
     },
-    "Sets the tint used for buttons, links and highlights across eNDS." : {
+    "Sets the tint used for buttons, links and highlights across eDuo." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Legt die Farbnuance fest, die in eNDS für Schaltflächen, Links und Hervorhebungen verwendet wird."
+            "value" : "Legt die Farbnuance fest, die in eDuo für Schaltflächen, Links und Hervorhebungen verwendet wird."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Establece el tono que se utiliza para los botones, los enlaces y los elementos resaltados en todo eNDS."
+            "value" : "Establece el tono que se utiliza para los botones, los enlaces y los elementos resaltados en todo eDuo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Définit la teinte utilisée pour les boutons, les liens et les éléments mis en évidence dans eNDS."
+            "value" : "Définit la teinte utilisée pour les boutons, les liens et les éléments mis en évidence dans eDuo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Imposta la tonalità utilizzata per i pulsanti, i link e gli elementi in evidenza in tutto eNDS."
+            "value" : "Imposta la tonalità utilizzata per i pulsanti, i link e gli elementi in evidenza in tutto eDuo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS全体で、ボタン、リンク、およびハイライトに使用される色合いを設定します。"
+            "value" : "eDuo全体で、ボタン、リンク、およびハイライトに使用される色合いを設定します。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 전반에 걸쳐 버튼, 링크 및 강조 표시 부분에 사용되는 색조를 설정합니다."
+            "value" : "eDuo 전반에 걸쳐 버튼, 링크 및 강조 표시 부분에 사용되는 색조를 설정합니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Define a tonalidade utilizada nos botões, links e destaques em todo o eNDS."
+            "value" : "Define a tonalidade utilizada nos botões, links e destaques em todo o eDuo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Устанавливает оттенок, используемый для кнопок, ссылок и выделенных элементов во всем приложении eNDS."
+            "value" : "Устанавливает оттенок, используемый для кнопок, ссылок и выделенных элементов во всем приложении eDuo."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设置 eNDS 中按钮、链接和高亮显示所使用的色调。"
+            "value" : "设置 eDuo 中按钮、链接和高亮显示所使用的色调。"
           }
         }
       }
@@ -18066,7 +18241,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSの2画面を縦に重ねる、横に並べる、片方だけを大きく表示する。いつでも切り替えられます。"
+            "value" : "2画面を縦に重ねる、横に並べる、片方だけを大きく表示する。いつでも切り替えられます。"
           }
         },
         "ko" : {
@@ -18476,7 +18651,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "各DS画面を、元の4:3のアスペクト比を維持するのではなく、割り当てられた領域を完全に埋めるように拡大表示します。すべてのレイアウトモードで、即座に適用されます。"
+            "value" : "各画面を、元の4:3のアスペクト比を維持するのではなく、割り当てられた領域を完全に埋めるように拡大表示します。すべてのレイアウトモードで、即座に適用されます。"
           }
         },
         "ko" : {
@@ -18500,7 +18675,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将每个DS屏幕拉伸以完全填满其分配的区域，而非保持原始的4:3比例。该设置在所有布局模式下均立即生效。"
+            "value" : "将每个屏幕拉伸以完全填满其分配的区域，而非保持原始的4:3比例。该设置在所有布局模式下均立即生效。"
           }
         }
       }
@@ -19473,7 +19648,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NDSのヘッダーが不完全です。"
+            "value" : "ROMのヘッダーが不完全です。"
           }
         },
         "ko" : {
@@ -20001,7 +20176,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "究極のDS体験"
+            "value" : "究極の2画面体験"
           }
         },
         "ko" : {
@@ -20025,65 +20200,65 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "极致DS体验"
+            "value" : "极致双屏体验"
           }
         }
       }
     },
-    "These are the defaults used the next time you open a game that has no layout of its own yet. You can always change the layout in-game from the pause menu or the HUD's layout button — eNDS remembers your choice per game." : {
+    "These are the defaults used the next time you open a game that has no layout of its own yet. You can always change the layout in-game from the pause menu or the HUD's layout button — eDuo remembers your choice per game." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dies sind die Standardeinstellungen, die beim nächsten Öffnen eines Spiels verwendet werden, für das noch kein eigenes Layout festgelegt wurde. Du kannst das Layout jederzeit während des Spiels über das Pausenmenü oder die Layout-Schaltfläche im HUD ändern – eNDS speichert deine Auswahl für jedes einzelne Spiel."
+            "value" : "Dies sind die Standardeinstellungen, die beim nächsten Öffnen eines Spiels verwendet werden, für das noch kein eigenes Layout festgelegt wurde. Du kannst das Layout jederzeit während des Spiels über das Pausenmenü oder die Layout-Schaltfläche im HUD ändern – eDuo speichert deine Auswahl für jedes einzelne Spiel."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estos son los ajustes predeterminados que se utilizarán la próxima vez que abras un juego que aún no tenga su propia configuración. Siempre puedes cambiar la configuración dentro del juego desde el menú de pausa o mediante el botón de configuración del HUD; eNDS recuerda tu elección para cada juego."
+            "value" : "Estos son los ajustes predeterminados que se utilizarán la próxima vez que abras un juego que aún no tenga su propia configuración. Siempre puedes cambiar la configuración dentro del juego desde el menú de pausa o mediante el botón de configuración del HUD; eDuo recuerda tu elección para cada juego."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce sont les paramètres par défaut qui seront utilisés la prochaine fois que vous lancerez un jeu qui ne dispose pas encore de sa propre configuration. Vous pouvez à tout moment modifier la configuration en cours de jeu depuis le menu de pause ou via le bouton de configuration du HUD — eNDS mémorise votre choix pour chaque jeu."
+            "value" : "Ce sont les paramètres par défaut qui seront utilisés la prochaine fois que vous lancerez un jeu qui ne dispose pas encore de sa propre configuration. Vous pouvez à tout moment modifier la configuration en cours de jeu depuis le menu de pause ou via le bouton de configuration du HUD — eDuo mémorise votre choix pour chaque jeu."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Queste sono le impostazioni predefinite che verranno utilizzate la prossima volta che aprirai un gioco che non dispone ancora di un proprio layout. Puoi sempre modificare il layout durante il gioco dal menu di pausa o dal pulsante \"Layout\" dell'HUD: eNDS memorizza la tua scelta per ogni singolo gioco."
+            "value" : "Queste sono le impostazioni predefinite che verranno utilizzate la prossima volta che aprirai un gioco che non dispone ancora di un proprio layout. Puoi sempre modificare il layout durante il gioco dal menu di pausa o dal pulsante \"Layout\" dell'HUD: eDuo memorizza la tua scelta per ogni singolo gioco."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "これらは、独自のレイアウトがまだ設定されていないゲームを次に起動した際に使用されるデフォルト設定です。ゲーム内では、いつでもポーズメニューやHUDのレイアウトボタンからレイアウトを変更できます。eNDSはゲームごとに設定を記憶しています。"
+            "value" : "これらは、独自のレイアウトがまだ設定されていないゲームを次に起動した際に使用されるデフォルト設定です。ゲーム内では、いつでもポーズメニューやHUDのレイアウトボタンからレイアウトを変更できます。eDuoはゲームごとに設定を記憶しています。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 설정들은 아직 자체 레이아웃이 없는 게임을 다음에 실행할 때 적용되는 기본값입니다. 게임 내 일시 정지 메뉴나 HUD의 레이아웃 버튼을 통해 언제든지 레이아웃을 변경할 수 있으며, eNDS는 게임별로 사용자가 선택한 설정을 기억합니다."
+            "value" : "이 설정들은 아직 자체 레이아웃이 없는 게임을 다음에 실행할 때 적용되는 기본값입니다. 게임 내 일시 정지 메뉴나 HUD의 레이아웃 버튼을 통해 언제든지 레이아웃을 변경할 수 있으며, eDuo는 게임별로 사용자가 선택한 설정을 기억합니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estas são as predefinições utilizadas na próxima vez que abrir um jogo que ainda não tenha um layout próprio. Pode sempre alterar o layout durante o jogo a partir do menu de pausa ou do botão de layout do HUD — o eNDS guarda a sua escolha para cada jogo."
+            "value" : "Estas são as predefinições utilizadas na próxima vez que abrir um jogo que ainda não tenha um layout próprio. Pode sempre alterar o layout durante o jogo a partir do menu de pausa ou do botão de layout do HUD — o eDuo guarda a sua escolha para cada jogo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Эти настройки будут использоваться по умолчанию при следующем запуске игры, для которой ещё не создана собственная схема расположения элементов. Вы всегда можете изменить схему расположения элементов прямо в игре через меню паузы или с помощью кнопки «Схема расположения» на панели управления — eNDS запоминает ваш выбор для каждой игры."
+            "value" : "Эти настройки будут использоваться по умолчанию при следующем запуске игры, для которой ещё не создана собственная схема расположения элементов. Вы всегда можете изменить схему расположения элементов прямо в игре через меню паузы или с помощью кнопки «Схема расположения» на панели управления — eDuo запоминает ваш выбор для каждой игры."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这些是您下次打开尚未设置自定义布局的游戏时将采用的默认设置。您随时可以通过暂停菜单或HUD中的布局按钮在游戏中更改布局——eNDS会为每款游戏记住您的选择。"
+            "value" : "这些是您下次打开尚未设置自定义布局的游戏时将采用的默认设置。您随时可以通过暂停菜单或HUD中的布局按钮在游戏中更改布局——eDuo会为每款游戏记住您的选择。"
           }
         }
       }
@@ -20204,60 +20379,60 @@
         }
       }
     },
-    "This CodeBreaker/CodeFreak code uses a code type eNDS can't convert to Action Replay." : {
+    "This CodeBreaker/CodeFreak code uses a code type eDuo can't convert to Action Replay." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieser CodeBreaker/CodeFreak-Code verwendet einen Codetyp, den eNDS nicht in Action Replay umwandeln kann."
+            "value" : "Dieser CodeBreaker/CodeFreak-Code verwendet einen Codetyp, den eDuo nicht in Action Replay umwandeln kann."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este código CodeBreaker/CodeFreak usa un tipo de código que eNDS no puede convertir a Action Replay."
+            "value" : "Este código CodeBreaker/CodeFreak usa un tipo de código que eDuo no puede convertir a Action Replay."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce code CodeBreaker/CodeFreak utilise un type de code qu'eNDS ne peut pas convertir en Action Replay."
+            "value" : "Ce code CodeBreaker/CodeFreak utilise un type de code qu'eDuo ne peut pas convertir en Action Replay."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Questo codice CodeBreaker/CodeFreak usa un tipo di codice che eNDS non può convertire in Action Replay."
+            "value" : "Questo codice CodeBreaker/CodeFreak usa un tipo di codice che eDuo non può convertire in Action Replay."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このCodeBreaker/コードフリークのコードには、eNDSがアクションリプレイに変換できないコードタイプが含まれています。"
+            "value" : "このCodeBreaker/コードフリークのコードには、eDuoがアクションリプレイに変換できないコードタイプが含まれています。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 CodeBreaker/CodeFreak 코드에는 eNDS가 Action Replay로 변환할 수 없는 코드 유형이 포함되어 있습니다."
+            "value" : "이 CodeBreaker/CodeFreak 코드에는 eDuo가 Action Replay로 변환할 수 없는 코드 유형이 포함되어 있습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este código CodeBreaker/CodeFreak usa um tipo de código que o eNDS não consegue converter para Action Replay."
+            "value" : "Este código CodeBreaker/CodeFreak usa um tipo de código que o eDuo não consegue converter para Action Replay."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "В этом коде CodeBreaker/CodeFreak используется тип кода, который eNDS не может преобразовать в Action Replay."
+            "value" : "В этом коде CodeBreaker/CodeFreak используется тип кода, который eDuo не может преобразовать в Action Replay."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此 CodeBreaker/CodeFreak 代码使用了 eNDS 无法转换为 Action Replay 的代码类型。"
+            "value" : "此 CodeBreaker/CodeFreak 代码使用了 eDuo 无法转换为 Action Replay 的代码类型。"
           }
         }
       }
@@ -20321,61 +20496,61 @@
         }
       }
     },
-    "This document could not be loaded. You can also read it at github.com/mattiaa95/eNDS." : {
+    "This document could not be loaded. You can also read it at github.com/mattiaa95/eDuo." : {
       "comment" : "Licenses screen: bundled file missing",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieses Dokument konnte nicht geladen werden. Du kannst es auch unter github.com/mattiaa95/eNDS lesen."
+            "value" : "Dieses Dokument konnte nicht geladen werden. Du kannst es auch unter github.com/mattiaa95/eDuo lesen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No se ha podido cargar este documento. También puedes leerlo en github.com/mattiaa95/eNDS."
+            "value" : "No se ha podido cargar este documento. También puedes leerlo en github.com/mattiaa95/eDuo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce document n'a pas pu être chargé. Vous pouvez également le consulter sur github.com/mattiaa95/eNDS."
+            "value" : "Ce document n'a pas pu être chargé. Vous pouvez également le consulter sur github.com/mattiaa95/eDuo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossibile caricare questo documento. Puoi leggerlo anche su github.com/mattiaa95/eNDS."
+            "value" : "Impossibile caricare questo documento. Puoi leggerlo anche su github.com/mattiaa95/eDuo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このドキュメントを読み込めませんでした。github.com/mattiaa95/eNDS でも読むことができます。"
+            "value" : "このドキュメントを読み込めませんでした。github.com/mattiaa95/eDuo でも読むことができます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 문서를 불러올 수 없습니다. github.com/mattiaa95/eNDS에서도 읽을 수 있습니다."
+            "value" : "이 문서를 불러올 수 없습니다. github.com/mattiaa95/eDuo에서도 읽을 수 있습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não foi possível carregar este documento. Também o pode ler em github.com/mattiaa95/eNDS."
+            "value" : "Não foi possível carregar este documento. Também o pode ler em github.com/mattiaa95/eDuo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не удалось загрузить документ. Его также можно прочитать на github.com/mattiaa95/eNDS."
+            "value" : "Не удалось загрузить документ. Его также можно прочитать на github.com/mattiaa95/eDuo."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法加载该文档。您也可以在 github.com/mattiaa95/eNDS 上阅读。"
+            "value" : "无法加载该文档。您也可以在 github.com/mattiaa95/eDuo 上阅读。"
           }
         }
       }
@@ -20468,7 +20643,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このファイルはDSのROMとしては大きすぎます。"
+            "value" : "このファイルはゲームファイルとしては大きすぎます。"
           }
         },
         "ko" : {
@@ -20937,7 +21112,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSの上画面"
+            "value" : "上画面"
           }
         },
         "ko" : {
@@ -20996,7 +21171,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSのタッチスクリーン"
+            "value" : "タッチスクリーン"
           }
         },
         "ko" : {
@@ -21612,61 +21787,61 @@
         }
       }
     },
-    "Unlock eNDS PRO" : {
+    "Unlock eDuo PRO" : {
       "comment" : "Purchase CTA button",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO freischalten"
+            "value" : "eDuo PRO freischalten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desbloquear eNDS PRO"
+            "value" : "Desbloquear eDuo PRO"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Débloquer eNDS PRO"
+            "value" : "Débloquer eDuo PRO"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sblocca eNDS PRO"
+            "value" : "Sblocca eDuo PRO"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PROのロックを解除する"
+            "value" : "eDuo PROのロックを解除する"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO 잠금 해제"
+            "value" : "eDuo PRO 잠금 해제"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desbloquear o eNDS PRO"
+            "value" : "Desbloquear o eDuo PRO"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Разблокировать eNDS PRO"
+            "value" : "Разблокировать eDuo PRO"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "解锁 eNDS PRO"
+            "value" : "解锁 eDuo PRO"
           }
         }
       }
@@ -22258,294 +22433,294 @@
         }
       }
     },
-    "Welcome to eNDS" : {
+    "Welcome to eDuo" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Willkommen bei eNDS"
+            "value" : "Willkommen bei eDuo"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bienvenido a eNDS"
+            "value" : "Bienvenido a eDuo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bienvenue sur eNDS"
+            "value" : "Bienvenue sur eDuo"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Benvenuto su eNDS"
+            "value" : "Benvenuto su eDuo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSへようこそ"
+            "value" : "eDuoへようこそ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS에 오신 것을 환영합니다"
+            "value" : "eDuo에 오신 것을 환영합니다"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bem-vindo ao eNDS"
+            "value" : "Bem-vindo ao eDuo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добро пожаловать в eNDS"
+            "value" : "Добро пожаловать в eDuo"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "欢迎来到 eNDS"
+            "value" : "欢迎来到 eDuo"
           }
         }
       }
     },
-    "Welcome to eNDS PRO!" : {
+    "Welcome to eDuo PRO!" : {
       "comment" : "Purchase success title",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Willkommen bei eNDS PRO!"
+            "value" : "Willkommen bei eDuo PRO!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¡Bienvenido a eNDS PRO!"
+            "value" : "¡Bienvenido a eDuo PRO!"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bienvenue sur eNDS PRO !"
+            "value" : "Bienvenue sur eDuo PRO !"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Benvenuto su eNDS PRO!"
+            "value" : "Benvenuto su eDuo PRO!"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PROへようこそ！"
+            "value" : "eDuo PROへようこそ！"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO에 오신 것을 환영합니다!"
+            "value" : "eDuo PRO에 오신 것을 환영합니다!"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bem-vindo ao eNDS PRO!"
+            "value" : "Bem-vindo ao eDuo PRO!"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добро пожаловать в eNDS PRO!"
+            "value" : "Добро пожаловать в eDuo PRO!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "欢迎使用 eNDS PRO！"
+            "value" : "欢迎使用 eDuo PRO！"
           }
         }
       }
     },
-    "What eNDS detects" : {
+    "What eDuo detects" : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Was eNDS erkennt"
+            "value" : "Was eDuo erkennt"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Qué detecta eNDS"
+            "value" : "Qué detecta eDuo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce qu'eNDS détecte"
+            "value" : "Ce qu'eDuo détecte"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cosa rileva eNDS"
+            "value" : "Cosa rileva eDuo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSが検出した内容"
+            "value" : "eDuoが検出した内容"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS가 감지한 항목"
+            "value" : "eDuo가 감지한 항목"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O que o eNDS deteta"
+            "value" : "O que o eDuo deteta"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Что видит eNDS"
+            "value" : "Что видит eDuo"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 检测到的内容"
+            "value" : "eDuo 检测到的内容"
           }
         }
       }
     },
-    "When on, eNDS saves a snapshot automatically whenever you leave a game or the app goes to the background, and offers to resume from it next time. The save indicator briefly shows \"Auto-saved\" on screen whenever that happens; turn it off to save silently.\n\nThis is separate from a game's own battery save (.sav) — the in-game save system, written when you save inside the game itself, exactly like a real cartridge. Save states are manual snapshots you create anytime from the pause menu and can return to instantly, even mid-level; autosave is just one save state eNDS keeps up to date for you automatically." : {
+    "When on, eDuo saves a snapshot automatically whenever you leave a game or the app goes to the background, and offers to resume from it next time. The save indicator briefly shows \"Auto-saved\" on screen whenever that happens; turn it off to save silently.\n\nThis is separate from a game's own battery save (.sav) — the in-game save system, written when you save inside the game itself, exactly like a real cartridge. Save states are manual snapshots you create anytime from the pause menu and can return to instantly, even mid-level; autosave is just one save state eDuo keeps up to date for you automatically." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn diese Funktion aktiviert ist, speichert eNDS automatisch einen Schnappschuss, sobald du ein Spiel verlässt oder die App in den Hintergrund wechselt, und bietet dir an, das Spiel beim nächsten Mal von diesem Punkt aus fortzusetzen. Die Speicheranzeige zeigt in diesem Fall kurz „Automatisch gespeichert“ auf dem Bildschirm an; deaktiviere die Funktion, um unauffällig zu speichern.\n\nDies ist unabhängig vom spielinternen Speicherzustand (.sav) – dem Speichersystem des Spiels, das beim Speichern innerhalb des Spiels selbst geschrieben wird, genau wie bei einer echten Spielkassette. Speicherstände sind manuelle Momentaufnahmen, die du jederzeit über das Pausenmenü erstellen kannst und zu denen du sofort zurückkehren kannst, sogar mitten im Level; die automatische Speicherung ist lediglich ein Speicherstand, den eNDS automatisch für dich auf dem neuesten Stand hält."
+            "value" : "Wenn diese Funktion aktiviert ist, speichert eDuo automatisch einen Schnappschuss, sobald du ein Spiel verlässt oder die App in den Hintergrund wechselt, und bietet dir an, das Spiel beim nächsten Mal von diesem Punkt aus fortzusetzen. Die Speicheranzeige zeigt in diesem Fall kurz „Automatisch gespeichert“ auf dem Bildschirm an; deaktiviere die Funktion, um unauffällig zu speichern.\n\nDies ist unabhängig vom spielinternen Speicherzustand (.sav) – dem Speichersystem des Spiels, das beim Speichern innerhalb des Spiels selbst geschrieben wird, genau wie bei einer echten Spielkassette. Speicherstände sind manuelle Momentaufnahmen, die du jederzeit über das Pausenmenü erstellen kannst und zu denen du sofort zurückkehren kannst, sogar mitten im Level; die automatische Speicherung ist lediglich ein Speicherstand, den eDuo automatisch für dich auf dem neuesten Stand hält."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cuando está activado, eNDS guarda automáticamente una instantánea cada vez que sales de un juego o la aplicación pasa a segundo plano, y te ofrece la opción de reanudar desde ese punto la próxima vez. El indicador de guardado muestra brevemente «Guardado automáticamente» en pantalla cada vez que esto ocurre; desactívalo para guardar de forma silenciosa.\n\nEsto es independiente del archivo de guardado del juego (.sav), es decir, el sistema de guardado integrado en el juego, que se graba cuando guardas desde dentro del propio juego, exactamente igual que en un cartucho real. Los estados de guardado son instantáneas manuales que puedes crear en cualquier momento desde el menú de pausa y a las que puedes volver al instante, incluso en mitad de un nivel; el guardado automático es simplemente un estado de guardado que eNDS mantiene actualizado automáticamente por ti."
+            "value" : "Cuando está activado, eDuo guarda automáticamente una instantánea cada vez que sales de un juego o la aplicación pasa a segundo plano, y te ofrece la opción de reanudar desde ese punto la próxima vez. El indicador de guardado muestra brevemente «Guardado automáticamente» en pantalla cada vez que esto ocurre; desactívalo para guardar de forma silenciosa.\n\nEsto es independiente del archivo de guardado del juego (.sav), es decir, el sistema de guardado integrado en el juego, que se graba cuando guardas desde dentro del propio juego, exactamente igual que en un cartucho real. Los estados de guardado son instantáneas manuales que puedes crear en cualquier momento desde el menú de pausa y a las que puedes volver al instante, incluso en mitad de un nivel; el guardado automático es simplemente un estado de guardado que eDuo mantiene actualizado automáticamente por ti."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lorsqu'il est activé, eNDS enregistre automatiquement un instantané chaque fois que vous quittez un jeu ou que l'application passe en arrière-plan, et vous propose de reprendre à partir de cet instantané la prochaine fois. L'indicateur de sauvegarde affiche brièvement « Sauvegarde automatique » à l'écran chaque fois que cela se produit ; désactivez-le pour que la sauvegarde s'effectue en arrière-plan.\n\nCette fonctionnalité est distincte de la sauvegarde sur batterie (.sav) propre au jeu — le système de sauvegarde intégré au jeu, qui s'enregistre lorsque vous sauvegardez depuis le jeu lui-même, exactement comme sur une vraie cartouche. Les états de sauvegarde sont des instantanés manuels que vous créez à tout moment depuis le menu de pause et auxquels vous pouvez revenir instantanément, même en cours de niveau ; la sauvegarde automatique n’est qu’un état de sauvegarde parmi d’autres qu’eNDS met à jour automatiquement pour vous."
+            "value" : "Lorsqu'il est activé, eDuo enregistre automatiquement un instantané chaque fois que vous quittez un jeu ou que l'application passe en arrière-plan, et vous propose de reprendre à partir de cet instantané la prochaine fois. L'indicateur de sauvegarde affiche brièvement « Sauvegarde automatique » à l'écran chaque fois que cela se produit ; désactivez-le pour que la sauvegarde s'effectue en arrière-plan.\n\nCette fonctionnalité est distincte de la sauvegarde sur batterie (.sav) propre au jeu — le système de sauvegarde intégré au jeu, qui s'enregistre lorsque vous sauvegardez depuis le jeu lui-même, exactement comme sur une vraie cartouche. Les états de sauvegarde sont des instantanés manuels que vous créez à tout moment depuis le menu de pause et auxquels vous pouvez revenir instantanément, même en cours de niveau ; la sauvegarde automatique n’est qu’un état de sauvegarde parmi d’autres qu’eDuo met à jour automatiquement pour vous."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando è attivo, eNDS salva automaticamente un’istantanea ogni volta che esci da un gioco o l’app passa in secondo piano, e ti propone di riprendere da lì la prossima volta. L’indicatore di salvataggio mostra brevemente la scritta “Salvataggio automatico” sullo schermo ogni volta che ciò accade; disattivalo per salvare in modo silenzioso.\n\nQuesto è distinto dal salvataggio su batteria (.sav) proprio del gioco — il sistema di salvataggio integrato nel gioco, che viene scritto quando si salva all’interno del gioco stesso, esattamente come su una vera cartuccia. Gli stati di salvataggio sono istantanee manuali che puoi creare in qualsiasi momento dal menu di pausa e a cui puoi tornare all’istante, anche nel bel mezzo di un livello; il salvataggio automatico è semplicemente uno stato di salvataggio che eNDS mantiene aggiornato automaticamente per te."
+            "value" : "Quando è attivo, eDuo salva automaticamente un’istantanea ogni volta che esci da un gioco o l’app passa in secondo piano, e ti propone di riprendere da lì la prossima volta. L’indicatore di salvataggio mostra brevemente la scritta “Salvataggio automatico” sullo schermo ogni volta che ciò accade; disattivalo per salvare in modo silenzioso.\n\nQuesto è distinto dal salvataggio su batteria (.sav) proprio del gioco — il sistema di salvataggio integrato nel gioco, che viene scritto quando si salva all’interno del gioco stesso, esattamente come su una vera cartuccia. Gli stati di salvataggio sono istantanee manuali che puoi creare in qualsiasi momento dal menu di pausa e a cui puoi tornare all’istante, anche nel bel mezzo di un livello; il salvataggio automatico è semplicemente uno stato di salvataggio che eDuo mantiene aggiornato automaticamente per te."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "この機能がオンになっていると、eNDSはゲームを終了したりアプリがバックグラウンドに移行したりするたびに自動的にスナップショットを保存し、次回その時点から再開するよう提案します。その際、画面に「自動保存」という表示が一時的に表示されます。保存を通知せずに実行したい場合は、この機能をオフにしてください。\n\nこれは、ゲーム独自のバッテリーセーブ（.sav）とは別物です。バッテリーセーブとは、ゲーム内でセーブ操作を行った際に記録される、本物のカートリッジと全く同じ仕組みのセーブシステムのことです。 セーブステートは、ポーズメニューからいつでも手動で作成できるスナップショットであり、ステージの途中であっても即座にその状態に戻ることができます。自動保存は、eNDSが自動的に最新の状態に保ってくれるセーブステートの一つに過ぎません。"
+            "value" : "この機能がオンになっていると、eDuoはゲームを終了したりアプリがバックグラウンドに移行したりするたびに自動的にスナップショットを保存し、次回その時点から再開するよう提案します。その際、画面に「自動保存」という表示が一時的に表示されます。保存を通知せずに実行したい場合は、この機能をオフにしてください。\n\nこれは、ゲーム独自のバッテリーセーブ（.sav）とは別物です。バッテリーセーブとは、ゲーム内でセーブ操作を行った際に記録される、本物のカートリッジと全く同じ仕組みのセーブシステムのことです。 セーブステートは、ポーズメニューからいつでも手動で作成できるスナップショットであり、ステージの途中であっても即座にその状態に戻ることができます。自動保存は、eDuoが自動的に最新の状態に保ってくれるセーブステートの一つに過ぎません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 기능이 켜져 있으면, 게임을 종료하거나 앱이 백그라운드로 이동할 때마다 eNDS가 자동으로 스냅샷을 저장하며, 다음에 해당 지점부터 게임을 재개할 수 있도록 제안합니다. 이러한 상황이 발생할 때마다 화면에 잠시 “자동 저장됨”이라는 저장 표시가 나타납니다. 조용히 저장하려면 이 기능을 끄세요.\n\n이는 게임 자체의 배터리 저장(.sav) 기능과는 별개입니다. 배터리 저장 기능은 실제 카트리지와 똑같이 게임 내에서 직접 저장할 때 생성되는 게임 내 저장 시스템입니다. 세이브 스테이트는 일시 정지 메뉴에서 언제든지 직접 생성할 수 있는 수동 스냅샷으로, 레벨 도중이라도 즉시 해당 지점으로 돌아갈 수 있습니다. 자동 저장은 eNDS가 사용자를 위해 자동으로 최신 상태로 유지해 주는 하나의 세이브 스테이트일 뿐입니다."
+            "value" : "이 기능이 켜져 있으면, 게임을 종료하거나 앱이 백그라운드로 이동할 때마다 eDuo가 자동으로 스냅샷을 저장하며, 다음에 해당 지점부터 게임을 재개할 수 있도록 제안합니다. 이러한 상황이 발생할 때마다 화면에 잠시 “자동 저장됨”이라는 저장 표시가 나타납니다. 조용히 저장하려면 이 기능을 끄세요.\n\n이는 게임 자체의 배터리 저장(.sav) 기능과는 별개입니다. 배터리 저장 기능은 실제 카트리지와 똑같이 게임 내에서 직접 저장할 때 생성되는 게임 내 저장 시스템입니다. 세이브 스테이트는 일시 정지 메뉴에서 언제든지 직접 생성할 수 있는 수동 스냅샷으로, 레벨 도중이라도 즉시 해당 지점으로 돌아갈 수 있습니다. 자동 저장은 eDuo가 사용자를 위해 자동으로 최신 상태로 유지해 주는 하나의 세이브 스테이트일 뿐입니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando está ativado, o eNDS guarda automaticamente um instantâneo sempre que sair de um jogo ou a aplicação passar para segundo plano, e oferece a possibilidade de retomar a partir desse ponto na próxima vez. O indicador de gravação mostra brevemente «Guardado automaticamente» no ecrã sempre que isso acontece; desative-o para guardar em silêncio.\n\nIsto é diferente do próprio ficheiro de gravação do jogo (.sav) — o sistema de gravação do jogo, que é gravado quando guarda dentro do próprio jogo, exatamente como num cartucho real. Os estados de gravação são instantâneos manuais que cria a qualquer momento a partir do menu de pausa e aos quais pode regressar instantaneamente, mesmo a meio de um nível; a gravação automática é apenas um estado de gravação que o eNDS mantém atualizado automaticamente por si."
+            "value" : "Quando está ativado, o eDuo guarda automaticamente um instantâneo sempre que sair de um jogo ou a aplicação passar para segundo plano, e oferece a possibilidade de retomar a partir desse ponto na próxima vez. O indicador de gravação mostra brevemente «Guardado automaticamente» no ecrã sempre que isso acontece; desative-o para guardar em silêncio.\n\nIsto é diferente do próprio ficheiro de gravação do jogo (.sav) — o sistema de gravação do jogo, que é gravado quando guarda dentro do próprio jogo, exatamente como num cartucho real. Os estados de gravação são instantâneos manuais que cria a qualquer momento a partir do menu de pausa e aos quais pode regressar instantaneamente, mesmo a meio de um nível; a gravação automática é apenas um estado de gravação que o eDuo mantém atualizado automaticamente por si."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда функция eNDS включена, она автоматически сохраняет моментальный снимок при выходе из игры или переходе приложения в фоновый режим и предлагает возобновить игру с этого момента в следующий раз. При каждом таком событии на экране на короткое время появляется надпись «Автосохранено»; отключите эту функцию, чтобы сохранение происходило незаметно.\n\nЭто отличается от собственного файла сохранения игры (.sav) — встроенной системы сохранения, которая записывается при сохранении непосредственно в самой игре, точно так же, как на настоящем картридже. Состояния сохранения — это ручные снимки, которые вы можете создавать в любое время из меню паузы и к которым можно мгновенно вернуться даже посреди уровня; автосохранение — это всего лишь одно из состояний сохранения, которое eNDS автоматически обновляет для вас."
+            "value" : "Когда функция eDuo включена, она автоматически сохраняет моментальный снимок при выходе из игры или переходе приложения в фоновый режим и предлагает возобновить игру с этого момента в следующий раз. При каждом таком событии на экране на короткое время появляется надпись «Автосохранено»; отключите эту функцию, чтобы сохранение происходило незаметно.\n\nЭто отличается от собственного файла сохранения игры (.sav) — встроенной системы сохранения, которая записывается при сохранении непосредственно в самой игре, точно так же, как на настоящем картридже. Состояния сохранения — это ручные снимки, которые вы можете создавать в любое время из меню паузы и к которым можно мгновенно вернуться даже посреди уровня; автосохранение — это всего лишь одно из состояний сохранения, которое eDuo автоматически обновляет для вас."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用该功能后，每当您退出游戏或应用进入后台时，eNDS 会自动保存一个快照，并会在下次使用时提示您从中继续。每次发生这种情况时，屏幕上都会短暂显示“已自动保存”的提示；若需静默保存，请关闭此功能。\n\n这与游戏自身的电池存档（.sav）不同——后者是游戏内的存档系统，当您在游戏内进行保存时生成，与真实的卡带完全相同。 保存状态是您随时可通过暂停菜单手动创建的快照，即使在关卡进行中也能立即返回；而自动保存只是 eNDS 为您自动保持最新状态的一个保存状态。"
+            "value" : "启用该功能后，每当您退出游戏或应用进入后台时，eDuo 会自动保存一个快照，并会在下次使用时提示您从中继续。每次发生这种情况时，屏幕上都会短暂显示“已自动保存”的提示；若需静默保存，请关闭此功能。\n\n这与游戏自身的电池存档（.sav）不同——后者是游戏内的存档系统，当您在游戏内进行保存时生成，与真实的卡带完全相同。 保存状态是您随时可通过暂停菜单手动创建的快照，即使在关卡进行中也能立即返回；而自动保存只是 eDuo 为您自动保持最新状态的一个保存状态。"
           }
         }
       }
     },
-    "When on, eNDS silences itself while music or another app's audio is playing, instead of mixing with it. Takes effect immediately, even in an open game. Yields to the microphone whenever a game is actively listening." : {
+    "When on, eDuo silences itself while music or another app's audio is playing, instead of mixing with it. Takes effect immediately, even in an open game. Yields to the microphone whenever a game is actively listening." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn eNDS aktiviert ist, schaltet es sich stumm, sobald Musik oder der Ton einer anderen App abgespielt wird, anstatt sich damit zu vermischen. Dies tritt sofort in Kraft, auch in einem laufenden Spiel. Es weicht dem Mikrofon zurück, sobald ein Spiel aktiv auf Töne achtet."
+            "value" : "Wenn eDuo aktiviert ist, schaltet es sich stumm, sobald Musik oder der Ton einer anderen App abgespielt wird, anstatt sich damit zu vermischen. Dies tritt sofort in Kraft, auch in einem laufenden Spiel. Es weicht dem Mikrofon zurück, sobald ein Spiel aktiv auf Töne achtet."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cuando está activado, eNDS se silencia mientras se reproduce música o el audio de otra aplicación, en lugar de mezclarse con él. El efecto es inmediato, incluso en un juego en curso. Da prioridad al micrófono siempre que un juego esté escuchando activamente."
+            "value" : "Cuando está activado, eDuo se silencia mientras se reproduce música o el audio de otra aplicación, en lugar de mezclarse con él. El efecto es inmediato, incluso en un juego en curso. Da prioridad al micrófono siempre que un juego esté escuchando activamente."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lorsqu'il est activé, eNDS se met en sourdine pendant la lecture de musique ou du son d'une autre application, au lieu de se superposer à celui-ci. Cette fonction prend effet immédiatement, même dans un jeu en cours. Elle cède la place au microphone dès qu'un jeu est en mode d'écoute active."
+            "value" : "Lorsqu'il est activé, eDuo se met en sourdine pendant la lecture de musique ou du son d'une autre application, au lieu de se superposer à celui-ci. Cette fonction prend effet immédiatement, même dans un jeu en cours. Elle cède la place au microphone dès qu'un jeu est en mode d'écoute active."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando è attivo, eNDS si disattiva automaticamente durante la riproduzione di musica o dell'audio di un'altra app, invece di sovrapporsi ad esso. L'effetto è immediato, anche durante una partita in corso. Cede il posto al microfono ogni volta che un gioco è in fase di ascolto attivo."
+            "value" : "Quando è attivo, eDuo si disattiva automaticamente durante la riproduzione di musica o dell'audio di un'altra app, invece di sovrapporsi ad esso. L'effetto è immediato, anche durante una partita in corso. Cede il posto al microfono ogni volta che un gioco è in fase di ascolto attivo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSをオンにすると、音楽や他のアプリの音が再生されている間は、その音と混ざることなく、eNDSの音は自動的にミュートされます。この機能は、ゲームを起動中の場合でも即座に有効になります。ゲームがマイクからの音声をアクティブに受信している間は、DSのマイク音声が優先されます。"
+            "value" : "eDuoをオンにすると、音楽や他のアプリの音が再生されている間は、その音と混ざることなく、eDuoの音は自動的にミュートされます。この機能は、ゲームを起動中の場合でも即座に有効になります。ゲームがマイクからの音声をアクティブに受信している間は、マイク音声が優先されます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS가 켜져 있을 때, 음악이나 다른 앱의 오디오가 재생 중이면 소리가 섞이지 않고 자동으로 음소거됩니다. 실행 중인 게임 중에도 즉시 적용됩니다. 게임이 마이크 소리를 수신 중일 때는 마이크 소리가 우선적으로 재생됩니다."
+            "value" : "eDuo가 켜져 있을 때, 음악이나 다른 앱의 오디오가 재생 중이면 소리가 섞이지 않고 자동으로 음소거됩니다. 실행 중인 게임 중에도 즉시 적용됩니다. 게임이 마이크 소리를 수신 중일 때는 마이크 소리가 우선적으로 재생됩니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando está ativado, o eNDS silencia-se enquanto está a ser reproduzida música ou o áudio de outra aplicação, em vez de se misturar com o som. O efeito é imediato, mesmo num jogo em execução. Cede prioridade ao microfone sempre que um jogo estiver a captar som ativamente."
+            "value" : "Quando está ativado, o eDuo silencia-se enquanto está a ser reproduzida música ou o áudio de outra aplicação, em vez de se misturar com o som. O efeito é imediato, mesmo num jogo em execução. Cede prioridade ao microfone sempre que um jogo estiver a captar som ativamente."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда функция eNDS включена, она отключает собственный звук во время воспроизведения музыки или звука из другого приложения, вместо того чтобы смешиваться с ним. Эффект вступает в силу немедленно, даже в запущенной игре. Функция уступает приоритет микрофону всякий раз, когда игра активно прослушивает звук."
+            "value" : "Когда функция eDuo включена, она отключает собственный звук во время воспроизведения музыки или звука из другого приложения, вместо того чтобы смешиваться с ним. Эффект вступает в силу немедленно, даже в запущенной игре. Функция уступает приоритет микрофону всякий раз, когда игра активно прослушивает звук."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用后，当音乐或其他应用的音频正在播放时，eNDS会自动静音，而非与之混合播放。该功能立即生效，即使在游戏运行过程中也是如此。当游戏处于主动监听状态时，eNDS会优先让DS麦克风工作。"
+            "value" : "启用后，当音乐或其他应用的音频正在播放时，eDuo会自动静音，而非与之混合播放。该功能立即生效，即使在游戏运行过程中也是如此。当游戏处于主动监听状态时，eDuo会优先让麦克风工作。"
           }
         }
       }
@@ -22608,60 +22783,60 @@
         }
       }
     },
-    "While iOS Low Power Mode is on, eNDS caps emulation speed at 1x — even if Fast Forward is held — and lowers the screen's refresh rate. The emulated console itself isn't slowed down or paused." : {
+    "While iOS Low Power Mode is on, eDuo caps emulation speed at 1x — even if Fast Forward is held — and lowers the screen's refresh rate. The emulated console itself isn't slowed down or paused." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solange der iOS-Energiesparmodus aktiviert ist, begrenzt eNDS die Emulationsgeschwindigkeit auf 1x – auch wenn die Schnellvorlauf-Taste gedrückt gehalten wird – und senkt die Bildwiederholfrequenz des Bildschirms. Die emulierte Konsole selbst wird dabei weder verlangsamt noch angehalten."
+            "value" : "Solange der iOS-Energiesparmodus aktiviert ist, begrenzt eDuo die Emulationsgeschwindigkeit auf 1x – auch wenn die Schnellvorlauf-Taste gedrückt gehalten wird – und senkt die Bildwiederholfrequenz des Bildschirms. Die emulierte Konsole selbst wird dabei weder verlangsamt noch angehalten."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mientras el modo de bajo consumo de iOS está activado, eNDS limita la velocidad de emulación a 1x —incluso si se mantiene pulsado el botón de avance rápido— y reduce la frecuencia de actualización de la pantalla. La consola emulada en sí no se ralentiza ni se pausa."
+            "value" : "Mientras el modo de bajo consumo de iOS está activado, eDuo limita la velocidad de emulación a 1x —incluso si se mantiene pulsado el botón de avance rápido— y reduce la frecuencia de actualización de la pantalla. La consola emulada en sí no se ralentiza ni se pausa."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lorsque le mode Économie d'énergie d'iOS est activé, eNDS limite la vitesse d'émulation à 1x — même si l'on maintient la touche « Avance rapide » enfoncée — et réduit la fréquence de rafraîchissement de l'écran. La console émulée elle-même n'est ni ralentie ni mise en pause."
+            "value" : "Lorsque le mode Économie d'énergie d'iOS est activé, eDuo limite la vitesse d'émulation à 1x — même si l'on maintient la touche « Avance rapide » enfoncée — et réduit la fréquence de rafraîchissement de l'écran. La console émulée elle-même n'est ni ralentie ni mise en pause."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando la modalità a basso consumo di iOS è attiva, eNDS limita la velocità di emulazione a 1x — anche se si tiene premuto il tasto di avanzamento rapido — e riduce la frequenza di aggiornamento dello schermo. La console emulata non subisce rallentamenti né viene messa in pausa."
+            "value" : "Quando la modalità a basso consumo di iOS è attiva, eDuo limita la velocità di emulazione a 1x — anche se si tiene premuto il tasto di avanzamento rapido — e riduce la frequenza di aggiornamento dello schermo. La console emulata non subisce rallentamenti né viene messa in pausa."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOSの低電力モードがオンになっている間、eNDSはエミュレーション速度を1xに制限します（「早送り」ボタンを長押ししている場合でも同様です）。また、画面のリフレッシュレートも低下します。ただし、エミュレートされているゲーム機自体の動作が遅くなったり、一時停止したりすることはありません。"
+            "value" : "iOSの低電力モードがオンになっている間、eDuoはエミュレーション速度を1xに制限します（「早送り」ボタンを長押ししている場合でも同様です）。また、画面のリフレッシュレートも低下します。ただし、エミュレートされているゲーム機自体の動作が遅くなったり、一時停止したりすることはありません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS 저전력 모드가 켜져 있는 동안, eNDS는 ‘빠른 감기’ 버튼을 길게 누르는 경우에도 에뮬레이션 속도를 1x로 제한하며 화면의 재생 빈도를 낮춥니다. 에뮬레이션되는 콘솔 자체의 속도가 느려지거나 일시 정지되지는 않습니다."
+            "value" : "iOS 저전력 모드가 켜져 있는 동안, eDuo는 ‘빠른 감기’ 버튼을 길게 누르는 경우에도 에뮬레이션 속도를 1x로 제한하며 화면의 재생 빈도를 낮춥니다. 에뮬레이션되는 콘솔 자체의 속도가 느려지거나 일시 정지되지는 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enquanto o Modo de Baixo Consumo do iOS estiver ativado, o eNDS limita a velocidade de emulação a 1x — mesmo que se mantenha premido o botão de avanço rápido — e reduz a taxa de atualização do ecrã. A própria consola emulada não fica mais lenta nem é pausada."
+            "value" : "Enquanto o Modo de Baixo Consumo do iOS estiver ativado, o eDuo limita a velocidade de emulação a 1x — mesmo que se mantenha premido o botão de avanço rápido — e reduz a taxa de atualização do ecrã. A própria consola emulada não fica mais lenta nem é pausada."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда в iOS включен режим энергосбережения, eNDS ограничивает скорость эмуляции до 1x — даже при удерживании кнопки «Fast Forward» — и снижает частоту обновления экрана. Сама эмулируемая консоль при этом не замедляется и не приостанавливается."
+            "value" : "Когда в iOS включен режим энергосбережения, eDuo ограничивает скорость эмуляции до 1x — даже при удерживании кнопки «Fast Forward» — и снижает частоту обновления экрана. Сама эмулируемая консоль при этом не замедляется и не приостанавливается."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当 iOS 低功耗模式开启时，eNDS 会将模拟速度限制在 1x —— 即使长按“快进”按钮也是如此 —— 并降低屏幕刷新率。被模拟的游戏机本身并不会因此变慢或暂停。"
+            "value" : "当 iOS 低功耗模式开启时，eDuo 会将模拟速度限制在 1x —— 即使长按“快进”按钮也是如此 —— 并降低屏幕刷新率。被模拟的游戏机本身并不会因此变慢或暂停。"
           }
         }
       }
@@ -22988,7 +23163,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DSのゲームを、もう一度ポケットに。"
+            "value" : "あなたのゲームを、もう一度ポケットに。"
           }
         },
         "ko" : {
@@ -23012,7 +23187,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的DS游戏，重新回到口袋。"
+            "value" : "你的游戏，重新回到口袋。"
           }
         }
       }
@@ -23134,584 +23309,584 @@
         }
       }
     },
-    "eNDS" : {
+    "eDuo" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         }
       }
     },
-    "eNDS PRO" : {
+    "eDuo PRO" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO"
+            "value" : "eDuo PRO"
           }
         }
       }
     },
-    "eNDS PRO Active" : {
+    "eDuo PRO Active" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO aktiv"
+            "value" : "eDuo PRO aktiv"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO activo"
+            "value" : "eDuo PRO activo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO actif"
+            "value" : "eDuo PRO actif"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO attivo"
+            "value" : "eDuo PRO attivo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PROが有効"
+            "value" : "eDuo PROが有効"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO 활성화됨"
+            "value" : "eDuo PRO 활성화됨"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO ativo"
+            "value" : "eDuo PRO ativo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO активен"
+            "value" : "eDuo PRO активен"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO已激活"
+            "value" : "eDuo PRO已激活"
           }
         }
       }
     },
-    "eNDS PRO has been restored. Enjoy!" : {
+    "eDuo PRO has been restored. Enjoy!" : {
       "comment" : "Restore success message",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO wurde wiederhergestellt. Viel Spaß!"
+            "value" : "eDuo PRO wurde wiederhergestellt. Viel Spaß!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO ya está restaurado. ¡Disfrútalo!"
+            "value" : "eDuo PRO ya está restaurado. ¡Disfrútalo!"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO a été restauré. Profitez-en bien !"
+            "value" : "eDuo PRO a été restauré. Profitez-en bien !"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO è stato ripristinato. Buon divertimento!"
+            "value" : "eDuo PRO è stato ripristinato. Buon divertimento!"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PROが復旧しました。お楽しみください！"
+            "value" : "eDuo PROが復旧しました。お楽しみください！"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO가 복구되었습니다. 즐겁게 이용하세요!"
+            "value" : "eDuo PRO가 복구되었습니다. 즐겁게 이용하세요!"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS PRO foi restaurado. Divirtam-se!"
+            "value" : "O eDuo PRO foi restaurado. Divirtam-se!"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO восстановлен. Приятного пользования!"
+            "value" : "eDuo PRO восстановлен. Приятного пользования!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS PRO 已恢复正常。尽情享受吧！"
+            "value" : "eDuo PRO 已恢复正常。尽情享受吧！"
           }
         }
       }
     },
-    "eNDS and the melonDS core it uses are both released under these terms." : {
+    "eDuo and the melonDS core it uses are both released under these terms." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS und der verwendete melonDS-Kern stehen beide unter diesen Bedingungen."
+            "value" : "eDuo und der verwendete melonDS-Kern stehen beide unter diesen Bedingungen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tanto eNDS como el núcleo melonDS que utiliza se publican bajo estos términos."
+            "value" : "Tanto eDuo como el núcleo melonDS que utiliza se publican bajo estos términos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS et le cœur melonDS qu'il utilise sont tous deux distribués selon ces conditions."
+            "value" : "eDuo et le cœur melonDS qu'il utilise sont tous deux distribués selon ces conditions."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS e il core melonDS che utilizza sono entrambi distribuiti secondo questi termini."
+            "value" : "eDuo e il core melonDS che utilizza sono entrambi distribuiti secondo questi termini."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS と、使用している melonDS コアは、どちらもこの条件のもとで公開されています。"
+            "value" : "eDuo と、使用している melonDS コアは、どちらもこの条件のもとで公開されています。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS와 eNDS가 사용하는 melonDS 코어 모두 이 조건에 따라 배포됩니다."
+            "value" : "eDuo와 eDuo가 사용하는 melonDS 코어 모두 이 조건에 따라 배포됩니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS e o núcleo melonDS que utiliza são ambos disponibilizados sob estes termos."
+            "value" : "O eDuo e o núcleo melonDS que utiliza são ambos disponibilizados sob estes termos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS и используемое им ядро melonDS распространяются на этих условиях."
+            "value" : "eDuo и используемое им ядро melonDS распространяются на этих условиях."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 及其使用的 melonDS 核心均以这些条款发布。"
+            "value" : "eDuo 及其使用的 melonDS 核心均以这些条款发布。"
           }
         }
       }
     },
-    "eNDS is open-source software licensed under the GNU General Public License v3 (GPLv3). It is powered by the melonDS emulation core, © Arisotura and the melonDS team, also GPLv3. eNDS is not affiliated with or endorsed by the melonDS team or by any console manufacturer." : {
+    "eDuo is open-source software licensed under the GNU General Public License v3 (GPLv3). It is powered by the melonDS emulation core, © Arisotura and the melonDS team, also GPLv3. eDuo is not affiliated with or endorsed by the melonDS team or by any console manufacturer." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS ist Open-Source-Software unter der GNU General Public License v3 (GPLv3). Es basiert auf dem melonDS-Emulationskern, © Arisotura und das melonDS-Team, ebenfalls GPLv3. eNDS ist weder mit dem melonDS-Team noch mit einem Konsolenhersteller verbunden oder von ihnen unterstützt."
+            "value" : "eDuo ist Open-Source-Software unter der GNU General Public License v3 (GPLv3). Es basiert auf dem melonDS-Emulationskern, © Arisotura und das melonDS-Team, ebenfalls GPLv3. eDuo ist weder mit dem melonDS-Team noch mit einem Konsolenhersteller verbunden oder von ihnen unterstützt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS es software de código abierto bajo la licencia GNU General Public License v3 (GPLv3). Funciona con el núcleo de emulación melonDS, © Arisotura y el equipo de melonDS, también GPLv3. eNDS no está afiliado ni respaldado por el equipo de melonDS ni por ningún fabricante de consolas."
+            "value" : "eDuo es software de código abierto bajo la licencia GNU General Public License v3 (GPLv3). Funciona con el núcleo de emulación melonDS, © Arisotura y el equipo de melonDS, también GPLv3. eDuo no está afiliado ni respaldado por el equipo de melonDS ni por ningún fabricante de consolas."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS est un logiciel open source sous licence GNU General Public License v3 (GPLv3). Il repose sur le cœur d'émulation melonDS, © Arisotura et l'équipe melonDS, également GPLv3. eNDS n'est ni affilié ni approuvé par l'équipe melonDS ou par un quelconque fabricant de consoles."
+            "value" : "eDuo est un logiciel open source sous licence GNU General Public License v3 (GPLv3). Il repose sur le cœur d'émulation melonDS, © Arisotura et l'équipe melonDS, également GPLv3. eDuo n'est ni affilié ni approuvé par l'équipe melonDS ou par un quelconque fabricant de consoles."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS è software open source con licenza GNU General Public License v3 (GPLv3). Si basa sul core di emulazione melonDS, © Arisotura e il team melonDS, anch'esso GPLv3. eNDS non è affiliato né approvato dal team melonDS o da alcun produttore di console."
+            "value" : "eDuo è software open source con licenza GNU General Public License v3 (GPLv3). Si basa sul core di emulazione melonDS, © Arisotura e il team melonDS, anch'esso GPLv3. eDuo non è affiliato né approvato dal team melonDS o da alcun produttore di console."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS は GNU General Public License v3（GPLv3）のオープンソースソフトウェアです。エミュレーションコアには melonDS（© Arisotura および melonDS チーム、同じく GPLv3）を使用しています。eNDS は melonDS チームおよびゲーム機メーカーとは無関係です。"
+            "value" : "eDuo は GNU General Public License v3（GPLv3）のオープンソースソフトウェアです。エミュレーションコアには melonDS（© Arisotura および melonDS チーム、同じく GPLv3）を使用しています。eDuo は melonDS チームおよびゲーム機メーカーとは無関係です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS는 GNU General Public License v3(GPLv3) 오픈 소스 소프트웨어입니다. 에뮬레이션 코어로 melonDS(© Arisotura 및 melonDS 팀, 역시 GPLv3)를 사용합니다. eNDS는 melonDS 팀 또는 게임 콘솔 제조사와 무관합니다."
+            "value" : "eDuo는 GNU General Public License v3(GPLv3) 오픈 소스 소프트웨어입니다. 에뮬레이션 코어로 melonDS(© Arisotura 및 melonDS 팀, 역시 GPLv3)를 사용합니다. eDuo는 melonDS 팀 또는 게임 콘솔 제조사와 무관합니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS é software de código aberto sob a licença GNU General Public License v3 (GPLv3). Usa o núcleo de emulação melonDS, © Arisotura e a equipa melonDS, também GPLv3. O eNDS não é afiliado nem aprovado pela equipa melonDS nem por qualquer fabricante de consolas."
+            "value" : "O eDuo é software de código aberto sob a licença GNU General Public License v3 (GPLv3). Usa o núcleo de emulação melonDS, © Arisotura e a equipa melonDS, também GPLv3. O eDuo não é afiliado nem aprovado pela equipa melonDS nem por qualquer fabricante de consolas."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — программное обеспечение с открытым кодом под лицензией GNU General Public License v3 (GPLv3). Использует ядро эмуляции melonDS, © Arisotura и команда melonDS, также GPLv3. eNDS не связан с командой melonDS или каким-либо производителем консолей."
+            "value" : "eDuo — программное обеспечение с открытым кодом под лицензией GNU General Public License v3 (GPLv3). Использует ядро эмуляции melonDS, © Arisotura и команда melonDS, также GPLv3. eDuo не связан с командой melonDS или каким-либо производителем консолей."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 是基于 GNU 通用公共许可证 v3（GPLv3）的开源软件。其模拟核心为 melonDS（© Arisotura 及 melonDS 团队，同为 GPLv3）。eNDS 与 melonDS 团队及任何游戏主机厂商均无关联。"
+            "value" : "eDuo 是基于 GNU 通用公共许可证 v3（GPLv3）的开源软件。其模拟核心为 melonDS（© Arisotura 及 melonDS 团队，同为 GPLv3）。eDuo 与 melonDS 团队及任何游戏主机厂商均无关联。"
           }
         }
       }
     },
-    "eNDS plays game files you legally own. No games are included." : {
+    "eDuo plays game files you legally own. No games are included." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS spielt Spieledateien ab, die du legal besitzt. Es sind keine Spiele im Lieferumfang enthalten."
+            "value" : "eDuo spielt Spieledateien ab, die du legal besitzt. Es sind keine Spiele im Lieferumfang enthalten."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS reproduce archivos de juegos de los que seas propietario legítimo. No se incluye ningún juego."
+            "value" : "eDuo reproduce archivos de juegos de los que seas propietario legítimo. No se incluye ningún juego."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS permet de lire les fichiers de jeux dont vous êtes légalement propriétaire. Aucun jeu n'est fourni."
+            "value" : "eDuo permet de lire les fichiers de jeux dont vous êtes légalement propriétaire. Aucun jeu n'est fourni."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS riproduce i file di gioco di cui sei legittimo proprietario. Non sono inclusi giochi."
+            "value" : "eDuo riproduce i file di gioco di cui sei legittimo proprietario. Non sono inclusi giochi."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSは、お客様が合法的に所有しているゲームファイルを再生します。ゲーム本体が同梱されているわけではありません。"
+            "value" : "eDuoは、お客様が合法的に所有しているゲームファイルを再生します。ゲーム本体が同梱されているわけではありません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS는 사용자가 합법적으로 소유한 게임 파일만 실행합니다. 게임은 포함되어 있지 않습니다."
+            "value" : "eDuo는 사용자가 합법적으로 소유한 게임 파일만 실행합니다. 게임은 포함되어 있지 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS reproduz ficheiros de jogos que possua legalmente. Não estão incluídos quaisquer jogos."
+            "value" : "O eDuo reproduz ficheiros de jogos que possua legalmente. Não estão incluídos quaisquer jogos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS воспроизводит игровые файлы, права на которые принадлежат вам на законных основаниях. Игры в комплект не входят."
+            "value" : "eDuo воспроизводит игровые файлы, права на которые принадлежат вам на законных основаниях. Игры в комплект не входят."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 可播放您合法拥有的游戏文件。本产品不包含任何游戏。"
+            "value" : "eDuo 可播放您合法拥有的游戏文件。本产品不包含任何游戏。"
           }
         }
       }
     },
-    "eNDS reads each cartridge's own banner, so your library shows real game icons and titles." : {
+    "eDuo reads each cartridge's own banner, so your library shows real game icons and titles." : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS liest den Banner jedes Moduls aus, damit deine Bibliothek echte Spielsymbole und -titel zeigt."
+            "value" : "eDuo liest den Banner jedes Moduls aus, damit deine Bibliothek echte Spielsymbole und -titel zeigt."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS lee el banner de cada cartucho, así que tu biblioteca muestra los iconos y los títulos reales de los juegos."
+            "value" : "eDuo lee el banner de cada cartucho, así que tu biblioteca muestra los iconos y los títulos reales de los juegos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS lit la bannière de chaque cartouche : votre bibliothèque affiche donc les vraies icônes et les vrais titres des jeux."
+            "value" : "eDuo lit la bannière de chaque cartouche : votre bibliothèque affiche donc les vraies icônes et les vrais titres des jeux."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS legge il banner di ogni cartuccia, così nella tua libreria vedi le icone e i titoli originali dei giochi."
+            "value" : "eDuo legge il banner di ogni cartuccia, così nella tua libreria vedi le icone e i titoli originali dei giochi."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSは各カートリッジのバナーを読み取るので、ライブラリには本物のゲームのアイコンとタイトルが並びます。"
+            "value" : "eDuoは各カートリッジのバナーを読み取るので、ライブラリには本物のゲームのアイコンとタイトルが並びます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS는 각 카트리지의 배너를 직접 읽어, 라이브러리에 실제 게임 아이콘과 제목을 보여 줍니다."
+            "value" : "eDuo는 각 카트리지의 배너를 직접 읽어, 라이브러리에 실제 게임 아이콘과 제목을 보여 줍니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS lê o banner de cada cartucho, para que a sua biblioteca mostre os ícones e os títulos reais dos jogos."
+            "value" : "O eDuo lê o banner de cada cartucho, para que a sua biblioteca mostre os ícones e os títulos reais dos jogos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS читает баннер каждого картриджа, поэтому в библиотеке отображаются настоящие значки и названия игр."
+            "value" : "eDuo читает баннер каждого картриджа, поэтому в библиотеке отображаются настоящие значки и названия игр."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS 会读取每个卡带自带的横幅数据，因此你的游戏库会显示真实的游戏图标和标题。"
+            "value" : "eDuo 会读取每个卡带自带的横幅数据，因此你的游戏库会显示真实的游戏图标和标题。"
           }
         }
       }
     },
-    "eNDS — %@" : {
+    "eDuo — %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS – „%@“"
+            "value" : "eDuo – „%@“"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS — %@"
+            "value" : "eDuo — %@"
           }
         }
       }
     },
-    "iOS is blocking microphone access for eNDS, so games that use the mic won't hear you. Turn it back on in iOS Settings › Privacy & Security › Microphone." : {
+    "iOS is blocking microphone access for eDuo, so games that use the mic won't hear you. Turn it back on in iOS Settings › Privacy & Security › Microphone." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS blockiert den Mikrofonzugriff für eNDS, daher können Spiele, die das Mikrofon nutzen, dich nicht hören. Aktiviere ihn wieder unter iOS-Einstellungen › Datenschutz & Sicherheit › Mikrofon."
+            "value" : "iOS blockiert den Mikrofonzugriff für eDuo, daher können Spiele, die das Mikrofon nutzen, dich nicht hören. Aktiviere ihn wieder unter iOS-Einstellungen › Datenschutz & Sicherheit › Mikrofon."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS está bloqueando el acceso al micrófono para eNDS, así que los juegos que lo usan no te oirán. Reactívalo en Ajustes de iOS › Privacidad y seguridad › Micrófono."
+            "value" : "iOS está bloqueando el acceso al micrófono para eDuo, así que los juegos que lo usan no te oirán. Reactívalo en Ajustes de iOS › Privacidad y seguridad › Micrófono."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS bloque l'accès au micro pour eNDS : les jeux qui l'utilisent ne vous entendront pas. Réactivez-le dans Réglages iOS › Confidentialité et sécurité › Micro."
+            "value" : "iOS bloque l'accès au micro pour eDuo : les jeux qui l'utilisent ne vous entendront pas. Réactivez-le dans Réglages iOS › Confidentialité et sécurité › Micro."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS sta bloccando l'accesso al microfono per eNDS, quindi i giochi che lo usano non ti sentiranno. Riattivalo in Impostazioni iOS › Privacy e sicurezza › Microfono."
+            "value" : "iOS sta bloccando l'accesso al microfono per eDuo, quindi i giochi che lo usano non ti sentiranno. Riattivalo in Impostazioni iOS › Privacy e sicurezza › Microfono."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOSがeNDSのマイクへのアクセスをブロックしているため、マイクを使うゲームはあなたの声を聞けません。iOSの設定 › プライバシーとセキュリティ › マイク で再度オンにしてください。"
+            "value" : "iOSがeDuoのマイクへのアクセスをブロックしているため、マイクを使うゲームはあなたの声を聞けません。iOSの設定 › プライバシーとセキュリティ › マイク で再度オンにしてください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS가 eNDS의 마이크 접근을 차단하고 있어 마이크를 사용하는 게임이 소리를 듣지 못합니다. iOS 설정 › 개인정보 보호 및 보안 › 마이크에서 다시 켜세요."
+            "value" : "iOS가 eDuo의 마이크 접근을 차단하고 있어 마이크를 사용하는 게임이 소리를 듣지 못합니다. iOS 설정 › 개인정보 보호 및 보안 › 마이크에서 다시 켜세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O iOS está a bloquear o acesso ao microfone para o eNDS, por isso os jogos que o usam não o ouvirão. Volte a ativá-lo em Definições do iOS › Privacidade e Segurança › Microfone."
+            "value" : "O iOS está a bloquear o acesso ao microfone para o eDuo, por isso os jogos que o usam não o ouvirão. Volte a ativá-lo em Definições do iOS › Privacidade e Segurança › Microfone."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS блокирует доступ eNDS к микрофону, поэтому игры, использующие микрофон, вас не услышат. Включите его снова в Настройках iOS › Конфиденциальность и безопасность › Микрофон."
+            "value" : "iOS блокирует доступ eDuo к микрофону, поэтому игры, использующие микрофон, вас не услышат. Включите его снова в Настройках iOS › Конфиденциальность и безопасность › Микрофон."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS正在阻止eNDS使用麦克风，使用麦克风的游戏将听不到你。请在iOS设置 › 隐私与安全性 › 麦克风中重新开启。"
+            "value" : "iOS正在阻止eDuo使用麦克风，使用麦克风的游戏将听不到你。请在iOS设置 › 隐私与安全性 › 麦克风中重新开启。"
           }
         }
       }

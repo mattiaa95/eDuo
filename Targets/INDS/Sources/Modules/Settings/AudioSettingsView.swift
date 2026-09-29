@@ -1,6 +1,6 @@
 //
 //  AudioSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Audio. Volume + a quick-mute toggle over the existing
 //  "eNDSAudioVolume" key, the same one `MelonDSCoreBridge` reads at init and
@@ -103,9 +103,9 @@ struct AudioSettingsView: View {
                 Text("🎤 Microphone")
             } footer: {
                 if micBlockedBySystem {
-                    Text("iOS is blocking microphone access for eNDS, so games that use the mic won't hear you. Turn it back on in iOS Settings › Privacy & Security › Microphone.")
+                    Text("iOS is blocking microphone access for eDuo, so games that use the mic won't hear you. Turn it back on in iOS Settings › Privacy & Security › Microphone.")
                 } else {
-                    Text("Lets games listen — blowing into the mic in some games, or speaking in others. eNDS only asks for microphone access the first time a game actually needs it, never at launch, and audio never leaves your device. Turn this off to keep the mic silent.")
+                    Text("Lets games listen — blowing into the mic in some games, or speaking in others. eDuo only asks for microphone access the first time a game actually needs it, never at launch, and audio never leaves your device. Turn this off to keep the mic silent.")
                 }
             }
 
@@ -117,7 +117,7 @@ struct AudioSettingsView: View {
                     INDSAudioPreferences.muteWithOtherAudioEnabled = newValue
                 }
             } footer: {
-                Text("When on, eNDS silences itself while music or another app's audio is playing, instead of mixing with it. Takes effect immediately, even in an open game. Yields to the microphone whenever a game is actively listening.")
+                Text("When on, eDuo silences itself while music or another app's audio is playing, instead of mixing with it. Takes effect immediately, even in an open game. Yields to the microphone whenever a game is actively listening.")
             }
         }
         .navigationTitle("Audio")

@@ -1,11 +1,11 @@
 //
 //  NDSPauseMenuView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's PauseMenuView.swift: same
 //  visual language (grouped-background rows with icon + title + subtitle,
 //  inline slider cards, prominent Resume button, drag-to-dismiss-resumes
-//  sheet) applied to eNDS's action set — no link cable, macros or TAS;
+//  sheet) applied to eDuo's action set — no link cable, macros or TAS;
 //  adds DS-only concerns (screen layout, save-state slots with timestamps,
 //  haptics toggle) plus cheats, a display filter and clip recording, ported
 //  from iGBA separately (Cheats/AREngine, Display Filter, Record Clip below).
@@ -24,6 +24,8 @@ enum NDSPauseMenuAction {
     /// Put back the battery save as it was before this session's first state
     /// load. Only offered when a snapshot exists (see `INDSSaveBackup`).
     case recoverCartridgeSave
+    /// ~10 s back through the in-memory history (`MelonDSCoreBridge.rewindTenSeconds`).
+    case rewind
 }
 
 // MARK: - Speed slider (0.5x … 3x, all free)
@@ -323,6 +325,7 @@ struct NDSPauseMenuView: View {
     let initialLayoutMode: DSScreenLayoutMode
     let initialSwapEnabled: Bool
     let initialStretchEnabled: Bool
+    let canRewind: Bool
     let initialDisplayFilter: NDSDisplayFilter
     @ObservedObject var clipRecorder: NDSClipRecorder
 
@@ -381,6 +384,11 @@ struct NDSPauseMenuView: View {
                     }
                     menuRow(icon: "square.and.arrow.up", title: NSLocalizedString("Load State", comment: "")) {
                         showLoadSheet = true
+                    }
+                    if canRewind {
+                        menuRow(icon: "backward.end.alt.fill", title: NSLocalizedString("Rewind", comment: "")) {
+                            onAction(.rewind)
+                        }
                     }
                     menuRow(icon: "arrow.counterclockwise", title: NSLocalizedString("Reset", comment: ""), destructive: true) {
                         showResetConfirmation = true

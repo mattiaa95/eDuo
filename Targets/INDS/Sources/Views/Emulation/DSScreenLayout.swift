@@ -1,6 +1,6 @@
 //
 //  DSScreenLayout.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent — GBA has a single screen). Defines how the two DS
 //  framebuffers (top = display only, bottom = touch) are arranged on screen,
@@ -272,6 +272,23 @@ struct DSFoldableLayout {
     /// controls at all (a hardware gamepad is driving).
     let controls: INDSControllerLayout?
 
+    /// Duo half open, the lower half flat on the table: the upper half faces
+    /// the player at an angle, and a panel hanging straight off the crease
+    /// reads as bent. Set from the hinge (`NDSRomViewController`); stays
+    /// false on every device without one, so nothing else moves.
+    static var isHalfOpen = false
+
+    /// How far the upper panel moves up, away from the crease, while
+    /// `isHalfOpen`.
+    private static let halfOpenLift: CGFloat = 24
+
+    /// The upper panel's y when it would otherwise sit on the crease: lifted
+    /// while half open, as far as the space above it allows.
+    private static func topY(fold: CGFloat, panelHeight: CGFloat) -> CGFloat {
+        let onCrease = fold - creaseHalf - panelHeight
+        return isHalfOpen ? max(0, onCrease - halfOpenLift) : onCrease
+    }
+
     /// Whether `size` can only be an unfolded folding iPhone.
     ///
     /// The exception is as narrow as it can be made without a posture API: an
@@ -293,7 +310,8 @@ struct DSFoldableLayout {
                         mode: DSScreenLayoutMode,
                         stretch: Bool = false,
                         controlsReserved: Bool = true,
-                        idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) -> DSFoldableLayout? {
+                        idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
+                        fold: CGFloat? = nil) -> DSFoldableLayout? {
         guard isUnfolded(size, idiom: idiom), !stretch,
               INDSControllerLayoutManager.shared.persistedLayout == nil,
               (UserDefaults.standard.object(forKey: "eNDSControllerScale") as? Double ?? 1) <= 1 else { return nil }
@@ -304,24 +322,65 @@ struct DSFoldableLayout {
         let isPortrait = size.height >= size.width
         guard mode == (isPortrait ? .stacked : .sideBySide) else { return nil }
         return isPortrait
-            ? DSFoldableLayout(portraitIn: size, controlsReserved: controlsReserved)
-            : DSFoldableLayout(landscapeIn: size, controlsReserved: controlsReserved)
+            ? DSFoldableLayout(portraitIn: size, controlsReserved: controlsReserved, fold: fold)
+            : DSFoldableLayout(landscapeIn: size, controlsReserved: controlsReserved, fold: fold)
+    }
+
+    /// Where the hinge falls inside `content`, whose origin is in `view`'s
+    /// own coordinates. The crease splits the **display**, and the safe area
+    /// is not centred on it — on the iPhone Duo the status rail eats 80 pt off
+    /// one edge and the home indicator 34 pt off the other, so halving the
+    /// safe-area rect put the seam 23,5 pt past the crease. Measured on the
+    /// simulator, 21-sep-2026: display 669×951 pt, crease at 475,5.
+    ///
+    /// ⚠️Measured on the simulator, 21-sep-2026, with the SAME probe built
+    /// twice: with the **iOS 27.1 SDK** the app gets the whole display
+    /// (screen and window both 669×951, safe area {82,0,34,0}) and
+    /// `reservedRegions(kind: .division)` returns the crease — `{0, 455.5}
+    /// 669×40`, margins 20 top and bottom, i.e. **centred on 475,5 = the
+    /// display's middle**. Built with the **27.0 SDK** the very same code
+    /// gets 669×871 and cannot see any of it: `nativeBounds` is cut down too
+    /// (2007×2613) and `UIScreen.main.bounds` answers about the *outer*
+    /// display (466×678).
+    ///
+    /// So halving the screen is the crease, exactly, on the only toolchain
+    /// that can see the Duo at all — and on an older one it is a guess that
+    /// nothing can improve. ponytail: swap the two lines below for
+    /// `reservedRegions(kind: .division)` once the build moves to 27.1;
+    /// everything else here already works off `fold`.
+    static func fold(for view: UIView, content: CGRect, vertical: Bool) -> CGFloat? {
+        guard let window = view.window else { return nil }
+        // ⚠️La pantalla de la escena no siempre es la que se está usando: en
+        // iGBA `windowScene.screen` contesta por el display EXTERIOR (466×678
+        // medidos) porque la app se fabrica su propia `UIWindow`. Si dice ser
+        // más pequeña que la ventana, manda la ventana.
+        let screen = window.windowScene?.screen.bounds ?? .zero
+        let display = CGSize(width: max(screen.width, window.bounds.width),
+                             height: max(screen.height, window.bounds.height))
+        guard display.width > 1, display.height > 1 else { return nil }
+        let origin = view.convert(content.origin, to: nil)
+        return vertical ? display.height / 2 - origin.y : display.width / 2 - origin.x
     }
 
     // MARK: - Portrait: hinge across the middle
 
-    private init?(portraitIn size: CGSize, controlsReserved: Bool) {
-        let fold = (size.height / 2).rounded()
-        // The upper panel hangs from the hinge, so the picture breaks exactly
-        // where the display physically does.
-        top = Self.panel(in: CGRect(x: 0, y: 0, width: size.width, height: fold), anchor: .maxYEdge)
+    private init?(portraitIn size: CGSize, controlsReserved: Bool, fold foldOverride: CGFloat? = nil) {
+        let fold = (foldOverride ?? size.height / 2).rounded()
+        guard fold > 0, fold < size.height else { return nil }
 
-        // A gamepad is driving: no controls, so both panels take a whole half
-        // each and the two DS screens fill the display edge to edge.
+        // A gamepad is driving: no controls, so the two panels take a half
+        // each. They still match — a DS's screens are the same panel twice —
+        // so the shorter half sets the size, and each hangs from the hinge.
         guard controlsReserved else {
-            bottom = Self.panel(in: CGRect(x: 0, y: fold, width: size.width, height: size.height - fold),
-                                anchor: .minYEdge)
-            controls = nil
+            let half = min(fold, size.height - fold) - Self.creaseHalf
+            guard half > 1 else { return nil }
+            let slot = CGRect(x: 0, y: 0, width: size.width, height: half)
+            let panel = Self.panel(in: slot, anchor: .minYEdge)
+            top = CGRect(x: panel.minX, y: Self.topY(fold: fold, panelHeight: panel.height),
+                         width: panel.width, height: panel.height)
+            bottom = CGRect(x: panel.minX, y: fold + Self.creaseHalf,
+                            width: panel.width, height: panel.height)
+            controls = Self.hudRow(between: top, and: bottom, in: size)
             return
         }
 
@@ -347,19 +406,34 @@ struct DSFoldableLayout {
         let rail = max(dpad.width, 2 * radius) + 16
         let panelWidth = size.width - 2 * rail
         let panelHeight = panelWidth * DSScreenGeometry.aspectHeight / DSScreenGeometry.aspectWidth
-        // Two rows under the panel: L/R with the HUD pills, then SELECT/START
+        // Two rows under the panel: the HUD pills, then SELECT/START
         // against the bottom edge.
         let rowHeight = max(shoulder.height, hud.height)
+        let panelTop = fold + Self.creaseHalf
         guard panelWidth >= 192,
-              fold + panelHeight + 12 + rowHeight + 12 + start.height + 16 <= size.height else { return nil }
+              panelTop + panelHeight + 12 + rowHeight + 12 + start.height + 16 <= size.height else { return nil }
 
-        bottom = CGRect(x: (size.width - panelWidth) / 2, y: fold,
+        bottom = CGRect(x: (size.width - panelWidth) / 2, y: panelTop,
                         width: panelWidth, height: panelHeight)
+        // A DS's two screens are the same panel twice (256×192 each), so the
+        // top one copies the touch one instead of filling its half. The touch
+        // panel is the one that is boxed in — the d-pad and ABXY sit either
+        // side of it — so it sets the size for both, and what is left above is
+        // the console's own bezel, not wasted space.
+        guard panelHeight + Self.creaseHalf <= fold else { return nil }
+        top = CGRect(x: bottom.minX, y: Self.topY(fold: fold, panelHeight: panelHeight),
+                     width: panelWidth, height: panelHeight)
         let clusterY = bottom.midY
         let left = rail / 2
         let right = size.width - left
         let bottomY = size.height - 16 - start.height / 2
-        // SELECT/START sit on the bottom edge, so the L/R + HUD row is
+        // L/R go where a DS has its shoulder buttons: the top corners of the
+        // lower half, right under the hinge, above the d-pad and ABXY in the
+        // rails beside the touch panel. The rear display, where the index
+        // fingers actually rest, takes no app content in iOS 27.1 (the only
+        // interactive scene accessory is camera capture).
+        let shoulderY = panelTop + shoulder.height / 2
+        // SELECT/START sit on the bottom edge, so the HUD row is
         // centred in what is left between them and the touch panel instead
         // of hugging the panel and leaving a dead strip in the middle.
         let rowY = (bottom.maxY + bottomY - start.height / 2 - 12) / 2
@@ -369,8 +443,8 @@ struct DSFoldableLayout {
             .a: CGPoint(x: right + spread, y: clusterY),
             .x: CGPoint(x: right, y: clusterY - spread),
             .b: CGPoint(x: right, y: clusterY + spread),
-            .l: CGPoint(x: 12 + shoulder.width / 2, y: rowY),
-            .r: CGPoint(x: size.width - 12 - shoulder.width / 2, y: rowY),
+            .l: CGPoint(x: left, y: shoulderY),
+            .r: CGPoint(x: right, y: shoulderY),
             .layout: CGPoint(x: size.width / 2 - hud.width - 12, y: rowY),
             .menu: CGPoint(x: size.width / 2, y: rowY),
             .fastForward: CGPoint(x: size.width / 2 + hud.width + 12, y: rowY),
@@ -381,8 +455,14 @@ struct DSFoldableLayout {
 
     // MARK: - Landscape: hinge down the middle
 
-    private init?(landscapeIn size: CGSize, controlsReserved: Bool) {
-        let fold = (size.width / 2).rounded()
+    private init?(landscapeIn size: CGSize, controlsReserved: Bool, fold foldOverride: CGFloat? = nil) {
+        let fold = (foldOverride ?? size.width / 2).rounded()
+        guard fold > 0, fold < size.width else { return nil }
+        // Both panels are the same size, so the narrower side of the crease
+        // sets it — the safe area is not centred on the hinge — and neither
+        // one enters the 40 pt band the hinge itself takes.
+        let half = min(fold, size.width - fold) - Self.creaseHalf
+        guard half > 1 else { return nil }
         let idiom = INDSControlBand.effectiveIdiom(for: size)
         let dpad = INDSControllerButtonID.dpad.baseSize(for: idiom)
         let shoulder = INDSControllerButtonID.l.baseSize(for: idiom)
@@ -399,14 +479,16 @@ struct DSFoldableLayout {
         let lowerBand = controlsReserved ? max(dpad.height, 2 * radius) + 24 : 0
         let upperBand = controlsReserved ? max(shoulder.height, hud.height) + 20 : 0
         let free = size.height - lowerBand - upperBand
-        let scale = min(fold / DSScreenGeometry.aspectWidth, free / DSScreenGeometry.aspectHeight)
+        let scale = min(half / DSScreenGeometry.aspectWidth, free / DSScreenGeometry.aspectHeight)
         let panelWidth = DSScreenGeometry.aspectWidth * scale
         let panelHeight = DSScreenGeometry.aspectHeight * scale
         guard panelWidth >= 192, free > 0 else { return nil }
 
         let y = upperBand + (free - panelHeight) / 2
-        top = CGRect(x: fold - panelWidth, y: y, width: panelWidth, height: panelHeight)
-        bottom = CGRect(x: fold, y: y, width: panelWidth, height: panelHeight)
+        top = CGRect(x: fold - Self.creaseHalf - panelWidth, y: y,
+                     width: panelWidth, height: panelHeight)
+        bottom = CGRect(x: fold + Self.creaseHalf, y: y,
+                        width: panelWidth, height: panelHeight)
 
         guard controlsReserved else {
             controls = nil
@@ -435,11 +517,41 @@ struct DSFoldableLayout {
         ], in: size))
     }
 
+    /// Sin mandos en pantalla el HUD se iba al sitio de la banda de
+    /// controles, que sin mandos es la pantalla TÁCTIL: las tres pastillas
+    /// quedaban encima del juego y tapando los toques. Van en fila a la tira
+    /// que sobra debajo del panel de abajo, y si no cabe, a la de arriba; si
+    /// tampoco, nil y se deja el sitio por defecto. Lo usan el Duo abierto y
+    /// cualquier vertical bajo con mando (Duo cerrado, iPhone SE), donde la
+    /// columna de tres no cabe bajo las pantallas.
+    static func hudRow(between top: CGRect, and bottom: CGRect, in size: CGSize) -> INDSControllerLayout? {
+        let hudSize = INDSControllerButtonID.menu.baseSize(for: INDSControlBand.effectiveIdiom(for: size))
+        let upper = top.minY <= bottom.minY ? top : bottom
+        let lower = top.minY <= bottom.minY ? bottom : top
+        let belowGap = size.height - lower.maxY
+        let aboveGap = upper.minY
+        let hudY: CGFloat? = belowGap >= hudSize.height + 8 ? lower.maxY + belowGap / 2
+            : aboveGap >= hudSize.height + 8 ? aboveGap / 2 : nil
+        return hudY.map { y in
+            INDSControllerLayout(buttons: INDSControllerLayout.entries(from: [
+                .layout: CGPoint(x: size.width / 2 - hudSize.width - 12, y: y),
+                .menu: CGPoint(x: size.width / 2, y: y),
+                .fastForward: CGPoint(x: size.width / 2 + hudSize.width + 12, y: y),
+            ], in: size))
+        }
+    }
+
     /// How much of the default iPad control metrics the portrait arrangement
     /// uses, so the touch panel fits between the thumb clusters. Roughly a
     /// phone's own button sizes; `INDSButtonLayoutEntry.scale` carries it to
     /// the drawn frames, so measurements and pixels agree.
     private static let clusterScale: CGFloat = 0.7
+
+    /// Half the crease. The hinge is a 40 pt band, not a line: measured on the
+    /// simulator the division region is `{0, 455.5} 669×40` with 20 pt of
+    /// margin on each side. Panels stop at its edge, which is also what the
+    /// two screens of a real DS do — the hinge sits between them.
+    private static let creaseHalf: CGFloat = 20
 
     private static func size(_ id: INDSControllerButtonID,
                              _ idiom: UIUserInterfaceIdiom,

@@ -1,6 +1,6 @@
 //
 //  INDSPerGameProfileStore.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's PerGameProfileStore.swift:
 //  automatic per-game settings memory. When the user changes speed or screen
@@ -8,7 +8,7 @@
 //  re-applied the next time it launches — no new UI, the app "just
 //  remembers". Adaptation: a plain Swift enum instead of an `@objc NSObject`
 //  subclass — iGBA's original is `@objc` because its legacy Objective-C
-//  `EmuVC.mm` calls it directly; eNDS has no Objective-C call site for this
+//  `EmuVC.mm` calls it directly; eDuo has no Objective-C call site for this
 //  (only Swift, from `NDSRomViewController`), so the ObjC bridging is dead
 //  weight here. `value(_:forGame:)` returns a plain `Int?` instead of
 //  `NSNumber?` for the same reason.

@@ -1,6 +1,6 @@
 //
 //  NDSCheatsView.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent — GBA cheats are a different, simpler format).
 //  Per-game cheat list sheet presented from the pause menu. Unlike the other
@@ -236,7 +236,7 @@ private struct NDSCheatEditorView: View {
                     case .codeBreaker:
                         Text(NSLocalizedString("CodeBreaker/CodeFreak code detected. It will be saved as the equivalent Action Replay code.", comment: "Cheat editor note"))
                     case .codeBreakerUnsupported:
-                        Text(NSLocalizedString("This CodeBreaker/CodeFreak code uses a code type eNDS can't convert to Action Replay.", comment: "Cheat code validation error"))
+                        Text(NSLocalizedString("This CodeBreaker/CodeFreak code uses a code type eDuo can't convert to Action Replay.", comment: "Cheat code validation error"))
                             .foregroundColor(.red)
                     case .actionReplay, nil:
                         if !code.isEmpty && !isCodeValid {

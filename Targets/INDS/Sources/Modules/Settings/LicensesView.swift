@@ -1,11 +1,11 @@
 //
 //  LicensesView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → About → Licenses. The GPLv3 text and the third-party notices,
 //  bundled inside the app rather than only linked.
 //
-//  This matters beyond tidiness: eNDS links melonDS (GPLv3), and GPLv3 §4/§6
+//  This matters beyond tidiness: eDuo links melonDS (GPLv3), and GPLv3 §4/§6
 //  expect the licence to travel with the work. Someone with no network, or
 //  reading on a plane, still has to be able to see the terms the app ships
 //  under — a hyperlink to GitHub is not the licence, and it is exactly the
@@ -39,7 +39,7 @@ struct LicensesView: View {
             } header: {
                 Text("GNU General Public License v3")
             } footer: {
-                Text("eNDS and the melonDS core it uses are both released under these terms.")
+                Text("eDuo and the melonDS core it uses are both released under these terms.")
             }
 
             // BSD/MIT/zlib/LGPL all require their notice to accompany binary
@@ -76,7 +76,7 @@ struct LicensesView: View {
               let text = try? String(contentsOf: url, encoding: .utf8) else {
             // Should be impossible (both files are bundled resources), but a
             // licence screen that renders empty is worse than one that says so.
-            return NSLocalizedString("This document could not be loaded. You can also read it at github.com/mattiaa95/eNDS.",
+            return NSLocalizedString("This document could not be loaded. You can also read it at github.com/mattiaa95/eDuo.",
                                      comment: "Licenses screen: bundled file missing")
         }
         return text

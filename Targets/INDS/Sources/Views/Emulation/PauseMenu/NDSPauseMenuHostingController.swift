@@ -1,6 +1,6 @@
 //
 //  NDSPauseMenuHostingController.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's PauseMenuHostingController.swift
 // : a UIKit sheet that hosts the SwiftUI pause menu, with a
@@ -26,6 +26,7 @@ final class NDSPauseMenuHostingController: UIViewController, UIGestureRecognizer
          currentLayoutMode: DSScreenLayoutMode,
          currentSwapEnabled: Bool,
          currentStretchEnabled: Bool,
+         canRewind: Bool,
          currentDisplayFilter: NDSDisplayFilter,
          clipRecorder: NDSClipRecorder,
          onAction: @escaping (NDSPauseMenuAction) -> Void,
@@ -50,6 +51,7 @@ final class NDSPauseMenuHostingController: UIViewController, UIGestureRecognizer
             initialLayoutMode: currentLayoutMode,
             initialSwapEnabled: currentSwapEnabled,
             initialStretchEnabled: currentStretchEnabled,
+            canRewind: canRewind,
             initialDisplayFilter: currentDisplayFilter,
             clipRecorder: clipRecorder,
             onAction: { [weak self] action in

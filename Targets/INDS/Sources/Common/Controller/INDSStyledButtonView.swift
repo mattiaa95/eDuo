@@ -1,11 +1,11 @@
 //
 //  INDSStyledButtonView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from the private `StyledControllerButtonView` nested in
 //  iGBA's CustomControllerView.swift. Renders a single
 //  on-screen button from an `INDSButtonStyle` (vector text, or an imported
-//  image). No macro-slot gesture handling here (eNDS has no macros) — this
+//  image). No macro-slot gesture handling here (eDuo has no macros) — this
 //  view is purely visual; `NDSControllerView` owns all touch/hit-testing.
 //
 

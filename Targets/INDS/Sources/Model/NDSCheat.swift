@@ -1,6 +1,6 @@
 //
 //  NDSCheat.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent — GBA cheats are a different, simpler format).
 //  Swift-side model + on-disk persistence for melonDS Action Replay codes.

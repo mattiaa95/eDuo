@@ -1,13 +1,13 @@
 //
 //  AppearanceSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Appearance. Same idea as iGBA's AppearanceSettingsView: a native `ColorPicker` bound to a persisted accent color, applied
 //  app-wide via `.tint`, plus the per-orientation background images (iGBA
 //  calls them controller skins). iGBA's page also has a GB palette picker —
-//  a GBA-only concern with no eNDS equivalent.
+//  a GBA-only concern with no eDuo equivalent.
 //
-//  The background images are PRO. iGBA offers "watch an ad instead"; eNDS has
+//  The background images are PRO. iGBA offers "watch an ad instead"; eDuo has
 //  no ad SDK at all (docs/LEGAL.md), so the equivalent "try before you buy" is
 //  the first-48h honeymoon, which unlocks this like every other gate.
 //
@@ -35,7 +35,7 @@ struct AppearanceSettingsView: View {
             } header: {
                 Text("🎨 Accent Color")
             } footer: {
-                Text("Sets the tint used for buttons, links and highlights across eNDS.")
+                Text("Sets the tint used for buttons, links and highlights across eDuo.")
             }
 
             Section {
@@ -54,7 +54,7 @@ struct AppearanceSettingsView: View {
             } footer: {
                 Text(isEntitled
                      ? "Pick a photo to sit behind the screens and the controls. Each orientation has its own image, and it changes as soon as you rotate. The background colour above shows through wherever no image is set."
-                     : "Set your own photo behind the screens and the controls, with a separate image for portrait and landscape. Included in eNDS PRO.")
+                     : "Set your own photo behind the screens and the controls, with a separate image for portrait and landscape. Included in eDuo PRO.")
             }
         }
         .navigationTitle("Appearance")

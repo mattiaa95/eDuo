@@ -1,13 +1,13 @@
 //
 //  NDSControllerView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's CustomControllerView.swift.
 //  On-screen controller overlay that reads button positions from
 //  `INDSControllerLayoutManager` and drives `MelonDSCoreBridge.setButton:pressed:`
 //  through a delegate. Adaptations vs. iGBA:
 //   - Direct `INDSButton`/`Set<INDSButton>` typing instead of NSNumber-boxed
-//     legacy GBA raw ints (eNDS has no ObjC-interop legacy code to share with).
+//     legacy GBA raw ints (eDuo has no ObjC-interop legacy code to share with).
 //   - No turbo, A+B combo, macro slots, or menu button — DS has X/Y instead,
 //     and pause lives in a separate floating HUD button (see `NDSHUDView`).
 //   - `hitTest` only claims points that land on a visible button/joystick, so
@@ -89,8 +89,13 @@ final class NDSControllerView: UIView {
         // does, and a nil `controls` there means "the default arrangement is
         // already right for this half" — portrait, where the reserved band is
         // nowhere near the fold.
-        if let foldable = DSFoldableLayout.current(in: containerSize, mode: screenLayoutMode,
-                                                   stretch: DSScreenLayoutPreferences.stretchEnabled) {
+        if let foldable = DSFoldableLayout.current(
+            in: containerSize, mode: screenLayoutMode,
+            stretch: DSScreenLayoutPreferences.stretchEnabled,
+            // Same crease the screens use, or the touch panel and the thumb
+            // clusters drift apart.
+            fold: DSFoldableLayout.fold(for: self, content: contentRect,
+                                        vertical: containerSize.height >= containerSize.width)) {
             return foldable.controls ?? defaults()
         }
         if let console = DSConsoleLayout.current(in: containerSize, mode: screenLayoutMode,
@@ -294,11 +299,20 @@ final class NDSControllerView: UIView {
         }
 
         #if DEBUG
-        assertDefaultLayoutHasNoOverlaps()
+        // Once the layout settles, not now: while it rotates, the iPhone Duo
+        // reports its 84 pt system rail on BOTH sides (folded, landscape →
+        // portrait: 298 pt wide for the whole animation, then 382). Only an
+        // overlap that survives the layout is a bug.
+        overlapCheck?.cancel()
+        let check = DispatchWorkItem { [weak self] in self?.assertDefaultLayoutHasNoOverlaps() }
+        overlapCheck = check
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: check)
         #endif
     }
 
     #if DEBUG
+    private var overlapCheck: DispatchWorkItem?
+
     /// v1.0(8) shipped defaults where the d-pad overlapped L by 16-32pt on
     /// every phone, so a thumb on the d-pad fired the shoulder too. That class
     /// of bug is what this catches, against the real clamped, globally-scaled

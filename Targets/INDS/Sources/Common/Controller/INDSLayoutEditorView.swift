@@ -1,6 +1,6 @@
 //
 //  INDSLayoutEditorView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ControllerLayoutEditorView.swift. Full-screen canvas for repositioning, resizing, hiding, and
 //  restyling on-screen controller buttons, per orientation.
@@ -8,12 +8,12 @@
 //  Adaptations vs. iGBA:
 //   - Pushed via a plain `NavigationLink` inside Settings' existing
 //     `NavigationStack` (see `ControlsSettingsView`) instead of a separate
-//     `UIHostingController` presented `.fullScreen` — eNDS's Settings hub is
+//     `UIHostingController` presented `.fullScreen` — eDuo's Settings hub is
 //     SwiftUI-native end to end, so there is no legacy UIKit host to bridge
 //     from. `Save` writes straight to `INDSControllerLayoutManager`; `Cancel`
 //     (or swiping back) just discards the local working copy.
 //   - The editable canvas is the FULL view, not a "game placeholder on top /
-//     controls strip below" split: eNDS's on-screen controller is a
+//     controls strip below" split: eDuo's on-screen controller is a
 //     full-bleed overlay across both DS screens (it lets touches that miss a
 //     button fall through to the real touch screen underneath — see
 //     `NDSControllerView`), so every button's normalizedX/Y is a fraction of
@@ -22,7 +22,7 @@
 //     the user's current `DSScreenLayoutPreferences` for the orientation
 //     being edited) purely so the user can see what the buttons sit on top
 //     of — not editable here.
-//   - No preset picker/"Load Preset" menu — eNDS ships no built-in preset
+//   - No preset picker/"Load Preset" menu — eDuo ships no built-in preset
 //     library (unlike iGBA's Default/Compact/Wide), only per-user layouts.
 //   - Haptics (`INDSHaptics`) on select/drop, which iGBA's editor didn't have.
 //

@@ -1,6 +1,6 @@
 //
 //  INDSExternalDisplayController.swift
-//  eNDS
+//  eDuo
 //
 //  External display / AirPlay screen mirroring: when a second screen is
 //  present, it takes over showing the Top screen fullscreen (letterboxed

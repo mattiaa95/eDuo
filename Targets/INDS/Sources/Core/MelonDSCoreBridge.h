@@ -147,6 +147,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)saveStateToPath:(NSString *)path error:(NSError **)error;
 - (BOOL)loadStateFromPath:(NSString *)path error:(NSError **)error;
 
+/// In-memory rewind history (~35 s, one capture every 3.5 s). Off frees it.
+@property (nonatomic) BOOL rewindEnabled;
+/// At least one capture exists for the running game.
+@property (nonatomic, readonly) BOOL canRewind;
+/// Jumps ~10 s back; call again to keep going. NO if nothing was restored.
+- (BOOL)rewindTenSeconds;
+- (void)clearRewindHistory;
+
 /// Autosave variant: serializes synchronously (unavoidable — it must not race
 /// RunFrame) but writes the file on a background queue, so a periodic autosave
 /// doesn't hitch the game. Returns whether the snapshot was taken, not whether

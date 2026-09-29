@@ -1,6 +1,6 @@
 # Third-party components
 
-Everything compiled into the eNDS binary, including the components that
+Everything compiled into the eDuo binary, including the components that
 melonDS itself vendors and builds unconditionally.
 
 | Component | Where | License | Copyright |
@@ -17,7 +17,7 @@ melonDS itself vendors and builds unconditionally.
 | minizip | `Targets/INDS/Sources/Vendor/minizip` | zlib | © 1998–2010 Gilles Vollant |
 
 License texts travel with the app and with this repository:
-`LICENSE` (GPLv3, covers eNDS itself and melonDS),
+`LICENSE` (GPLv3, covers eDuo itself and melonDS),
 `Targets/INDS/Resources/Legal/NOTICES.txt` (verbatim notices of every
 component above, as BSD/MIT/zlib/LGPL require),
 `Targets/INDS/Sources/Vendor/lzma/LICENSE.txt` and
@@ -28,5 +28,5 @@ Not compiled in: melonDS's Dolphin-derived JIT (`ENABLE_JIT=OFF`), its
 OpenGL renderer, GDB stub, and the net-utils / multiplayer targets — see
 `BUILDING.md` for the exact core configuration.
 
-Everything else in `Targets/` is original eNDS code, © Mattia La Spina,
+Everything else in `Targets/` is original eDuo code, © Mattia La Spina,
 released under the GPLv3 (see `LICENSE`).

@@ -1,6 +1,6 @@
 //
 //  ControlsSettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Controls. Exposes the on-screen controller preferences that
 //  `NDSControllerView` (Common/Controller) already reads from UserDefaults at

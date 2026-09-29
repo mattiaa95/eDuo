@@ -1,6 +1,6 @@
 //
 //  PurchaseModel.swift
-//  eNDS
+//  eDuo
 //
 //  Ported from iGBA
 //  (App/SwiftUI/Modules/PurchaseView/PurchaseModel.swift) — the `PurchaseView`

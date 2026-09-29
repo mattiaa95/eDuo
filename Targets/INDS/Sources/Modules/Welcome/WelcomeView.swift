@@ -1,17 +1,17 @@
 //
 //  WelcomeView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's WelcomeView.swift: same
 //  first-launch onboarding shape — a 4-page `TabView` with a custom capsule
 //  page indicator, a top-right Skip button (hidden on the last page), and a
 //  bottom action that morphs from "Continue" into a primary/secondary button
 //  pair on the last page. Adaptations vs. iGBA:
-//   - Content is eNDS's own (DS-specific): hero welcome, adding games,
+//   - Content is eDuo's own (DS-specific): hero welcome, adding games,
 //     what the emulator supports, and controls — instead of iGBA's
 //     hero/features/Watch-beta/get-started set.
 //   - Hero icon is "SplashIcon" (same imageset the splash screen uses) and
-//     the glow is eNDS's crimson brand color instead of iGBA's purple.
+//     the glow is eDuo's crimson brand color instead of iGBA's purple.
 //   - `featureCard` takes an explicit `page` index (iGBA only ever used it
 //     from one page, so didn't need to parameterize which page's
 //     `animatedPages` membership drives its reveal animation).
@@ -19,7 +19,7 @@
 //     respects the same "eNDSHapticsEnabled" toggle as the rest of the app,
 //     instead of firing `UIImpactFeedbackGenerator` unconditionally.
 //   - Plain string literals (no `NSLocalizedString` wrapping), matching
-//     every other View in eNDS (ROMListView, SettingsView, etc.); the
+//     every other View in eDuo (ROMListView, SettingsView, etc.); the
 //     string catalog picks these up as keys.
 //
 //  Gate: first-launch presentation is driven by `INDSWelcomeGate` below
@@ -237,7 +237,7 @@ struct WelcomeView: View {
 
             Spacer().frame(height: 36)
 
-            Text("Welcome to eNDS")
+            Text("Welcome to eDuo")
                 .font(.system(size: welcomeTitleSize, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
                 .opacity(animatedPages.contains(0) ? 1 : 0)
@@ -320,7 +320,7 @@ struct WelcomeView: View {
 
             benefitRow(
                 icon: "photo.on.rectangle.angled",
-                text: "eNDS reads each cartridge's own banner, so your library shows real game icons and titles."
+                text: "eDuo reads each cartridge's own banner, so your library shows real game icons and titles."
             )
             .padding(.horizontal, 28)
             .opacity(animatedPages.contains(1) ? 1 : 0)
@@ -328,7 +328,7 @@ struct WelcomeView: View {
 
             Spacer()
 
-            Text("eNDS plays game files you legally own. No games are included.")
+            Text("eDuo plays game files you legally own. No games are included.")
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.4))
                 .multilineTextAlignment(.center)

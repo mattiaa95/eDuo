@@ -1,6 +1,6 @@
 //
 //  NDSClipRecorder.swift
-//  eNDS
+//  eDuo
 //
 //  New (no iGBA equivalent). Thin ObservableObject wrapper around
 //  RPScreenRecorder for the pause menu's "Record Clip" row: `isRecording`

@@ -1,9 +1,9 @@
-# eNDS
+# eDuo
 
 A retro game emulator for iPhone and iPad, built on the
 [melonDS](https://github.com/melonDS-emu/melonDS) emulation core.
 
-This repository contains the complete source code of the eNDS app as it is
+This repository contains the complete source code of the eDuo app as it is
 built and distributed. It is published under the **GNU GPLv3** (see
 `LICENSE`) — the same license as melonDS — so that anyone who receives the
 app can study, build and modify exactly what runs on their device.
@@ -21,7 +21,7 @@ What that does **not** cover: the emulation core. `Vendor/melonDS` is
 unmodified upstream melonDS, written by Arisotura and the melonDS team, and
 no AI touched it.
 
-## What eNDS adds on top of melonDS
+## What eDuo adds on top of melonDS
 
 - A native SwiftUI/UIKit iOS frontend: ROM library (with each cartridge's
   real banner icon), dual-screen layouts, an on-screen controller with a
@@ -38,7 +38,7 @@ no AI touched it.
 ## Credits
 
 - **[melonDS](https://melonds.org)** — © Arisotura and the melonDS team,
-  GPLv3. eNDS uses the core unmodified (see `Vendor/melonDS`, pinned as a
+  GPLv3. eDuo uses the core unmodified (see `Vendor/melonDS`, pinned as a
   submodule to the upstream commit each release builds against).
 - **FreeBIOS** — the built-in BIOS replacement inside melonDS, © Gilead
   Kutnick (BSD). No proprietary console BIOS, firmware or keys are included anywhere
@@ -61,16 +61,16 @@ your own team.
 
 ## Releases
 
-Every build of eNDS that leaves this machine gets a tag here — `v1.0-b29`,
+Every build of eDuo that leaves this machine gets a tag here — `v1.0-b29`,
 `v1.0-b30`, … — and each tag is the complete corresponding source for that
 exact binary. The current one has release notes on the [releases
-page](https://github.com/mattiaa95/eNDS/releases). `main` may carry later
+page](https://github.com/mattiaa95/eDuo/releases). `main` may carry later
 work (comment translations, docs) that is not in any binary yet; when in
 doubt, build a tag.
 
 What ships is what you see here: no ads, no analytics and no tracking SDKs
 of any kind. The app's privacy policy is at
-[mattiaa95.github.io/privacy.html](https://mattiaa95.github.io/privacy.html).
+[mattials.com/privacy](https://mattials.com/privacy/).
 
 ## What the App Store build charges for
 
@@ -92,15 +92,15 @@ it is not a lock.
 
 ## Legal
 
-- eNDS is an unofficial project. It is **not** affiliated with, or endorsed
+- eDuo is an unofficial project. It is **not** affiliated with, or endorsed
   by, the melonDS team, and **not** affiliated with any game console
   manufacturer. All related console names are trademarks of their respective
   owners and are used here only to describe compatibility.
 - **On the `INDS` prefix you will see everywhere in this source**: the
   project was started under the working name *iNDS* and the class prefix,
   folder names, bundle id (`com.mls.inds`) and StoreKit product ids were
-  never renamed when the app became eNDS. It is a leftover, and it is the
-  obvious thing to be suspicious about, so: eNDS shares no code and no
+  never renamed when the app became eDuo. It is a leftover, and it is the
+  obvious thing to be suspicious about, so: eDuo shares no code and no
   authorship with the earlier nds4ios/iNDS project for iOS. That one wrapped
   DeSmuME; this one is a SwiftUI/UIKit frontend over melonDS, and every line
   of it is in this repository for comparison.
@@ -108,5 +108,5 @@ it is not a lock.
   ported from **iGBA**, the author's other emulator, and the
   comment headers of those files say so. That code is the author's own and
   is published here under the GPLv3.
-- eNDS does not include any games and does not link to ROM sites. Play only
+- eDuo does not include any games and does not link to ROM sites. Play only
   backups of cartridges you legally own.

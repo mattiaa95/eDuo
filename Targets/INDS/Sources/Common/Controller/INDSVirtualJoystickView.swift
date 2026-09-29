@@ -1,6 +1,6 @@
 //
 //  INDSVirtualJoystickView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported near-verbatim from iGBA's VirtualJoystickView.swift.
 //  Only the direction → button raw-value mapping changed (INDSButton's

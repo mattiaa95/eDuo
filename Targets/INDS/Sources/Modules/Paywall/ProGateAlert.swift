@@ -1,6 +1,6 @@
 //
 //  ProGateAlert.swift
-//  eNDS
+//  eDuo
 //
 //  Reusable "you hit a Pro limit" offer: a Go Pro / Not Now alert shared by
 //  every gate (save-state slots 2–4, the scanlines filter, custom

@@ -72,7 +72,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         }
       }
@@ -84,7 +84,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "eNDS"
+            "value" : "eDuo"
           }
         }
       }
@@ -287,61 +287,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS nutzt das Mikrofon nur, damit Spiele dich hören können – Pusten oder Sprechen, wenn ein Spiel danach fragt. Audio verlässt dein Gerät nie."
+            "value" : "eDuo nutzt das Mikrofon nur, damit Spiele dich hören können – Pusten oder Sprechen, wenn ein Spiel danach fragt. Audio verlässt dein Gerät nie."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS uses the microphone only to let games hear you — blowing or speaking when a game asks for it. Audio never leaves your device."
+            "value" : "eDuo uses the microphone only to let games hear you — blowing or speaking when a game asks for it. Audio never leaves your device."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS usa el micrófono solo para que los juegos puedan oírte: soplar o hablar cuando un juego lo pide. El audio nunca sale de tu dispositivo."
+            "value" : "eDuo usa el micrófono solo para que los juegos puedan oírte: soplar o hablar cuando un juego lo pide. El audio nunca sale de tu dispositivo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS n'utilise le micro que pour que les jeux puissent vous entendre — souffler ou parler quand un jeu le demande. L'audio ne quitte jamais votre appareil."
+            "value" : "eDuo n'utilise le micro que pour que les jeux puissent vous entendre — souffler ou parler quand un jeu le demande. L'audio ne quitte jamais votre appareil."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS usa il microfono solo perché i giochi possano sentirti: soffiare o parlare quando un gioco lo richiede. L'audio non lascia mai il tuo dispositivo."
+            "value" : "eDuo usa il microfono solo perché i giochi possano sentirti: soffiare o parlare quando un gioco lo richiede. L'audio non lascia mai il tuo dispositivo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSがマイクを使うのは、DSゲームがあなたの声や息を聞くためだけです。ゲームが求めたときに吹いたり話したりします。音声が端末の外に出ることはありません。"
+            "value" : "eDuoがマイクを使うのは、ゲームがあなたの声や息を聞くためだけです。ゲームが求めたときに吹いたり話したりします。音声が端末の外に出ることはありません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS는 게임이 소리를 들을 수 있도록 할 때만 마이크를 사용합니다. 게임이 요청할 때 불거나 말하세요. 오디오는 절대 기기를 떠나지 않습니다."
+            "value" : "eDuo는 게임이 소리를 들을 수 있도록 할 때만 마이크를 사용합니다. 게임이 요청할 때 불거나 말하세요. 오디오는 절대 기기를 떠나지 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS usa o microfone apenas para que os jogos o possam ouvir — soprar ou falar quando um jogo o pede. O áudio nunca sai do seu dispositivo."
+            "value" : "O eDuo usa o microfone apenas para que os jogos o possam ouvir — soprar ou falar quando um jogo o pede. O áudio nunca sai do seu dispositivo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS использует микрофон только для того, чтобы игры могли вас слышать: дуйте или говорите, когда игра просит. Звук никогда не покидает ваше устройство."
+            "value" : "eDuo использует микрофон только для того, чтобы игры могли вас слышать: дуйте или говорите, когда игра просит. Звук никогда не покидает ваше устройство."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS仅在DS游戏需要听到你时使用麦克风——在游戏要求时吹气或说话。音频绝不会离开你的设备。"
+            "value" : "eDuo仅在游戏需要听到你时使用麦克风——在游戏要求时吹气或说话。音频绝不会离开你的设备。"
           }
         }
       }
@@ -352,61 +352,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS fragt nur, wenn du einen Spielclip sichern willst, damit das Video in deiner Mediathek landet. Deine Fotos werden nie gelesen."
+            "value" : "eDuo fragt nur, wenn du einen Spielclip sichern willst, damit das Video in deiner Mediathek landet. Deine Fotos werden nie gelesen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS asks only when you choose to save a gameplay clip, so the video lands in your photo library. It never reads or browses your photos."
+            "value" : "eDuo asks only when you choose to save a gameplay clip, so the video lands in your photo library. It never reads or browses your photos."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS solo lo pide cuando eliges guardar un clip de tu partida, para que el vídeo acabe en tu fototeca. Nunca lee ni consulta tus fotos."
+            "value" : "eDuo solo lo pide cuando eliges guardar un clip de tu partida, para que el vídeo acabe en tu fototeca. Nunca lee ni consulta tus fotos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS ne le demande que si vous choisissez d'enregistrer un extrait de jeu, pour que la vidéo arrive dans votre photothèque. Vos photos ne sont jamais lues."
+            "value" : "eDuo ne le demande que si vous choisissez d'enregistrer un extrait de jeu, pour que la vidéo arrive dans votre photothèque. Vos photos ne sont jamais lues."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS lo chiede solo se scegli di salvare un clip di gioco, così il video finisce nella tua libreria. Non legge mai le tue foto."
+            "value" : "eDuo lo chiede solo se scegli di salvare un clip di gioco, così il video finisce nella tua libreria. Non legge mai le tue foto."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDSは、プレイ動画を保存するときだけ許可を求めます。写真を読み取ることはありません。"
+            "value" : "eDuoは、プレイ動画を保存するときだけ許可を求めます。写真を読み取ることはありません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS는 플레이 영상을 저장할 때만 권한을 요청하며, 사진을 읽거나 열람하지 않습니다."
+            "value" : "eDuo는 플레이 영상을 저장할 때만 권한을 요청하며, 사진을 읽거나 열람하지 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eNDS só pede quando escolhe guardar um clipe de jogo, para que o vídeo fique na sua fototeca. Nunca lê as suas fotografias."
+            "value" : "O eDuo só pede quando escolhe guardar um clipe de jogo, para que o vídeo fique na sua fototeca. Nunca lê as suas fotografias."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eNDS запрашивает доступ, только когда вы сохраняете игровой клип, чтобы видео попало в медиатеку. Ваши фото никогда не читаются."
+            "value" : "eDuo запрашивает доступ, только когда вы сохраняете игровой клип, чтобы видео попало в медиатеку. Ваши фото никогда не читаются."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅在您选择保存游戏片段时，eNDS 才会请求权限，以便视频存入照片图库。它从不读取您的照片。"
+            "value" : "仅在您选择保存游戏片段时，eDuo 才会请求权限，以便视频存入照片图库。它从不读取您的照片。"
           }
         }
       }

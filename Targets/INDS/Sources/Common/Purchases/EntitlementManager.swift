@@ -1,6 +1,6 @@
 //
 //  EntitlementManager.swift
-//  eNDS
+//  eDuo
 //
 //  Ported from iGBA's `EntitlementManager`
 //  (App/SwiftUI/Common/PurchaseManager/EntitlementManager.swift). Same
@@ -9,7 +9,7 @@
 //  filtering out transactions with a non-nil `revocationDate` keeps granting
 //  Pro after a refund/chargeback.
 //
-//  Adaptation vs. iGBA: no `@objc`/`NSObject` ObjC-visibility — eNDS has no
+//  Adaptation vs. iGBA: no `@objc`/`NSObject` ObjC-visibility — eDuo has no
 //  Objective-C layer to bridge through. `updateProStatus(isPro: true)` also
 //  persists a one-way "ever had Pro" flag itself (iGBA sets the equivalent
 //  `hasPro_ever` only at the exact moment `PurchaseModel.purchaseSubscription`

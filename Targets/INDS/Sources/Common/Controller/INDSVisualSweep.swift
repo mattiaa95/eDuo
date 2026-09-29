@@ -1,7 +1,7 @@
 #if DEBUG
 //
 //  INDSVisualSweep.swift
-//  eNDS
+//  eDuo
 //
 //  The visual sibling of `INDSLayoutSweep` (launch argument
 //  `-iNDSVisualSweep`): instead of validating numbers it RENDERS the real
@@ -34,11 +34,15 @@ enum INDSVisualSweep {
             (CGSize(width: 1376, height: 1032), "large-landscape"),
             (CGSize(width: 507, height: 1376), "medium-window"),
             (CGSize(width: 375, height: 1112), "narrow-window"),
-            // iPhone Duo: Apple's published point sizes for the inner and
-            // outer displays. Still not a simulator capture, and the hinge is
-            // not drawn — what is judged is where the panels and controls land.
-            (CGSize(width: 626, height: 890), "duo-inner-portrait"),
-            (CGSize(width: 890, height: 626), "duo-inner-landscape"),
+            // iPhone Duo, measured on the simulator 21-sep-2026 (the device
+            // profile's `capabilities.plist`): inner 2007×2853 px @3 = 669×951
+            // pt, outer 1398×2034 = 466×678. The 626×890 that was used here
+            // before is not any display this device has. The hinge is not
+            // drawn — what is judged is where the panels and controls land.
+            (CGSize(width: 669, height: 951), "duo-inner-portrait"),
+            (CGSize(width: 951, height: 669), "duo-inner-landscape"),
+            // Lo que recibe una build con SDK anterior al 27.1.
+            (CGSize(width: 669, height: 871), "duo-inner-portrait-sdk270"),
             (CGSize(width: 466, height: 678), "duo-outer-portrait"),
             (CGSize(width: 678, height: 466), "duo-outer-landscape"),
         ]

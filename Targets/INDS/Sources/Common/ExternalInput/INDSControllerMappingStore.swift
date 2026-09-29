@@ -1,6 +1,6 @@
 //
 //  INDSControllerMappingStore.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ControllerMappingStore.swift:
 //  single source of truth for external-gamepad button remapping. Same shape

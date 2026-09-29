@@ -1,6 +1,6 @@
 //
 //  INDSKeyboardManager.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's KeyboardController.m: routes
 //  a physical keyboard (GCKeyboard, iOS 14+) to the engine through a

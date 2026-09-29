@@ -137,6 +137,25 @@ final class NDSRomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        observeHinge()
+    }
+
+    /// Duo half open = a DS on the table: `DSFoldableLayout` lifts the upper
+    /// panel off the crease. Only the posture moves it — every other device
+    /// has no hinge, so `isHalfOpen` never leaves false there.
+    private func observeHinge() {
+        // ponytail: UIHingeInteraction only exists in the iOS 27.1 SDK (UIKit
+        // 9127.0.85); 27.0 is 9127.0.84. An older toolchain builds without it.
+        #if canImport(UIKit, _version: 9127.0.85)
+        guard #available(iOS 27.1, *) else { return }
+        view.addInteraction(UIHingeInteraction { [weak self] _, update in
+            let halfOpen = update.hinge?.status == .partiallyOpen
+            guard let self, halfOpen != DSFoldableLayout.isHalfOpen else { return }
+            DSFoldableLayout.isHalfOpen = halfOpen
+            self.applyCurrentScreenLayout(animated: true)
+            self.hudView.setNeedsLayout()
+        })
+        #endif
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -248,6 +267,8 @@ final class NDSRomViewController: UIViewController {
         super.didReceiveMemoryWarning()
         guard core.loaded, !didExplicitlyQuit else { return }
         autosaveIfNeeded()
+        // The one cache we do own: ~60 MB of rewind history.
+        core.clearRewindHistory()
     }
 
     override func viewDidLayoutSubviews() {
@@ -531,6 +552,7 @@ final class NDSRomViewController: UIViewController {
             // New session: this game is allowed one fresh battery-save snapshot
             // before whatever state load comes next.
             INDSSaveBackup.beginSession(baseName: rom.baseName)
+            core.rewindEnabled = INDSSavingPreferences.rewindEnabled
             let biosDirectory = try ROMStorageManager.biosDirectoryURL()
             // Before the load, not after: the console's name and language are
             // baked into the firmware image, which is read once during boot
@@ -1183,6 +1205,7 @@ final class NDSRomViewController: UIViewController {
             currentLayoutMode: DSScreenLayoutPreferences.mode(for: orientationClass, containerSize: view.bounds.inset(by: view.safeAreaInsets).size),
             currentSwapEnabled: DSScreenLayoutPreferences.swapEnabled,
             currentStretchEnabled: DSScreenLayoutPreferences.stretchEnabled,
+            canRewind: core.canRewind,
             currentDisplayFilter: displayFilter,
             clipRecorder: clipRecorder,
             onAction: { [weak self] action in self?.handlePauseMenuAction(action) },
@@ -1232,6 +1255,21 @@ final class NDSRomViewController: UIViewController {
 
         case .loadFromSlot(let slot):
             performLoadFromSlot(slot)
+
+        case .rewind:
+            dismiss(animated: true) { [weak self] in
+                guard let self else { return }
+                // Same hazard as a state load: the capture's cartridge save
+                // lands on the .sav.
+                INDSSaveBackup.backupBeforeStateLoad(baseName: self.rom.baseName)
+                if self.core.rewindTenSeconds() {
+                    self.applyConsoleClock()
+                } else {
+                    self.hudView.showToast(NSLocalizedString("Couldn't rewind", comment: "Rewind failed toast"))
+                }
+                self.resumeFromPause()
+            }
+            pauseMenuController = nil
 
         case .recoverCartridgeSave:
             dismiss(animated: true) { [weak self] in

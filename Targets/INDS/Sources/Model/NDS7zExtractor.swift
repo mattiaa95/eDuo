@@ -4,7 +4,7 @@ import Foundation
 /// domain, `Vendor/lzma/`) via the flat-C `Sz7zShim` (`Sz7zShim.h`/`.c`,
 /// exposed to Swift through the bridging header). Same contract and shape
 /// as `NDSZipExtractor` — read that one first — so `ROMStorageManager` can
-/// treat `.zip` and `.7z` imports identically: eNDS only ever *reads*
+/// treat `.zip` and `.7z` imports identically: eDuo only ever *reads*
 /// `.7z` archives (ROM import), never writes them, so none of the SDK's
 /// encoder sources were vendored.
 enum NDS7zExtractor {

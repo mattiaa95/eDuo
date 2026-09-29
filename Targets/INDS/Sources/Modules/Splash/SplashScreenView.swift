@@ -1,21 +1,21 @@
 //
 //  SplashScreenView.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's SplashScreenView.swift: same
 //  animation shape — icon spring-scale + radial glow, title fade+offset,
 //  subtitle, version badge, then a fade-to-app exit — driven by
 //  `onAnimationComplete`. Adaptations vs. iGBA:
 //   - iGBA hosts this from a dedicated `SplashHostingViewController` (UIKit
-//     root). eNDS is SwiftUI-root, so `ContentView` shows this directly as a
+//     root). eDuo is SwiftUI-root, so `ContentView` shows this directly as a
 //     ZStack overlay over `ROMListView` instead — no hosting controller
 //     needed.
 //   - Icon is "SplashIcon" (a plain imageset copy of AppIcon1024.png — app
 //     icons themselves can't be referenced via `Image(_:)`), not "icon".
-//   - Glow/shadow use eNDS's crimson brand color (matching the app icon's
+//   - Glow/shadow use eDuo's crimson brand color (matching the app icon's
 //     own gradient) instead of iGBA's purple. Background reuses the same
 //     dark neutral `ROMListView` uses for its library backdrop, instead of
-//     iGBA's navy, so the splash reads as part of eNDS's own dark-first UI.
+//     iGBA's navy, so the splash reads as part of eDuo's own dark-first UI.
 //   - Timing compressed to a ~1.6s hold before the exit fade (vs iGBA's
 //     ~2.2s), so returning users reach the library faster.
 //   - Respects Reduce Motion: jumps straight to the final state and
@@ -24,7 +24,7 @@
 
 import SwiftUI
 
-/// eNDS's crimson brand color, matching the app icon's gradient
+/// eDuo's crimson brand color, matching the app icon's gradient
 /// (`AppIcon1024.png`: #E8546A → #AC1E3E). Shared with `WelcomeView`, which
 /// reuses the same hero glow for visual continuity between splash and
 /// onboarding.
@@ -62,7 +62,7 @@ struct SplashScreenView: View {
     var body: some View {
         ZStack {
             // Background — the same dark neutral as the library's own
-            // backdrop, so the splash reads as part of eNDS rather than a
+            // backdrop, so the splash reads as part of eDuo rather than a
             // separate screen bolted on top.
             Color(red: 0.06, green: 0.06, blue: 0.08)
                 .ignoresSafeArea()
@@ -96,7 +96,7 @@ struct SplashScreenView: View {
                 Spacer().frame(height: 28)
 
                 // App name
-                Text("eNDS")
+                Text("eDuo")
                     .font(.system(size: 46, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .offset(y: titleOffset)

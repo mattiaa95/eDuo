@@ -1,10 +1,10 @@
 //
 //  INDSButtonStyle.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ButtonStyle.swift.
 //  Per-button visual style: text/colors/border, or a user-imported image.
-//  eNDS ships with no bundled controller-skin artwork (unlike iGBA's legacy
+//  eDuo ships with no bundled controller-skin artwork (unlike iGBA's legacy
 //  xcassets skin), so unlike the original there is no `.asset` fallback kind —
 //  every button renders as a vector shape unless the user later imports a
 //  custom image via the (deferred) layout editor.

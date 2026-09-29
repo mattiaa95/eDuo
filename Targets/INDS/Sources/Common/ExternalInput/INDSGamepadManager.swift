@@ -1,6 +1,6 @@
 //
 //  INDSGamepadManager.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ExternalController.m: reads
 //  a physical game controller (GCController) and drives the engine through a

@@ -10,7 +10,7 @@ struct BIOSSetupView: View {
         NavigationStack {
             List {
                 Section {
-                    Text("BIOS/firmware files are optional. eNDS can boot and run almost any game using a built-in compatibility BIOS. Importing real dumps from your own console can improve compatibility for a few games. eNDS does not include or download BIOS files.")
+                    Text("BIOS/firmware files are optional. eDuo can boot and run almost any game using a built-in compatibility BIOS. Importing real dumps from your own console can improve compatibility for a few games. eDuo does not include or download BIOS files.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

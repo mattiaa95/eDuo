@@ -1,6 +1,6 @@
 //
 //  BatterySettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Battery. Two independent toggles over
 //  `INDSBatterySaverPreferences`, both read live by `NDSRomViewController`
@@ -30,7 +30,7 @@ struct BatterySettingsView: View {
                         INDSBatterySaverPreferences.respectLowPowerMode = newValue
                     }
             } footer: {
-                Text("While iOS Low Power Mode is on, eNDS caps emulation speed at 1x — even if Fast Forward is held — and lowers the screen's refresh rate. The emulated console itself isn't slowed down or paused.")
+                Text("While iOS Low Power Mode is on, eDuo caps emulation speed at 1x — even if Fast Forward is held — and lowers the screen's refresh rate. The emulated console itself isn't slowed down or paused.")
             }
 
             Section {
@@ -39,7 +39,7 @@ struct BatterySettingsView: View {
                         INDSBatterySaverPreferences.autoThrottleWhenHot = newValue
                     }
             } footer: {
-                Text("If your device starts running hot, eNDS automatically caps speed at 1x. If it keeps heating up, eNDS also lowers the screen's refresh rate to help it cool down.")
+                Text("If your device starts running hot, eDuo automatically caps speed at 1x. If it keeps heating up, eDuo also lowers the screen's refresh rate to help it cool down.")
             }
 
             Section {

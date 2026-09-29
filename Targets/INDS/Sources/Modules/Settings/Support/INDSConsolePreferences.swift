@@ -1,6 +1,6 @@
 //
 //  INDSConsolePreferences.swift
-//  eNDS
+//  eDuo
 //
 //  Settings > Profile. The DS keeps its owner's name and system language in
 //  the firmware's user settings, and direct boot copies them straight into
@@ -9,7 +9,7 @@
 //  which of their translations to show without ever asking.
 //
 //  melonDS's generated firmware fills both in with its own defaults: the
-//  literal name "melonDS", in English. Neither is something a player of eNDS
+//  literal name "melonDS", in English. Neither is something a player of eDuo
 //  should be handed, hence this file. Baked into the firmware image at ROM
 //  load (`MelonDSCoreBridge.loadROMAtPath:`), so changes here land the next
 //  time a game is opened — see [[inds-project]] for the wider console-state
@@ -64,7 +64,7 @@ enum INDSConsoleLanguage: Int, CaseIterable, Identifiable {
 enum INDSConsolePreferences {
     /// The firmware stores the name as 10 UTF-16 characters and no more.
     static let maxNicknameLength = 10
-    static let defaultNickname = "eNDS"
+    static let defaultNickname = "eDuo"
 
     private static let nicknameKey = "eNDSConsoleNickname"
     private static let languageKey = "eNDSConsoleLanguage"

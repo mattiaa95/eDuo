@@ -1,6 +1,6 @@
 //
 //  NDSHUDView.swift
-//  eNDS
+//  eDuo
 //
 //  New (loosely inspired by iGBA's small translucent EmuVC overlays — ping /
 //  fast-forward labels — but built with modern UIBlurEffect materials instead
@@ -204,7 +204,10 @@ final class NDSHUDView: UIView {
         // badges belong in the column between the thumb clusters there as
         // well, not floating in the middle of the game.
         let foldableBand = foldable?.controls != nil
-        let isPortrait = foldableBand || (content.height >= content.width && console == nil)
+        // The pill row takes the strip under the screens the badge column
+        // would use: badges go to the top, as in landscape.
+        let isPortrait = foldableBand || (content.height >= content.width && console == nil
+                                          && (foldable != nil || gamepadHUDRow(in: content.size) == nil))
 
         // Portrait: the column between the thumb clusters, where Menu and
         // Layout already live. Landscape: plain centre, nothing is there.
@@ -256,6 +259,8 @@ final class NDSHUDView: UIView {
             layout = foldableControls
         } else if let console {
             layout = console.controls
+        } else if let row = gamepadHUDRow(in: content.size) {
+            layout = row
         } else {
             layout = isPortrait
                 ? INDSCustomControllerLayout.defaultPortrait(containerSize: content.size)
@@ -308,6 +313,25 @@ final class NDSHUDView: UIView {
             fittedFrames[id] = button.frame
             button.isHidden = false
         }
+    }
+
+    /// Gamepad driving, portrait, no foldable/console arrangement: the stacked
+    /// screens take the whole height, and the default column of three pills
+    /// lands on the touch screen wherever less than its height is left under
+    /// them. A row in the leftover strip instead — nil when the column fits.
+    private func gamepadHUDRow(in size: CGSize) -> INDSControllerLayout? {
+        guard !controlsReserved, size.height >= size.width,
+              INDSControllerLayoutManager.shared.persistedLayout == nil,
+              DSFoldableLayout.current(in: size, mode: screenLayoutMode, controlsReserved: false) == nil else { return nil }
+        let (top, bottom) = DSScreenGeometry.frames(mode: screenLayoutMode, swap: DSScreenLayoutPreferences.swapEnabled,
+                                                    stretch: DSScreenLayoutPreferences.stretchEnabled,
+                                                    in: CGRect(origin: .zero, size: size))
+        guard let top, let bottom else { return nil }
+        let column = INDSCustomControllerLayout.defaultPortrait(containerSize: size).buttons
+            .filter { $0.isVisible && $0.id.isHUDChrome }
+            .map { $0.clampedFrame(in: size) }
+        guard column.contains(where: { $0.intersects(top) || $0.intersects(bottom) }) else { return nil }
+        return DSFoldableLayout.hudRow(between: top, and: bottom, in: size)
     }
 
     /// Caption size the pills are authored at (`makeCircleButton`).

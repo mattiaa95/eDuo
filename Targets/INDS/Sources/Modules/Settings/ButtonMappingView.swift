@@ -1,6 +1,6 @@
 //
 //  ButtonMappingView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings → Controls → Controller Mapping. Adapted from iGBA's
 //  ButtonMappingView.swift but organized the other way round:
@@ -110,7 +110,7 @@ struct ButtonMappingView: View {
                     // A pad whose buttons do nothing is otherwise a dead end
                     // for support: this is the one place a tester can read back
                     // what iOS actually handed the app.
-                    DisclosureGroup("What eNDS detects") {
+                    DisclosureGroup("What eDuo detects") {
                         Text(INDSControllerElements.detectedNames(on: controller).joined(separator: ", "))
                             .font(.system(.caption, design: .monospaced))
                             .textSelection(.enabled)

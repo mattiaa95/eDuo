@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  eNDS
+//  eDuo
 //
 //  Settings hub — clones iGBA's hub-style settings screen
 //  (SettingsView.swift): a short `Form` of `NavigationLink`s into focused
@@ -129,7 +129,7 @@ struct SettingsView: View {
                                        title: "BIOS", subtitle: "Optional firmware files")
                     }
                 } footer: {
-                    Text("Optional — eNDS boots games without BIOS files; add them only if a specific game needs them.")
+                    Text("Optional — eDuo boots games without BIOS files; add them only if a specific game needs them.")
                 }
 
                 Section {
@@ -151,7 +151,7 @@ struct SettingsView: View {
                 Section {
                     HStack {
                         Spacer()
-                        Text("eNDS — \(appVersion)")
+                        Text("eDuo — \(appVersion)")
                             .font(.footnote)
                             .foregroundColor(.secondary)
                         Spacer()
@@ -205,7 +205,7 @@ struct SettingsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("eNDS PRO")
+                            Text("eDuo PRO")
                                 .font(.headline.weight(.bold))
                                 .foregroundColor(.primary)
                             Text("Unlock all PRO features")
@@ -243,7 +243,7 @@ struct SettingsView: View {
                         }
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("eNDS PRO Active")
+                            Text("eDuo PRO Active")
                                 .font(.headline.weight(.bold))
                                 .foregroundColor(.primary)
                             Group {

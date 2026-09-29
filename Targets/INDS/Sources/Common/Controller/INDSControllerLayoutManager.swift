@@ -1,6 +1,6 @@
 //
 //  INDSControllerLayoutManager.swift
-//  eNDS
+//  eDuo
 //
 //  Ported and adapted from iGBA's ControllerLayoutManager.swift.
 //  Persists the active on-screen controller layout to disk (JSON in

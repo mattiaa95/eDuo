@@ -61,7 +61,7 @@ enum BIOSManager {
         return FileManager.default.fileExists(atPath: url.path)
     }
 
-    /// Informational only: eNDS boots ROMs fine without any of these files
+    /// Informational only: eDuo boots ROMs fine without any of these files
     /// (melonDS falls back to its built-in FreeBIOS + generated firmware).
     /// Installing real dumps only improves compatibility for a few games.
     static var biosInstalled: Bool {
