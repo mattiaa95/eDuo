@@ -44,7 +44,7 @@ struct ROMDetailView: View {
                     Text(rom.banner?.englishTitle ?? rom.displayName)
                         .font(.headline)
                         .lineLimit(3)
-                    Text(rom.filename)
+                    Text((rom.filename as NSString).deletingPathExtension)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
