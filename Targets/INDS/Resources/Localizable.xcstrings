@@ -8304,64 +8304,6 @@
         }
       }
     },
-    "Import .nds files — or .zip/.7z archives containing them — straight from the Files app." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importiere .nds-Dateien — oder .zip/.7z-Archive mit ihnen — direkt aus der Dateien-App."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importa archivos .nds — o archivos .zip/.7z que los contengan — directamente desde la app Archivos."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importez des fichiers .nds — ou des archives .zip/.7z qui en contiennent — directement depuis l'app Fichiers."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importa file .nds — o archivi .zip/.7z che li contengono — direttamente dall'app File."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ".nds ファイル（または .zip/.7z アーカイブ）をファイルアプリから直接読み込めます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ".nds 파일 — 또는 이를 담은 .zip/.7z 아카이브 — 을 파일 앱에서 바로 가져오세요."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Importe ficheiros .nds — ou arquivos .zip/.7z que os contenham — diretamente da app Ficheiros."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Импортируйте файлы .nds — или архивы .zip/.7z с ними — прямо из приложения «Файлы»."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "直接从“文件”App 导入 .nds 文件，或包含它们的 .zip/.7z 压缩包。"
-          }
-        }
-      }
-    },
     "Import BIOS/Firmware Files" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8598,60 +8540,118 @@
         }
       }
     },
-    "Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library." : {
+    "Import your game files — or .zip/.7z archives containing them — straight from the Files app." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importiere legale .nds-Backups — oder .zip/.7z-Archive mit ihnen — aus der Dateien-App und baue deine eDuo-Bibliothek auf."
+            "value" : "Importiere Dateien — oder .zip/.7z-Archive mit ihnen — direkt aus der Dateien-App."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa copias legales .nds — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eDuo."
+            "value" : "Importa archivos — o archivos .zip/.7z que los contengan — directamente desde la app Archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importez des sauvegardes .nds légales — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eDuo."
+            "value" : "Importez des fichiers — ou des archives .zip/.7z qui en contiennent — directement depuis l'app Fichiers."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa backup legali .nds — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eDuo."
+            "value" : "Importa file — o archivi .zip/.7z che li contengono — direttamente dall'app File."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "合法的な .nds バックアップ（.zip/.7z も可）をファイルアプリから読み込んで、eDuo ライブラリを作りましょう。"
+            "value" : "ゲームファイル（または .zip/.7z アーカイブ）をファイルアプリから直接読み込めます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "합법적인 .nds 백업 — 또는 .zip/.7z 아카이브 — 을 파일 앱에서 가져와 eDuo 라이브러리를 시작하세요."
+            "value" : "게임 파일 — 또는 이를 담은 .zip/.7z 아카이브 — 을 파일 앱에서 바로 가져오세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importe cópias legais .nds — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eDuo."
+            "value" : "Importe ficheiros — ou arquivos .zip/.7z que os contenham — diretamente da app Ficheiros."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Импортируйте легальные копии .nds — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eDuo."
+            "value" : "Импортируйте файлы — или архивы .zip/.7z с ними — прямо из приложения «Файлы»."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从“文件”App 导入你合法拥有的 .nds 备份（或 .zip/.7z 压缩包），开始搭建你的 eDuo 游戏库。"
+            "value" : "直接从“文件”App 导入游戏文件，或包含它们的 .zip/.7z 压缩包。"
+          }
+        }
+      }
+    },
+    "Import your own legal game backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importiere legale Backups — oder .zip/.7z-Archive mit ihnen — aus der Dateien-App und baue deine eDuo-Bibliothek auf."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa copias legales — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eDuo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importez des sauvegardes légales — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eDuo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa backup legali — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eDuo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合法的なバックアップ（.zip/.7z も可）をファイルアプリから読み込んで、eDuo ライブラリを作りましょう。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "합법적인 백업 — 또는 .zip/.7z 아카이브 — 을 파일 앱에서 가져와 eDuo 라이브러리를 시작하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importe cópias legais — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eDuo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортируйте легальные копии — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eDuo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从“文件”App 导入你合法拥有的游戏备份（或 .zip/.7z 压缩包），开始搭建你的 eDuo 游戏库。"
           }
         }
       }

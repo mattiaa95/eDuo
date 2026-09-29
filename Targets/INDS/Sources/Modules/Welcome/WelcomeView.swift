@@ -297,7 +297,7 @@ struct WelcomeView: View {
 
             Spacer().frame(height: 10)
 
-            Text("Import .nds files — or .zip/.7z archives containing them — straight from the Files app.")
+            Text("Import your game files — or .zip/.7z archives containing them — straight from the Files app.")
                 .font(.body)
                 .foregroundColor(.white.opacity(0.64))
                 .multilineTextAlignment(.center)

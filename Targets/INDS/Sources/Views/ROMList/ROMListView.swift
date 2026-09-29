@@ -380,7 +380,7 @@ struct ROMListView: View {
             VStack(spacing: 8) {
                 Text("Add your first game")
                     .font(.title2.bold())
-                Text("Import legal .nds backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library.")
+                Text("Import your own legal game backups — or .zip/.7z archives containing them — from the Files app to start building your eDuo library.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
