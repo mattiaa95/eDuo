@@ -11060,65 +11060,6 @@
         }
       }
     },
-    "No ROM named \"%1$@.nds\" was found. Import the ROM before its save file." : {
-      "comment" : "Import Failed alert: the user imported a .sav save file with no matching ROM in the library. %1$@ is the save file's base name.",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kein ROM mit dem Namen „%1$@.nds“ gefunden. Importiere erst das ROM, dann die Speicherdatei."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No se ha encontrado ninguna ROM con el nombre «%1$@.nds». Importa la ROM antes que su archivo de guardado."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucune ROM nommée « %1$@.nds » n'a été trouvée. Importez la ROM avant son fichier de sauvegarde."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuna ROM chiamata “%1$@.nds” trovata. Importa la ROM prima del suo file di salvataggio."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "「%1$@.nds」という名前のROMが見つかりません。セーブデータより先にROMを読み込んでください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“%1$@.nds”라는 ROM을 찾을 수 없습니다. 저장 파일보다 ROM을 먼저 가져오세요."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Não foi encontrada nenhuma ROM com o nome «%1$@.nds». Importe a ROM antes do respetivo ficheiro de gravação."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ROM с именем «%1$@.nds» не найден. Сначала импортируйте ROM, а затем файл сохранения."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未找到名为“%1$@.nds”的 ROM。请先导入 ROM，再导入其存档文件。"
-          }
-        }
-      }
-    },
     "No controller connected" : {
       "comment" : "Controller mapping status row: no gamepad paired",
       "localizations" : {
@@ -11174,6 +11115,65 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未连接手柄"
+          }
+        }
+      }
+    },
+    "No game named \"%1$@\" was found. Import the game before its save file." : {
+      "comment" : "Import Failed alert: the user imported a .sav save file with no matching ROM in the library. %1$@ is the save file's base name.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Spiel mit dem Namen „%1$@“ gefunden. Importiere erst das Spiel, dann die Speicherdatei."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha encontrado ningún juego con el nombre «%1$@». Importa el juego antes que su archivo de guardado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun jeu nommé « %1$@ » n'a été trouvé. Importez le jeu avant son fichier de sauvegarde."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun gioco chiamato “%1$@” trovato. Importa il gioco prima del suo file di salvataggio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%1$@」という名前のゲームが見つかりません。セーブデータより先にゲームを読み込んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%1$@”라는 게임을 찾을 수 없습니다. 저장 파일보다 게임을 먼저 가져오세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi encontrado nenhum jogo com o nome «%1$@». Importe o jogo antes do respetivo ficheiro de gravação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игра с именем «%1$@» не найдена. Сначала импортируйте игру, а затем файл сохранения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到名为“%1$@”的游戏。请先导入游戏，再导入其存档文件。"
           }
         }
       }
@@ -20437,61 +20437,61 @@
         }
       }
     },
-    "This archive doesn't contain any .nds or .sav files." : {
+    "This archive doesn't contain any game or save files." : {
       "comment" : "Import Failed alert: the user imported a .zip/.7z/.gz archive with nothing usable inside.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieses Archiv enthält keine .nds- oder .sav-Dateien."
+            "value" : "Dieses Archiv enthält keine Spiel- oder Speicherdateien."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este archivo comprimido no contiene ningún archivo .nds ni .sav."
+            "value" : "Este archivo comprimido no contiene ningún juego ni partida guardada."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cette archive ne contient aucun fichier .nds ni .sav."
+            "value" : "Cette archive ne contient aucun jeu ni fichier de sauvegarde."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Questo archivio non contiene file .nds o .sav."
+            "value" : "Questo archivio non contiene giochi né file di salvataggio."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このアーカイブには .nds ファイルも .sav ファイルも含まれていません。"
+            "value" : "このアーカイブにはゲームファイルもセーブデータも含まれていません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 아카이브에는 .nds 또는 .sav 파일이 없습니다."
+            "value" : "이 아카이브에는 게임 파일이나 저장 파일이 없습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este arquivo não contém ficheiros .nds nem .sav."
+            "value" : "Este arquivo não contém jogos nem ficheiros de gravação."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "В этом архиве нет файлов .nds или .sav."
+            "value" : "В этом архиве нет файлов игр или сохранений."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "该压缩包中不含任何 .nds 或 .sav 文件。"
+            "value" : "该压缩包中不含任何游戏文件或存档文件。"
           }
         }
       }
@@ -21846,61 +21846,61 @@
         }
       }
     },
-    "Unsupported file type .%1$@. Import a .nds ROM, a .zip/.7z/.gz archive, or a .sav save file." : {
+    "Unsupported file type .%1$@. Import a game file, a .zip/.7z/.gz archive, or a .sav save file." : {
       "comment" : "Import Failed alert: the user picked a file whose extension the importer doesn't accept. %1$@ is the file extension.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nicht unterstützter Dateityp .%1$@. Importiere ein .nds-ROM, ein .zip-/.7z-/.gz-Archiv oder eine .sav-Speicherdatei."
+            "value" : "Nicht unterstützter Dateityp .%1$@. Importiere eine Spieldatei, ein .zip-/.7z-/.gz-Archiv oder eine .sav-Speicherdatei."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tipo de archivo no compatible: .%1$@. Importa una ROM .nds, un archivo .zip/.7z/.gz o una partida guardada .sav."
+            "value" : "Tipo de archivo no compatible: .%1$@. Importa un archivo de juego, un archivo .zip/.7z/.gz o una partida guardada .sav."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type de fichier non pris en charge : .%1$@. Importez une ROM .nds, une archive .zip/.7z/.gz ou un fichier de sauvegarde .sav."
+            "value" : "Type de fichier non pris en charge : .%1$@. Importez un fichier de jeu, une archive .zip/.7z/.gz ou un fichier de sauvegarde .sav."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tipo di file .%1$@ non supportato. Importa una ROM .nds, un archivio .zip/.7z/.gz o un file di salvataggio .sav."
+            "value" : "Tipo di file .%1$@ non supportato. Importa un file di gioco, un archivio .zip/.7z/.gz o un file di salvataggio .sav."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ".%1$@ は対応していないファイル形式です。.nds のROM、.zip/.7z/.gz のアーカイブ、または .sav のセーブデータを読み込んでください。"
+            "value" : ".%1$@ は対応していないファイル形式です。ゲームファイル、.zip/.7z/.gz のアーカイブ、または .sav のセーブデータを読み込んでください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지원하지 않는 파일 형식 .%1$@입니다. .nds ROM, .zip/.7z/.gz 아카이브 또는 .sav 저장 파일을 가져오세요."
+            "value" : "지원하지 않는 파일 형식 .%1$@입니다. 게임 파일, .zip/.7z/.gz 아카이브 또는 .sav 저장 파일을 가져오세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tipo de ficheiro não suportado: .%1$@. Importe uma ROM .nds, um arquivo .zip/.7z/.gz ou um ficheiro de gravação .sav."
+            "value" : "Tipo de ficheiro não suportado: .%1$@. Importe um ficheiro de jogo, um arquivo .zip/.7z/.gz ou um ficheiro de gravação .sav."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Неподдерживаемый тип файла .%1$@. Импортируйте ROM .nds, архив .zip/.7z/.gz или файл сохранения .sav."
+            "value" : "Неподдерживаемый тип файла .%1$@. Импортируйте файл игры, архив .zip/.7z/.gz или файл сохранения .sav."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不支持的文件类型 .%1$@。请导入 .nds ROM、.zip/.7z/.gz 压缩包或 .sav 存档文件。"
+            "value" : "不支持的文件类型 .%1$@。请导入游戏文件、.zip/.7z/.gz 压缩包或 .sav 存档文件。"
           }
         }
       }

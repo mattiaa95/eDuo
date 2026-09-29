@@ -18,7 +18,7 @@ enum ROMStorageError: LocalizedError {
         case .unsupportedFileType(let ext):
             return String(
                 format: NSLocalizedString(
-                    "Unsupported file type .%1$@. Import a .nds ROM, a .zip/.7z/.gz archive, or a .sav save file.",
+                    "Unsupported file type .%1$@. Import a game file, a .zip/.7z/.gz archive, or a .sav save file.",
                     comment: "Import Failed alert: the user picked a file whose extension the importer doesn't accept. %1$@ is the file extension."
                 ),
                 ext
@@ -57,14 +57,14 @@ enum ROMStorageError: LocalizedError {
         case .noMatchingROM(let name):
             return String(
                 format: NSLocalizedString(
-                    "No ROM named \"%1$@.nds\" was found. Import the ROM before its save file.",
+                    "No game named \"%1$@\" was found. Import the game before its save file.",
                     comment: "Import Failed alert: the user imported a .sav save file with no matching ROM in the library. %1$@ is the save file's base name."
                 ),
                 name
             )
         case .zipContainsNoSupportedFiles:
             return NSLocalizedString(
-                "This archive doesn't contain any .nds or .sav files.",
+                "This archive doesn't contain any game or save files.",
                 comment: "Import Failed alert: the user imported a .zip/.7z/.gz archive with nothing usable inside."
             )
         case .invalidName:
