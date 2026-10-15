@@ -65,6 +65,8 @@ final class NDSRomViewController: UIViewController {
     private var turboHeld: Set<INDSButton> = []
     private var turboTimer: Timer?
     private var turboPhaseOn = true
+    /// A controller's «Rapid fire on/off»: for this session only.
+    private var turboSuspended = false
 
     /// True the instant `refreshBatterySaverState()` last saw thermal
     /// `.critical` — guards the "Cooling down" toast to fire once on entry
@@ -149,13 +151,23 @@ final class NDSRomViewController: UIViewController {
         #if canImport(UIKit, _version: 9127.0.85)
         guard #available(iOS 27.1, *) else { return }
         view.addInteraction(UIHingeInteraction { [weak self] _, update in
+            guard let self else { return }
             let halfOpen = update.hinge?.status == .partiallyOpen
-            guard let self, halfOpen != DSFoldableLayout.isHalfOpen else { return }
+            let changed = halfOpen != DSFoldableLayout.isHalfOpen
             DSFoldableLayout.isHalfOpen = halfOpen
-            self.applyCurrentScreenLayout(animated: true)
-            self.hudView.setNeedsLayout()
+            // The crease can move without the view's size changing (open to
+            // half open), so nothing else would re-ask the system.
+            self.refreshForHinge(animated: changed)
         })
         #endif
+    }
+
+    /// Re-lays everything out against what the system now says about the
+    /// crease. The game itself is untouched: only frames move.
+    private func refreshForHinge(animated: Bool) {
+        applyCurrentScreenLayout(animated: animated)
+        controllerView.setNeedsLayout()
+        hudView.setNeedsLayout()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -274,6 +286,10 @@ final class NDSRomViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         applyLayoutForCurrentSize()
+        #if DEBUG
+        INDSLayoutProbe.schedule(controller: self, dual: dualScreenView, buttons: controllerView,
+                                 hud: hudView, core: core)
+        #endif
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool { true }
@@ -638,6 +654,13 @@ final class NDSRomViewController: UIViewController {
     /// View resizing, etc.) are handled automatically by `DSDualScreenView`
     /// re-laying-out its *current* mode on every bounds change — this only
     /// needs to step in when the mode itself must change.
+    /// The rect every layout works in: the view minus its safe area.
+    private var contentRect: CGRect { view.bounds.inset(by: view.safeAreaInsets) }
+
+    /// Where the crease is right now, asked of the system every time: the
+    /// posture can change without the view's size changing (open to half open).
+    private var hingeState: DSHingeState { DSHingeState.resolve(for: view, content: contentRect) }
+
     private func applyLayoutForCurrentSize() {
         let content = view.bounds.inset(by: view.safeAreaInsets)
         guard content.width > 1, content.height > 1 else { return }
@@ -716,7 +739,7 @@ final class NDSRomViewController: UIViewController {
     private func applyCurrentScreenLayout(animated: Bool) {
         let mode: DSScreenLayoutMode = INDSExternalDisplayController.shared.isConnected
             ? .bottomOnly
-            : DSScreenLayoutPreferences.mode(for: orientationClass, containerSize: view.bounds.inset(by: view.safeAreaInsets).size)
+            : DSScreenLayoutPreferences.mode(for: orientationClass, containerSize: contentRect.size, hinge: hingeState)
         controllerView.screenLayoutMode = mode
         controllerView.setNeedsLayout()
         dualScreenView.applyLayout(mode: mode, swap: DSScreenLayoutPreferences.swapEnabled,
@@ -738,7 +761,7 @@ final class NDSRomViewController: UIViewController {
             hudView.showToast(NSLocalizedString("TV connected — showing touch screen here", comment: ""))
             return .bottomOnly
         }
-        let newMode = DSScreenLayoutPreferences.cycleMode(for: orientationClass, containerSize: view.bounds.inset(by: view.safeAreaInsets).size)
+        let newMode = DSScreenLayoutPreferences.cycleMode(for: orientationClass, containerSize: contentRect.size, hinge: hingeState)
         applyCurrentScreenLayout(animated: true)
         hudView.showToast(newMode.displayName)
         let settingName = orientationClass == .portrait ? "layoutPortrait" : "layoutLandscape"
@@ -1125,6 +1148,35 @@ final class NDSRomViewController: UIViewController {
             setScreenSwap(!DSScreenLayoutPreferences.swapEnabled)
         case .fastForward:
             break // hold state, routed through setFastForwardHold(_:) instead
+        case .nextFastForwardSpeed:
+            let speeds = INDSSpeedPreferences.fastForwardSpeeds
+            let index = speeds.firstIndex(of: INDSSpeedPreferences.fastForwardSpeed) ?? 0
+            let next = speeds[(index + 1) % speeds.count]
+            INDSSpeedPreferences.fastForwardSpeed = next
+            hudView.showToast(String(format: NSLocalizedString("Fast forward: %@", comment: "Toast: controller picked the next fast forward speed"),
+                                     INDSSpeedPreferences.label(next)))
+        case .fastForwardToggle:
+            setFastForwardHold(!isFastForwardHeld)
+            if isFastForwardHeld { warnIfSpeedClamped() }
+        case .turboToggle:
+            releaseTurboButtons()
+            turboSuspended.toggle()
+            hudView.showToast(turboSuspended
+                ? NSLocalizedString("Rapid fire off", comment: "")
+                : NSLocalizedString("Rapid fire on", comment: ""))
+        case .rewind:
+            guard core.canRewind else {
+                hudView.showToast(NSLocalizedString("Couldn't rewind", comment: "Rewind failed toast"))
+                return
+            }
+            // Same hazard as a state load: the capture's cartridge save lands
+            // on the .sav.
+            INDSSaveBackup.backupBeforeStateLoad(baseName: rom.baseName)
+            if core.rewindTenSeconds() {
+                applyConsoleClock()
+            } else {
+                hudView.showToast(NSLocalizedString("Couldn't rewind", comment: "Rewind failed toast"))
+            }
         }
     }
 
@@ -1202,7 +1254,7 @@ final class NDSRomViewController: UIViewController {
             saveSlots: saveStateSlotInfos(includeAuto: false),
             loadSlots: saveStateSlotInfos(includeAuto: true),
             currentVolume: core.audioVolume,
-            currentLayoutMode: DSScreenLayoutPreferences.mode(for: orientationClass, containerSize: view.bounds.inset(by: view.safeAreaInsets).size),
+            currentLayoutMode: DSScreenLayoutPreferences.mode(for: orientationClass, containerSize: contentRect.size, hinge: hingeState),
             currentSwapEnabled: DSScreenLayoutPreferences.swapEnabled,
             currentStretchEnabled: DSScreenLayoutPreferences.stretchEnabled,
             canRewind: core.canRewind,
@@ -1382,9 +1434,20 @@ final class NDSRomViewController: UIViewController {
     /// handling for exactly that reason: a button marked as turbo auto-fires
     /// whichever way it is being driven.
     private func applyButton(_ button: INDSButton, pressed: Bool) {
-        guard INDSTurboPreferences.isTurbo(button) else {
+        guard !turboSuspended, INDSTurboPreferences.isTurbo(button) else {
             core.setButton(button, pressed: pressed)
             return
+        }
+        // Latch mode: a press starts firing, the next press stops it, and
+        // releases do nothing.
+        if INDSTurboPreferences.toggleMode {
+            guard pressed else { return }
+            if turboHeld.contains(button) {
+                turboHeld.remove(button)
+                core.setButton(button, pressed: false)
+                if turboHeld.isEmpty { stopTurboTimer() }
+                return
+            }
         }
         if pressed {
             turboHeld.insert(button)
@@ -1402,14 +1465,15 @@ final class NDSRomViewController: UIViewController {
         }
     }
 
-    /// 15 pulses per second: each phase lasts ~2 of the 60 frames at which
-    /// the game reads the keypad, so none is lost. Any faster and some games
-    /// start dropping presses.
+    /// `INDSTurboPreferences.rateHz` pulses per second (15 by default: each
+    /// phase lasts ~2 of the 60 frames at which the game reads the keypad).
+    /// 30/s is one frame on, one off — the most a game can see.
     // Note: a Timer, not the display link — frame accuracy is not needed
     // here and coupling it to the video loop complicates it for nothing.
     private func startTurboTimer() {
         guard turboTimer == nil else { return }
-        turboTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 30.0, repeats: true) { [weak self] _ in
+        let phase = 1.0 / Double(2 * INDSTurboPreferences.rateHz)
+        turboTimer = Timer.scheduledTimer(withTimeInterval: phase, repeats: true) { [weak self] _ in
             guard let self else { return }
             self.turboPhaseOn.toggle()
             for button in self.turboHeld {

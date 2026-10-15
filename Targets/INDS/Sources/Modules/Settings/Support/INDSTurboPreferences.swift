@@ -5,7 +5,8 @@
 //  Which buttons auto-fire while held. This is a preference, not a property
 //  of the controller layout: it applies equally to the touch overlay, to a
 //  game controller and to a keyboard, and the layout only knows about the
-//  first of the three.
+//  first of the three. Rate and hold/latch mode are configurable (iGBA has
+//  the same ladder); a controller's «Rapid fire on/off» pauses all of it.
 //
 
 import Foundation
@@ -36,6 +37,22 @@ enum INDSTurboPreferences {
     }
 
     static var isAnyEnabled: Bool { !buttons.isEmpty }
+
+    private static let rateKey = "eNDSTurboRateHz"
+    private static let toggleModeKey = "eNDSTurboToggleMode"
+
+    /// Pulsaciones por segundo (`INDSTurboPattern.rates`).
+    static var rateHz: Int {
+        get { INDSTurboPattern.clampedRate(UserDefaults.standard.integer(forKey: rateKey)) }
+        set { UserDefaults.standard.set(INDSTurboPattern.clampedRate(newValue), forKey: rateKey) }
+    }
+
+    /// false = dispara mientras se mantiene; true = un toque lo engancha y
+    /// otro lo suelta.
+    static var toggleMode: Bool {
+        get { UserDefaults.standard.bool(forKey: toggleModeKey) }
+        set { UserDefaults.standard.set(newValue, forKey: toggleModeKey) }
+    }
 
     static func displayName(_ button: INDSButton) -> String {
         switch button {

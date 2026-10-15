@@ -16,6 +16,7 @@
 		0D188A982B9012CEC33A1A60 /* Bra86.c in Sources */ = {isa = PBXBuildFile; fileRef = 43BDA80E44199C5D5F771072 /* Bra86.c */; };
 		0F1DB859AD024577C66B60C0 /* ROMListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BFD3480A8B6F3479DFB063 /* ROMListViewModel.swift */; };
 		0FD3EE37A132F300E131806D /* THIRD_PARTY.md in Resources */ = {isa = PBXBuildFile; fileRef = B5F4E073693E71160ED123DC /* THIRD_PARTY.md */; };
+		1094F7BA68239D60B879D497 /* ControllerDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA95569637B700D394B8D89 /* ControllerDiagramView.swift */; };
 		1451342316B194B030DE476F /* INDSSaveBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C0FFF68243287F7F37E105 /* INDSSaveBackup.swift */; };
 		14D5D7924C8CBA1EEB6FC7E7 /* ROMIconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */; };
 		19426B550FCCCFE9D3CDB27F /* INDSAudioPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF19BE6740F2C40E41E8C1 /* INDSAudioPreferences.swift */; };
@@ -52,11 +53,14 @@
 		563283092891F08332158D62 /* DSDualScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D81E1C1BE496C8A347266 /* DSDualScreenView.swift */; };
 		56E0DCC07974F2D9A4B8BB82 /* EmulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0176C947E721C4B89E0F9 /* EmulationView.swift */; };
 		5C181F43F1279BAB2034B2D3 /* 7zFile.c in Sources */ = {isa = PBXBuildFile; fileRef = E465158ABA0236E3E733D0DB /* 7zFile.c */; };
+		6111F49067A07A508103E73E /* TurboSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135F11D0F697685D3261524 /* TurboSettingsSection.swift */; };
 		669D16C6D78FBA89E44FA99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A991E1D084A864C4E5992455 /* AppDelegate.swift */; };
 		6C1D219A0E653B33A7D64828 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D949A90A580DED9DB96AA /* AboutSettingsView.swift */; };
+		6D97C25F4F827FEA820653A9 /* DSHinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939BD45E462980BEC807C4A0 /* DSHinge.swift */; };
 		6E815950B0A142F228E374DB /* INDSControllerLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */; };
 		6ED22653E0E51DEEBB2356E4 /* ROMDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AE2312801B73F7EE221E73 /* ROMDetailView.swift */; };
 		71710BF31E7AC520C4699397 /* Lzma2Dec.c in Sources */ = {isa = PBXBuildFile; fileRef = C6773641AFE7D4CDAF9BB347 /* Lzma2Dec.c */; };
+		71F8FC66F52C8F3AF428D391 /* INDSControllerMappingLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */; };
 		7203C48B084BEBED695BDEF9 /* INDSDPadShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15F4158DDF71AEEA98604CB /* INDSDPadShapeView.swift */; };
 		735CD9D048FA52CDA463D85C /* INDSLayoutSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB124E8593E5A3AAB1CF4180 /* INDSLayoutSweep.swift */; };
 		751B7FDBA18FCED2565DA0ED /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2999805555B0E26E258294DF /* ioapi.c */; };
@@ -74,6 +78,7 @@
 		85264C5F012C01E964450C72 /* GPLv3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A11141D9BAF13505EF53AF5E /* GPLv3.txt */; };
 		866D03E5363F2629576DC2A8 /* BIOSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC975E99F30A6478407D804D /* BIOSManager.swift */; };
 		8A18C5D209F8DB2485DF3422 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FE82B2663ADE6894F327DB /* ProfileSettingsView.swift */; };
+		8AE3F5633035CDAF2228B33F /* INDSLayoutProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D5B45A7A77F3C3BA1D5E8D /* INDSLayoutProbe.swift */; };
 		8C058B05EB5A872CA1B7D1E8 /* SavingSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */; };
 		8C815AE8E50E83F08DAE233A /* INDSGamepadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBEE702CB715FEE662A096 /* INDSGamepadManager.swift */; };
 		8D6DB4270D99C1BED1AFF0A5 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E55426D1400B9517D4B9755 /* Notification+Names.swift */; };
@@ -101,6 +106,7 @@
 		C255D295ABFF60D2571C01FF /* INDSConsolePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702B9DB47C1592FC6A1B103 /* INDSConsolePreferences.swift */; };
 		C7A5E1DE75AE11E83FA64F1B /* NDSZipExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79A677DD13EC8EE25DB305 /* NDSZipExtractor.swift */; };
 		C8C5A853CCA1CBA1A86423F7 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1364600AC006B7697D61E124 /* ReplayKit.framework */; };
+		C8F9D6CDFD0B68767B97A23D /* INDSDuoSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94561B6BA004ABA2E3AFC5C /* INDSDuoSweep.swift */; };
 		CAFC795486C5F8E42D5A0049 /* NDSCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04371E0A508587EC8BD350 /* NDSCheat.swift */; };
 		CBDE78B663229C673670C084 /* INDSRTCPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3706BB5B202BDAD36D7642 /* INDSRTCPreferences.swift */; };
 		CD79E23B69E8F5F626B28F42 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D8BE41E3A39F7CDAF9019E /* DebugLog.swift */; };
@@ -181,6 +187,7 @@
 		1A463E15BE246EAEF8ABDCE4 /* NDSRomViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSRomViewWrapper.swift; sourceTree = "<group>"; };
 		1B3706BB5B202BDAD36D7642 /* INDSRTCPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSRTCPreferences.swift; sourceTree = "<group>"; };
 		2479AA705600481AC8E068A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerMappingLogic.swift; sourceTree = "<group>"; };
 		2999805555B0E26E258294DF /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		2A757FCC5A34401D5FA7E158 /* NDSSaveStatePaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSSaveStatePaths.swift; sourceTree = "<group>"; };
 		2D994BD3D0CC29A8C3FB3D6F /* INDSAppearanceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSAppearanceStore.swift; sourceTree = "<group>"; };
@@ -226,10 +233,12 @@
 		7B65064657F95120CC6FE300 /* INDSVisualSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSVisualSweep.swift; sourceTree = "<group>"; };
 		7C380A3BC39CAD2A1065CC9C /* UTType+NDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+NDS.swift"; sourceTree = "<group>"; };
 		7CED5D6BD8B64A4776064716 /* NDSCheatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCheatsView.swift; sourceTree = "<group>"; };
+		7DA95569637B700D394B8D89 /* ControllerDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerDiagramView.swift; sourceTree = "<group>"; };
 		832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSTurboPreferences.swift; sourceTree = "<group>"; };
 		8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSettingsView.swift; sourceTree = "<group>"; };
 		8EBC2B6BCAE919D63D3BF3FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91C904010B7AD91405065430 /* BatterySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySettingsView.swift; sourceTree = "<group>"; };
+		939BD45E462980BEC807C4A0 /* DSHinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSHinge.swift; sourceTree = "<group>"; };
 		983804A16F3F6D204E8E2666 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		98950CA5D27B39AB88DE84E4 /* EntitlementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementManager.swift; sourceTree = "<group>"; };
 		98C14F820A6FF3E4C6856995 /* INDSControllerMappingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerMappingStore.swift; sourceTree = "<group>"; };
@@ -248,6 +257,7 @@
 		A40D6EB2FD5B26FD67797B60 /* ROMClassicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMClassicCell.swift; sourceTree = "<group>"; };
 		A531BBE90CE99F4EE7E4E667 /* NDSGzExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSGzExtractor.swift; sourceTree = "<group>"; };
 		A684EB48BA636E4B19D659D2 /* Delta.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Delta.c; sourceTree = "<group>"; };
+		A7D5B45A7A77F3C3BA1D5E8D /* INDSLayoutProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutProbe.swift; sourceTree = "<group>"; };
 		A991E1D084A864C4E5992455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMappingView.swift; sourceTree = "<group>"; };
 		AC98B95B098222B202A26D90 /* ROMGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMGridCell.swift; sourceTree = "<group>"; };
@@ -264,6 +274,7 @@
 		BDACB16860CF2ECC472174B0 /* Bcj2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bcj2.c; sourceTree = "<group>"; };
 		BE01AC7366341C63635ABDBE /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		BEB5624AA1E29AD0ED68BE75 /* CpuArch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CpuArch.c; sourceTree = "<group>"; };
+		C135F11D0F697685D3261524 /* TurboSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurboSettingsSection.swift; sourceTree = "<group>"; };
 		C6773641AFE7D4CDAF9BB347 /* Lzma2Dec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Lzma2Dec.c; sourceTree = "<group>"; };
 		C6DCA18030F130D82ADE4548 /* INDSVirtualJoystickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSVirtualJoystickView.swift; sourceTree = "<group>"; };
 		C83D949A90A580DED9DB96AA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
@@ -285,6 +296,7 @@
 		E517FE7C9A79C0E99662E49A /* BraIA64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BraIA64.c; sourceTree = "<group>"; };
 		E5553014B15168C9AA9791FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E702B9DB47C1592FC6A1B103 /* INDSConsolePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSConsolePreferences.swift; sourceTree = "<group>"; };
+		E94561B6BA004ABA2E3AFC5C /* INDSDuoSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSDuoSweep.swift; sourceTree = "<group>"; };
 		E97C9863C3B2A57CED6BEE5A /* ROMStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMStorageManager.swift; sourceTree = "<group>"; };
 		EAA6D5088978BB263540A7A8 /* INDSPerGameProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSPerGameProfileStore.swift; sourceTree = "<group>"; };
 		ECBBEE702CB715FEE662A096 /* INDSGamepadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSGamepadManager.swift; sourceTree = "<group>"; };
@@ -333,6 +345,7 @@
 			children = (
 				E849AD9F9AD1EEBA0C393C86 /* PauseMenu */,
 				567D81E1C1BE496C8A347266 /* DSDualScreenView.swift */,
+				939BD45E462980BEC807C4A0 /* DSHinge.swift */,
 				DBF11C643DEBCEA9B266202E /* DSScreenLayout.swift */,
 				4FE0176C947E721C4B89E0F9 /* EmulationView.swift */,
 				D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */,
@@ -562,6 +575,7 @@
 		BF201C0878847E940FDAB34E /* ExternalInput */ = {
 			isa = PBXGroup;
 			children = (
+				27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */,
 				98C14F820A6FF3E4C6856995 /* INDSControllerMappingStore.swift */,
 				ECBBEE702CB715FEE662A096 /* INDSGamepadManager.swift */,
 				17F4D38E6C3CD27C005C5AC0 /* INDSKeyboardManager.swift */,
@@ -591,6 +605,7 @@
 				694F451CBABBB3B76AB6436A /* AudioSettingsView.swift */,
 				91C904010B7AD91405065430 /* BatterySettingsView.swift */,
 				AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */,
+				7DA95569637B700D394B8D89 /* ControllerDiagramView.swift */,
 				59C6AF4A1F010932AAE0AA51 /* ControlsSettingsView.swift */,
 				B67C81FAB8D94A0F7F7780F8 /* DateTimeSettingsView.swift */,
 				66093551E57D7F2366017F2E /* LicensesView.swift */,
@@ -598,6 +613,7 @@
 				8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */,
 				DE5A1654FBF63E78AD0A4A90 /* ScreensSettingsView.swift */,
 				4DEA93C3FDBA79FF93973F3E /* SettingsView.swift */,
+				C135F11D0F697685D3261524 /* TurboSettingsSection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -650,6 +666,7 @@
 				46D8BE41E3A39F7CDAF9019E /* DebugLog.swift */,
 				FE3A407B35815197407A6DED /* INDSHoneymoon.swift */,
 				A16BBD6076B0776B809C6E9E /* INDSLaunchFlags.swift */,
+				A7D5B45A7A77F3C3BA1D5E8D /* INDSLayoutProbe.swift */,
 				7902A93230922C4CF8A04C1A /* INDSMotion.swift */,
 				EAA6D5088978BB263540A7A8 /* INDSPerGameProfileStore.swift */,
 				CC4835B34D3B09CECA59BB7C /* INDSReviewPrompt.swift */,
@@ -706,6 +723,7 @@
 				9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */,
 				A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */,
 				A15F4158DDF71AEEA98604CB /* INDSDPadShapeView.swift */,
+				E94561B6BA004ABA2E3AFC5C /* INDSDuoSweep.swift */,
 				1313CF93EAE709E247482B5F /* INDSHaptics.swift */,
 				F9F8482D02C6F7598A67CE0D /* INDSLayoutEditorView.swift */,
 				BB124E8593E5A3AAB1CF4180 /* INDSLayoutSweep.swift */,
@@ -838,6 +856,7 @@
 				3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */,
 				6E815950B0A142F228E374DB /* INDSControllerLayoutManager.swift in Sources */,
 				7203C48B084BEBED695BDEF9 /* INDSDPadShapeView.swift in Sources */,
+				C8F9D6CDFD0B68767B97A23D /* INDSDuoSweep.swift in Sources */,
 				291E6DFA3565DF954FB15656 /* INDSHaptics.swift in Sources */,
 				214E57C446117905DC55A34C /* INDSLayoutEditorView.swift in Sources */,
 				735CD9D048FA52CDA463D85C /* INDSLayoutSweep.swift in Sources */,
@@ -846,11 +865,13 @@
 				FA4A12CBF8A66A00D178CE8F /* INDSVisualSweep.swift in Sources */,
 				3D6FB82EF1A333E5C861AA5D /* NDSControllerView.swift in Sources */,
 				CD79E23B69E8F5F626B28F42 /* DebugLog.swift in Sources */,
+				71F8FC66F52C8F3AF428D391 /* INDSControllerMappingLogic.swift in Sources */,
 				2917722F9FF00C876BCEFD05 /* INDSControllerMappingStore.swift in Sources */,
 				8C815AE8E50E83F08DAE233A /* INDSGamepadManager.swift in Sources */,
 				97185BD199CA510DA4CD9E3B /* INDSKeyboardManager.swift in Sources */,
 				DFB2E2F7FA097D6820428E50 /* INDSHoneymoon.swift in Sources */,
 				2701C1F0A9B6ED6A9676D847 /* INDSLaunchFlags.swift in Sources */,
+				8AE3F5633035CDAF2228B33F /* INDSLayoutProbe.swift in Sources */,
 				4BD9C7FF57E7383860DB7BAD /* INDSMotion.swift in Sources */,
 				83F0A97197B8BEAC7431E865 /* INDSPerGameProfileStore.swift in Sources */,
 				EBC08725663852E898679092 /* INDSReviewPrompt.swift in Sources */,
@@ -885,6 +906,7 @@
 				EE772FF6DB386ECE13ECF407 /* AudioSettingsView.swift in Sources */,
 				DB6098C9A24BEEF6CA8F0195 /* BatterySettingsView.swift in Sources */,
 				3D3B0A26D0B02C4A5A220F1F /* ButtonMappingView.swift in Sources */,
+				1094F7BA68239D60B879D497 /* ControllerDiagramView.swift in Sources */,
 				30F969EADB6CDF8F5D0EA452 /* ControlsSettingsView.swift in Sources */,
 				D9B0F801F9673CDD43CA29CC /* DateTimeSettingsView.swift in Sources */,
 				A7FD93EC1DD923F855AD87C5 /* LicensesView.swift in Sources */,
@@ -902,6 +924,7 @@
 				A9655D665D23578FAC99F041 /* INDSSavingPreferences.swift in Sources */,
 				93327EEADB6D2C3100E72AF7 /* INDSSpeedPreferences.swift in Sources */,
 				22B1D937B8B434AFF81888F3 /* INDSTurboPreferences.swift in Sources */,
+				6111F49067A07A508103E73E /* TurboSettingsSection.swift in Sources */,
 				BAFEFD231C0D3E3837FA20A0 /* SplashScreenView.swift in Sources */,
 				B02B467150A889372451E36C /* WelcomeView.swift in Sources */,
 				38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */,
@@ -924,6 +947,7 @@
 				24EF2321ACC91FAA0E3B9F44 /* unzip.c in Sources */,
 				900D59A822F56C2E53B3C24F /* BIOSSetupView.swift in Sources */,
 				563283092891F08332158D62 /* DSDualScreenView.swift in Sources */,
+				6D97C25F4F827FEA820653A9 /* DSHinge.swift in Sources */,
 				D664FE85EEE0291E6EC13822 /* DSScreenLayout.swift in Sources */,
 				56E0DCC07974F2D9A4B8BB82 /* EmulationView.swift in Sources */,
 				3BE2C9CA7F82A80484ED1B7D /* INDSExternalDisplayController.swift in Sources */,

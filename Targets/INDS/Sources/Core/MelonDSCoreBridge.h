@@ -26,6 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// (started/resumed and not paused or stopped).
 @property (nonatomic, readonly) BOOL running;
 
+/// Frames run since the ROM loaded. Diagnostics (layout checks) only.
+@property (nonatomic, readonly) uint64_t emulatedFrames;
+
+/// Whether the audio engine is running right now. Diagnostics only.
+@property (nonatomic, readonly) BOOL audioEngineRunning;
+
 @property (nonatomic, readonly) NSString *statusText;
 
 /// YES if an auto-save state already exists on disk for the loaded ROM.

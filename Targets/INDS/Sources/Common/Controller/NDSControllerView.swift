@@ -52,6 +52,12 @@ final class NDSControllerView: UIView {
 
     private var buttonViews: [INDSControllerButtonID: UIView] = [:]
     private var buttonFrames: [INDSControllerButtonID: CGRect] = [:]
+    /// Where every drawn button is right now, in this view's coordinates.
+    /// Read by the layout probe (`INDSLayoutProbe`).
+    var probeFrames: [String: CGRect] {
+        Dictionary(uniqueKeysWithValues: buttonViews.filter { !$0.value.isHidden }
+            .map { (String(describing: $0.key), $0.value.frame) })
+    }
     private var joystickView: INDSVirtualJoystickView?
     private var touchButtons: [UITouch: Set<INDSButton>] = [:]
     /// What the delegate currently believes is down from touches: the union
@@ -94,8 +100,7 @@ final class NDSControllerView: UIView {
             stretch: DSScreenLayoutPreferences.stretchEnabled,
             // Same crease the screens use, or the touch panel and the thumb
             // clusters drift apart.
-            fold: DSFoldableLayout.fold(for: self, content: contentRect,
-                                        vertical: containerSize.height >= containerSize.width)) {
+            hinge: DSHingeState.resolve(for: self, content: contentRect)) {
             return foldable.controls ?? defaults()
         }
         if let console = DSConsoleLayout.current(in: containerSize, mode: screenLayoutMode,

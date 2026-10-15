@@ -22,6 +22,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // The same thing, visually (`-iNDSVisualSweep`): renders the
         // emulation screen to PNG at foldable/iPad sizes and exits.
         INDSVisualSweep.runIfRequested()
+        // The iPhone Duo's measured geometry (`-iNDSDuoSweep`), driven by
+        // `scripts/duo_layout_check.sh`.
+        INDSDuoSweep.runIfRequested()
 #endif
         EntitlementManager.shared.startTransactionListener()
         EntitlementManager.shared.refreshEntitlementsAsync()

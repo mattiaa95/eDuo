@@ -50,6 +50,7 @@ struct ROMListView: View {
                     libraryContent
                 }
             }
+            .modifier(INDSAutoOpenModifier(roms: viewModel.filteredROMs))
             .navigationTitle("eDuo")
             .navigationBarTitleDisplayMode(.inline)
             .overlay(alignment: .top) {

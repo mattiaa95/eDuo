@@ -7,11 +7,15 @@ struct eNDSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(romLibrary)
-                .onOpenURL { url in
-                    AppDelegate.handleFileURL(url)
-                }
+            if INDSLaunchFlags.openMapping {
+                NavigationStack { ButtonMappingView() }
+            } else {
+                ContentView()
+                    .environmentObject(romLibrary)
+                    .onOpenURL { url in
+                        AppDelegate.handleFileURL(url)
+                    }
+            }
         }
     }
 }

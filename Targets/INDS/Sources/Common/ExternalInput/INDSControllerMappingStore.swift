@@ -2,10 +2,9 @@
 //  INDSControllerMappingStore.swift
 //  eDuo
 //
-//  Ported and adapted from iGBA's ControllerMappingStore.swift:
-//  single source of truth for external-gamepad button remapping. Same shape
-//  (active mapping + per-controller-model profiles in UserDefaults, healed on
-//  every read), rescoped to the DS button set.
+//  Ported and adapted from iGBA's ControllerMappingStore.swift: single source
+//  of truth for external-gamepad button remapping. The pure rules (defaults,
+//  migration, conflicts) live in INDSControllerMappingLogic.swift.
 //
 //  Storage model:
 //  - `activeKey` ([physicalKey: targetRawValue]) is the ACTIVE mapping —
@@ -13,65 +12,43 @@
 //    remapping never requires the manager to be told about a change.
 //  - `profilesKey` ([profileID: mapping]) remembers one mapping per
 //    controller model (vendor + productCategory); connecting a known
-//    controller re-activates its profile automatically
-//    (`INDSGamepadManager` calls `activateProfile` on connect).
+//    controller re-activates its profile automatically.
+//  - `pendingKey`: edits made with no controller connected, merged over the
+//    profile when one connects (otherwise the profile would overwrite them).
 //
-//  Deliberately NOT remappable: the d-pad and left thumbstick (movement stays
-//  fixed — see `INDSGamepadManager`) and the system Menu button (always
-//  pause, guaranteeing a way into the pause menu even with a blank mapping).
-//  Keyboard input is a separate, fixed (non-remappable) scheme — see
-//  `INDSKeyboardManager` — this store only covers gamepads ("per-mando").
+//  Everything is remappable, the d-pad and the Menu button included. Only the
+//  left stick always moves, and a remapped Menu button still opens the pause
+//  menu when held if nothing else does (`INDSMappingLogic.menuEscapeApplies`).
 //
 
 import Foundation
 import GameController
 
+extension Notification.Name {
+    static let indsControllerMappingDidChange = Notification.Name("INDSControllerMappingDidChange")
+}
+
 /// Discrete app-level actions an external-input button can trigger, distinct
-/// from the 12 DS buttons. `fastForward` is a hold (start/stop), the rest
-/// fire once per press. Handled by `NDSRomViewController`.
+/// from the 12 DS buttons. Handled by `NDSRomViewController`.
 enum INDSControllerAppAction {
     case pause
     case quickSave
     case quickLoad
     case cycleScreenLayout
     case swapScreens
+    /// Hold state; reported through `setFastForwardActive` instead.
     case fastForward
+    /// A short tap on the Fast Forward hold: step to the next rate.
+    case nextFastForwardSpeed
+    case fastForwardToggle
+    case turboToggle
+    case rewind
 }
 
-/// What a physical gamepad button can be assigned to: one of the 12 DS
-/// buttons, or an app action. DS-button raw values are IDENTICAL to
-/// `INDSButton`'s own raw values (A=0, B=1, Select=2, Start=3, Right=4,
-/// Left=5, Up=6, Down=7, R=8, L=9, X=10, Y=11), so resolving a target that is
-/// a DS button is a plain `INDSButton(rawValue:)` round trip. App actions use
-/// raw values ≥ 50 so they can never collide with a DS button's raw value.
-enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
-    case a = 0
-    case b = 1
-    case select = 2
-    case start = 3
-    case right = 4
-    case left = 5
-    case up = 6
-    case down = 7
-    case r = 8
-    case l = 9
-    case x = 10
-    case y = 11
-
-    case pause = 50
-    case quickSave = 51
-    case quickLoad = 52
-    case cycleScreenLayout = 53
-    case swapScreens = 54
-    case fastForward = 55
-
-    case none = 99
-
-    var id: Int { rawValue }
-
+extension INDSMappingTarget {
     /// `nil` for anything that isn't one of the 12 DS buttons.
     var indsButton: INDSButton? {
-        guard (0...11).contains(rawValue) else { return nil }
+        guard isDSButton else { return nil }
         return INDSButton(rawValue: rawValue)
     }
 
@@ -84,9 +61,14 @@ enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
         case .cycleScreenLayout: return .cycleScreenLayout
         case .swapScreens: return .swapScreens
         case .fastForward: return .fastForward
+        case .fastForwardToggle: return .fastForwardToggle
+        case .turboToggle: return .turboToggle
+        case .rewind: return .rewind
         default: return nil
         }
     }
+
+    var isEmulatorAction: Bool { Self.emulatorOrder.contains(self) }
 
     var displayName: String {
         switch self {
@@ -107,106 +89,135 @@ enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
         case .quickLoad: return NSLocalizedString("Quick Load", comment: "Mapping target")
         case .cycleScreenLayout: return NSLocalizedString("Cycle Screen Layout", comment: "Mapping target")
         case .swapScreens: return NSLocalizedString("Swap Screens", comment: "Mapping target")
-        case .fastForward: return NSLocalizedString("Fast Forward (Hold)", comment: "Mapping target")
+        case .fastForward: return NSLocalizedString("Fast forward (hold)", comment: "Mapping target: fast forward while the button is held")
+        case .fastForwardToggle: return NSLocalizedString("Fast forward (on/off)", comment: "Mapping target: one press turns fast forward on, the next one off")
+        case .turboToggle: return NSLocalizedString("Rapid fire on/off", comment: "Mapping target: switches rapid fire (turbo buttons) on or off")
+        case .rewind: return NSLocalizedString("Rewind", comment: "")
         case .none: return NSLocalizedString("Unassigned", comment: "Mapping target")
         }
     }
 
-    /// Picker order: DS face/shoulder/start-select buttons first, D-pad
-    /// directions (rarely retargeted, but valid targets per spec), then app
-    /// actions, then "Unassigned" last.
-    static let pickerOrder: [INDSMappingTarget] = [
-        .a, .b, .x, .y, .l, .r, .start, .select,
-        .up, .down, .left, .right,
-        .pause, .quickSave, .quickLoad, .cycleScreenLayout, .swapScreens, .fastForward,
-        .none,
-    ]
+    /// Una línea que cuenta qué hace, para la lista de acciones.
+    var detail: String? {
+        switch self {
+        case .fastForward: return NSLocalizedString("Hold to speed up. A quick tap picks the next speed.", comment: "Mapping target detail")
+        case .fastForwardToggle: return NSLocalizedString("Press once to speed up, again to go back.", comment: "Mapping target detail")
+        case .turboToggle: return NSLocalizedString("Pauses or resumes rapid fire on the buttons you chose.", comment: "Mapping target detail")
+        case .rewind: return NSLocalizedString("Jump ~10 seconds back — undo that mistake", comment: "")
+        case .quickSave: return NSLocalizedString("Saves to slot 1 without opening the menu.", comment: "Mapping target detail")
+        case .quickLoad: return NSLocalizedString("Loads slot 1 without opening the menu.", comment: "Mapping target detail")
+        default: return nil
+        }
+    }
+
+    /// SF Symbol de la acción (no del botón físico).
+    var symbol: String {
+        switch self {
+        case .up: return "arrowtriangle.up.fill"
+        case .down: return "arrowtriangle.down.fill"
+        case .left: return "arrowtriangle.left.fill"
+        case .right: return "arrowtriangle.right.fill"
+        case .a: return "a.circle.fill"
+        case .b: return "b.circle.fill"
+        case .x: return "x.circle.fill"
+        case .y: return "y.circle.fill"
+        case .l: return "l.rectangle.roundedbottom.fill"
+        case .r: return "r.rectangle.roundedbottom.fill"
+        case .start: return "play.circle.fill"
+        case .select: return "capsule.fill"
+        case .pause: return "pause.circle.fill"
+        case .fastForward: return "forward.fill"
+        case .fastForwardToggle: return "forward.circle.fill"
+        case .turboToggle: return "flame.fill"
+        case .rewind: return "backward.end.alt.fill"
+        case .quickSave: return "square.and.arrow.down.fill"
+        case .quickLoad: return "square.and.arrow.up.fill"
+        case .cycleScreenLayout: return "rectangle.split.1x2.fill"
+        case .swapScreens: return "arrow.up.arrow.down"
+        case .none: return "circle.dashed"
+        }
+    }
+
+    /// Etiqueta corta para el dibujo del mando ("A", "Start"); vacía = símbolo.
+    var shortLabel: String {
+        switch self {
+        case .up: return "↑"
+        case .down: return "↓"
+        case .left: return "←"
+        case .right: return "→"
+        case .a, .b, .x, .y, .l, .r: return displayName
+        case .start: return "St"
+        case .select: return "Se"
+        case .none: return "—"
+        default: return ""
+        }
+    }
 }
 
-/// Per-controller button remapping store. Namespace-only (no instances),
-/// matching this codebase's other UserDefaults-backed stores (`INDSHaptics`,
-/// `INDSPerGameProfileStore`).
+/// Per-controller button remapping store. Namespace-only, like this
+/// codebase's other UserDefaults-backed stores.
 enum INDSControllerMappingStore {
 
     static let activeKey = "eNDSExternalControllerButtons"
     static let profilesKey = "eNDSExternalControllerProfiles"
+    static let pendingKey = "eNDSExternalControllerPendingMapping"
 
-    /// Physical inputs the user can remap, in UI display order. Keys match
-    /// `INDSGamepadManager`'s handler wiring — the d-pad and left thumbstick
-    /// are intentionally absent (movement stays fixed).
-    static let remappablePhysicalInputs: [String] = ["A", "B", "X", "Y", "L1", "R1", "L2", "R2", "Options"]
-
-    /// Positional "DS layout" default (see `INDSGamepadManager`'s doc
-    /// comment for the south/east/west/north reasoning) plus L2/R2/Options
-    /// covering the two DS buttons a standard 8-button-plus-bumpers pad has
-    /// no face button left for: L2→Select, R2→Start, Options→Pause (a
-    /// second, remappable way into the pause menu alongside the always-on
-    /// system Menu button).
-    static let defaultMapping: [String: Int] = [
-        "A": INDSMappingTarget.b.rawValue,
-        "B": INDSMappingTarget.a.rawValue,
-        "X": INDSMappingTarget.y.rawValue,
-        "Y": INDSMappingTarget.x.rawValue,
-        "L1": INDSMappingTarget.l.rawValue,
-        "R1": INDSMappingTarget.r.rawValue,
-        "L2": INDSMappingTarget.select.rawValue,
-        "R2": INDSMappingTarget.start.rawValue,
-        "Options": INDSMappingTarget.pause.rawValue,
-    ]
-
-    private static let validTargets: Set<Int> = Set(INDSMappingTarget.allCases.map(\.rawValue))
+    static var defaultMapping: [String: Int] { INDSMappingLogic.defaultMapping }
 
     // MARK: - Active mapping
 
-    /// Heals whatever is stored: every expected physical key present, every
-    /// value a valid target, anything else (a stale key from a future
-    /// version, or a corrupted value) dropped. Safe to call repeatedly;
-    /// writes only when something actually changed.
-    @discardableResult
-    static func repairActiveMapping() -> [String: Int] {
+    static func activeMapping() -> [String: Int] {
         let stored = UserDefaults.standard.dictionary(forKey: activeKey) as? [String: Int] ?? [:]
-        var repaired = defaultMapping
-        for (key, value) in stored where defaultMapping[key] != nil && validTargets.contains(value) {
-            repaired[key] = value
-        }
+        let repaired = INDSMappingLogic.migrate(stored)
         if repaired != stored {
             UserDefaults.standard.set(repaired, forKey: activeKey)
         }
         return repaired
     }
 
-    static func activeMapping() -> [String: Int] {
-        repairActiveMapping()
-    }
-
-    /// Resolves the live target for one physical input. Falls back to the
-    /// hardware default (never to raw `0`, which would silently mean "A")
-    /// when the key is missing from a stored mapping.
-    static func target(forPhysical key: String) -> INDSMappingTarget {
-        let raw = activeMapping()[key] ?? defaultMapping[key] ?? INDSMappingTarget.none.rawValue
+    /// Resolves the live target for one physical input.
+    static func target(forPhysical key: String, in mapping: [String: Int]? = nil) -> INDSMappingTarget {
+        let raw = (mapping ?? activeMapping())[key] ?? INDSMappingTarget.none.rawValue
         return INDSMappingTarget(rawValue: raw) ?? .none
     }
 
-    static func setTarget(_ target: INDSMappingTarget, forPhysical key: String, controller: GCController?) {
-        var mapping = activeMapping()
-        mapping[key] = target.rawValue
-        UserDefaults.standard.set(mapping, forKey: activeKey)
-        saveProfile(mapping, for: controller)
+    /// Sustituye el mapeo activo entero (deshacer, restablecer).
+    static func setMapping(_ mapping: [String: Int], controller: GCController?) {
+        let clean = INDSMappingLogic.migrate(mapping)
+        UserDefaults.standard.set(clean, forKey: activeKey)
+        if controller != nil { saveProfile(clean, for: controller) } else { rememberPending(clean) }
+        NotificationCenter.default.post(name: .indsControllerMappingDidChange, object: nil)
+    }
+
+    /// Asigna una acción a un botón físico. Devuelve lo que se ha quedado sin
+    /// ningún botón por culpa de esta asignación, para ofrecer deshacer.
+    @discardableResult
+    static func assign(_ target: INDSMappingTarget, toPhysical key: String, controller: GCController?) -> INDSMappingTarget? {
+        let result = INDSMappingLogic.assign(target, to: key, in: activeMapping())
+        UserDefaults.standard.set(result.mapping, forKey: activeKey)
+        if controller != nil { saveProfile(result.mapping, for: controller) } else { rememberPending([key: target.rawValue]) }
+        NotificationCenter.default.post(name: .indsControllerMappingDidChange, object: nil)
+        return result.displaced
     }
 
     static func resetToDefaults(controller: GCController?) {
+        setMapping(defaultMapping, controller: controller)
+    }
+
+    /// Todos los mandos a fábrica: perfiles, pendientes y el activo.
+    static func resetAllControllers() {
+        UserDefaults.standard.removeObject(forKey: profilesKey)
+        UserDefaults.standard.removeObject(forKey: pendingKey)
         UserDefaults.standard.set(defaultMapping, forKey: activeKey)
-        saveProfile(defaultMapping, for: controller)
+        NotificationCenter.default.post(name: .indsControllerMappingDidChange, object: nil)
     }
 
     // MARK: - Per-controller profiles
 
     /// One profile per controller model (vendor + category) — enough to give
-    /// e.g. a DualSense and an Xbox pad different mappings without needing a
-    /// per-device pairing UUID.
+    /// a DualSense and an Xbox pad different mappings without pairing UUIDs.
     static func profileID(for controller: GCController) -> String {
-        let vendor = controller.vendorName ?? "Unknown"
-        return "\(vendor)|\(controller.productCategory)"
+        "\(controller.vendorName ?? "Unknown")|\(controller.productCategory)"
     }
 
     private static func saveProfile(_ mapping: [String: Int], for controller: GCController?) {
@@ -216,16 +227,27 @@ enum INDSControllerMappingStore {
         UserDefaults.standard.set(profiles, forKey: profilesKey)
     }
 
-    /// Called when a controller connects: a known controller model
-    /// re-activates its saved mapping; an unknown one adopts the current
-    /// active mapping as its own starting profile.
+    private static func rememberPending(_ edits: [String: Int]) {
+        var pending = UserDefaults.standard.dictionary(forKey: pendingKey) as? [String: Int] ?? [:]
+        for (key, value) in edits { pending[key] = value }
+        UserDefaults.standard.set(pending, forKey: pendingKey)
+    }
+
+    /// Called when a controller connects: a known model re-activates its
+    /// saved mapping, an unknown one adopts the active mapping. Either way,
+    /// what was remapped with no controller around wins over what was saved.
     static func activateProfile(for controller: GCController) {
         let profiles = UserDefaults.standard.dictionary(forKey: profilesKey) as? [String: [String: Int]] ?? [:]
+        let pending = UserDefaults.standard.dictionary(forKey: pendingKey) as? [String: Int] ?? [:]
         if let saved = profiles[profileID(for: controller)] {
-            UserDefaults.standard.set(saved, forKey: activeKey)
-            repairActiveMapping()
+            // migrate: a 1.0 profile has no d-pad/Menu/L3… keys.
+            let merged = INDSMappingLogic.migrate(saved.merging(pending) { _, new in new })
+            UserDefaults.standard.set(merged, forKey: activeKey)
+            if merged != saved { saveProfile(merged, for: controller) }
         } else {
             saveProfile(activeMapping(), for: controller)
         }
+        UserDefaults.standard.removeObject(forKey: pendingKey)
+        NotificationCenter.default.post(name: .indsControllerMappingDidChange, object: nil)
     }
 }

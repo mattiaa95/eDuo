@@ -143,8 +143,7 @@ final class DSDualScreenView: UIView {
         let foldable = DSFoldableLayout.current(
             in: content.size, mode: mode, stretch: stretch,
             controlsReserved: reservesControlBand,
-            fold: DSFoldableLayout.fold(for: self, content: content,
-                                        vertical: content.height >= content.width))
+            hinge: DSHingeState.resolve(for: self, content: content))
         let console = foldable == nil && reservesControlBand
             ? DSConsoleLayout.current(in: content.size, mode: mode, stretch: stretch) : nil
         let contentOrigin = content.origin

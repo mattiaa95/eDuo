@@ -51,6 +51,17 @@ final class NDSHUDView: UIView {
     /// nil = off; otherwise the rate currently running.
     private var fastForwardSpeed: Double?
 
+    /// Menu / Layout / Speed pills and the status badges, as drawn now, in
+    /// this view's coordinates. Read by the layout probe (`INDSLayoutProbe`).
+    var probeFrames: [String: CGRect] {
+        var frames: [String: CGRect] = [:]
+        for (name, view) in [("menu", pauseButton), ("layout", layoutButton), ("speed", fastForwardButton)]
+        where !view.isHidden { frames[name] = view.frame }
+        for (name, view) in [("gamepadBadge", gamepadBadge), ("micBadge", micBadge), ("recordingBadge", recordingBadge)]
+        where !view.isHidden && view.window != nil { frames[name] = view.convert(view.bounds, to: self) }
+        return frames
+    }
+
     private let toastLabel = NDSHUDView.makeToastLabel()
     private var toastHideWorkItem: DispatchWorkItem?
 
@@ -195,7 +206,8 @@ final class NDSHUDView: UIView {
         guard content.width > 1, content.height > 1 else { return }
         let foldable = DSFoldableLayout.current(in: content.size, mode: screenLayoutMode,
                                                 stretch: DSScreenLayoutPreferences.stretchEnabled,
-                                                controlsReserved: controlsReserved)
+                                                controlsReserved: controlsReserved,
+                                                hinge: DSHingeState.resolve(for: self, content: content))
         let console = foldable == nil && controlsReserved
             ? DSConsoleLayout.current(in: content.size, mode: screenLayoutMode,
                                       stretch: DSScreenLayoutPreferences.stretchEnabled) : nil
@@ -248,7 +260,8 @@ final class NDSHUDView: UIView {
         // controls instead of over the game.
         let foldable = DSFoldableLayout.current(in: content.size, mode: screenLayoutMode,
                                                 stretch: DSScreenLayoutPreferences.stretchEnabled,
-                                                controlsReserved: controlsReserved)
+                                                controlsReserved: controlsReserved,
+                                                hinge: DSHingeState.resolve(for: self, content: content))
         let console = foldable == nil && controlsReserved
             ? DSConsoleLayout.current(in: content.size, mode: screenLayoutMode,
                                       stretch: DSScreenLayoutPreferences.stretchEnabled) : nil
@@ -322,7 +335,9 @@ final class NDSHUDView: UIView {
     private func gamepadHUDRow(in size: CGSize) -> INDSControllerLayout? {
         guard !controlsReserved, size.height >= size.width,
               INDSControllerLayoutManager.shared.persistedLayout == nil,
-              DSFoldableLayout.current(in: size, mode: screenLayoutMode, controlsReserved: false) == nil else { return nil }
+              DSFoldableLayout.current(in: size, mode: screenLayoutMode, controlsReserved: false,
+                                       hinge: DSHingeState.resolve(for: self, content: bounds.inset(by: safeAreaInsets))) == nil
+        else { return nil }
         let (top, bottom) = DSScreenGeometry.frames(mode: screenLayoutMode, swap: DSScreenLayoutPreferences.swapEnabled,
                                                     stretch: DSScreenLayoutPreferences.stretchEnabled,
                                                     in: CGRect(origin: .zero, size: size))

@@ -33,7 +33,6 @@ struct ControlsSettingsView: View {
     @State private var scale: Double
     @State private var hapticsEnabled: Bool
     @State private var hapticStrength: INDSHapticStrength
-    @State private var turboButtons: Set<INDSButton>
     @State private var fastForwardSpeed: Double
 
     init() {
@@ -42,7 +41,6 @@ struct ControlsSettingsView: View {
         _scale = State(initialValue: defaults.object(forKey: Self.scaleKey) as? Double ?? 1.0)
         _hapticsEnabled = State(initialValue: INDSHaptics.isEnabled)
         _hapticStrength = State(initialValue: INDSHaptics.strength)
-        _turboButtons = State(initialValue: INDSTurboPreferences.buttons)
         _fastForwardSpeed = State(initialValue: INDSSpeedPreferences.fastForwardSpeed)
     }
 
@@ -98,21 +96,7 @@ struct ControlsSettingsView: View {
                 Text("Reposition, resize, hide, and restyle every button, per orientation.")
             }
 
-            Section {
-                ForEach(INDSTurboPreferences.eligible, id: \.rawValue) { button in
-                    Toggle(INDSTurboPreferences.displayName(button), isOn: Binding(
-                        get: { turboButtons.contains(button) },
-                        set: { isOn in
-                            INDSTurboPreferences.setTurbo(isOn, for: button)
-                            turboButtons = INDSTurboPreferences.buttons
-                        }
-                    ))
-                }
-            } header: {
-                Text("Turbo")
-            } footer: {
-                Text("A turbo button fires by itself while you hold it. Works with the on-screen controls, a controller and a keyboard.")
-            }
+            INDSTurboSettingsSection()
 
             Section {
                 Picker("Speed", selection: $fastForwardSpeed) {

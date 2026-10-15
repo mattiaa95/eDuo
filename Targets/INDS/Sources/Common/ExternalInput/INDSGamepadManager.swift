@@ -11,26 +11,16 @@
 //   - Physical-button → DS-button/app-action resolution goes through
 //     `INDSControllerMappingStore` (per-controller-model remapping) instead
 //     of a single flat dictionary.
-//   - D-pad AND left thumbstick both drive movement simultaneously (union of
-//     both sources), matching the DS-layout defaults; ports
-//     iGBA's dpad-plus-thumbstick pattern but merges them into one directions
-//     set instead of only ever reading whichever changed last.
+//   - Everything goes through the mapping, the d-pad and the Menu button
+//     included. Only the left thumbstick always moves; its directions and
+//     whatever the mapped buttons hold are merged, so releasing one source
+//     never lets go of a DS button another source is still holding.
 //
-//  Button-position mapping ("DS layout"): GameController normalizes
-//  every gamepad (Xbox, PlayStation, MFi and the rest) to Xbox-style position
-//  names — buttonA/B/X/Y always mean south/east/west/north regardless of
-//  what's printed on the controller. A DS-style printed layout has B at
-//  south, A at east, Y at west, X at north — the exact rotation applied
-//  below — so a pad printed that way has its A/B/X/Y line up with the DS's
-//  own A/B/X/Y, while an Xbox/PlayStation pad's SOUTH button (labelled A or
-//  ✕) drives the DS's B (matching where B actually sits on a real DS).
-//
-//  Menu button: `controllerPausedHandler` (soft-deprecated by Apple in favor
-//  of `buttonMenu.valueChangedHandler`, but kept here — same as iGBA — since
-//  it already delivers exactly the single discrete "pause was pressed" event
-//  this needs, with no press/release bookkeeping required) is NEVER
-//  remappable, guaranteeing a way into the pause menu regardless of what the
-//  user does to the rest of the mapping.
+//  Menu button: wired like any other button when the controller exposes it
+//  (then `controllerPausedHandler` stays unset, or one press would do two
+//  things). Remapped, holding it still opens the pause menu if no other
+//  button does (`INDSMappingLogic.menuEscapeApplies`). Controllers that only
+//  report pause through `controllerPausedHandler` keep that as pause.
 //
 
 import GameController
@@ -52,30 +42,53 @@ import UIKit
 /// so a row that lights up is a button the game will actually read.
 enum INDSControllerElements {
 
-    /// The physical inputs the mapping store knows, in display order.
-    static let physicalKeys = ["A", "B", "X", "Y", "L1", "R1", "L2", "R2", "Options"]
+    /// Clave física → nombre de elemento de GameController.
+    static let elementName: [String: String] = [
+        "A": GCInputButtonA, "B": GCInputButtonB, "X": GCInputButtonX, "Y": GCInputButtonY,
+        "L1": GCInputLeftShoulder, "R1": GCInputRightShoulder,
+        "L2": GCInputLeftTrigger, "R2": GCInputRightTrigger,
+        "L3": GCInputLeftThumbstickButton, "R3": GCInputRightThumbstickButton,
+        "Options": GCInputButtonOptions, "Menu": GCInputButtonMenu,
+        "Home": GCInputButtonHome, "Share": GCInputButtonShare,
+    ]
 
+    /// The element behind a physical key, d-pad directions included. Typed
+    /// property first, then by name, so pads with no extendedGamepad work too.
     static func button(_ key: String, on controller: GCController) -> GCControllerButtonInput? {
-        let gamepad = controller.extendedGamepad
-        let profile = controller.physicalInputProfile
-
-        switch key {
-        case "A":       return gamepad?.buttonA       ?? profile.buttons[GCButtonElementName.a.rawValue]
-        case "B":       return gamepad?.buttonB       ?? profile.buttons[GCButtonElementName.b.rawValue]
-        case "X":       return gamepad?.buttonX       ?? profile.buttons[GCButtonElementName.x.rawValue]
-        case "Y":       return gamepad?.buttonY       ?? profile.buttons[GCButtonElementName.y.rawValue]
-        case "L1":      return gamepad?.leftShoulder  ?? profile.buttons[GCButtonElementName.leftShoulder.rawValue]
-        case "R1":      return gamepad?.rightShoulder ?? profile.buttons[GCButtonElementName.rightShoulder.rawValue]
-        case "L2":      return gamepad?.leftTrigger   ?? profile.buttons[GCButtonElementName.leftTrigger.rawValue]
-        case "R2":      return gamepad?.rightTrigger  ?? profile.buttons[GCButtonElementName.rightTrigger.rawValue]
-        case "Options": return gamepad?.buttonOptions ?? profile.buttons[GCButtonElementName.options.rawValue]
-        default:        return nil
+        if let dpad = directionPad(on: controller) {
+            switch key {
+            case "Up": return dpad.up
+            case "Down": return dpad.down
+            case "Left": return dpad.left
+            case "Right": return dpad.right
+            default: break
+            }
         }
+        let gamepad = controller.extendedGamepad
+        let typed: GCControllerButtonInput?
+        switch key {
+        case "A": typed = gamepad?.buttonA
+        case "B": typed = gamepad?.buttonB
+        case "X": typed = gamepad?.buttonX
+        case "Y": typed = gamepad?.buttonY
+        case "L1": typed = gamepad?.leftShoulder
+        case "R1": typed = gamepad?.rightShoulder
+        case "L2": typed = gamepad?.leftTrigger
+        case "R2": typed = gamepad?.rightTrigger
+        case "L3": typed = gamepad?.leftThumbstickButton
+        case "R3": typed = gamepad?.rightThumbstickButton
+        case "Options": typed = gamepad?.buttonOptions
+        case "Menu": typed = gamepad?.buttonMenu
+        case "Home": typed = gamepad?.buttonHome
+        default: typed = nil
+        }
+        if let typed { return typed }
+        return elementName[key].flatMap { controller.physicalInputProfile.buttons[$0] }
     }
 
     /// Every button this controller actually has, paired with its mapping key.
     static func buttons(on controller: GCController) -> [(key: String, button: GCControllerButtonInput)] {
-        physicalKeys.compactMap { key in
+        INDSPhysicalKey.all.compactMap { key in
             button(key, on: controller).map { (key, $0) }
         }
     }
@@ -115,6 +128,7 @@ protocol INDSGamepadManagerDelegate: AnyObject {
     func gamepadManagerDidChangeConnection(_ manager: INDSGamepadManager, connected: Bool)
 }
 
+
 final class INDSGamepadManager {
 
     weak var delegate: INDSGamepadManagerDelegate?
@@ -129,22 +143,17 @@ final class INDSGamepadManager {
 
     private var observers: [NSObjectProtocol] = []
 
-    // Movement is the union of whatever the d-pad and left thumbstick are
-    // each currently reporting, so releasing one source never cancels a
-    // direction the other source is still holding.
-    private var dpadDirections: Set<INDSButton> = []
+    /// What each physical key did when it went down, so its release undoes
+    /// exactly that even if the mapping changed in between.
+    private var pressedTargets: [String: INDSMappingTarget] = [:]
     private var stickDirections: Set<INDSButton> = []
-    /// Mapped face/shoulder buttons currently down, plus a held Fast-Forward
-    /// trigger: a pad that drops mid-press (Bluetooth, flat battery) never
-    /// sends the release, so `releaseAllInputs` has to send it instead —
-    /// otherwise the character keeps walking with nothing on screen to stop it.
+    /// DS buttons currently reported as pressed: the union of the stick and
+    /// every held key mapped to a DS button. Two keys on the same DS button
+    /// (L1 and L2 both on L) release it only when the last one lets go.
     private var heldButtons: Set<INDSButton> = []
-    private var fastForwardHeld = false
-    /// Last `pressed` state seen per physical key. `valueChangedHandler`
-    /// fires on every analog change of a trigger while `pressed` stays the
-    /// same, so without this edge check a remapped R2 cycled the layout (or
-    /// wrote a quick save) several times per squeeze.
-    private var physicalPressed: [String: Bool] = [:]
+    private var fastForwardKeys: Set<String> = []
+    private var fastForwardStartedAt: Date?
+    private var menuEscape: DispatchWorkItem?
 
     /// The manager whose handlers are currently installed on the shared
     /// `GCController`. Two managers can overlap briefly (one game screen torn
@@ -153,6 +162,10 @@ final class INDSGamepadManager {
     private static weak var handlerOwner: INDSGamepadManager?
 
     private static let stickThreshold: Float = 0.5
+    /// Shorter than this, a Fast Forward hold counts as a tap: next speed.
+    private static let fastForwardTap: TimeInterval = 0.25
+    /// Holding a remapped Menu this long opens the pause menu.
+    private static let menuEscapeDelay: TimeInterval = 0.6
 
     init() {
         let center = NotificationCenter.default
@@ -165,17 +178,20 @@ final class INDSGamepadManager {
             self?.handleDisconnect(of: controller)
         })
         // A button held while the app is suspended never delivers its
-        // release: the pad's state moves on without us. Let go of everything
-        // on the way out so nothing is still down on return.
+        // release. Let go of everything on the way out.
         observers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil,
                                             queue: .main) { [weak self] _ in
             self?.releaseHeldInputs()
         })
+        // Home/Share go back to iOS when they lose their job, and vice versa.
+        observers.append(center.addObserver(forName: .indsControllerMappingDidChange, object: nil,
+                                            queue: .main) { [weak self] _ in
+            guard let self, let current = self.current, Self.handlerOwner === self else { return }
+            Self.applySystemGestures(on: current)
+        })
 
-        // A controller can already be connected before this manager exists
-        // (e.g. paired over Bluetooth before the app launched) — connect
-        // notifications only fire for NEW connections, so this initial scan
-        // is required, not just a nicety.
+        // Connect notifications only fire for NEW connections: a pad paired
+        // before the app launched needs this initial scan.
         if let existing = GCController.controllers().first {
             attach(existing)
         }
@@ -207,25 +223,19 @@ final class INDSGamepadManager {
         current = nil
         delegate?.gamepadManagerDidChangeConnection(self, connected: false)
 
-        // A second pad already connected while the first was active never
-        // got a chance to attach (guarded above) — pick it up now instead of
-        // leaving the app permanently controller-less until a fresh connect.
         if let next = GCController.controllers().first(where: { $0 !== controller }) {
             attach(next)
         }
     }
 
     private func releaseAllInputs(_ controller: GCController) {
-        // Only the manager that installed the handlers may clear them: a
-        // `GCController` is shared, and an older instance deallocating after
-        // a newer one attached would otherwise silence the new game's pad.
         if Self.handlerOwner === self {
             Self.handlerOwner = nil
             controller.controllerPausedHandler = nil
-            INDSControllerElements.directionPad(on: controller)?.valueChangedHandler = nil
             INDSControllerElements.thumbstick(on: controller)?.valueChangedHandler = nil
             for (_, button) in INDSControllerElements.buttons(on: controller) {
                 button.valueChangedHandler = nil
+                button.preferredSystemGestureState = .enabled
             }
         }
         wiredInputCount = 0
@@ -235,14 +245,14 @@ final class INDSGamepadManager {
     /// Reports a release for everything currently down without unwiring the
     /// pad — the disconnect path and the background path both end here.
     private func releaseHeldInputs() {
-        physicalPressed = [:]
-        let held = dpadDirections.union(stickDirections).union(heldButtons)
-        dpadDirections = []
+        menuEscape?.cancel()
+        menuEscape = nil
+        pressedTargets = [:]
         stickDirections = []
-        heldButtons = []
-        for button in held { delegate?.gamepadManager(self, setButton: button, pressed: false) }
-        if fastForwardHeld {
-            fastForwardHeld = false
+        syncHeldButtons()
+        if !fastForwardKeys.isEmpty {
+            fastForwardKeys = []
+            fastForwardStartedAt = nil
             delegate?.gamepadManager(self, setFastForwardActive: false)
         }
     }
@@ -251,19 +261,8 @@ final class INDSGamepadManager {
 
     private func configureHandlers(_ controller: GCController) {
         Self.handlerOwner = self
-        controller.controllerPausedHandler = { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.gamepadManager(self, perform: .pause)
-        }
-
         wiredInputCount = 0
 
-        if let dpad = INDSControllerElements.directionPad(on: controller) {
-            wiredInputCount += 1
-            dpad.valueChangedHandler = { [weak self] dpad, _, _ in
-                self?.setDpadDirections(Self.directions(from: dpad))
-            }
-        }
         if let stick = INDSControllerElements.thumbstick(on: controller) {
             wiredInputCount += 1
             stick.valueChangedHandler = { [weak self] _, x, y in
@@ -271,12 +270,25 @@ final class INDSGamepadManager {
             }
         }
 
-        for (key, button) in INDSControllerElements.buttons(on: controller) {
+        let buttons = INDSControllerElements.buttons(on: controller)
+        for (key, button) in buttons {
             wiredInputCount += 1
             button.valueChangedHandler = { [weak self] _, _, pressed in
                 self?.handlePhysical(key, pressed: pressed)
             }
         }
+
+        // Only pads that don't expose Menu as a button get the legacy pause
+        // callback; wiring both would make one press do two things.
+        if !buttons.contains(where: { $0.key == "Menu" }) {
+            controller.controllerPausedHandler = { [weak self] _ in
+                guard let self else { return }
+                self.delegate?.gamepadManager(self, perform: .pause)
+            }
+        } else {
+            controller.controllerPausedHandler = nil
+        }
+        Self.applySystemGestures(on: controller)
 
         if wiredInputCount == 0 {
             NSLog("[INDSGamepadManager] %@ exposes no input this app can read: %@",
@@ -285,65 +297,92 @@ final class INDSGamepadManager {
         }
     }
 
+    /// Home/Share/Menu belong to iOS (Games app, screenshots) unless the user
+    /// gave them a job here.
+    static func applySystemGestures(on controller: GCController) {
+        let mapping = INDSControllerMappingStore.activeMapping()
+        for key in ["Home", "Share", "Menu"] {
+            let assigned = INDSControllerMappingStore.target(forPhysical: key, in: mapping) != .none
+            INDSControllerElements.button(key, on: controller)?.preferredSystemGestureState = assigned ? .disabled : .enabled
+        }
+    }
+
     // MARK: - Physical input -> mapping target
 
     private func handlePhysical(_ key: String, pressed: Bool) {
         // Edge only: an analog trigger reports every value change, most of
         // them with `pressed` unchanged.
-        guard (physicalPressed[key] ?? false) != pressed else { return }
-        physicalPressed[key] = pressed
+        guard (pressedTargets[key] != nil) != pressed else { return }
 
-        let target = INDSControllerMappingStore.target(forPhysical: key)
-
-        if let button = target.indsButton {
-            if pressed { heldButtons.insert(button) } else { heldButtons.remove(button) }
-            delegate?.gamepadManager(self, setButton: button, pressed: pressed)
-            return
+        if pressed {
+            let mapping = INDSControllerMappingStore.activeMapping()
+            let target = INDSControllerMappingStore.target(forPhysical: key, in: mapping)
+            pressedTargets[key] = target
+            if key == "Menu" && INDSMappingLogic.menuEscapeApplies(mapping) {
+                armMenuEscape()
+            }
+            pressAction(target, key: key)
+        } else {
+            let target = pressedTargets.removeValue(forKey: key) ?? .none
+            if key == "Menu" {
+                menuEscape?.cancel()
+                menuEscape = nil
+            }
+            releaseAction(target, key: key)
         }
+        syncHeldButtons()
+    }
 
+    private func pressAction(_ target: INDSMappingTarget, key: String) {
         switch target {
         case .fastForward:
-            fastForwardHeld = pressed
-            delegate?.gamepadManager(self, setFastForwardActive: pressed)
-        case .none:
-            break
+            if fastForwardKeys.isEmpty {
+                fastForwardStartedAt = Date()
+                delegate?.gamepadManager(self, setFastForwardActive: true)
+            }
+            fastForwardKeys.insert(key)
         default:
-            // Discrete app actions (pause / quick save / quick load / cycle
-            // layout / swap screens) fire once, on press only.
-            guard pressed, let action = target.appAction else { return }
+            // DS buttons go through syncHeldButtons; the rest fire once.
+            guard let action = target.appAction else { return }
             delegate?.gamepadManager(self, perform: action)
         }
     }
 
-    // MARK: - Movement (d-pad + thumbstick union, never remappable)
-
-    private func setDpadDirections(_ next: Set<INDSButton>) {
-        guard dpadDirections != next else { return }
-        let before = dpadDirections.union(stickDirections)
-        dpadDirections = next
-        emitDirectionDiff(before: before, after: dpadDirections.union(stickDirections))
+    private func releaseAction(_ target: INDSMappingTarget, key: String) {
+        guard target == .fastForward, fastForwardKeys.remove(key) != nil, fastForwardKeys.isEmpty else { return }
+        delegate?.gamepadManager(self, setFastForwardActive: false)
+        if let start = fastForwardStartedAt, Date().timeIntervalSince(start) < Self.fastForwardTap {
+            delegate?.gamepadManager(self, perform: .nextFastForwardSpeed)
+        }
+        fastForwardStartedAt = nil
     }
+
+    private func armMenuEscape() {
+        menuEscape?.cancel()
+        let item = DispatchWorkItem { [weak self] in
+            guard let self, self.pressedTargets["Menu"] != nil else { return }
+            self.menuEscape = nil
+            self.delegate?.gamepadManager(self, perform: .pause)
+        }
+        menuEscape = item
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.menuEscapeDelay, execute: item)
+    }
+
+    // MARK: - DS buttons (mapped keys + left stick)
 
     private func setStickDirections(_ next: Set<INDSButton>) {
         guard stickDirections != next else { return }
-        let before = dpadDirections.union(stickDirections)
         stickDirections = next
-        emitDirectionDiff(before: before, after: dpadDirections.union(stickDirections))
+        syncHeldButtons()
     }
 
-    private func emitDirectionDiff(before: Set<INDSButton>, after: Set<INDSButton>) {
-        guard before != after else { return }
-        for button in before.subtracting(after) { delegate?.gamepadManager(self, setButton: button, pressed: false) }
-        for button in after.subtracting(before) { delegate?.gamepadManager(self, setButton: button, pressed: true) }
-    }
-
-    private static func directions(from dpad: GCControllerDirectionPad) -> Set<INDSButton> {
-        var result: Set<INDSButton> = []
-        if dpad.up.isPressed { result.insert(.up) }
-        if dpad.down.isPressed { result.insert(.down) }
-        if dpad.left.isPressed { result.insert(.left) }
-        if dpad.right.isPressed { result.insert(.right) }
-        return result
+    private func syncHeldButtons() {
+        let next = stickDirections.union(pressedTargets.values.compactMap(\.indsButton))
+        guard next != heldButtons else { return }
+        let before = heldButtons
+        heldButtons = next
+        for button in before.subtracting(next) { delegate?.gamepadManager(self, setButton: button, pressed: false) }
+        for button in next.subtracting(before) { delegate?.gamepadManager(self, setButton: button, pressed: true) }
     }
 
     private static func directions(fromStickX x: Float, y: Float) -> Set<INDSButton> {

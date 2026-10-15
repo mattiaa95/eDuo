@@ -56,15 +56,21 @@ struct LicensesView: View {
         .navigationTitle("Licenses")
         .navigationBarTitleDisplayMode(.inline)
         .tint(INDSAppearanceStore.shared.accentColor)
-        .task {
-            let (license, thirdParty, notices) = await Task.detached(priority: .userInitiated) {
-                (Self.bundledText(named: "GPLv3", ext: "txt"),
-                 Self.bundledText(named: "THIRD_PARTY", ext: "md"),
-                 Self.bundledText(named: "NOTICES", ext: "txt"))
-            }.value
-            licenseText = license
-            thirdPartyText = thirdParty
-            noticesText = notices
+        // `onAppear` + `Task`, not `.task`: built with Xcode 27 the `.task`
+        // modifier is the iOS 27 variant (`_TaskModifier2`), a type iOS 17-18
+        // do not have, and `weak_swiftui_types_check.sh` rejects the archive.
+        .onAppear {
+            guard noticesText == nil else { return }
+            Task {
+                let (license, thirdParty, notices) = await Task.detached(priority: .userInitiated) {
+                    (Self.bundledText(named: "GPLv3", ext: "txt"),
+                     Self.bundledText(named: "THIRD_PARTY", ext: "md"),
+                     Self.bundledText(named: "NOTICES", ext: "txt"))
+                }.value
+                licenseText = license
+                thirdPartyText = thirdParty
+                noticesText = notices
+            }
         }
     }
 

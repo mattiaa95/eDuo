@@ -206,6 +206,9 @@ struct FramebufferSlot {
 // notes are next to each group below.
 struct Runtime {
     std::unique_ptr<NDS> nds;
+    // Frames the core has run since the ROM loaded; only read for the layout
+    // checks, to show a fold/unfold did not stop the game.
+    std::atomic<uint64_t> framesRun{0};
     std::string status = "melonDS core ready";
     std::string savePath;     // battery .sav path
     std::string romFileName;  // ROM filename incl. extension, for direct boot
@@ -436,6 +439,7 @@ void EmuThreadMain(Runtime *r) {
             for (int i = 0; i < framesThisTick; i++) {
                 ApplyPendingInput(r);
                 r->nds->RunFrame();
+                r->framesRun.fetch_add(1, std::memory_order_relaxed);
                 if (i + 1 < framesThisTick) {
                     // This frame only exists to advance emulation faster than
                     // real time; drop the audio it produced instead of
@@ -891,6 +895,14 @@ void* DynamicLibrary_LoadFunction(DynamicLibrary*, const char*) { return nullptr
 
 - (BOOL)running {
     return _runtime->nds != nullptr && _runtime->wantActive.load();
+}
+
+- (uint64_t)emulatedFrames {
+    return _runtime->framesRun.load(std::memory_order_relaxed);
+}
+
+- (BOOL)audioEngineRunning {
+    return self.audioEngine.isRunning;
 }
 
 - (NSString *)statusText {
