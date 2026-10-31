@@ -1,11 +1,13 @@
 # eDuo
 
 A retro game emulator for iPhone and iPad, built on the
-[melonDS](https://github.com/melonDS-emu/melonDS) emulation core.
+[melonDS](https://github.com/melonDS-emu/melonDS) emulation core, with a
+second handheld format built on [Azahar](https://github.com/azahar-emu/azahar).
 
 This repository contains the complete source code of the eDuo app as it is
 built and distributed. It is published under the **GNU GPLv3** (see
-`LICENSE`) — the same license as melonDS — so that anyone who receives the
+`LICENSE`) — the same license as melonDS, and compatible with Azahar's
+GPLv2-or-later — so that anyone who receives the
 app can study, build and modify exactly what runs on their device.
 
 ## Built with AI assistance
@@ -17,9 +19,13 @@ tested on real devices and shipped by a human — but it would be dishonest to
 present it as hand-typed work, so it is said here plainly rather than left
 for you to guess from the commit log.
 
-What that does **not** cover: the emulation core. `Vendor/melonDS` is
+What that does **not** cover: the emulation cores. `Vendor/melonDS` is
 unmodified upstream melonDS, written by Arisotura and the melonDS team, and
-no AI touched it.
+`Vendor/azahar` is upstream Azahar, written by the Citra and Azahar teams;
+no AI touched either. The only changes to Azahar are the small integration
+patches in `Native3DS/patches/` (iOS paths, the eDuo frontend hook, the
+embedded MoltenVK framework, preferring a user-dumped system font), which
+are part of the eDuo code described above.
 
 ## What eDuo adds on top of melonDS
 
@@ -46,6 +52,11 @@ no AI touched it.
 - **[teakra](https://github.com/wwylele/teakra)** — DSi DSP emulation, MIT.
 - **LZMA SDK** (7z extraction) — Igor Pavlov, public domain.
 - **minizip** (zip extraction) — Gilles Vollant, zlib license.
+- **[Azahar](https://github.com/azahar-emu/azahar)** — © Citra Emulator
+  Project / Azahar Emulator Project, GPLv2 or later. Pinned as a submodule
+  (`Vendor/azahar`); built without its JIT and without the built-in key
+  blob. No console keys or system files are included.
+- **MoltenVK** — The Brenwill Workshop Ltd. / Khronos Group, Apache-2.0.
 
 See `THIRD_PARTY.md` for the full component inventory — including the
 libraries melonDS itself vendors (blip-buf, xxHash, FatFs, tiny-AES-c,
@@ -55,7 +66,8 @@ license texts, which also ship inside the app (Settings › About › Licenses).
 ## Building
 
 See `BUILDING.md`. Short version: build the melonDS static libraries with
-CMake (exact flags documented), then open `eNDS.xcworkspace` and build the
+CMake (exact flags documented), build the Azahar core with
+`scripts/build_3ds_core.sh` (pinned commit + `Native3DS/patches`), then open `eNDS.xcworkspace` and build the
 `eNDS` scheme. No account-specific secrets are needed to build; signing uses
 your own team.
 
@@ -63,7 +75,8 @@ your own team.
 
 Every build of eDuo that leaves this machine gets a tag here — `v1.0-b29`,
 `v1.0-b30`, … — and each tag is the complete corresponding source for that
-exact binary. The current one has release notes on the [releases
+exact binary. Since build 53 (`v1.0.3-b53`) the tag also pins
+`Vendor/azahar` and carries the patches applied to it. The current one has release notes on the [releases
 page](https://github.com/mattiaa95/eDuo/releases). `main` may carry later
 work (comment translations, docs) that is not in any binary yet; when in
 doubt, build a tag.

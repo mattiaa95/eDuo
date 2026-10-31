@@ -1,0 +1,25 @@
+diff --git a/src/common/common_paths.h b/src/common/common_paths.h
+index cb79621..5d1216a 100644
+--- a/src/common/common_paths.h
++++ b/src/common/common_paths.h
+@@ -29,7 +29,7 @@
+ #elif defined(__APPLE__)
+ #include <TargetConditionals.h>
+ #if TARGET_OS_IPHONE
+-#define EMU_APPLE_DATA_DIR "Documents" DIR_SEP "Azahar"
++#define EMU_APPLE_DATA_DIR "Documents" DIR_SEP "System" // eDuo: neutral folder name in Files
+ #define LEGACY_CITRA_APPLE_DATA_DIR "Documents" DIR_SEP "Citra"
+ #define LEGACY_LIME3DS_APPLE_DATA_DIR "Documents" DIR_SEP "Lime3DS"
+ #else
+@@ -71,7 +71,11 @@
+ 
+ // Filenames
+ // Files in the directory returned by GetUserPath(UserPath::LogDir)
++#if defined(__APPLE__) && TARGET_OS_IPHONE
++#define LOG_FILE "core_log.txt" // eDuo
++#else
+ #define LOG_FILE "azahar_log.txt"
++#endif
+ 
+ // Files in the directory returned by GetUserPath(UserPath::ConfigDir)
+ #define EMU_CONFIG "emu.ini"

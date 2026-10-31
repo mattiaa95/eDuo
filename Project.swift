@@ -15,7 +15,17 @@ let project = Project(
             resources: ["Targets/INDS/Resources/**"],
             dependencies: [
                 .sdk(name: "AVFoundation", type: .framework),
-                .sdk(name: "ReplayKit", type: .framework)
+                .sdk(name: "ReplayKit", type: .framework),
+                // Second handheld format: Azahar core + eDuo frontend
+                // (scripts/build_3ds_core.sh) and the official MoltenVK.
+                .xcframework(path: "Build/E3DS.xcframework"),
+                .xcframework(path: "Build/MoltenVK.xcframework"),
+                .sdk(name: "AudioToolbox", type: .framework),
+                .sdk(name: "CoreAudio", type: .framework),
+                .sdk(name: "Metal", type: .framework),
+                .sdk(name: "QuartzCore", type: .framework),
+                .sdk(name: "IOSurface", type: .framework),
+                .sdk(name: "GameController", type: .framework)
             ],
             settings: .settings(base: [
                 "DEVELOPMENT_TEAM": "CPJ98JGHA8",
@@ -29,7 +39,9 @@ let project = Project(
                     "$(SRCROOT)/Build/melonDS-ios/src",
                     "$(SRCROOT)/Build/melonDS-ios-sim/src",
                     // Vendored LZMA SDK (.7z import, see Sources/Model/Sz7zShim.c)
-                    "$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma"
+                    "$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+                    // E3DS.h (3DS core frontend)
+                    "$(SRCROOT)/Native3DS/src"
                 ],
                 "LIBRARY_SEARCH_PATHS[sdk=iphoneos*]": [
                     "$(SRCROOT)/Build/melonDS-ios/src/$(CONFIGURATION)-iphoneos",

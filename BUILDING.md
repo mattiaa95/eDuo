@@ -51,7 +51,24 @@ This produces `libcore.a` / `libteakra.a` under
 `Build/melonDS-ios{,-sim}/src/...`, which is where the app's
 `LIBRARY_SEARCH_PATHS` (see `Project.swift`) expect them.
 
-## 3. Build the app
+## 3. Build the second-format core (Azahar)
+
+```sh
+git submodule update --init Vendor/azahar
+scripts/build_3ds_core.sh
+```
+
+`Vendor/azahar` is upstream [Azahar](https://github.com/azahar-emu/azahar)
+pinned to the commit the release was built against (the script refuses to
+build any other commit). The script applies the small eDuo patches in
+`Native3DS/patches/` in numeric order (see `Native3DS/patches/README.md`),
+builds Azahar plus the eDuo bridge in `Native3DS/` for device and simulator
+with CMake + Ninja (`brew install ninja`), and produces
+`Build/E3DS.xcframework` and `Build/MoltenVK.xcframework` (the official
+MoltenVK release that Azahar's CMake downloads), which `Project.swift`
+links. Set `DEVELOPER_DIR` if your Xcode is not the one the script names.
+
+## 4. Build the app
 
 ```sh
 xcodebuild -workspace eNDS.xcworkspace -scheme eNDS \

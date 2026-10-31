@@ -1,6 +1,14 @@
 import UIKit
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    /// Narrowed by a game screen that pins its orientation (3DS: Screens >
+    /// Orientation); everything else leaves it at `.all`.
+    static var orientationLock: UIInterfaceOrientationMask = .all
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        Self.orientationLock
+    }
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil

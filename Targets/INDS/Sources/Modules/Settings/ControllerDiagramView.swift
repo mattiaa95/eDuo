@@ -12,9 +12,9 @@
 import GameController
 import SwiftUI
 
-/// La forma del mando, para dibujarlo: con los sticks abajo y simétricos
-/// (PlayStation) o con el izquierdo arriba (Xbox, Switch Pro, casi todos los
-/// de móvil: Backbone, Kishi, 8BitDo).
+/// The controller's shape, for drawing it: with symmetric sticks at the bottom
+/// (PlayStation) or with the left one on top (Xbox, Switch Pro, most
+/// mobile ones: Backbone, Kishi, 8BitDo).
 enum ControllerStyle {
     case xbox, playstation, nintendo, generic
 
@@ -35,9 +35,9 @@ enum ControllerStyle {
 }
 
 struct ControllerGlyph {
-    /// Lo que pone en el botón ("LB", "Cross", "A").
+    /// What is printed on the button ("LB", "Cross", "A").
     let name: String
-    /// SF Symbol del botón físico.
+    /// SF Symbol of the physical button.
     let symbol: String
 }
 
@@ -68,13 +68,13 @@ enum ControllerGlyphs {
         }
     }
 
-    /// El elemento físico de una clave, también las direcciones de la cruceta.
+    /// The physical element of a key, including the d-pad directions.
     static func element(for key: String, on controller: GCController?) -> GCControllerButtonInput? {
         guard let controller else { return nil }
         return INDSControllerElements.button(key, on: controller)
     }
 
-    /// Un símbolo que no existe en esta versión de iOS pinta un hueco en blanco.
+    /// A symbol that doesn't exist on this iOS version draws a blank gap.
     private static func available(_ symbol: String?) -> String? {
         guard let symbol, UIImage(systemName: symbol) != nil else { return nil }
         return symbol
@@ -89,12 +89,12 @@ enum ControllerGlyphs {
         guard let symbol = available(element.sfSymbolsName) else {
             return ControllerGlyph(name: name, symbol: fallback)
         }
-        // Lo relleno se lee mejor sobre el dibujo; no todos los símbolos lo tienen.
+        // Filled reads better over the drawing; not every symbol has it.
         let filled = symbol.hasSuffix(".fill") || symbol.hasSuffix(".filled") ? symbol : symbol + ".fill"
         return ControllerGlyph(name: name, symbol: available(filled) ?? symbol)
     }
 
-    /// ¿Tiene este mando ese botón? Sin mando conectado se enseñan todos.
+    /// Does this controller have that button? With no controller connected, all are shown.
     static func exists(_ key: String, on controller: GCController?) -> Bool {
         guard let controller else { return true }
         return element(for: key, on: controller) != nil
@@ -112,7 +112,7 @@ struct ControllerDiagramView: View {
     let mapping: [String: Int]
     let pressed: Set<String>
     let selected: String?
-    /// Esperando a que se pulse un botón para asignarle una acción.
+    /// Waiting for a button press to assign an action to it.
     let capturing: Bool
     let onTap: (String) -> Void
 
@@ -142,7 +142,7 @@ struct ControllerDiagramView: View {
             Spot(key: "R1", center: CGPoint(x: 0.78, y: 0.17), kind: .shoulder),
             Spot(key: "L3", center: leftStick, kind: .stick),
             Spot(key: "R3", center: rightStick, kind: .stick),
-            // Posiciones de Apple: A abajo, B derecha, X izquierda, Y arriba.
+            // Apple positions: A bottom, B right, X left, Y top.
             Spot(key: "A", center: CGPoint(x: face.x, y: face.y + faceOffset * Self.aspect), kind: .face),
             Spot(key: "B", center: CGPoint(x: face.x + faceOffset, y: face.y), kind: .face),
             Spot(key: "X", center: CGPoint(x: face.x - faceOffset, y: face.y), kind: .face),
@@ -183,7 +183,7 @@ struct ControllerDiagramView: View {
                                          startPoint: .top, endPoint: .bottom))
                     .shadow(color: .black.opacity(0.18), radius: 10, y: 5)
 
-                // La cruz de la cruceta, debajo de sus cuatro brazos.
+                // The d-pad cross, beneath its four arms.
                 if let up = spots.first(where: { $0.key == "Up" }) {
                     let center = CGPoint(x: up.center.x, y: up.center.y + 0.058 * Self.aspect)
                     DPadCross()
@@ -258,7 +258,7 @@ struct ControllerDiagramView: View {
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
-    /// Lo que hace ahora, en pequeño, cuando no es lo de fábrica.
+    /// What it does now, in small print, when it isn't the default.
     private func badge(for target: INDSMappingTarget) -> some View {
         ZStack {
             Circle().fill(target == .none ? Color(UIColor.systemGray) : Color.orange)
@@ -317,8 +317,8 @@ struct ControllerDiagramView: View {
 
 // MARK: - Shapes
 
-/// Cuerpo con dos empuñaduras: un rectángulo redondeado y dos óvalos
-/// inclinados. Sin contorno, así la unión no enseña costuras.
+/// Body with two grips: a rounded rectangle and two tilted ovals.
+/// No outline, so the join shows no seams.
 private struct ControllerBodyShape: Shape {
     func path(in rect: CGRect) -> Path {
         let w = rect.width, h = rect.height
@@ -347,8 +347,8 @@ private struct DPadCross: Shape {
     }
 }
 
-/// La forma de un botón. Gatillo: redondeado arriba, recto abajo (iOS 15 no
-/// tiene UnevenRoundedRectangle ni AnyShape).
+/// The shape of a button. Trigger: rounded on top, straight at the bottom (iOS 15 has
+/// neither UnevenRoundedRectangle nor AnyShape).
 private struct ElementShape: Shape {
     enum Form { case circle, trigger, capsule, rounded }
     let form: Form

@@ -28365,6 +28365,888 @@
     },
     "—" : {
       "shouldTranslate" : false
+    },
+    "This game file is encrypted. Add bios7.bin from your own console in Settings → BIOS Setup, or use a decrypted copy of the game." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Spieldatei ist verschlüsselt. Füge unter Einstellungen → BIOS-Einrichtung die bios7.bin deiner eigenen Konsole hinzu oder verwende eine entschlüsselte Kopie des Spiels."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este archivo de juego está cifrado. Añade bios7.bin de tu propia consola en Ajustes → Configuración de BIOS, o usa una copia descifrada del juego."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier de jeu est chiffré. Ajoutez le bios7.bin de votre propre console dans Réglages → Configuration du BIOS, ou utilisez une copie déchiffrée du jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo file di gioco è cifrato. Aggiungi bios7.bin della tua console in Impostazioni → Configurazione BIOS, oppure usa una copia decifrata del gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームファイルは暗号化されています。設定 → BIOS設定でご自身の本体の bios7.bin を追加するか、復号済みのゲームを使ってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임 파일은 암호화되어 있습니다. 설정 → BIOS 설정에서 본인 기기의 bios7.bin을 추가하거나 복호화된 게임 파일을 사용하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este ficheiro de jogo está encriptado. Adicione o bios7.bin da sua própria consola em Definições → Configuração da BIOS, ou use uma cópia desencriptada do jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот файл игры зашифрован. Добавьте bios7.bin со своей консоли в «Настройки → Настройка BIOS» или используйте расшифрованную копию игры."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此游戏文件已加密。请在“设置 → BIOS 设置”中添加你自己主机的 bios7.bin，或使用已解密的游戏文件。"
+          }
+        }
+      }
+    },
+    "This game only runs on a DSi, which eDuo does not emulate." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Spiel läuft nur auf einem DSi, und eDuo emuliert den DSi nicht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este juego solo funciona en una DSi, y eDuo no emula la DSi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce jeu ne fonctionne que sur DSi, et eDuo n’émule pas la DSi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo gioco funziona solo su DSi, e eDuo non emula il DSi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームは DSi 専用で、eDuo は DSi をエミュレートしません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임은 DSi 전용이며 eDuo는 DSi를 에뮬레이션하지 않습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este jogo só funciona numa DSi, e o eDuo não emula a DSi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта игра работает только на DSi, а eDuo не эмулирует DSi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此游戏仅能在 DSi 上运行，而 eDuo 不模拟 DSi。"
+          }
+        }
+      }
+    },
+    "Encrypted game files need bios7.bin to start." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verschlüsselte Spieldateien brauchen bios7.bin zum Starten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los archivos de juego cifrados necesitan bios7.bin para arrancar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les fichiers de jeu chiffrés ont besoin de bios7.bin pour démarrer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I file di gioco cifrati hanno bisogno di bios7.bin per avviarsi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暗号化されたゲームファイルの起動には bios7.bin が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "암호화된 게임 파일을 실행하려면 bios7.bin이 필요합니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os ficheiros de jogo encriptados precisam do bios7.bin para arrancar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для запуска зашифрованных файлов игр нужен bios7.bin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加密的游戏文件需要 bios7.bin 才能启动。"
+          }
+        }
+      }
+    },
+    "This game needs system files from your own console." : {
+      "comment" : "3DS load error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Spiel braucht Systemdateien von deiner eigenen Konsole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este juego necesita archivos de sistema de tu propia consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce jeu a besoin des fichiers système de votre propre console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo gioco ha bisogno dei file di sistema della tua console."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームにはご自身の本体のシステムファイルが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임에는 본인 기기의 시스템 파일이 필요합니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este jogo precisa de ficheiros de sistema da sua própria consola."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этой игре нужны системные файлы с вашей консоли."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此游戏需要你自己主机的系统文件。"
+          }
+        }
+      }
+    },
+    "This file is not a game eDuo can open." : {
+      "comment" : "3DS load error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Datei ist kein Spiel, das eDuo öffnen kann."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este archivo no es un juego que eDuo pueda abrir."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier n’est pas un jeu qu’eDuo peut ouvrir."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo file non è un gioco che eDuo può aprire."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイルは eDuo で開けるゲームではありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 파일은 eDuo에서 열 수 있는 게임이 아닙니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este ficheiro não é um jogo que o eDuo consiga abrir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот файл не является игрой, которую может открыть eDuo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此文件不是 eDuo 可以打开的游戏。"
+          }
+        }
+      }
+    },
+    "This game could not be started." : {
+      "comment" : "3DS load error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Spiel konnte nicht gestartet werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido iniciar este juego."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de lancer ce jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile avviare questo gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームを起動できませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임을 시작할 수 없습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível iniciar este jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось запустить эту игру."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法启动此游戏。"
+          }
+        }
+      }
+    },
+    "This game file is encrypted. eDuo only opens decrypted copies: decrypt it on your own console first." : {
+      "comment" : "3DS load error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Spieldatei ist verschlüsselt. eDuo öffnet nur entschlüsselte Kopien: Entschlüssle sie zuerst auf deiner eigenen Konsole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este archivo de juego está cifrado. eDuo solo abre copias descifradas: descífralo antes en tu propia consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier de jeu est chiffré. eDuo n’ouvre que les copies déchiffrées : déchiffre-le d’abord sur ta propre console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo file di gioco è cifrato. eDuo apre solo copie decifrate: decifralo prima sulla tua console."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームファイルは暗号化されています。eDuo は復号済みのコピーのみ開けます。先にご自身の本体で復号してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임 파일은 암호화되어 있습니다. eDuo는 복호화된 사본만 열 수 있습니다. 먼저 본인의 기기에서 복호화하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este ficheiro de jogo está encriptado. O eDuo só abre cópias desencriptadas: desencripta-o primeiro na tua própria consola."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот файл игры зашифрован. eDuo открывает только расшифрованные копии: сначала расшифруйте его на своей консоли."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此游戏文件已加密。eDuo 只能打开已解密的副本：请先在你自己的主机上解密。"
+          }
+        }
+      }
+    },
+    "Share Log" : {
+      "comment" : "Shares the emulator log file so a tester can send it",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokoll teilen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir registro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager le journal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi registro"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログを共有"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그 공유"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partilhar registo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться журналом"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享日志"
+          }
+        }
+      }
+    },
+    "Import Save" : {
+      "comment" : "3DS pause menu: replace the game's save with one exported from a console",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speicherstand importieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar la partida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer la sauvegarde"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa il salvataggio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セーブデータを読み込む"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장 데이터 가져오기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar o jogo guardado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт сохранения"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入存档"
+          }
+        }
+      }
+    },
+    "Start the game and save once, then import your save." : {
+      "comment" : "3DS save import: the game has no save yet",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starte das Spiel und speichere einmal, dann importiere deinen Spielstand."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empieza el juego y guarda una vez; después importa tu partida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lance le jeu et sauvegarde une fois, puis importe ta sauvegarde."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvia il gioco e salva una volta, poi importa il tuo salvataggio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームを始めて一度セーブしてから、セーブデータを読み込んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임을 시작해 한 번 저장한 다음 세이브를 가져오세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia o jogo e grava uma vez; depois importa a tua gravação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустите игру и сохранитесь один раз, затем импортируйте сохранение."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先开始游戏并存档一次，然后再导入存档。"
+          }
+        }
+      }
+    },
+    "This game has no save yet." : {
+      "comment" : "3DS save export",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Spiel hat noch keinen Spielstand."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este juego aún no tiene partida guardada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce jeu n’a pas encore de sauvegarde."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo gioco non ha ancora un salvataggio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームにはまだセーブデータがありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임에는 아직 세이브가 없습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este jogo ainda não tem gravação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У этой игры пока нет сохранения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此游戏还没有存档。"
+          }
+        }
+      }
+    },
+    "%@ save" : {
+      "comment" : "Exported 3DS save folder name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Spielstand"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partida de %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarde %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvataggio %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ セーブデータ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 세이브"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gravação de %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранение %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 存档"
+          }
+        }
+      }
+    },
+    "That isn't a save eDuo can use. Pick the folder your save manager exported, with the save files inside." : {
+      "comment" : "3DS save import error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesen Spielstand kann eDuo nicht verwenden. Wähle den Ordner, den dein Spielstand-Manager exportiert hat, mit den Dateien darin."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo no puede usar esa partida. Elige la carpeta que exportó tu gestor de partidas, con los archivos dentro."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo ne peut pas utiliser cette sauvegarde. Choisis le dossier exporté par ton gestionnaire de sauvegardes, avec les fichiers dedans."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo non può usare questo salvataggio. Scegli la cartella esportata dal tuo gestore di salvataggi, con i file al suo interno."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このセーブデータは eDuo では使えません。セーブ管理ツールで書き出した、ファイルが入っているフォルダを選んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo에서 사용할 수 없는 세이브입니다. 세이브 관리 도구로 내보낸, 파일이 들어 있는 폴더를 선택하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O eDuo não consegue usar essa gravação. Escolhe a pasta que o teu gestor de gravações exportou, com os ficheiros lá dentro."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo не может использовать это сохранение. Выберите папку, которую экспортировал ваш менеджер сохранений, с файлами внутри."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "eDuo 无法使用该存档。请选择存档管理工具导出的、包含存档文件的文件夹。"
+          }
+        }
+      }
+    },
+    "Tap + to add a cheat code for this game." : {
+      "comment" : "Empty cheat list, 3DS game",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf +, um einen Cheat-Code für dieses Spiel hinzuzufügen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca + para añadir un código de truco a este juego."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touche + pour ajouter un code de triche à ce jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca + per aggiungere un codice trucco a questo gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ をタップして、このゲームのチートコードを追加します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+를 탭해 이 게임의 치트 코드를 추가하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca em + para adicionar um código de batota a este jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите +, чтобы добавить чит-код для этой игры."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻点 + 为此游戏添加作弊码。"
+          }
+        }
+      }
+    },
+    "Resolution" : {
+      "comment" : "3DS pause menu > Screens: internal render scale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auflösung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolución"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résolution"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risoluzione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解像度"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "해상도"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешение"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolução"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分辨率"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

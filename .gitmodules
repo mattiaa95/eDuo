@@ -1,3 +1,6 @@
 [submodule "Vendor/melonDS"]
 	path = Vendor/melonDS
 	url = https://github.com/melonDS-emu/melonDS.git
+[submodule "Vendor/azahar"]
+	path = Vendor/azahar
+	url = https://github.com/azahar-emu/azahar.git

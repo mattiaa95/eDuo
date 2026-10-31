@@ -1,5 +1,8 @@
 #import "Core/MelonDSCoreBridge.h"
 
+// The Azahar core + eDuo's frontend for it (Native3DS/, Build/E3DS.xcframework).
+#import "E3DS.h"
+
 // Vendored minizip (zlib license, ported from iGBA's Libs/minizip) — read-only
 // ZIP extraction for .zip ROM imports. See Model/NDSZipExtractor.swift.
 #import "Vendor/minizip/unzip.h"

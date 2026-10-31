@@ -209,7 +209,7 @@ enum DSScreenGeometry {
     }
 
     /// Two equal 256:192 rects stacked vertically, top-anchored (per spec:
-    /// "centradas arriba"), horizontally centered — leaves the remainder of
+    /// "centered at top"), horizontally centered — leaves the remainder of
     /// `bounds` below free for controls on any phone-shaped screen.
     private static func stackedPair(in bounds: CGRect) -> (CGRect, CGRect) {
         guard bounds.width > 0, bounds.height > 0 else { return (.zero, .zero) }
@@ -438,16 +438,37 @@ struct DSFoldableLayout {
             .x: CGPoint(x: right, y: clusterY - spread),
             .b: CGPoint(x: right, y: clusterY + spread),
         ], in: size, scale: s)
-        entries += INDSControllerLayout.entries(from: [
-            .l: CGPoint(x: left, y: shoulderY),
-            .r: CGPoint(x: right, y: shoulderY),
+        let hudPoints = Self.clockColumn(beside: top, band: band, upperEnd: upperEnd, in: size, hud: hud) ?? [
             .layout: CGPoint(x: size.width / 2 - hud.width - 12, y: hudY),
             .menu: CGPoint(x: size.width / 2, y: hudY),
             .fastForward: CGPoint(x: size.width / 2 + hud.width + 12, y: hudY),
+        ]
+        entries += INDSControllerLayout.entries(from: hudPoints.merging([
+            .l: CGPoint(x: left, y: shoulderY),
+            .r: CGPoint(x: right, y: shoulderY),
             .select: CGPoint(x: size.width / 2 - start.width, y: bottomY),
             .start: CGPoint(x: size.width / 2 + start.width, y: bottomY),
-        ], in: size, scale: shoulderScale)
+        ]) { a, _ in a }, in: size, scale: shoulderScale)
         controls = INDSControllerLayout(buttons: entries)
+    }
+
+    /// iPhone Duo, portrait: the system clock takes the top-right corner and
+    /// leaves the column under it empty beside the upper panel — the bar the
+    /// system itself uses for its controls elsewhere. Layout/Menu/Speed stack
+    /// there, above the hinge and off the game. nil when that column is not
+    /// free (no clock corner, or the panel reaches into it).
+    private static func clockColumn(beside top: CGRect, band: DSHingeBand, upperEnd: CGFloat,
+                                    in size: CGSize, hud: CGSize) -> [INDSControllerButtonID: CGPoint]? {
+        guard let clock = band.occlusions.first(where: { $0.maxX >= size.width - 1 && $0.minY <= 0 }) else { return nil }
+        let columnX = max(top.maxX, clock.minX)
+        guard size.width - columnX >= hud.width + 16 else { return nil }
+        let step = hud.height + 12
+        let firstY = max(0, clock.maxY) + 12 + hud.height / 2
+        guard firstY + 2 * step + hud.height / 2 <= upperEnd - 8 else { return nil }
+        let x = (columnX + size.width) / 2
+        return [.menu: CGPoint(x: x, y: firstY),
+                .layout: CGPoint(x: x, y: firstY + step),
+                .fastForward: CGPoint(x: x, y: firstY + 2 * step)]
     }
 
     /// The upper panel's y when it hangs off the hinge band: lifted while
@@ -523,13 +544,13 @@ struct DSFoldableLayout {
         ], in: size))
     }
 
-    /// Sin mandos en pantalla el HUD se iba al sitio de la banda de
-    /// controles, que sin mandos es la pantalla TÁCTIL: las tres pastillas
-    /// quedaban encima del juego y tapando los toques. Van en fila a la tira
-    /// que sobra debajo del panel de abajo, y si no cabe, a la de arriba; si
-    /// tampoco, nil y se deja el sitio por defecto. Lo usan el Duo abierto y
-    /// cualquier vertical bajo con mando (Duo cerrado, iPhone SE), donde la
-    /// columna de tres no cabe bajo las pantallas.
+    /// With no on-screen controls the HUD used to go to the control band's
+    /// spot, which without controls is the TOUCH screen: the three pills
+    /// sat on top of the game and blocked touches. They go in a row in the
+    /// leftover strip below the lower panel, or the one above if that doesn't
+    /// fit; if neither does, nil and the default spot is kept. Used by the open
+    /// Duo and any short portrait layout with a controller (closed Duo,
+    /// iPhone SE), where the three-pill column doesn't fit under the screens.
     static func hudRow(between top: CGRect, and bottom: CGRect, in size: CGSize,
                        scale: CGFloat = 1) -> INDSControllerLayout? {
         let base = INDSControllerButtonID.menu.baseSize(for: INDSControlBand.effectiveIdiom(for: size))

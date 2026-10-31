@@ -119,6 +119,12 @@ enum ROMStorageManager {
     private static let maxROMSize: Int64 = 512 * 1024 * 1024
     private static let saveExtension = "sav"
     private static let zipROMExtensions: Set<String> = ["nds"]
+    /// The second handheld format (Azahar core). Plain and Azahar-compressed
+    /// images; `.cia` is an installer, not something the core boots, so it
+    /// is not accepted.
+    static let threeDSExtensions: Set<String> = ["3ds", "cci", "cxi", "3dsx", "z3ds", "zcci", "zcxi", "z3dsx"]
+    /// Cartridge images run to 4 GB; the DS cap of 512 MB would turn most away.
+    private static let maxThreeDSSize: Int64 = 4 * 1024 * 1024 * 1024
     private static let zipSaveExtensions: Set<String> = ["sav"]
     private static let importTempPrefix = "ROMImport-"
 
@@ -146,11 +152,32 @@ enum ROMStorageManager {
         )
 
         return try urls
-            .filter { $0.pathExtension.lowercased() == "nds" }
+            .filter { $0.pathExtension.lowercased() == "nds" || threeDSExtensions.contains($0.pathExtension.lowercased()) }
+            .map(repairingRenamedThreeDS)
             .map { url in
                 let values = try url.resourceValues(forKeys: [.creationDateKey])
                 return ROMFile(fileURL: url, creationDate: values.creationDate ?? .distantPast)
             }
+    }
+
+    /// Renaming used to force `.nds` on every game, so a renamed 3DS file
+    /// was read as a DS one (garbled title, won't start). Gives such a file
+    /// its extension back, picked from its magic.
+    private static func repairingRenamedThreeDS(_ url: URL) -> URL {
+        guard url.pathExtension.lowercased() == "nds",
+              let handle = try? FileHandle(forReadingFrom: url),
+              let head = try? handle.read(upToCount: 0x104), head.count == 0x104 else { return url }
+        let ext: String
+        switch (head.prefix(4), head.suffix(4)) {
+        case (Data("3DSX".utf8), _): ext = "3dsx"
+        case (_, Data("NCSD".utf8)): ext = "3ds"
+        case (_, Data("NCCH".utf8)): ext = "cxi"
+        default: return url
+        }
+        let fixed = url.deletingPathExtension().appendingPathExtension(ext)
+        guard !FileManager.default.fileExists(atPath: fixed.path),
+              (try? FileManager.default.moveItem(at: url, to: fixed)) != nil else { return url }
+        return fixed
     }
 
     // MARK: - Import (dispatch by extension)
@@ -187,6 +214,8 @@ enum ROMStorageManager {
             return try importROMsFromArchive(at: sourceURL, replacePolicy: replacePolicy) {
                 NDSGzExtractor.extractEntries(fromGz: $0, matchingExtensions: $1, to: $2)
             }
+        case let ext where threeDSExtensions.contains(ext):
+            return ROMImportResult(importedROMURLs: [try importThreeDS(from: sourceURL, replacePolicy: replacePolicy)])
         case saveExtension:
             let url = try importSave(from: sourceURL, replaceExisting: replacePolicy == .always)
             return ROMImportResult(importedSaveURLs: [url])
@@ -404,6 +433,24 @@ enum ROMStorageManager {
 
     /// The on-disk `.nds` (any extension case) whose base name equals
     /// `baseName` case-insensitively, if there is one.
+    /// Straight copy: no header to validate on our side (the core reports a
+    /// bad or encrypted file when it is opened). Same name = same game.
+    private static func importThreeDS(from sourceURL: URL, replacePolicy: ROMReplacePolicy) throws -> URL {
+        let didStartAccess = sourceURL.startAccessingSecurityScopedResource()
+        defer { if didStartAccess { sourceURL.stopAccessingSecurityScopedResource() } }
+
+        let size = (try FileManager.default.attributesOfItem(atPath: sourceURL.path)[.size] as? Int64) ?? 0
+        guard size > 0 else { throw ROMStorageError.emptyFile }
+        guard size <= maxThreeDSSize else { throw ROMStorageError.fileTooLarge }
+        guard hasRoom(forBytes: size) else { throw ROMStorageError.notEnoughSpace }
+
+        let destination = try romsDirectoryURL().appendingPathComponent(sourceURL.lastPathComponent)
+        let exists = FileManager.default.fileExists(atPath: destination.path)
+        if exists, replacePolicy == .never { throw ROMStorageError.duplicateFile(destination.lastPathComponent) }
+        try copyItem(from: sourceURL, to: destination, replaceExisting: exists)
+        return destination
+    }
+
     private static func matchingROMURL(forBaseName baseName: String) throws -> URL? {
         let directory = try romsDirectoryURL()
         let urls = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
@@ -552,7 +599,9 @@ enum ROMStorageManager {
             throw ROMStorageError.romInUse(rom.baseName)
         }
 
-        let newFilename = (newBaseName as NSString).appendingPathExtension("nds") ?? "\(newBaseName).nds"
+        // Keep the game's own extension: it decides which core runs it.
+        let ext = rom.fileURL.pathExtension.isEmpty ? "nds" : rom.fileURL.pathExtension
+        let newFilename = (newBaseName as NSString).appendingPathExtension(ext) ?? "\(newBaseName).\(ext)"
         let newROMURL = try romsDirectoryURL().appendingPathComponent(newFilename)
         if FileManager.default.fileExists(atPath: newROMURL.path) {
             throw ROMStorageError.duplicateFile(newFilename)

@@ -15,6 +15,8 @@ melonDS itself vendors and builds unconditionally.
 | SHA-1 | inside melonDS (`src/sha1`) | Public domain | Steve Reid |
 | LZMA SDK (7z decoder) | `Targets/INDS/Sources/Vendor/lzma` | Public domain | Igor Pavlov |
 | minizip | `Targets/INDS/Sources/Vendor/minizip` | zlib | © 1998–2010 Gilles Vollant |
+| Second-format core (Azahar) | `Vendor/azahar` (git submodule, pinned; patches in `Native3DS/patches`) + `Native3DS` | GPLv2 or later | © Citra Emulator Project / Azahar Emulator Project · bundled libraries and their notices: `NOTICES.txt` |
+| MoltenVK | official release, embedded framework | Apache-2.0 | © The Brenwill Workshop Ltd. |
 
 License texts travel with the app and with this repository:
 `LICENSE` (GPLv3, covers eDuo itself and melonDS),
@@ -25,8 +27,13 @@ component above, as BSD/MIT/zlib/LGPL require),
 the top of each vendored file.
 
 Not compiled in: melonDS's Dolphin-derived JIT (`ENABLE_JIT=OFF`), its
-OpenGL renderer, GDB stub, and the net-utils / multiplayer targets — see
-`BUILDING.md` for the exact core configuration.
+OpenGL renderer, GDB stub, and the net-utils / multiplayer targets; and from
+Azahar, its JIT (disabled at runtime), the built-in key blob
+(`ENABLE_BUILTIN_KEYBLOB=OFF`), web services, room server, scripting and
+GDB stub — see `BUILDING.md` and `scripts/build_3ds_core.sh` for the exact
+core configurations. `scripts/gen_3ds_notices.py` regenerates the Azahar
+section of `NOTICES.txt` from the pinned submodule.
 
-Everything else in `Targets/` is original eDuo code, © Mattia La Spina,
+Everything else in `Targets/` and `Native3DS/` (outside `Native3DS/licenses`)
+is original eDuo code, © Mattia La Spina,
 released under the GPLv3 (see `LICENSE`).

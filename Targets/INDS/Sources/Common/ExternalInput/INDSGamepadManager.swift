@@ -42,7 +42,7 @@ import UIKit
 /// so a row that lights up is a button the game will actually read.
 enum INDSControllerElements {
 
-    /// Clave física → nombre de elemento de GameController.
+    /// Physical key → GameController element name.
     static let elementName: [String: String] = [
         "A": GCInputButtonA, "B": GCInputButtonB, "X": GCInputButtonX, "Y": GCInputButtonY,
         "L1": GCInputLeftShoulder, "R1": GCInputRightShoulder,

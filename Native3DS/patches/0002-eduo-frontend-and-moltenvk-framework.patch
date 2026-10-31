@@ -1,0 +1,29 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 70f8173..6f25b6f 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -230,3 +230,8 @@ endif()
+ if (ENABLE_WEB_SERVICE)
+     add_subdirectory(web_service)
+ endif()
++
++# eDuo: the iOS frontend lives outside this tree (iNDS/Native3DS).
++if (EDUO_FRONTEND_DIR)
++    add_subdirectory(${EDUO_FRONTEND_DIR} eduo3ds)
++endif()
+diff --git a/src/video_core/renderer_vulkan/vk_platform.cpp b/src/video_core/renderer_vulkan/vk_platform.cpp
+index 352aba4..1b1ac5a 100644
+--- a/src/video_core/renderer_vulkan/vk_platform.cpp
++++ b/src/video_core/renderer_vulkan/vk_platform.cpp
+@@ -110,7 +110,10 @@ std::shared_ptr<Common::DynamicLibrary> OpenLibrary(
+     if (!library->Load(filename)) {
+         // Fall back to directly loading bundled MoltenVK library.
+         const std::string mvk_filename = Common::DynamicLibrary::GetLibraryName("MoltenVK");
+-        void(library->Load(mvk_filename));
++        if (!library->Load(mvk_filename)) {
++            // eDuo (iOS): MoltenVK ships as an embedded framework.
++            void(library->Load("@rpath/MoltenVK.framework/MoltenVK"));
++        }
+     }
+ #else
+     std::string filename = Common::DynamicLibrary::GetLibraryName("vulkan", 1);

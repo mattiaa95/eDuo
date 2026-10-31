@@ -2,23 +2,23 @@
 //  INDSControllerMappingLogic.swift
 //  eDuo
 //
-//  Lógica pura del mapeo del mando, portada de iGBA (ControllerMappingLogic):
-//  qué botones físicos existen, qué puede hacer cada uno, cómo se migra lo
-//  guardado, qué conflictos hay y a qué ritmo pulsa el turbo. Sin UIKit ni
-//  GameController a propósito: scripts/controller_mapping_check.sh la compila
-//  sola con swiftc y la prueba.
+//  Pure controller-mapping logic, ported from iGBA (ControllerMappingLogic):
+//  which physical buttons exist, what each one can do, how saved data is
+//  migrated, which conflicts exist and at what rate turbo fires. Deliberately
+//  free of UIKit and GameController: scripts/controller_mapping_check.sh
+//  compiles it standalone with swiftc and tests it.
 //
-//  El formato guardado NO cambia: `[clave física: raw de INDSMappingTarget]`.
-//  Solo se añaden claves (cruceta, L3, R3, Menu, Home, Share) y destinos
-//  (avance rápido on/off, turbo on/off, rebobinar), así que un mapeo de la
-//  1.0 se abre tal cual.
+//  The saved format does NOT change: `[physical key: raw INDSMappingTarget]`.
+//  Only keys (d-pad, L3, R3, Menu, Home, Share) and targets (fast forward
+//  on/off, turbo on/off, rewind) are added, so a 1.0 mapping opens as-is.
+//
 //
 
 import Foundation
 
-/// Lo que puede hacer un botón físico. Los botones DS valen lo mismo que
-/// `INDSButton` (A=0 … Y=11); las acciones van de 50 en adelante.
-/// NO renumerar: están guardados en UserDefaults.
+/// What a physical button can do. DS buttons have the same values as
+/// `INDSButton` (A=0 … Y=11); actions start at 50.
+/// Do NOT renumber: they are persisted in UserDefaults.
 enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
     case a = 0
     case b = 1
@@ -38,11 +38,11 @@ enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
     case quickLoad = 52
     case cycleScreenLayout = 53
     case swapScreens = 54
-    /// Mantener = rápido; un toque corto pasa a la siguiente velocidad.
+    /// Hold = fast; a short tap steps to the next speed.
     case fastForward = 55
     /// Un toque lo enciende, otro lo apaga.
     case fastForwardToggle = 56
-    /// Enciende o apaga el turbo de los botones elegidos.
+    /// Turns turbo on or off for the chosen buttons.
     case turboToggle = 57
     case rewind = 58
 
@@ -58,12 +58,12 @@ enum INDSMappingTarget: Int, CaseIterable, Identifiable, Codable {
     static let emulatorOrder: [INDSMappingTarget] = [.pause, .fastForward, .fastForwardToggle,
                                                      .turboToggle, .rewind, .quickSave, .quickLoad,
                                                      .cycleScreenLayout, .swapScreens]
-    /// Botones con turbo. Direcciones y Start/Select no: nadie quiere un menú
-    /// que se abre y se cierra diez veces por segundo.
+    /// Buttons with turbo. Not directions or Start/Select: nobody wants a menu
+    /// that opens and closes ten times a second.
     static let turboCapable: [INDSMappingTarget] = [.a, .b, .x, .y, .l, .r]
 }
 
-/// Claves físicas, tal y como las guarda el mapeo.
+/// Physical keys, as stored by the mapping.
 enum INDSPhysicalKey {
     static let directions = ["Up", "Down", "Left", "Right"]
     static let all: [String] = directions + ["A", "B", "X", "Y",
@@ -73,10 +73,10 @@ enum INDSPhysicalKey {
 
 enum INDSMappingLogic {
 
-    /// «Disposición DS»: GameController llama A/B/X/Y a sur/este/oeste/norte
-    /// en todos los mandos, y en la DS el sur es B. Así el botón de abajo del
-    /// Xbox hace de B, donde está en una DS de verdad. L2/R2 = Select/Start
-    /// (un mando normal no tiene más botones frontales), Options y Menú pausan.
+    /// "DS layout": GameController calls the face buttons A/B/X/Y by position
+    /// (south/east/west/north) on every controller, and on a DS the south one
+    /// is B. So an Xbox's bottom button acts as B, where it sits on a real DS.
+    /// L2/R2 = Select/Start (a regular pad has no more front buttons); Options and Menu pause.
     static let defaultMapping: [String: Int] = [
         "Up": INDSMappingTarget.up.rawValue,
         "Down": INDSMappingTarget.down.rawValue,
@@ -94,16 +94,16 @@ enum INDSMappingLogic {
         "R3": INDSMappingTarget.none.rawValue,
         "Options": INDSMappingTarget.pause.rawValue,
         "Menu": INDSMappingTarget.pause.rawValue,
-        // Sin nada de fábrica: iOS los usa (app Juegos, capturas) y solo se le
-        // piden al sistema cuando alguien les asigna algo.
+        // Nothing by default: iOS uses them (Games app, screenshots) and they are only
+        // requested from the system when someone assigns them something.
         "Home": INDSMappingTarget.none.rawValue,
         "Share": INDSMappingTarget.none.rawValue,
     ]
 
     private static let validTargets = Set(INDSMappingTarget.allCases.map(\.rawValue))
 
-    /// Lo guardado, sano: toda clave esperada presente, valores inválidos y
-    /// claves desconocidas fuera. Idempotente.
+    /// The saved data, sanitized: every expected key present, invalid values and
+    /// unknown keys dropped. Idempotent.
     static func migrate(_ stored: [String: Int]) -> [String: Int] {
         var out = defaultMapping
         for (key, value) in stored where defaultMapping[key] != nil && validTargets.contains(value) {
@@ -112,25 +112,25 @@ enum INDSMappingLogic {
         return out
     }
 
-    /// Asigna y cuenta qué se ha quedado fuera, para ofrecer «deshacer».
+    /// Assigns and counts what was left without a button, to offer "undo".
     static func assign(_ target: INDSMappingTarget, to key: String,
                        in mapping: [String: Int]) -> (mapping: [String: Int], displaced: INDSMappingTarget?) {
         var out = mapping
         let previous = out[key].flatMap(INDSMappingTarget.init(rawValue:))
         out[key] = target.rawValue
         guard let previous, previous != .none, previous != target else { return (out, nil) }
-        // Solo es «desplazado» si ya no lo alcanza ningún otro botón.
+        // Only "displaced" if no other button reaches it any more.
         return (out, out.values.contains(previous.rawValue) ? nil : previous)
     }
 
-    /// Claves físicas que hacen `target`, en el orden de pantalla.
+    /// Physical keys that perform `target`, in on-screen order.
     static func keys(for target: INDSMappingTarget, in mapping: [String: Int]) -> [String] {
         INDSPhysicalKey.all.filter { mapping[$0] == target.rawValue }
     }
 
-    /// ¿Mantener Menú abre la pausa aunque tenga otro trabajo? Solo cuando
-    /// ningún otro botón la abre y lo que hace Menú no se mantiene pulsado
-    /// (con el avance rápido de mantener ahí, la pausa saltaría a media carrera).
+    /// Does holding Menu open pause even if it has another job? Only when
+    /// no other button opens it and what Menu does is not a held action
+    /// (with hold-to-fast-forward there, pause would trigger mid-run).
     static func menuEscapeApplies(_ mapping: [String: Int]) -> Bool {
         let target = INDSMappingTarget(rawValue: mapping["Menu"] ?? INDSMappingTarget.pause.rawValue) ?? .none
         if target == .pause { return false }
@@ -138,8 +138,8 @@ enum INDSMappingLogic {
         return target != .fastForward && !target.isDSButton
     }
 
-    /// Lo imprescindible que ningún botón alcanza. La cruceta solo cuenta si el
-    /// mando no tiene stick: el stick izquierdo mueve siempre.
+    /// Essentials that no button reaches. The d-pad only counts if the
+    /// controller has no stick: the left stick always moves.
     static func unreachableEssentials(_ mapping: [String: Int], hasStick: Bool) -> [INDSMappingTarget] {
         let reached = Set(mapping.values)
         var needed: [INDSMappingTarget] = [.a, .b, .start]
@@ -149,18 +149,18 @@ enum INDSMappingLogic {
     }
 }
 
-/// El ritmo del turbo. La DS lee el teclado 60 veces por segundo: 30/s es
-/// un fotograma pulsado y otro suelto, el máximo que un juego puede ver.
+/// Turbo rate. The DS reads the keypad 60 times a second: 30/s is
+/// one frame pressed and one released, the most a game can see.
 enum INDSTurboPattern {
     static let rates = [5, 8, 10, 12, 15, 20, 30]
-    /// 15/s era el ritmo fijo de antes.
+    /// 15/s was the fixed rate before.
     static let defaultRate = 15
 
     static func clampedRate(_ rate: Int) -> Int {
         rates.contains(rate) ? rate : defaultRate
     }
 
-    /// El siguiente o el anterior de la escalera, sin salirse.
+    /// The next or previous step of the ladder, without overflowing.
     static func step(_ rate: Int, by delta: Int) -> Int {
         let index = rates.firstIndex(of: clampedRate(rate)) ?? 4
         return rates[max(0, min(rates.count - 1, index + delta))]

@@ -40,6 +40,9 @@ struct ROMFile: Identifiable, Equatable {
         return fileURL.deletingPathExtension().lastPathComponent
     }
 
+    /// Runs on the Azahar core (ThreeDSGameViewController) instead of melonDS.
+    var isThreeDS: Bool { ROMStorageManager.threeDSExtensions.contains(fileURL.pathExtension.lowercased()) }
+
     var gameCode: String {
         header?.gameCode.isEmpty == false ? header?.gameCode ?? Self.unknownGameCode : Self.unknownGameCode
     }
@@ -80,11 +83,20 @@ struct ROMFile: Identifiable, Equatable {
         return ByteCountFormatter.string(fromByteCount: fileSize, countStyle: .file)
     }
 
+    /// "2 h 15 min", "0 min" — localized by the system, like iGBA. "00:00"
+    /// read as a clock, and the grid fell back to the header's game code,
+    /// which is "####" on every homebrew.
     var formattedPlayTime: String {
-        let minutes = Int(playTime) / 60
-        let hours = minutes / 60
-        return String(format: "%02d:%02d", hours, minutes % 60)
+        Self.playTimeFormatter.string(from: TimeInterval(Int(playTime) / 60 * 60)) ?? ""
     }
+
+    private static let playTimeFormatter: DateComponentsFormatter = {
+        let f = DateComponentsFormatter()
+        f.allowedUnits = [.hour, .minute]
+        f.unitsStyle = .abbreviated
+        f.zeroFormattingBehavior = .dropLeading
+        return f
+    }()
 
     /// Header + banner parsed once per (path, mtime, size). `reload()` runs
     /// on the main thread after every import/delete/rename/pull-to-refresh
@@ -110,8 +122,9 @@ struct ROMFile: Identifiable, Equatable {
         if let cached {
             (self.header, self.banner) = cached
         } else {
-            self.header = try? NDSHeader.read(from: fileURL)
-            self.banner = try? NDSBanner.read(from: fileURL)
+            let isDS = fileURL.pathExtension.lowercased() == "nds"
+            self.header = isDS ? try? NDSHeader.read(from: fileURL) : nil
+            self.banner = isDS ? try? NDSBanner.read(from: fileURL) : nil
             Self.parsedCacheLock.lock()
             Self.parsedCache[key] = (header, banner)
             Self.parsedCacheLock.unlock()

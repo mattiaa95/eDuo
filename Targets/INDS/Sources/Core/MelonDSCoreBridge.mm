@@ -190,6 +190,26 @@ void DrainPendingSave(const std::shared_ptr<SaveWriter>& writer) {
 /// `message` doubles as the catalog key: every call site's literal has an
 /// entry in Localizable.xcstrings, since these surface verbatim in HUD
 /// toasts ("Couldn't load state: %@") and the ROM-load error screen.
+/// A retail dump whose secure area is still encrypted. Without the player's
+/// own ARM7 BIOS the key table is all zeros, DecryptSecureArea fails and
+/// melonDS fills the area with 0xE7FFDEFF: the game boots into a black
+/// screen with no error. Decrypted dumps start with 0xE7FFDEFF 0xE7FFDEFF;
+/// homebrew has no secure-area checksum (0x6C).
+/// ponytail: header heuristic, not a trial decryption; good enough to warn.
+static bool SecureAreaIsEncrypted(const u8 *rom, u32 length) {
+    if (length < 0x200) return false;
+    u32 arm9Offset; memcpy(&arm9Offset, rom + 0x20, 4);
+    u16 secureCRC;  memcpy(&secureCRC, rom + 0x6C, 2);
+    if (secureCRC == 0 || arm9Offset < 0x4000 || arm9Offset >= 0x8000 || arm9Offset + 8 > length) return false;
+    // Homebrew (ndstool) leaves the secure area zeroed and often names itself
+    // "####"; an encrypted one is never zero. Both used to be refused (the
+    // App Review test game among them).
+    if (memcmp(rom + 0x0C, "####", 4) == 0) return false;
+    u32 first, second; memcpy(&first, rom + arm9Offset, 4); memcpy(&second, rom + arm9Offset + 4, 4);
+    if (first == 0 && second == 0) return false;
+    return first != 0xE7FFDEFF;
+}
+
 NSError *MakeError(NSInteger code, NSString *message) {
     return [NSError errorWithDomain:MelonDSCoreBridgeErrorDomain
                                code:code
@@ -1031,6 +1051,13 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
         return NO;
     }
 
+    // DSi-only carts (unit code 3) need DSi mode, its BIOS and a NAND dump:
+    // in DS mode they hang on the first frame.
+    if (romLength > 0x12 && romData[0x12] == 0x03) {
+        if (error) *error = MakeError(9, @"This game only runs on a DSi, which eDuo does not emulate.");
+        return NO;
+    }
+
     NSError *directoryError = nil;
     NSURL *documentsURL = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
     NSURL *savesURL = [documentsURL URLByAppendingPathComponent:@"Saves" isDirectory:YES];
@@ -1060,6 +1087,9 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
     std::array<u8, melonDS::ARM7BIOSSize> arm7{};
     if (ReadFixedFile(biosDir + "/bios7.bin", arm7)) {
         args.ARM7BIOS = std::make_unique<melonDS::ARM7BIOSImage>(arm7);
+    } else if (SecureAreaIsEncrypted(romData.get(), romLength)) {
+        if (error) *error = MakeError(8, @"This game file is encrypted. Add bios7.bin from your own console in Settings → BIOS Setup, or use a decrypted copy of the game.");
+        return NO;
     }
     std::vector<u8> firmwareData;
     // BIOSManager only admits 256/512 KB dumps, but Documents/BIOS is

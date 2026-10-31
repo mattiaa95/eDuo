@@ -23,6 +23,12 @@ final class NDSHUDView: UIView {
     /// land on the panel.
     private var controlsReserved = true
 
+    /// Layout, Menu and Speed are in the system's vertical bar (iPhone Duo):
+    /// the floating pills would only repeat them over the game.
+    var chromeInSystemBar = false {
+        didSet { if chromeInSystemBar != oldValue { setNeedsLayout() } }
+    }
+
     var onPauseTapped: (() -> Void)?
     var onCycleLayoutTapped: (() -> Void)?
     var onErrorBackTapped: (() -> Void)?
@@ -314,7 +320,7 @@ final class NDSHUDView: UIView {
                 || (resolved!.isVisible == false && resolved!.normalizedX == 0.5 && resolved!.normalizedY == 0.5) {
                 resolved = defaults.entry(for: id)
             }
-            guard let entry = resolved, entry.isVisible else {
+            guard !chromeInSystemBar, let entry = resolved, entry.isVisible else {
                 button.isHidden = true
                 continue
             }

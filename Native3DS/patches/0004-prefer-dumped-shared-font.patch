@@ -1,0 +1,21 @@
+diff --git a/src/core/hle/service/apt/apt.cpp b/src/core/hle/service/apt/apt.cpp
+index f47d321..b3abb0a 100644
+--- a/src/core/hle/service/apt/apt.cpp
++++ b/src/core/hle/service/apt/apt.cpp
+@@ -300,11 +300,13 @@ void Module::APTInterface::GetSharedFont(Kernel::HLERequestContext& ctx) {
+     if (!apt->shared_font_loaded) {
+         // On real 3DS, font loading happens on booting. However, we load it on demand to coordinate
+         // with CFG region auto configuration, which happens later than APT initialization.
+-        if (apt->LoadSharedFont()) {
+-            apt->shared_font_loaded = true;
+-        } else if (apt->LoadLegacySharedFont()) {
++        // eDuo: a font dumped from the player's own console (sysdata/shared_font.bin)
++        // wins over the built-in open replacement, whose glyph layout some games misdraw.
++        if (apt->LoadLegacySharedFont()) {
+             LOG_WARNING(Service_APT, "Loaded shared font by legacy method");
+             apt->shared_font_loaded = true;
++        } else if (apt->LoadSharedFont()) {
++            apt->shared_font_loaded = true;
+         } else {
+             LOG_ERROR(Service_APT, "shared font file missing - go dump it from your 3ds");
+             rb.Push<u32>(-1); // TODO: Find the right error code

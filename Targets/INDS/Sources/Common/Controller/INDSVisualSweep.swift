@@ -41,7 +41,7 @@ enum INDSVisualSweep {
             // drawn — what is judged is where the panels and controls land.
             (CGSize(width: 669, height: 951), "duo-inner-portrait"),
             (CGSize(width: 951, height: 669), "duo-inner-landscape"),
-            // Lo que recibe una build con SDK anterior al 27.1.
+            // What a build with an SDK older than 27.1 receives.
             (CGSize(width: 669, height: 871), "duo-inner-portrait-sdk270"),
             (CGSize(width: 466, height: 678), "duo-outer-portrait"),
             (CGSize(width: 678, height: 466), "duo-outer-landscape"),

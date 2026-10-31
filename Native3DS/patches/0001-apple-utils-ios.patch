@@ -1,0 +1,36 @@
+diff --git a/src/common/apple_utils.mm b/src/common/apple_utils.mm
+index ac3a5f4..eee7ade 100644
+--- a/src/common/apple_utils.mm
++++ b/src/common/apple_utils.mm
+@@ -2,12 +2,23 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the misc/licenses/gplv2.txt file included.
+ 
++#import <TargetConditionals.h>
++#if TARGET_OS_IOS
++#import <UIKit/UIKit.h>
++#else
+ #import <Cocoa/Cocoa.h>
++#endif
+ #import <CoreGraphics/CoreGraphics.h>
+ #import <Foundation/Foundation.h>
+ 
+ namespace AppleUtils {
+ 
++#if TARGET_OS_IOS
++// eDuo: iOS has no NSScreen.
++float GetRefreshRate() {
++    return 60;
++}
++#else
+ float GetRefreshRate() { // TODO: How does this handle multi-monitor? -OS
+     NSScreen* screen = [NSScreen mainScreen];
+     if (screen) {
+@@ -24,6 +35,7 @@ float GetRefreshRate() { // TODO: How does this handle multi-monitor? -OS
+ 
+     return 60; // Something went wrong, so just return a generic value
+ }
++#endif
+ 
+ int IsLowPowerModeEnabled() {
+     return (int)[NSProcessInfo processInfo].lowPowerModeEnabled;

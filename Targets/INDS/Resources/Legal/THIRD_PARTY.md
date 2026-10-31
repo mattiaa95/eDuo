@@ -15,6 +15,8 @@ melonDS itself vendors and builds unconditionally.
 | SHA-1 | inside melonDS (`src/sha1`) | Public domain | Steve Reid |
 | LZMA SDK (7z decoder) | `Targets/INDS/Sources/Vendor/lzma` | Public domain | Igor Pavlov |
 | minizip | `Targets/INDS/Sources/Vendor/minizip` | zlib | © 1998–2010 Gilles Vollant |
+| Second-format core | `Vendor/azahar` (git submodule, pinned; patches in `Native3DS/patches`) + `Native3DS` | GPLv2 or later | © Citra Emulator Project / Azahar Emulator Project · bundled libraries and their notices: `NOTICES.txt` |
+| MoltenVK | official release, embedded framework | Apache-2.0 | © The Brenwill Workshop Ltd. |
 
 License texts travel with the app and with this repository:
 `LICENSE` (GPLv3, covers eNDS itself and melonDS),

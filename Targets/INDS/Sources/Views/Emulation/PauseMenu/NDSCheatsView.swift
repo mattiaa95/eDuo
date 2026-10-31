@@ -21,6 +21,8 @@ import SwiftUI
 
 struct NDSCheatsView: View {
     let romBaseName: String
+    /// Set for a 3DS game: Gateway codes in the 3DS core's cheat file.
+    var threeDSProgramID: UInt64? = nil
     let onCheatsChanged: () -> Void
 
     @State private var cheats: [NDSCheat] = []
@@ -66,16 +68,16 @@ struct NDSCheatsView: View {
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.hidden)
         .onAppear {
-            cheats = NDSCheatFileStore.load(forBaseName: romBaseName)
+            cheats = threeDSProgramID.map(ThreeDSCheatStore.load) ?? NDSCheatFileStore.load(forBaseName: romBaseName)
         }
         .sheet(isPresented: $isAddingNew) {
-            NDSCheatEditorView(cheat: nil) { newCheat in
+            NDSCheatEditorView(cheat: nil, gateway: threeDSProgramID != nil) { newCheat in
                 cheats.append(newCheat)
                 persist()
             }
         }
         .sheet(item: $editingCheat) { cheat in
-            NDSCheatEditorView(cheat: cheat) { updated in
+            NDSCheatEditorView(cheat: cheat, gateway: threeDSProgramID != nil) { updated in
                 guard let idx = cheats.firstIndex(where: { $0.id == updated.id }) else { return }
                 cheats[idx] = updated
                 persist()
@@ -90,7 +92,9 @@ struct NDSCheatsView: View {
                 .foregroundColor(.secondary)
             Text(NSLocalizedString("No Cheats Yet", comment: ""))
                 .font(.body.weight(.medium))
-            Text(NSLocalizedString("Tap + to add an Action Replay code for this game.", comment: ""))
+            Text(threeDSProgramID == nil
+                 ? NSLocalizedString("Tap + to add an Action Replay code for this game.", comment: "")
+                 : NSLocalizedString("Tap + to add a cheat code for this game.", comment: "Empty cheat list, 3DS game"))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -168,7 +172,8 @@ struct NDSCheatsView: View {
         // the bridge's own empty-Code guard (see NDSCheatValidation.isValid),
         // checked here too so the UI never shows a toggle "on" for something
         // the engine would refuse to run anyway.
-        guard !enabled || NDSCheatValidation.isValid(cheats[idx].code) else { return }
+        let valid = threeDSProgramID == nil ? NDSCheatValidation.isValid(cheats[idx].code) : ThreeDSCheatStore.isValid(cheats[idx].code)
+        guard !enabled || valid else { return }
         INDSHaptics.light()
         cheats[idx].enabled = enabled
         persist()
@@ -181,7 +186,11 @@ struct NDSCheatsView: View {
     }
 
     private func persist() {
-        NDSCheatFileStore.save(cheats, forBaseName: romBaseName)
+        if let id = threeDSProgramID {
+            ThreeDSCheatStore.save(cheats, programID: id)
+        } else {
+            NDSCheatFileStore.save(cheats, forBaseName: romBaseName)
+        }
         onCheatsChanged()
     }
 }
@@ -191,21 +200,23 @@ struct NDSCheatsView: View {
 private struct NDSCheatEditorView: View {
     /// `nil` when adding a new cheat.
     let cheat: NDSCheat?
+    let gateway: Bool
     let onSave: (NDSCheat) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var name: String
     @State private var code: String
 
-    init(cheat: NDSCheat?, onSave: @escaping (NDSCheat) -> Void) {
+    init(cheat: NDSCheat?, gateway: Bool, onSave: @escaping (NDSCheat) -> Void) {
         self.cheat = cheat
+        self.gateway = gateway
         self.onSave = onSave
         _name = State(initialValue: cheat?.name ?? "")
         _code = State(initialValue: cheat?.code ?? "")
     }
 
-    private var isCodeValid: Bool { NDSCheatValidation.isValid(code) }
-    private var codeFormat: NDSCheatValidation.CodeFormat? { NDSCheatValidation.format(of: code) }
+    private var isCodeValid: Bool { gateway ? ThreeDSCheatStore.isValid(code) : NDSCheatValidation.isValid(code) }
+    private var codeFormat: NDSCheatValidation.CodeFormat? { gateway ? nil : NDSCheatValidation.format(of: code) }
     private var canSave: Bool {
         !name.trimmingCharacters(in: .whitespaces).isEmpty && isCodeValid
     }
@@ -277,7 +288,7 @@ private struct NDSCheatEditorView: View {
         // .mch holds and what the list shows after a reload anyway.
         var updated = NDSCheat(
             name: name.trimmingCharacters(in: .whitespaces),
-            code: NDSCheatValidation.normalizedLines(code).joined(separator: "\n"),
+            code: (gateway ? ThreeDSCheatStore.normalizedLines(code) : NDSCheatValidation.normalizedLines(code)).joined(separator: "\n"),
             enabled: cheat?.enabled ?? true
         )
         if let existingID = cheat?.id {

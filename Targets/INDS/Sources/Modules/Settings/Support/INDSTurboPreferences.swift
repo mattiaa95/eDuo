@@ -41,14 +41,14 @@ enum INDSTurboPreferences {
     private static let rateKey = "eNDSTurboRateHz"
     private static let toggleModeKey = "eNDSTurboToggleMode"
 
-    /// Pulsaciones por segundo (`INDSTurboPattern.rates`).
+    /// Presses per second (`INDSTurboPattern.rates`).
     static var rateHz: Int {
         get { INDSTurboPattern.clampedRate(UserDefaults.standard.integer(forKey: rateKey)) }
         set { UserDefaults.standard.set(INDSTurboPattern.clampedRate(newValue), forKey: rateKey) }
     }
 
-    /// false = dispara mientras se mantiene; true = un toque lo engancha y
-    /// otro lo suelta.
+    /// false = fires while held; true = one tap latches it and
+    /// another releases it.
     static var toggleMode: Bool {
         get { UserDefaults.standard.bool(forKey: toggleModeKey) }
         set { UserDefaults.standard.set(newValue, forKey: toggleModeKey) }

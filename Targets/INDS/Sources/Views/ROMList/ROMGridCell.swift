@@ -53,7 +53,7 @@ struct ROMGridCell: View {
                     Image(systemName: "clock.fill")
                         .font(.caption2)
                         .accessibilityHidden(true)
-                    Text(rom.playTime > 0 ? rom.formattedPlayTime : rom.gameCode)
+                    Text(rom.formattedPlayTime)
                         .font(.caption2.weight(.medium))
                 }
                 .foregroundStyle(.white.opacity(0.55))

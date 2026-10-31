@@ -238,3 +238,58 @@ enum NDSCheatFileStore {
         return cheats
     }
 }
+
+/// The 3DS core's own cheat file (Gateway format: `[Name]`, an optional
+/// `*citra_enabled` line, then `AAAAAAAA VVVVVVVV` lines). Kept in the
+/// core's file so a list dropped into System/cheats via Files also works.
+enum ThreeDSCheatStore {
+    private static let enabledMark = "*citra_enabled"
+
+    static func fileURL(programID: UInt64) -> URL? {
+        guard let path = E3DSCopyCheatFile(programID) else { return nil }
+        defer { free(path) }
+        return URL(fileURLWithPath: String(cString: path))
+    }
+
+    /// Same line shape as Action Replay, but no CodeBreaker translation:
+    /// a 3DS code is run exactly as typed.
+    static func normalizedLines(_ code: String) -> [String] {
+        NDSCheatValidation.codeLines(code).compactMap(NDSCheatValidation.normalizedLine)
+    }
+
+    static func isValid(_ code: String) -> Bool {
+        let lines = NDSCheatValidation.codeLines(code)
+        return !lines.isEmpty && lines.allSatisfy(NDSCheatValidation.isValidLine)
+    }
+
+    static func load(programID: UInt64) -> [NDSCheat] {
+        guard let url = fileURL(programID: programID),
+              let text = try? String(contentsOf: url, encoding: .utf8) else { return [] }
+        var cheats: [NDSCheat] = []
+        for raw in text.components(separatedBy: .newlines) {
+            let line = raw.trimmingCharacters(in: .whitespaces)
+            if line.hasPrefix("["), line.hasSuffix("]") {
+                cheats.append(NDSCheat(name: String(line.dropFirst().dropLast()), code: "", enabled: false))
+            } else if line == enabledMark, !cheats.isEmpty {
+                cheats[cheats.count - 1].enabled = true
+            } else if let data = NDSCheatValidation.normalizedLine(line), !cheats.isEmpty {
+                cheats[cheats.count - 1].code += (cheats[cheats.count - 1].code.isEmpty ? "" : "\n") + data
+            }
+            // ponytail: other `*` comment lines are dropped on the next save.
+        }
+        return cheats
+    }
+
+    static func save(_ cheats: [NDSCheat], programID: UInt64) {
+        guard let url = fileURL(programID: programID) else { return }
+        var text = ""
+        for cheat in cheats {
+            let lines = normalizedLines(cheat.code)
+            guard !lines.isEmpty else { continue }
+            let name = cheat.name.replacingOccurrences(of: "]", with: ")").components(separatedBy: .newlines).joined(separator: " ")
+            text += "[\(name)]\n" + (cheat.enabled ? enabledMark + "\n" : "") + lines.joined(separator: "\n") + "\n"
+        }
+        try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try? text.write(to: url, atomically: true, encoding: .utf8)
+    }
+}

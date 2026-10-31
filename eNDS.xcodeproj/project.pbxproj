@@ -29,9 +29,11 @@
 		27E5E1EBA9813FB25B849B49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEA93C3FDBA79FF93973F3E /* SettingsView.swift */; };
 		2917722F9FF00C876BCEFD05 /* INDSControllerMappingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C14F820A6FF3E4C6856995 /* INDSControllerMappingStore.swift */; };
 		291E6DFA3565DF954FB15656 /* INDSHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313CF93EAE709E247482B5F /* INDSHaptics.swift */; };
+		2B9BC2B08522A30ED73318C6 /* MoltenVK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA69243C04E366D72820F2C9 /* MoltenVK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C2C4C6936F9381033E8FDE5 /* ROMIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63915A9A489BD4B09B48A302 /* ROMIconView.swift */; };
 		2D780836C2FC294DA4A5243B /* PurchaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30268FE4D70D96B8CF41C601 /* PurchaseModel.swift */; };
 		30F969EADB6CDF8F5D0EA452 /* ControlsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C6AF4A1F010932AAE0AA51 /* ControlsSettingsView.swift */; };
+		342DCFDD636C9610A7CAAF53 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BEDBF23DE9E3E6BBD036970 /* Metal.framework */; };
 		3793453687AB2CC9240944CC /* NDSHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1C57307F331CA0E3899717 /* NDSHUDView.swift */; };
 		38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD26D49C7D799C6EC6ADA193 /* 7zAlloc.c */; };
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
@@ -44,6 +46,7 @@
 		43009A216F4446044F37DDBD /* NDSGzExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531BBE90CE99F4EE7E4E667 /* NDSGzExtractor.swift */; };
 		436EACDB2A7892B696B74D93 /* INDSButtonStyleEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D0F4AF234EC8156F1005DF /* INDSButtonStyleEditorSheet.swift */; };
 		447D3D301F20D68074AF71E6 /* NDSPauseMenuHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1426594998684043BCF3F3 /* NDSPauseMenuHostingController.swift */; };
+		470EF52F2813B96A97DC19EB /* ThreeDSGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA10B984F9039A953021AA /* ThreeDSGameViewController.swift */; };
 		4754D21C87E3F2B790AB0C36 /* NDSRomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735843C4C8E17E1C9A4F95D1 /* NDSRomViewController.swift */; };
 		4BD9C7FF57E7383860DB7BAD /* INDSMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7902A93230922C4CF8A04C1A /* INDSMotion.swift */; };
 		5019F63D36D6E35C60108C83 /* 7zDec.c in Sources */ = {isa = PBXBuildFile; fileRef = D8040537B258B60012CDFCD7 /* 7zDec.c */; };
@@ -53,12 +56,14 @@
 		563283092891F08332158D62 /* DSDualScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D81E1C1BE496C8A347266 /* DSDualScreenView.swift */; };
 		56E0DCC07974F2D9A4B8BB82 /* EmulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0176C947E721C4B89E0F9 /* EmulationView.swift */; };
 		5C181F43F1279BAB2034B2D3 /* 7zFile.c in Sources */ = {isa = PBXBuildFile; fileRef = E465158ABA0236E3E733D0DB /* 7zFile.c */; };
+		5D9F6419417EDE0EDCB0EA2A /* IOSurface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0DAC71BDF247459817C777 /* IOSurface.framework */; };
 		6111F49067A07A508103E73E /* TurboSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135F11D0F697685D3261524 /* TurboSettingsSection.swift */; };
 		669D16C6D78FBA89E44FA99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A991E1D084A864C4E5992455 /* AppDelegate.swift */; };
 		6C1D219A0E653B33A7D64828 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D949A90A580DED9DB96AA /* AboutSettingsView.swift */; };
 		6D97C25F4F827FEA820653A9 /* DSHinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939BD45E462980BEC807C4A0 /* DSHinge.swift */; };
 		6E815950B0A142F228E374DB /* INDSControllerLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */; };
 		6ED22653E0E51DEEBB2356E4 /* ROMDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AE2312801B73F7EE221E73 /* ROMDetailView.swift */; };
+		70BD3928CF1B2A3765EBB7E3 /* E3DS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD92040CC7644C67EF9DE84 /* E3DS.xcframework */; };
 		71710BF31E7AC520C4699397 /* Lzma2Dec.c in Sources */ = {isa = PBXBuildFile; fileRef = C6773641AFE7D4CDAF9BB347 /* Lzma2Dec.c */; };
 		71F8FC66F52C8F3AF428D391 /* INDSControllerMappingLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */; };
 		7203C48B084BEBED695BDEF9 /* INDSDPadShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15F4158DDF71AEEA98604CB /* INDSDPadShapeView.swift */; };
@@ -82,6 +87,7 @@
 		8C058B05EB5A872CA1B7D1E8 /* SavingSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */; };
 		8C815AE8E50E83F08DAE233A /* INDSGamepadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBBEE702CB715FEE662A096 /* INDSGamepadManager.swift */; };
 		8D6DB4270D99C1BED1AFF0A5 /* Notification+Names.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E55426D1400B9517D4B9755 /* Notification+Names.swift */; };
+		8D87D6F8DBCBC61139E926E4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBC3EEFA2041297D2476BDB /* GameController.framework */; };
 		8DBF4BFC4DE61BF985550F23 /* NOTICES.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FF202E13D8BAA3947A37FC2 /* NOTICES.txt */; };
 		8FD34C6471E67D87EBDDDF81 /* 7zArcIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 44497849F70DBBB6CB1AC685 /* 7zArcIn.c */; };
 		900D59A822F56C2E53B3C24F /* BIOSSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB281A6629714C604286E2F /* BIOSSetupView.swift */; };
@@ -98,6 +104,7 @@
 		ADB3476806689E6547BE753B /* PurchaseProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8419AE9ABE89601263FE3A /* PurchaseProductDetails.swift */; };
 		AFA7C3A4F52BC8FA3AB9C5EA /* 7zStream.c in Sources */ = {isa = PBXBuildFile; fileRef = CAE29EF2985114A2A2637956 /* 7zStream.c */; };
 		B02B467150A889372451E36C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC8417730C667A846DFE82B3 /* WelcomeView.swift */; };
+		B0D29B6D23F51630EBB0596A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEF213C2F02C92651649BF6F /* AudioToolbox.framework */; };
 		B237F288461266B7C9722A71 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6AC301AF51F7752D43F4A3 /* AVFoundation.framework */; };
 		B6A51518B1575505093E29FF /* NDSSaveStateSlotsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF4B43544BFE7B25FCE44A4 /* NDSSaveStateSlotsView.swift */; };
 		BAFEFD231C0D3E3837FA20A0 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A1493B6F6FCC13277DA166 /* SplashScreenView.swift */; };
@@ -109,14 +116,17 @@
 		C8F9D6CDFD0B68767B97A23D /* INDSDuoSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94561B6BA004ABA2E3AFC5C /* INDSDuoSweep.swift */; };
 		CAFC795486C5F8E42D5A0049 /* NDSCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04371E0A508587EC8BD350 /* NDSCheat.swift */; };
 		CBDE78B663229C673670C084 /* INDSRTCPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3706BB5B202BDAD36D7642 /* INDSRTCPreferences.swift */; };
+		CC178B95FD6E8ABC4E2E31AB /* MoltenVK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA69243C04E366D72820F2C9 /* MoltenVK.xcframework */; };
 		CD79E23B69E8F5F626B28F42 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D8BE41E3A39F7CDAF9019E /* DebugLog.swift */; };
 		D0E0DC9C0D4D96AC7A7F77C0 /* INDSAppearanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D994BD3D0CC29A8C3FB3D6F /* INDSAppearanceStore.swift */; };
 		D1398182C12DEC80174425FD /* UTType+NDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C380A3BC39CAD2A1065CC9C /* UTType+NDS.swift */; };
 		D664FE85EEE0291E6EC13822 /* DSScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF11C643DEBCEA9B266202E /* DSScreenLayout.swift */; };
 		D9B0F801F9673CDD43CA29CC /* DateTimeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67C81FAB8D94A0F7F7780F8 /* DateTimeSettingsView.swift */; };
+		DB244EC33A2F610392F942CF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7CAD7F46AB13015511F9802 /* QuartzCore.framework */; };
 		DB6098C9A24BEEF6CA8F0195 /* BatterySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C904010B7AD91405065430 /* BatterySettingsView.swift */; };
 		DBD7B1D4152ADA397D360F59 /* Delta.c in Sources */ = {isa = PBXBuildFile; fileRef = A684EB48BA636E4B19D659D2 /* Delta.c */; };
 		DC60AC19B8E9B3E1F6C7AD5B /* MelonDSCoreBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 32C1EAFD1973E8DC394CBA48 /* MelonDSCoreBridge.mm */; };
+		DC833BEF4164A52401B187A4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E05E94DBE26386B7895F4CE5 /* CoreAudio.framework */; };
 		DFB2E2F7FA097D6820428E50 /* INDSHoneymoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3A407B35815197407A6DED /* INDSHoneymoon.swift */; };
 		E066A371317213D9EA011A5C /* NDSCodeBreaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42537CBE699464F57A104DFA /* NDSCodeBreaker.swift */; };
 		E2DE0E3575049A1D87DBDF04 /* eNDSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BF3C246ADD1320E8093E9 /* eNDSApp.swift */; };
@@ -157,6 +167,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2B9BC2B08522A30ED73318C6 /* MoltenVK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,6 +197,7 @@
 		19D1170BD7F7A6E584F98A27 /* INDSScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INDSScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A463E15BE246EAEF8ABDCE4 /* NDSRomViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSRomViewWrapper.swift; sourceTree = "<group>"; };
 		1B3706BB5B202BDAD36D7642 /* INDSRTCPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSRTCPreferences.swift; sourceTree = "<group>"; };
+		1E0DAC71BDF247459817C777 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = System/Library/Frameworks/IOSurface.framework; sourceTree = SDKROOT; };
 		2479AA705600481AC8E068A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerMappingLogic.swift; sourceTree = "<group>"; };
 		2999805555B0E26E258294DF /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
@@ -198,6 +210,7 @@
 		32C1EAFD1973E8DC394CBA48 /* MelonDSCoreBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MelonDSCoreBridge.mm; sourceTree = "<group>"; };
 		33603FF8DD00E3267B32D50D /* ThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailManager.swift; sourceTree = "<group>"; };
 		33A7976503C72801E12D5B07 /* TuistBundle+ENDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+ENDS.swift"; sourceTree = "<group>"; };
+		36FA10B984F9039A953021AA /* ThreeDSGameViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThreeDSGameViewController.swift; path = ThreeDS/ThreeDSGameViewController.swift; sourceTree = "<group>"; };
 		3AA49210A86CF7CAD350D5D8 /* NDSDisplayFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSDisplayFilter.swift; sourceTree = "<group>"; };
 		3C671B34D75660A6AEE56EB8 /* Sz7zShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Sz7zShim.c; sourceTree = "<group>"; };
 		42537CBE699464F57A104DFA /* NDSCodeBreaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCodeBreaker.swift; sourceTree = "<group>"; };
@@ -223,6 +236,7 @@
 		694F451CBABBB3B76AB6436A /* AudioSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettingsView.swift; sourceTree = "<group>"; };
 		69EED5FB442C79C67F3A2C99 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		6AF4B43544BFE7B25FCE44A4 /* NDSSaveStateSlotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSSaveStateSlotsView.swift; sourceTree = "<group>"; };
+		6BEDBF23DE9E3E6BBD036970 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		6D0BF3C246ADD1320E8093E9 /* eNDSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eNDSApp.swift; sourceTree = "<group>"; };
 		713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMIconStore.swift; sourceTree = "<group>"; };
 		735843C4C8E17E1C9A4F95D1 /* NDSRomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSRomViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +245,7 @@
 		78B94CC3CA4E14AB95B77C0D /* NDSControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSControllerView.swift; sourceTree = "<group>"; };
 		7902A93230922C4CF8A04C1A /* INDSMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSMotion.swift; sourceTree = "<group>"; };
 		7B65064657F95120CC6FE300 /* INDSVisualSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSVisualSweep.swift; sourceTree = "<group>"; };
+		7BBC3EEFA2041297D2476BDB /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		7C380A3BC39CAD2A1065CC9C /* UTType+NDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+NDS.swift"; sourceTree = "<group>"; };
 		7CED5D6BD8B64A4776064716 /* NDSCheatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCheatsView.swift; sourceTree = "<group>"; };
 		7DA95569637B700D394B8D89 /* ControllerDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerDiagramView.swift; sourceTree = "<group>"; };
@@ -259,6 +274,8 @@
 		A684EB48BA636E4B19D659D2 /* Delta.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Delta.c; sourceTree = "<group>"; };
 		A7D5B45A7A77F3C3BA1D5E8D /* INDSLayoutProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutProbe.swift; sourceTree = "<group>"; };
 		A991E1D084A864C4E5992455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA69243C04E366D72820F2C9 /* MoltenVK.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MoltenVK.xcframework; path = Build/MoltenVK.xcframework; sourceTree = SOURCE_ROOT; };
+		AAD92040CC7644C67EF9DE84 /* E3DS.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = E3DS.xcframework; path = Build/E3DS.xcframework; sourceTree = SOURCE_ROOT; };
 		AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMappingView.swift; sourceTree = "<group>"; };
 		AC98B95B098222B202A26D90 /* ROMGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMGridCell.swift; sourceTree = "<group>"; };
 		AEF93AF9A9B668F16F548652 /* INDSSpeedPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSSpeedPreferences.swift; sourceTree = "<group>"; };
@@ -269,6 +286,7 @@
 		B7219F8FE31A771BB55DFB19 /* INDSMPLoopback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = INDSMPLoopback.mm; sourceTree = "<group>"; };
 		B789BA70623CD927FED9DB1F /* Localizable.xcstrings */ = {isa = PBXFileReference; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B79114A85DE92146A92D33E8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B7CAD7F46AB13015511F9802 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BB124E8593E5A3AAB1CF4180 /* INDSLayoutSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutSweep.swift; sourceTree = "<group>"; };
 		BC8417730C667A846DFE82B3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		BDACB16860CF2ECC472174B0 /* Bcj2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bcj2.c; sourceTree = "<group>"; };
@@ -290,6 +308,7 @@
 		DBF11C643DEBCEA9B266202E /* DSScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSScreenLayout.swift; sourceTree = "<group>"; };
 		DCDD22163D73BED3D91DA98A /* Bra.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bra.c; sourceTree = "<group>"; };
 		DE5A1654FBF63E78AD0A4A90 /* ScreensSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensSettingsView.swift; sourceTree = "<group>"; };
+		E05E94DBE26386B7895F4CE5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		E12A62F5C9F22C04CE3280B8 /* NDS7zExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDS7zExtractor.swift; sourceTree = "<group>"; };
 		E3FE82B2663ADE6894F327DB /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
 		E465158ABA0236E3E733D0DB /* 7zFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zFile.c; sourceTree = "<group>"; };
@@ -309,6 +328,7 @@
 		FB1C57307F331CA0E3899717 /* NDSHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSHUDView.swift; sourceTree = "<group>"; };
 		FC975E99F30A6478407D804D /* BIOSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BIOSManager.swift; sourceTree = "<group>"; };
 		FE3A407B35815197407A6DED /* INDSHoneymoon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSHoneymoon.swift; sourceTree = "<group>"; };
+		FEF213C2F02C92651649BF6F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +345,14 @@
 			files = (
 				B237F288461266B7C9722A71 /* AVFoundation.framework in Frameworks */,
 				C8C5A853CCA1CBA1A86423F7 /* ReplayKit.framework in Frameworks */,
+				70BD3928CF1B2A3765EBB7E3 /* E3DS.xcframework in Frameworks */,
+				CC178B95FD6E8ABC4E2E31AB /* MoltenVK.xcframework in Frameworks */,
+				B0D29B6D23F51630EBB0596A /* AudioToolbox.framework in Frameworks */,
+				DC833BEF4164A52401B187A4 /* CoreAudio.framework in Frameworks */,
+				342DCFDD636C9610A7CAAF53 /* Metal.framework in Frameworks */,
+				DB244EC33A2F610392F942CF /* QuartzCore.framework in Frameworks */,
+				5D9F6419417EDE0EDCB0EA2A /* IOSurface.framework in Frameworks */,
+				8D87D6F8DBCBC61139E926E4 /* GameController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +382,7 @@
 				FB1C57307F331CA0E3899717 /* NDSHUDView.swift */,
 				735843C4C8E17E1C9A4F95D1 /* NDSRomViewController.swift */,
 				1A463E15BE246EAEF8ABDCE4 /* NDSRomViewWrapper.swift */,
+				36FA10B984F9039A953021AA /* ThreeDSGameViewController.swift */,
 			);
 			path = Emulation;
 			sourceTree = "<group>";
@@ -527,6 +556,14 @@
 			children = (
 				9C6AC301AF51F7752D43F4A3 /* AVFoundation.framework */,
 				1364600AC006B7697D61E124 /* ReplayKit.framework */,
+				AAD92040CC7644C67EF9DE84 /* E3DS.xcframework */,
+				AA69243C04E366D72820F2C9 /* MoltenVK.xcframework */,
+				FEF213C2F02C92651649BF6F /* AudioToolbox.framework */,
+				E05E94DBE26386B7895F4CE5 /* CoreAudio.framework */,
+				6BEDBF23DE9E3E6BBD036970 /* Metal.framework */,
+				B7CAD7F46AB13015511F9802 /* QuartzCore.framework */,
+				1E0DAC71BDF247459817C777 /* IOSurface.framework */,
+				7BBC3EEFA2041297D2476BDB /* GameController.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -966,6 +1003,7 @@
 				2C2C4C6936F9381033E8FDE5 /* ROMIconView.swift in Sources */,
 				ED9775610FE620C037F3EBE0 /* ROMListView.swift in Sources */,
 				0F1DB859AD024577C66B60C0 /* ROMListViewModel.swift in Sources */,
+				470EF52F2813B96A97DC19EB /* ThreeDSGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,6 +1120,7 @@
 					"$(SRCROOT)/Build/melonDS-ios/src",
 					"$(SRCROOT)/Build/melonDS-ios-sim/src",
 					"$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+					"$(SRCROOT)/Native3DS/src",
 				);
 				INFOPLIST_FILE = Targets/INDS/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -1131,6 +1170,7 @@
 					"$(SRCROOT)/Build/melonDS-ios/src",
 					"$(SRCROOT)/Build/melonDS-ios-sim/src",
 					"$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+					"$(SRCROOT)/Native3DS/src",
 				);
 				INFOPLIST_FILE = Targets/INDS/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

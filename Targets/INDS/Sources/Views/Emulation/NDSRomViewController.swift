@@ -102,6 +102,10 @@ final class NDSRomViewController: UIViewController {
     /// and autosaved so the SwiftUI side can pop back to the ROM list.
     var onQuitToLibrary: (() -> Void)?
 
+    /// Set by `NDSRomViewWrapper`: the HUD actions as system toolbar items,
+    /// for when the system has a vertical bar to put them in.
+    var chrome: NDSGameChrome?
+
     /// Set once `quitToLibrary()` has already stopped and released the core,
     /// so the normal `viewDidDisappear` teardown (which also fires on a plain
     /// swipe-back) doesn't autosave/pause a second time on a torn-down core.
@@ -285,6 +289,7 @@ final class NDSRomViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        updateSystemBarChrome()
         applyLayoutForCurrentSize()
         #if DEBUG
         INDSLayoutProbe.schedule(controller: self, dual: dualScreenView, buttons: controllerView,
@@ -293,6 +298,22 @@ final class NDSRomViewController: UIViewController {
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool { true }
+
+    /// iPhone Duo: the system keeps a vertical bar beside the content (the
+    /// clock lives there). Layout/Menu/Speed go into it as toolbar items
+    /// instead of floating over the game. Everywhere else the trait is
+    /// unspecified and nothing changes.
+    private func updateSystemBarChrome() {
+        var vertical = false
+        // ponytail: verticalBarEdge only exists in the iOS 27.1 SDK (UIKit 9127.0.85).
+        #if canImport(UIKit, _version: 9127.0.85)
+        if #available(iOS 27.1, *) { vertical = traitCollection.verticalBarEdge != .unspecified }
+        #endif
+        hudView.chromeInSystemBar = vertical
+        guard let chrome, chrome.usesVerticalBar != vertical else { return }
+        // Not during a layout pass: SwiftUI would be updated mid-update.
+        DispatchQueue.main.async { chrome.usesVerticalBar = vertical }
+    }
 
     func update(rom: ROMFile) {
         self.rom = rom
@@ -496,6 +517,9 @@ final class NDSRomViewController: UIViewController {
         hudView.onCycleLayoutTapped = { [weak self] in self?.cycleScreenLayout() }
         hudView.onErrorBackTapped = { [weak self] in self?.quitToLibrary() }
         hudView.onFastForwardTapped = { [weak self] in self?.cycleFastForward() }
+        chrome?.pause = { [weak self] in self?.presentPauseMenu() }
+        chrome?.cycleLayout = { [weak self] in self?.cycleScreenLayout() }
+        chrome?.fastForward = { [weak self] in self?.cycleFastForward() }
         view.addSubview(hudView)
 
         gamepadManager.delegate = self
@@ -1197,6 +1221,7 @@ final class NDSRomViewController: UIViewController {
         // Keep the HUD pill in step whichever input drove this — a gamepad hold
         // and the on-screen button share one piece of state.
         hudView.setFastForwardSpeed(active ? rate : nil)
+        chrome?.fastForwardSpeed = active ? rate : nil
         applyEffectiveSpeed()
     }
 

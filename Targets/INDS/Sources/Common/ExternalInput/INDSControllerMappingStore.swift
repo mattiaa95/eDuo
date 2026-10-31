@@ -97,7 +97,7 @@ extension INDSMappingTarget {
         }
     }
 
-    /// Una línea que cuenta qué hace, para la lista de acciones.
+    /// One line describing what it does, for the actions list.
     var detail: String? {
         switch self {
         case .fastForward: return NSLocalizedString("Hold to speed up. A quick tap picks the next speed.", comment: "Mapping target detail")
@@ -110,7 +110,7 @@ extension INDSMappingTarget {
         }
     }
 
-    /// SF Symbol de la acción (no del botón físico).
+    /// SF Symbol of the action (not of the physical button).
     var symbol: String {
         switch self {
         case .up: return "arrowtriangle.up.fill"
@@ -138,7 +138,7 @@ extension INDSMappingTarget {
         }
     }
 
-    /// Etiqueta corta para el dibujo del mando ("A", "Start"); vacía = símbolo.
+    /// Short label for the controller drawing ("A", "Start"); empty = symbol.
     var shortLabel: String {
         switch self {
         case .up: return "↑"
@@ -181,7 +181,7 @@ enum INDSControllerMappingStore {
         return INDSMappingTarget(rawValue: raw) ?? .none
     }
 
-    /// Sustituye el mapeo activo entero (deshacer, restablecer).
+    /// Replaces the whole active mapping (undo, reset).
     static func setMapping(_ mapping: [String: Int], controller: GCController?) {
         let clean = INDSMappingLogic.migrate(mapping)
         UserDefaults.standard.set(clean, forKey: activeKey)
@@ -189,8 +189,8 @@ enum INDSControllerMappingStore {
         NotificationCenter.default.post(name: .indsControllerMappingDidChange, object: nil)
     }
 
-    /// Asigna una acción a un botón físico. Devuelve lo que se ha quedado sin
-    /// ningún botón por culpa de esta asignación, para ofrecer deshacer.
+    /// Assigns an action to a physical button. Returns what was left without
+    /// any button because of this assignment, to offer undo.
     @discardableResult
     static func assign(_ target: INDSMappingTarget, toPhysical key: String, controller: GCController?) -> INDSMappingTarget? {
         let result = INDSMappingLogic.assign(target, to: key, in: activeMapping())
@@ -204,7 +204,7 @@ enum INDSControllerMappingStore {
         setMapping(defaultMapping, controller: controller)
     }
 
-    /// Todos los mandos a fábrica: perfiles, pendientes y el activo.
+    /// Every controller back to defaults: profiles, pending and the active one.
     static func resetAllControllers() {
         UserDefaults.standard.removeObject(forKey: profilesKey)
         UserDefaults.standard.removeObject(forKey: pendingKey)

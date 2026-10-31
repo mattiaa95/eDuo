@@ -13,6 +13,11 @@ struct BIOSSetupView: View {
                     Text("BIOS/firmware files are optional. eDuo can boot and run almost any game using a built-in compatibility BIOS. Importing real dumps from your own console can improve compatibility for a few games. eDuo does not include or download BIOS files.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                    // An encrypted retail dump cannot boot without the ARM7
+                    // BIOS: the built-in one has no decryption key.
+                    Text("Encrypted game files need bios7.bin to start.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
 
                 Section("Optional files") {
