@@ -1,7 +1,7 @@
 #!/bin/bash
-# Builds the 3DS core (Vendor/azahar, pinned commit) + the eDuo bridge (Native3DS)
-# for device and simulator, and merges them into Build/E3DS.xcframework (+ official MoltenVK).
-# Versions and audit: Native3DS/patches/README.md. Nothing unpinned there is downloaded.
+# Builds the 3DS core (Vendor/azahar, pinned commit) + eDuo's bridge (Native3DS)
+# for iPhone and simulator, and merges them into Build/E3DS.xcframework (+ official MoltenVK).
+# Versions and audit: docs/3ds-core-pin.md. Nothing is downloaded that is not pinned there.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT=$PWD
@@ -11,7 +11,7 @@ export DEVELOPER_DIR=${DEVELOPER_DIR:-/Applications/Xcode27.1RC.app/Contents/Dev
 
 [ "$(git -C $AZ rev-parse HEAD)" = "$PIN" ] || { echo "Vendor/azahar no esta en $PIN"; exit 1; }
 git -C $AZ submodule update --init --recursive --depth 1 >/dev/null
-# Own patches, idempotent.
+# Our own patches, idempotent.
 for p in Native3DS/patches/*.patch; do
   git -C $AZ apply --check "$ROOT/$p" 2>/dev/null && git -C $AZ apply "$ROOT/$p"
 done

@@ -133,6 +133,10 @@ final class INDSGamepadManager {
 
     weak var delegate: INDSGamepadManagerDelegate?
 
+    /// Whether the left stick also presses the D-pad. DS: always (no analog).
+    /// 3DS: the game reads the stick as the Circle Pad, so it asks for false.
+    var stickDrivesDPad: () -> Bool = { true }
+
     private(set) var current: GCController?
 
     /// How many of the current pad's inputs could be wired. A controller that
@@ -161,7 +165,6 @@ final class INDSGamepadManager {
     /// handlers the newer one just installed.
     private static weak var handlerOwner: INDSGamepadManager?
 
-    private static let stickThreshold: Float = 0.5
     /// Shorter than this, a Fast Forward hold counts as a tap: next speed.
     private static let fastForwardTap: TimeInterval = 0.25
     /// Holding a remapped Menu this long opens the pause menu.
@@ -266,7 +269,8 @@ final class INDSGamepadManager {
         if let stick = INDSControllerElements.thumbstick(on: controller) {
             wiredInputCount += 1
             stick.valueChangedHandler = { [weak self] _, x, y in
-                self?.setStickDirections(Self.directions(fromStickX: x, y: y))
+                guard let self else { return }
+                self.setStickDirections(Self.directions(fromStickX: x, y: y, held: self.stickDirections, drives: self.stickDrivesDPad()))
             }
         }
 
@@ -385,12 +389,12 @@ final class INDSGamepadManager {
         for button in next.subtracting(before) { delegate?.gamepadManager(self, setButton: button, pressed: true) }
     }
 
-    private static func directions(fromStickX x: Float, y: Float) -> Set<INDSButton> {
-        var result: Set<INDSButton> = []
-        if y > stickThreshold { result.insert(.up) }
-        if y < -stickThreshold { result.insert(.down) }
-        if x < -stickThreshold { result.insert(.left) }
-        if x > stickThreshold { result.insert(.right) }
-        return result
+    /// With hysteresis: a stick resting near half travel used to cross the
+    /// threshold back and forth, and every crossing was a fresh press.
+    private static func directions(fromStickX x: Float, y: Float, held: Set<INDSButton>, drives: Bool) -> Set<INDSButton> {
+        let heldTargets = Set(held.compactMap { INDSMappingTarget(rawValue: $0.rawValue) })
+        return Set(INDSDirectionHysteresis.stickDPad(
+            x: Double(x), y: Double(y), held: heldTargets, stickDrivesDPad: drives
+        ).compactMap { INDSButton(rawValue: $0.rawValue) })
     }
 }

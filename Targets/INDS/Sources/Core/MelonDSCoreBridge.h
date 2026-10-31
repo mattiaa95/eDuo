@@ -140,6 +140,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// allocate.
 - (BOOL)copyFramebuffersTop:(uint32_t *)top bottom:(uint32_t *)bottom;
 
+/// Metal presentation: if a frame newer than the last one taken by this method
+/// or `copyFramebuffersTop:bottom:` exists, calls `block` with pointers
+/// straight into the bridge's published slot (256*192 uint32_t BGRA each) and
+/// returns YES. The pointers are valid only inside `block`, which runs under
+/// the framebuffer lock: it must only copy (e.g. texture `replace`).
+- (BOOL)withLatestFramebuffersIfNew:(NS_NOESCAPE void (^)(const uint32_t *top, const uint32_t *bottom))block;
+
+/// Copies the latest top frame whether or not it was already presented (for
+/// thumbnails while the Metal path does not keep a CPU copy per frame).
+- (BOOL)copyLatestTopFramebuffer:(uint32_t *)top;
+
 #pragma mark - Save states
 
 /// Path for numbered save-state slot 0...3 for the loaded ROM, or nil if no

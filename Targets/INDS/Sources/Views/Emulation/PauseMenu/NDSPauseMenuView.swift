@@ -126,6 +126,9 @@ private struct NDSScreenLayoutCard: View {
     let onCycle: () -> DSScreenLayoutMode
     let onToggleSwap: (Bool) -> Void
     let onToggleStretch: (Bool) -> Void
+    /// Same setting as Settings > Screens > Orientation; the game screen
+    /// picks the change up from `INDSOrientationLock.didChangeNotification`.
+    @State private var orientationLock = INDSOrientationLock.current
 
     var body: some View {
         VStack(spacing: 10) {
@@ -178,6 +181,25 @@ private struct NDSScreenLayoutCard: View {
             )) {
                 Label(NSLocalizedString("Fill Screen", comment: ""), systemImage: "rectangle.expand.vertical")
                     .font(.subheadline)
+            }
+
+            HStack {
+                Label(NSLocalizedString("Orientation", comment: ""), systemImage: "lock.rotation")
+                    .font(.subheadline)
+                Spacer()
+                Picker(NSLocalizedString("Orientation", comment: ""), selection: Binding(
+                    get: { orientationLock },
+                    set: { newValue in
+                        orientationLock = newValue
+                        INDSHaptics.light()
+                        INDSOrientationLock.current = newValue
+                    }
+                )) {
+                    ForEach(INDSOrientationLock.allCases, id: \.self) { option in
+                        Text(option.title).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
             }
         }
         .padding(.vertical, 13)

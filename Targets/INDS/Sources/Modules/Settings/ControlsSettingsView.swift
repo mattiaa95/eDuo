@@ -34,6 +34,10 @@ struct ControlsSettingsView: View {
     @State private var hapticsEnabled: Bool
     @State private var hapticStrength: INDSHapticStrength
     @State private var fastForwardSpeed: Double
+    @State private var hidesWithGamepad = INDSControllerOverlayPreferences.hidesWithGamepad
+    @State private var hidesHUDWithGamepad = INDSControllerOverlayPreferences.hidesHUDWithGamepad
+    @State private var stickMovesDPadDS = INDSControllerOverlayPreferences.stickMovesDPadDS
+    @State private var stickAlsoMovesDPad = INDSControllerOverlayPreferences.stickAlsoMovesDPad3DS
 
     init() {
         let defaults = UserDefaults.standard
@@ -84,6 +88,34 @@ struct ControlsSettingsView: View {
                 Text("🎮 On-Screen Controller")
             } footer: {
                 Text("Opacity and size apply the next time you open a game.")
+            }
+
+            Section {
+                Toggle("Hide with a Controller", isOn: $hidesWithGamepad)
+                    .onChange(of: hidesWithGamepad) { _, newValue in
+                        INDSControllerOverlayPreferences.hidesWithGamepad = newValue
+                    }
+                if hidesWithGamepad {
+                    Toggle("Also Hide the HUD", isOn: $hidesHUDWithGamepad)
+                        .onChange(of: hidesHUDWithGamepad) { _, newValue in
+                            INDSControllerOverlayPreferences.hidesHUDWithGamepad = newValue
+                        }
+                }
+            } footer: {
+                Text("Hides the on-screen buttons while a controller is connected and brings them back when it disconnects. The touch screen keeps working. With the HUD hidden too, press the controller's Menu button to pause.")
+            }
+
+            Section {
+                Toggle("Stick Moves the D-Pad (DS)", isOn: $stickMovesDPadDS)
+                    .onChange(of: stickMovesDPadDS) { _, newValue in
+                        INDSControllerOverlayPreferences.stickMovesDPadDS = newValue
+                    }
+                Toggle("Left Stick Also Moves D-Pad", isOn: $stickAlsoMovesDPad)
+                    .onChange(of: stickAlsoMovesDPad) { _, newValue in
+                        INDSControllerOverlayPreferences.stickAlsoMovesDPad3DS = newValue
+                    }
+            } footer: {
+                Text("On DS games the left stick moves the D-pad; turn the first switch off to keep the D-pad separate. On 3DS games the left stick always moves the Circle Pad; the second switch makes it press the D-pad too.")
             }
 
             Section {

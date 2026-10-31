@@ -18,6 +18,9 @@
 #include <locale>
 #include <memory>
 #include <mutex>
+#include <thread>
+#include <chrono>
+#include <unordered_map>
 
 #include <fmt/format.h>
 
@@ -27,6 +30,8 @@
 #include "core/cheats/cheats.h"
 #include "core/cheats/gateway_cheat.h"
 #include "core/core.h"
+#include "core/hle/kernel/kernel.h"
+#include "core/savestate.h"
 #include "core/file_sys/archive_source_sd_savedata.h"
 #include "core/frontend/applets/default_applets.h"
 #include "core/frontend/emu_window.h"
@@ -40,6 +45,12 @@
 #include "video_core/rasterizer_interface.h"
 
 #import <QuartzCore/CAMetalLayer.h>
+#import <objc/runtime.h>
+
+#include <mach/mach.h>
+#include <mach/thread_info.h>
+#include <pthread.h>
+#include <chrono>
 
 namespace {
 
@@ -78,13 +89,52 @@ struct Session {
     std::mutex mutex;
     std::condition_variable cv;
     std::atomic_bool stop{false}, paused{false}, running{false};
+    // True while the core thread sits in the paused wait (no GPU work in flight).
+    std::atomic_bool parked{false};
+    // Save-state op in progress: the loop keeps iterating even when paused.
+    std::atomic_bool stepping{false};
+    bool stepFinished = false;
+    int stepIters = 0;
+    std::chrono::steady_clock::time_point stepDeadline;
+    std::condition_variable doneCv;
+    std::mutex opMutex;
+    bool batterySaver = false;
     CAMetalLayer* top = nil;
     CAMetalLayer* bottom = nil;
     u64 program_id = 0;
     int resolution = 2;
     double topW = 400, topH = 240, bottomW = 320, bottomH = 240;
     std::unique_ptr<EmuWindow_iOS> window, secondary;
+    // Diagnostics (see E3DSSetDiagnostics / E3DSSampleStats).
+    int vsync = -1;
+    bool unlimited = false;
+    std::atomic_bool statsOn{false};
+    std::atomic<mach_port_t> coreThread{MACH_PORT_NULL};
+    std::atomic<unsigned long long> presents{0};
+    __weak CAMetalLayer* countedLayer = nil;
 } g;
+
+// Counts nextDrawable calls on the top layer (MoltenVK calls it once per
+// presented frame). Installed the first time stats are switched on; a Bool
+// test per call afterwards.
+IMP g_origNextDrawable = nullptr;
+id<CAMetalDrawable> CountingNextDrawable(CAMetalLayer* self, SEL _cmd) {
+    if (g.statsOn && self == g.countedLayer) g.presents.fetch_add(1, std::memory_order_relaxed);
+    return ((id<CAMetalDrawable>(*)(id, SEL))g_origNextDrawable)(self, _cmd);
+}
+
+double ThreadCPUSeconds(thread_act_t t, char* nameOut = nullptr, size_t nameLen = 0) {
+    thread_basic_info_data_t info;
+    mach_msg_type_number_t count = THREAD_BASIC_INFO_COUNT;
+    if (thread_info(t, THREAD_BASIC_INFO, (thread_info_t)&info, &count) != KERN_SUCCESS) return 0;
+    if (info.flags & TH_FLAGS_IDLE) return 0;
+    if (nameOut) {
+        nameOut[0] = 0;
+        if (pthread_t pt = pthread_from_mach_thread_np(t)) pthread_getname_np(pt, nameOut, nameLen);
+    }
+    return info.user_time.seconds + info.user_time.microseconds / 1e6 +
+           info.system_time.seconds + info.system_time.microseconds / 1e6;
+}
 
 void ConfigureOnce() {
     static std::once_flag once;
@@ -108,6 +158,13 @@ void ConfigureOnce() {
     v.resolution_factor.SetValue(static_cast<u32>(g.resolution));
     v.async_shader_compilation.SetValue(true);
     v.async_presentation.SetValue(true);
+    if (g.vsync >= 0) v.use_vsync.SetValue(g.vsync != 0);
+    v.frame_limit.SetValue(g.unlimited ? 0.0 : 100.0);
+    if (g.batterySaver) {
+        v.use_vsync.SetValue(true);
+        Settings::is_temporary_frame_limit = true;
+        Settings::temporary_frame_limit = 100.0;
+    }
     v.output_type.SetValue(AudioCore::SinkType::Auto);
 
     static const int buttons[Settings::NativeButton::NumButtons] = {
@@ -142,6 +199,7 @@ void E3DSSetLayers(void* topLayer, double topWidth, double topHeight, void* bott
                    double bottomWidth, double bottomHeight) {
     std::lock_guard lock(g.mutex);
     g.top = (__bridge CAMetalLayer*)topLayer;
+    g.countedLayer = g.top;
     g.bottom = (__bridge CAMetalLayer*)bottomLayer;
     g.topW = topWidth; g.topH = topHeight;
     g.bottomW = bottomWidth; g.bottomH = bottomHeight;
@@ -189,19 +247,43 @@ int E3DSRun(const char* path) {
         std::atomic_bool stop_loading{false};
         system.GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(stop_loading, nullptr);
         system.RegisterCoreLoopThreadId();
+        g.coreThread = pthread_mach_thread_np(pthread_self());
 
         while (!g.stop) {
-            if (g.paused) {
+            if (g.paused && !g.stepping) {
                 std::unique_lock lock(g.mutex);
-                g.cv.wait(lock, [] { return !g.paused || g.stop; });
+                g.parked = true;
+                g.cv.wait(lock, [] { return !g.paused || g.stop || g.stepping; });
+                g.parked = false;
                 continue;
             }
+            // The save/load request runs at the start of a RunLoop in which no
+            // async kernel operation is pending; that iteration ends the step.
+            const bool stepThis = g.stepping;
+            const bool asyncBefore = stepThis && system.Kernel().AreAsyncOperationsPending();
             result = system.RunLoop();
+            if (g.stepping) {
+                ++g.stepIters;
+                if ((stepThis && !asyncBefore) ||
+                    std::chrono::steady_clock::now() > g.stepDeadline) {
+                    std::lock_guard lock(g.mutex);
+                    g.stepping = false;
+                    g.stepFinished = true;
+                    g.doneCv.notify_all();
+                }
+            }
+            // A failed save/load must not kill the game.
+            if (result == Core::System::ResultStatus::ErrorSavestate ||
+                result == Core::System::ResultStatus::ErrorSavestateBuildMismatch) {
+                result = Core::System::ResultStatus::Success;
+                continue;
+            }
             if (result != Core::System::ResultStatus::Success) break;
         }
         if (g.stop) result = Core::System::ResultStatus::Success;
     }
 
+    g.coreThread = MACH_PORT_NULL;
     system.Shutdown();
     InputManager::Shutdown();
     {
@@ -210,6 +292,12 @@ int E3DSRun(const char* path) {
         g.secondary.reset();
     }
     g.running = false;
+    {
+        std::lock_guard lock(g.mutex);
+        g.stepping = false;
+        g.stepFinished = true;
+        g.doneCv.notify_all();
+    }
     return (int)result;
 }
 
@@ -223,6 +311,69 @@ void E3DSStop(void) {
 void E3DSSetPaused(bool paused) {
     g.paused = paused;
     g.cv.notify_all();
+}
+
+bool E3DSWaitParked(int timeoutMs) {
+    for (int i = 0; i < timeoutMs && g.running && !g.parked; ++i)
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    return g.parked || !g.running;
+}
+
+void E3DSSetBatterySaver(bool on) {
+    g.batterySaver = on;
+    if (on) {
+        Settings::values.use_vsync.SetValue(true);
+        Settings::is_temporary_frame_limit = true;
+        Settings::temporary_frame_limit = 100.0;
+    } else {
+        Settings::is_temporary_frame_limit = false;
+        // Core default (true on iOS) unless diagnostics force a value.
+        Settings::values.use_vsync.SetValue(g.vsync >= 0 ? g.vsync != 0 : true);
+    }
+}
+
+// Runs a save/load request on the core thread, even while paused. Blocks
+// up to ~7 s; must not be called from the core thread.
+static int RunStateOp(Core::System::Signal signal, int slot) {
+    if (!g.running || g.coreThread == pthread_mach_thread_np(pthread_self())) return -1;
+    std::lock_guard op(g.opMutex);
+    std::unique_lock lock(g.mutex);
+    if (!Core::System::GetInstance().SendSignal(signal, (u32)slot)) return -2;
+    g.stepFinished = false;
+    g.stepIters = 0;
+    g.stepDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(6);
+    g.stepping = true;
+    g.cv.notify_all();
+    g.doneCv.wait_for(lock, std::chrono::seconds(8), [] { return g.stepFinished; });
+    return g.stepFinished ? 0 : -3;
+}
+
+int E3DSSaveState(int slot) {
+    if (slot < 0 || slot > (int)Core::SaveStateSlotCount) return -1;
+    const auto before = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
+    const auto start = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    int r = RunStateOp(Core::System::Signal::Save, slot);
+    if (r != 0) return r;
+    // Verify the file was written (the core gives up silently after 5 s of async ops).
+    const auto after = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
+    (void)before;
+    return (after.slot != 0xFFFFFFFFu && (long long)after.time >= (long long)start - 1) ? 0 : -4;
+}
+
+int E3DSLoadState(int slot) {
+    if (slot < 0 || slot > (int)Core::SaveStateSlotCount) return -1;
+    const auto info = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
+    if (info.slot == 0xFFFFFFFFu) return -5; // no such state
+    if (info.status != Core::SaveStateInfo::ValidationStatus::OK) return -6; // other build
+    return RunStateOp(Core::System::Signal::Load, slot);
+}
+
+bool E3DSStateInfo(int slot, long long* unixTime) {
+    if (slot < 0 || slot > (int)Core::SaveStateSlotCount) return false;
+    const auto info = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
+    if (info.slot == 0xFFFFFFFFu) return false;
+    if (unixTime) *unixTime = (long long)info.time;
+    return true;
 }
 
 bool E3DSIsRunning(void) { return g.running; }
@@ -288,6 +439,77 @@ void E3DSReloadCheats(void) {
     char* path = E3DSCopyCheatFile(g.program_id);
     for (auto& cheat : Cheats::GatewayCheat::LoadFile(path)) engine.AddCheat(std::move(cheat));
     free(path);
+}
+
+} // extern "C"
+
+extern "C" {
+
+void E3DSSetDiagnostics(int vsync, bool unlimitedSpeed) {
+    g.vsync = vsync;
+    g.unlimited = unlimitedSpeed;
+}
+
+void E3DSSetStatsEnabled(bool enabled) {
+    if (enabled) {
+        static std::once_flag hook;
+        std::call_once(hook, [] {
+            Method m = class_getInstanceMethod([CAMetalLayer class], @selector(nextDrawable));
+            if (m) g_origNextDrawable = method_setImplementation(m, (IMP)CountingNextDrawable);
+        });
+    }
+    g.statsOn = enabled;
+}
+
+bool E3DSSampleStats(E3DSStats* out) {
+    using clock = std::chrono::steady_clock;
+    static clock::time_point lastWall;
+    static double lastCore = 0, lastProc = 0;
+    static unsigned long long lastPresents = 0;
+    static std::unordered_map<mach_port_t, double> lastThread;
+    if (!out || !g.statsOn || !g.running) return false;
+    const mach_port_t core = g.coreThread;
+    if (core == MACH_PORT_NULL) return false;
+
+    const auto now = clock::now();
+    thread_act_array_t threads = nullptr;
+    mach_msg_type_number_t n = 0;
+    if (task_threads(mach_task_self(), &threads, &n) != KERN_SUCCESS) return false;
+    double coreCPU = 0, proc = 0, hot = 0;
+    char hotName[32] = {0};
+    std::unordered_map<mach_port_t, double> current;
+    const double dt = std::chrono::duration<double>(now - lastWall).count();
+    for (mach_msg_type_number_t i = 0; i < n; ++i) {
+        char name[32];
+        const double cpu = ThreadCPUSeconds(threads[i], name, sizeof name);
+        proc += cpu;
+        current[threads[i]] = cpu;
+        if (threads[i] == core) { coreCPU = cpu; continue; }
+        const auto prev = lastThread.find(threads[i]);
+        const double delta = cpu - (prev == lastThread.end() ? 0 : prev->second);
+        if (dt > 0 && delta > hot) { hot = delta; std::memcpy(hotName, name, sizeof hotName); }
+    }
+    for (mach_msg_type_number_t i = 0; i < n; ++i) mach_port_deallocate(mach_task_self(), threads[i]);
+    vm_deallocate(mach_task_self(), (vm_address_t)threads, n * sizeof(thread_act_t));
+
+    const bool first = lastWall.time_since_epoch().count() == 0;
+    const unsigned long long presents = g.presents;
+    const double pr = first || dt <= 0 ? 0 : (presents - lastPresents) / dt;
+    out->coreCPU = first || dt <= 0 ? 0 : (coreCPU - lastCore) * 100 / dt;
+    out->processCPU = first || dt <= 0 ? 0 : (proc - lastProc) * 100 / dt;
+    out->hotCPU = first || dt <= 0 ? 0 : hot * 100 / dt;
+    std::memcpy(out->hotThread, hotName, sizeof hotName);
+    out->hotThread[sizeof out->hotThread - 1] = 0;
+    out->presentFPS = pr;
+    lastWall = now; lastCore = coreCPU; lastProc = proc; lastPresents = presents;
+    lastThread = std::move(current);
+
+    // Core::System resets its counters on every call, so this window is ours.
+    const auto perf = Core::System::GetInstance().GetAndResetPerfStats();
+    out->emulationSpeed = perf.emulation_speed * 100.0;
+    out->gameFPS = perf.game_fps;
+    out->systemFPS = perf.system_fps;
+    return !first;
 }
 
 } // extern "C"

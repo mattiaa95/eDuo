@@ -67,6 +67,8 @@ final class NDSRomViewController: UIViewController {
     private var turboPhaseOn = true
     /// A controller's «Rapid fire on/off»: for this session only.
     private var turboSuspended = false
+    /// Joins touch, controller and keyboard before `applyButton`.
+    private var pressMerger = INDSPressMerger()
 
     /// True the instant `refreshBatterySaverState()` last saw thermal
     /// `.critical` — guards the "Cooling down" toast to fire once on entry
@@ -176,6 +178,9 @@ final class NDSRomViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Again now that the window exists: on the first appearance
+        // viewWillAppear runs before there is a scene to ask to rotate.
+        INDSOrientationLock.apply(from: self)
         // One run-loop turn after the push has landed. The ROM load is
         // synchronous on the main thread (deliberately: the core is
         // main-thread only), and running it from viewDidLoad meant the
@@ -200,6 +205,7 @@ final class NDSRomViewController: UIViewController {
         INDSExternalDisplayController.shared.onConnectionChanged = { [weak self] _ in
             self?.applyCurrentScreenLayout(animated: true)
         }
+        INDSOrientationLock.apply(from: self)
         core.resumeEmulation()
         startDisplayLink()
         startPeriodicAutosave()
@@ -220,6 +226,10 @@ final class NDSRomViewController: UIViewController {
         // and we'll be back: the session record and the exit bookkeeping
         // belong to a real pop/dismiss only.
         let coveredByModal = presentedViewController != nil
+        // The library and Settings rotate freely. Not while our own modal
+        // (the pause sheet in compact height) covers us: the game is still
+        // there underneath and must stay where the player pinned it.
+        if !coveredByModal { INDSOrientationLock.release(from: self) }
 
         // Coming back to the library after playing is the moment to ask for a
         // rating: never mid-game, which is where it annoys and where people
@@ -472,6 +482,7 @@ final class NDSRomViewController: UIViewController {
         // image in a static NSCache and hands it to the library grid, so an
         // aliasing image would outlive topBuffer and the library would render
         // freed memory after quitting the game.
+        refreshThumbnailSource()
         guard core.loaded, let image = UIImage.ndsFramebufferImageCopy(from: topBuffer) else { return }
         ThumbnailManager.save(image, baseName: rom.baseName)
     }
@@ -521,14 +532,20 @@ final class NDSRomViewController: UIViewController {
         chrome?.cycleLayout = { [weak self] in self?.cycleScreenLayout() }
         chrome?.fastForward = { [weak self] in self?.cycleFastForward() }
         view.addSubview(hudView)
+        installPerfOverlayIfNeeded()
 
         gamepadManager.delegate = self
+        gamepadManager.stickDrivesDPad = { INDSControllerOverlayPreferences.stickMovesDPadDS }
         keyboardManager.delegate = self
         // A gamepad can already be connected by the time this view loads
         // (INDSGamepadManager scans for one in its own init, before its
         // delegate above was set) — sync the overlay/HUD to that now instead
         // of waiting for a connect/disconnect event that may never come.
         applyGamepadConnectionState(gamepadManager.isConnected)
+        NotificationCenter.default.addObserver(self, selector: #selector(gamepadOverlayPreferenceChanged),
+                                               name: INDSControllerOverlayPreferences.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationLockChanged),
+                                               name: INDSOrientationLock.didChangeNotification, object: nil)
 
         // Always-available way into the pause menu, and the reason hiding the
         // Menu button in the layout editor can't trap anyone: the top screen
@@ -1092,7 +1109,30 @@ final class NDSRomViewController: UIViewController {
         }
     }
 
+    /// TestFlight/Debug-only "Performance overlay" (Settings): small label with display/emu fps,
+    /// main-thread CPU and presentFrame cost. Not localized on purpose.
+    private func installPerfOverlayIfNeeded() {
+        DSPerfProbe.refresh()
+        guard DSPerfProbe.enabled else { DSPerfProbe.onSample = nil; return }
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = .monospacedSystemFont(ofSize: 10, weight: .semibold)
+        label.textColor = .green
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        label.isUserInteractionEnabled = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "perf..."
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4),
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+        ])
+        DSPerfProbe.onSample = { [weak label] text in label?.text = text }
+    }
+
     @objc private func presentFrame() {
+        let perfStart = DSPerfProbe.begin()
+        defer { DSPerfProbe.end(perfStart) }
         // Self-throttling to once a second inside the bridge; see
         // -ensureAudioIsRunning. The frame loop is just the only main-thread
         // heartbeat a running game is guaranteed to have.
@@ -1101,7 +1141,12 @@ final class NDSRomViewController: UIViewController {
             lastMicActive = core.microphoneActive
             hudView.setMicActive(lastMicActive)
         }
+        if dualScreenView.isMetalEnabled {
+            presentFrameMetal()
+            return
+        }
         guard core.copyFramebuffersTop(topBuffer, bottom: bottomBuffer) else { return }
+        DSPerfProbe.noteEmuFrame()
         // Shared with INDSExternalDisplayController below: the top screen
         // renders identically whether it's on-device or mirrored to an
         // external display, so build the UIImage once either way.
@@ -1109,6 +1154,29 @@ final class NDSRomViewController: UIViewController {
         dualScreenView.topScreenView.image = topImage
         dualScreenView.bottomScreenView.image = .ndsFramebufferImage(from: bottomBuffer)
         INDSExternalDisplayController.shared.present(topImage: topImage)
+    }
+
+    /// Metal path: the bridge's slot buffers are uploaded straight into GPU textures (no CPU copy
+    /// per frame, no CGImage). `topBuffer` is then only filled on demand (thumbnails) or, while an
+    /// external display is connected, with a private copy that image is built from.
+    private func presentFrameMetal() {
+        let external = INDSExternalDisplayController.shared.isConnected
+        let privateTop = topBuffer
+        let took = dualScreenView.presentFrames { copy in
+            core.withLatestFramebuffersIfNew { top, bottom in
+                copy(top, bottom)
+                if external { privateTop.update(from: top, count: 256 * 192) }
+            }
+        }
+        if took { DSPerfProbe.noteEmuFrame() }
+        if took, external, let image = UIImage.ndsFramebufferImageCopy(from: topBuffer) {
+            INDSExternalDisplayController.shared.present(topImage: image)
+        }
+    }
+
+    /// Thumbnails read `topBuffer`; the Metal path does not keep it current.
+    private func refreshThumbnailSource() {
+        if dualScreenView.isMetalEnabled { _ = core.copyLatestTopFramebuffer(topBuffer) }
     }
 
     // MARK: - Touch screen (bottom/touch DS screen)
@@ -1244,17 +1312,38 @@ final class NDSRomViewController: UIViewController {
     /// and mirrors it in the HUD badge. Uses the overlay's own existing
     /// `releaseAllActiveInputs()` so a finger mid-touch when a controller
     /// connects doesn't leave a phantom button stuck down.
+    ///
+    /// Settings > Controls > "Hide with a Controller" (default on) decides
+    /// whether the overlay goes at all; the badge follows the connection
+    /// either way. The touch screen itself is never affected.
     private func applyGamepadConnectionState(_ connected: Bool) {
-        // Screenshot harness: the sim's host keyboard registers as a
-        // connected gamepad, which would hide the touch overlay in every
-        // capture — keep the real no-controller presentation instead.
-        let effective = connected && !INDSLaunchFlags.screenshotHarness
+        // Screenshot harness (inside `shouldHideOverlay`): the sim's host
+        // keyboard registers as a connected gamepad, which would hide the
+        // touch overlay in every capture.
+        let hide = INDSControllerOverlayPreferences.shouldHideOverlay(gamepadConnected: connected)
+        let badge = (connected || INDSControllerOverlayPreferences.fakeGamepad) && !INDSLaunchFlags.screenshotHarness
         controllerView.releaseAllActiveInputs()
-        controllerView.isHidden = effective
+        controllerView.isHidden = hide
         // No on-screen controls to leave room for — give the strip back to
         // the screens (portrait only; see `DSDualScreenView`).
-        dualScreenView.reservesControlBand = !effective
-        hudView.setGamepadConnected(effective)
+        dualScreenView.reservesControlBand = !hide
+        hudView.setGamepadConnected(badge, controlsHidden: hide)
+        hudView.setChromeHidden(hide && INDSControllerOverlayPreferences.hidesHUDWithGamepad)
+    }
+
+    @objc private func gamepadOverlayPreferenceChanged() {
+        applyGamepadConnectionState(gamepadManager.isConnected)
+    }
+
+    // MARK: - Orientation lock (Settings > Screens > Orientation)
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        INDSOrientationLock.current.mask
+    }
+
+    @objc private func orientationLockChanged() {
+        guard view.window != nil else { return }
+        INDSOrientationLock.apply(from: self)
     }
 
     // MARK: - Pause menu
@@ -1452,6 +1541,30 @@ final class NDSRomViewController: UIViewController {
         sessionResumedAt = nil
     }
 
+    // MARK: - Input (sources -> turbo -> core)
+
+    /// Every source enters here. See `INDSPressMerger`: a DS button stays
+    /// down while any source holds it, and a controller/keyboard release that
+    /// is undone within 25 ms (bounce, or the same press delivered twice) never
+    /// reaches the game, so it can't turn one press into two.
+    private func input(_ button: INDSButton, pressed: Bool, source: String, graced: Bool) {
+        switch pressMerger.handle(button: button.rawValue, pressed: pressed, source: source, graced: graced) {
+        case .none:
+            break
+        case .press:
+            applyButton(button, pressed: true)
+        case .release(let delay, let token):
+            guard delay > 0 else {
+                if pressMerger.releaseFired(button: button.rawValue, token: token) { applyButton(button, pressed: false) }
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self, self.pressMerger.releaseFired(button: button.rawValue, token: token) else { return }
+                self.applyButton(button, pressed: false)
+            }
+        }
+    }
+
     // MARK: - Input (turbo)
 
     /// The single point all three input sources pass through (touch overlay,
@@ -1498,13 +1611,19 @@ final class NDSRomViewController: UIViewController {
     private func startTurboTimer() {
         guard turboTimer == nil else { return }
         let phase = 1.0 / Double(2 * INDSTurboPreferences.rateHz)
-        turboTimer = Timer.scheduledTimer(withTimeInterval: phase, repeats: true) { [weak self] _ in
+        // The first pulse is held `firstPulseHold` before the blinking starts
+        // (`INDSTurboPattern.isOn`): firing at once, a normal tap went
+        // ON-OFF-ON and the game counted two presses.
+        let timer = Timer(fire: Date().addingTimeInterval(INDSTurboPattern.firstPulseHold),
+                          interval: phase, repeats: true) { [weak self] _ in
             guard let self else { return }
             self.turboPhaseOn.toggle()
             for button in self.turboHeld {
                 self.core.setButton(button, pressed: self.turboPhaseOn)
             }
         }
+        RunLoop.main.add(timer, forMode: .common)
+        turboTimer = timer
     }
 
     private func stopTurboTimer() {
@@ -1529,6 +1648,7 @@ final class NDSRomViewController: UIViewController {
     // for this would cost more than it fixes. If it ever becomes a nuisance,
     // the way out is to capture inside `presentFrame`.
     private func saveSlotThumbnail(_ slot: Int) {
+        refreshThumbnailSource()
         guard core.loaded, let image = UIImage.ndsFramebufferImageCopy(from: topBuffer) else { return }
         NDSSaveStatePaths.saveThumbnail(image, baseName: rom.baseName, slot: slot)
     }
@@ -1601,7 +1721,7 @@ final class NDSRomViewController: UIViewController {
 
 extension NDSRomViewController: NDSControllerViewDelegate {
     func controllerView(_ view: NDSControllerView, setButton button: INDSButton, pressed: Bool) {
-        applyButton(button, pressed: pressed)
+        input(button, pressed: pressed, source: "touch", graced: false)
     }
 }
 
@@ -1609,7 +1729,7 @@ extension NDSRomViewController: NDSControllerViewDelegate {
 
 extension NDSRomViewController: INDSGamepadManagerDelegate {
     func gamepadManager(_ manager: INDSGamepadManager, setButton button: INDSButton, pressed: Bool) {
-        applyButton(button, pressed: pressed)
+        input(button, pressed: pressed, source: "gamepad", graced: true)
     }
 
     func gamepadManager(_ manager: INDSGamepadManager, perform action: INDSControllerAppAction) {
@@ -1628,11 +1748,19 @@ extension NDSRomViewController: INDSGamepadManagerDelegate {
 // MARK: - INDSKeyboardManagerDelegate
 
 extension NDSRomViewController: INDSKeyboardManagerDelegate {
+    // With a controller connected the keyboard does not press anything. If
+    // the system ever mirrors controller buttons as keys (A as Return, B as
+    // Escape), the mirror would land on a DIFFERENT DS button (Start) or open
+    // the pause menu — one press doing two things, and on A/B only, since the
+    // d-pad's mirror (arrows) hits the same buttons. Releases still go through
+    // so a key held across the connection can't stick.
     func keyboardManager(_ manager: INDSKeyboardManager, setButton button: INDSButton, pressed: Bool) {
-        applyButton(button, pressed: pressed)
+        if pressed && gamepadManager.isConnected { return }
+        input(button, pressed: pressed, source: "keyboard", graced: true)
     }
 
     func keyboardManagerDidRequestPause(_ manager: INDSKeyboardManager) {
+        guard !gamepadManager.isConnected else { return }
         performControllerAction(.pause)
     }
 }

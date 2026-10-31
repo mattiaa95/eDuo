@@ -12,11 +12,21 @@
 //
 
 import UIKit
+import Metal
 
 final class DSDualScreenView: UIView {
 
     let topScreenView = UIImageView()
     let bottomScreenView = UIImageView()
+
+    /// Native Metal presentation (see DSMetalScreenRenderer.swift). nil = legacy UIImage path,
+    /// either forced with UserDefaults `eDuoLegacyDSRender` or because Metal is unavailable.
+    private(set) var topMetalView: DSMetalScreenView?
+    private(set) var bottomMetalView: DSMetalScreenView?
+    private var currentFilter: NDSDisplayFilter = .smooth
+
+    /// True when frames go through `presentFrames` instead of `screen.image`.
+    var isMetalEnabled: Bool { topMetalView != nil }
 
     // One scanline overlay per screen, added as a sublayer so it moves/
     // resizes/animates in lockstep with its screen's own frame changes
@@ -32,6 +42,11 @@ final class DSDualScreenView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
+
+        if !DSMetalRenderer.legacyForced, let renderer = DSMetalRenderer.shared {
+            topMetalView = DSMetalScreenView(device: renderer.device)
+            bottomMetalView = DSMetalScreenView(device: renderer.device)
+        }
 
         for screen in [topScreenView, bottomScreenView] {
             screen.backgroundColor = UIColor(white: 0.05, alpha: 1)
@@ -69,6 +84,49 @@ final class DSDualScreenView: UIView {
 
         topScreenView.layer.addSublayer(topScanlineLayer)
         bottomScreenView.layer.addSublayer(bottomScanlineLayer)
+
+        // Above the legacy image and scanline layer; hidden until its first frame.
+        for (screen, metal) in [(topScreenView, topMetalView), (bottomScreenView, bottomMetalView)] {
+            guard let metal else { continue }
+            metal.frame = screen.bounds
+            screen.addSubview(metal)
+        }
+    }
+
+    /// Metal path: draws the bridge's latest framebuffers (256x192 BGRA each) on the screens that
+    /// are visible. Returns false when the frame was not taken (no Metal, GPU 3 frames behind or
+    /// `fetch` found nothing new): nothing is consumed from the bridge in that case.
+    /// `fetch` calls its argument with both pointers, valid only during that call (the bridge
+    /// holds its framebuffer lock around it), so the argument must only copy.
+    @discardableResult
+    func presentFrames(fetch: (_ copy: (UnsafePointer<UInt32>, UnsafePointer<UInt32>) -> Void) -> Bool) -> Bool {
+        guard let renderer = DSMetalRenderer.shared, let topMetal = topMetalView, let bottomMetal = bottomMetalView,
+              renderer.acquireSlot() else { return false }
+        var textures: (top: MTLTexture, bottom: MTLTexture)?
+        let took = fetch { top, bottom in textures = renderer.upload(top: top, bottom: bottom) }
+        guard took, let textures else { renderer.releaseSlot(); return false }
+        var draws: [(DSMetalScreenView, MTLTexture)] = []
+        if !topScreenView.isHidden { draws.append((topMetal, textures.top)) }
+        if !bottomScreenView.isHidden { draws.append((bottomMetal, textures.bottom)) }
+        renderer.present(draws)
+        refreshLegacyScanlines()
+        return true
+    }
+
+    /// Back to "no picture yet" (the Metal views hide until the next frame is drawn).
+    func clearFrames() {
+        topMetalView?.hasContent = false
+        bottomMetalView?.hasContent = false
+        topScreenView.image = nil
+        bottomScreenView.image = nil
+        refreshLegacyScanlines()
+    }
+
+    /// The tiled scanline CALayers belong to the UIImage path: hidden whenever Metal is drawing.
+    private func refreshLegacyScanlines() {
+        let legacyScanlines = currentFilter == .scanlines && !(topMetalView?.hasContent ?? false)
+        topScanlineLayer.isHidden = !legacyScanlines
+        bottomScanlineLayer.isHidden = !legacyScanlines
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) not implemented") }
@@ -86,9 +144,12 @@ final class DSDualScreenView: UIView {
         topScreenView.layer.magnificationFilter = magnification
         bottomScreenView.layer.magnificationFilter = magnification
 
-        let showsScanlines = filter == .scanlines
-        topScanlineLayer.isHidden = !showsScanlines
-        bottomScanlineLayer.isHidden = !showsScanlines
+        currentFilter = filter
+        for metal in [topMetalView, bottomMetalView] {
+            metal?.nearest = filter == .crisp
+            metal?.scanlines = filter == .scanlines
+        }
+        refreshLegacyScanlines()
     }
 
     /// A 1pt-wide, 2pt-tall tile — transparent on top, ~18% black on the
@@ -134,6 +195,8 @@ final class DSDualScreenView: UIView {
         for screen in [topScreenView, bottomScreenView] {
             screen.contentMode = stretch ? .scaleToFill : .scaleAspectFit
         }
+        topMetalView?.stretch = stretch
+        bottomMetalView?.stretch = stretch
 
         var content = bounds.inset(by: safeAreaInsets)
         // A folding iPhone's own arrangement wins over the classic DS one:
@@ -166,6 +229,10 @@ final class DSDualScreenView: UIView {
             let idiom = INDSControlBand.effectiveIdiom(for: content.size)
             content.size.height = max(1, content.height - INDSControlBand.height(for: idiom))
             portraitBand = true
+        } else if content.height >= content.width, !reservesControlBand, console == nil, foldable == nil {
+            // Gamepad: no controls, but the HUD row and badge still need a
+            // strip that is not the touch screen (see `gamepadHUDStripHeight`).
+            content.size.height = max(1, content.height - DSFoldableLayout.gamepadHUDStripHeight(for: content.size))
         }
         var (topFrame, bottomFrame) = DSScreenGeometry.frames(mode: mode, swap: swap, stretch: stretch, in: content)
         if let console {
@@ -208,6 +275,9 @@ final class DSDualScreenView: UIView {
             // just got resized to, every layout pass, regardless of
             // whether the .scanlines filter is even the active one right
             // now (cheap, and keeps `applyDisplayFilter` a pure show/hide).
+            let origin = self.convert(CGPoint.zero, to: nil)
+            if let topFrame { self.topMetalView?.place(screenFrame: topFrame, containerOrigin: origin) }
+            if let bottomFrame { self.bottomMetalView?.place(screenFrame: bottomFrame, containerOrigin: origin) }
             self.topScanlineLayer.frame = self.topScreenView.bounds
             self.bottomScanlineLayer.frame = self.bottomScreenView.bounds
         }

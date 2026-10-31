@@ -1,0 +1,12 @@
+diff --git a/externals/open_source_archives/CMakeLists.txt b/externals/open_source_archives/CMakeLists.txt
+index 0b23972..72a8dab 100644
+--- a/externals/open_source_archives/CMakeLists.txt
++++ b/externals/open_source_archives/CMakeLists.txt
+@@ -1,3 +1,7 @@
+ add_library(open_source_archives INTERFACE)
+ 
++# eDuo: shared_font.app.romfs.h with the 20 missing glyphs restored, shipped in Native3DS; takes precedence.
++if (EDUO_FRONTEND_DIR)
++    target_include_directories(open_source_archives BEFORE INTERFACE "${EDUO_FRONTEND_DIR}/open_source_archives/include")
++endif()
+ target_include_directories(open_source_archives INTERFACE "include/")

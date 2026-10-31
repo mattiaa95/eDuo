@@ -33,6 +33,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         // The iPhone Duo's measured geometry (`-iNDSDuoSweep`), driven by
         // `scripts/duo_layout_check.sh`.
         INDSDuoSweep.runIfRequested()
+        // Golden images of the Metal DS presentation (`-eDuoMetalGolden`),
+        // driven by `scripts/ds_metal_golden_check.sh`.
+        DSMetalGoldenHarness.runIfRequested()
 #endif
         EntitlementManager.shared.startTransactionListener()
         EntitlementManager.shared.refreshEntitlementsAsync()

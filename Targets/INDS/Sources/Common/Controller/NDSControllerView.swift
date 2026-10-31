@@ -60,6 +60,11 @@ final class NDSControllerView: UIView {
     }
     private var joystickView: INDSVirtualJoystickView?
     private var touchButtons: [UITouch: Set<INDSButton>] = [:]
+    /// The control each live touch landed on. A touch stays on it while it
+    /// is still over it (plus `touchSlop`): see `buttonsForTouch`.
+    private var touchControls: [UITouch: INDSControllerButtonID] = [:]
+    /// How far past a control's frame a touch can drift and still hold it.
+    private static let touchSlop: CGFloat = 10
     /// What the delegate currently believes is down from touches: the union
     /// of every live touch's set. Diffed in `syncHeldButtons`, so a button
     /// held by two fingers stays down until the last one lifts.
@@ -385,6 +390,7 @@ final class NDSControllerView: UIView {
         }
 
         touchButtons.removeAll()
+        touchControls.removeAll()
         syncHeldButtons()
 
         joystickView?.cancelTracking()
@@ -441,6 +447,7 @@ final class NDSControllerView: UIView {
                 let joyPoint = touch.location(in: joystickView)
                 if joystickView.point(inside: joyPoint, with: nil) {
                     touchButtons[touch] = nil
+                    touchControls[touch] = nil
                     continue
                 }
             }
@@ -450,7 +457,10 @@ final class NDSControllerView: UIView {
     }
 
     private func releaseButtons(for touches: Set<UITouch>) {
-        for touch in touches { touchButtons[touch] = nil }
+        for touch in touches {
+            touchButtons[touch] = nil
+            touchControls[touch] = nil
+        }
         syncHeldButtons()
     }
 
@@ -482,9 +492,24 @@ final class NDSControllerView: UIView {
     /// diagonal neighbours do overlap — pressed two buttons at once from a
     /// single thumb. Pressing A *and* B on purpose still works: that is two
     /// touches, and each is resolved on its own.
+    ///
+    /// Once a touch holds a control it keeps it while it is still over that
+    /// control's frame plus `touchSlop`, and the d-pad's directions have
+    /// hysteresis. Re-resolving from scratch on every `touchesMoved` turned a
+    /// thumb trembling on a border (the A/X overlap, a frame's edge, the
+    /// d-pad arm next to its dead centre) into release + press: one press
+    /// reached the game as two.
     private func buttonsForTouch(_ touch: UITouch) -> Set<INDSButton> {
         let point = touch.location(in: self)
         let layout = currentLayout
+        let previous = touchButtons[touch] ?? []
+
+        if let held = touchControls[touch], layout.entry(for: held)?.isVisible == true,
+           let frame = buttonFrames[held],
+           frame.insetBy(dx: -Self.touchSlop, dy: -Self.touchSlop).contains(point) {
+            if held == .dpad { return dpadButtonsForPoint(point, inRect: frame, held: previous) }
+            return held.indsButton.map { [$0] } ?? []
+        }
 
         var winner: (entry: INDSButtonLayoutEntry, frame: CGRect, distance: CGFloat)?
         for entry in layout.buttons {
@@ -498,40 +523,26 @@ final class NDSControllerView: UIView {
             }
         }
 
+        touchControls[touch] = winner?.entry.id
         guard let winner else { return [] }
         if winner.entry.id == .dpad {
-            return dpadButtonsForPoint(point, inRect: winner.frame)
+            return dpadButtonsForPoint(point, inRect: winner.frame, held: [])
         }
         return winner.entry.id.indsButton.map { [$0] } ?? []
     }
 
-    /// D-pad 9-zone detection: 4 edges + 4 diagonals + dead center.
-    private func dpadButtonsForPoint(_ point: CGPoint, inRect rect: CGRect) -> Set<INDSButton> {
-        let up: INDSButton = .up
-        let down: INDSButton = .down
-        let left: INDSButton = .left
-        let right: INDSButton = .right
-
-        let topRect    = CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height / 3)
-        let bottomRect = CGRect(x: rect.minX, y: rect.minY + rect.height * 2 / 3, width: rect.width, height: rect.height / 3)
-        let leftRect   = CGRect(x: rect.minX, y: rect.minY, width: rect.width / 3, height: rect.height)
-        let rightRect  = CGRect(x: rect.minX + rect.width * 2 / 3, y: rect.minY, width: rect.width / 3, height: rect.height)
-
-        let topLeft     = topRect.intersection(leftRect)
-        let topRight    = topRect.intersection(rightRect)
-        let bottomLeft  = bottomRect.intersection(leftRect)
-        let bottomRight = bottomRect.intersection(rightRect)
-
-        if topLeft.contains(point)     { return [up, left] }
-        if topRight.contains(point)    { return [up, right] }
-        if bottomLeft.contains(point)  { return [down, left] }
-        if bottomRight.contains(point) { return [down, right] }
-        if topRect.contains(point)     { return [up] }
-        if leftRect.contains(point)    { return [left] }
-        if bottomRect.contains(point)  { return [down] }
-        if rightRect.contains(point)   { return [right] }
-
-        return []
+    /// D-pad 9-zone detection: 4 edges + 4 diagonals + dead center, the
+    /// thirds of the frame. `held` (what this touch already presses) only
+    /// lets go once the thumb is clearly back toward the centre.
+    private func dpadButtonsForPoint(_ point: CGPoint, inRect rect: CGRect, held: Set<INDSButton>) -> Set<INDSButton> {
+        guard rect.width > 0, rect.height > 0 else { return [] }
+        let x = Double((point.x - rect.midX) / (rect.width / 2))
+        let y = Double((rect.midY - point.y) / (rect.height / 2))
+        let heldTargets = Set(held.compactMap { INDSMappingTarget(rawValue: $0.rawValue) })
+        return Set(INDSDirectionHysteresis.directions(
+            x: x, y: y, held: heldTargets,
+            press: INDSDirectionHysteresis.touchPress, release: INDSDirectionHysteresis.touchRelease
+        ).compactMap { INDSButton(rawValue: $0.rawValue) })
     }
 
     // MARK: - Hit Testing (let non-button touches fall through to the screen)
@@ -553,5 +564,73 @@ final class NDSControllerView: UIView {
             return self
         }
         return nil
+    }
+}
+
+// MARK: - Hide with a controller (Settings > Controls)
+
+/// Whether the on-screen buttons step aside while a physical controller is
+/// connected. Default on — that was the only behaviour before it became a
+/// setting. Only the button overlay is affected: the DS/3DS bottom screen
+/// keeps taking touches either way. Game screens listen for
+/// `didChangeNotification`, so flipping it applies on the spot.
+enum INDSControllerOverlayPreferences {
+    static let didChangeNotification = Notification.Name("INDSControllerOverlayPreferencesDidChange")
+    private static let hideKey = "eNDSHideControlsWithGamepad"
+
+    static var hidesWithGamepad: Bool {
+        // bool(forKey:), not `as? Bool`: a launch argument arrives as a string.
+        get { UserDefaults.standard.object(forKey: hideKey) == nil || UserDefaults.standard.bool(forKey: hideKey) }
+        set {
+            UserDefaults.standard.set(newValue, forKey: hideKey)
+            NotificationCenter.default.post(name: didChangeNotification, object: nil)
+        }
+    }
+
+    private static let hudKey = "eNDSHidesHUDWithGamepad"
+
+    /// Also hides the HUD buttons (Menu/Layout/Speed) while a controller is
+    /// connected and "Hide with a Controller" is on. Off by default.
+    static var hidesHUDWithGamepad: Bool {
+        get { UserDefaults.standard.bool(forKey: hudKey) }
+        set {
+            UserDefaults.standard.set(newValue, forKey: hudKey)
+            NotificationCenter.default.post(name: didChangeNotification, object: nil)
+        }
+    }
+
+    private static let stickDSKey = "eNDSStickMovesDPadDS"
+
+    /// DS only: the left stick presses the D-pad (DS has no analog stick).
+    /// On by default; off lets the D-pad be its own control.
+    static var stickMovesDPadDS: Bool {
+        get { UserDefaults.standard.object(forKey: stickDSKey) == nil || UserDefaults.standard.bool(forKey: stickDSKey) }
+        set { UserDefaults.standard.set(newValue, forKey: stickDSKey) }
+    }
+
+    private static let stickDPadKey = "eNDSStickAlsoMovesDPad3DS"
+
+    /// 3DS only: the left stick always drives the Circle Pad; this also makes
+    /// it press the D-pad. Off by default (the D-pad is its own control).
+    static var stickAlsoMovesDPad3DS: Bool {
+        get { UserDefaults.standard.bool(forKey: stickDPadKey) }
+        set { UserDefaults.standard.set(newValue, forKey: stickDPadKey) }
+    }
+
+    /// `-eNDSFakeGamepad` (Debug only): behave as if a controller were
+    /// connected, for simulator captures of the hidden-overlay layout.
+    static let fakeGamepad: Bool = {
+        #if DEBUG
+        return ProcessInfo.processInfo.arguments.contains("-eNDSFakeGamepad")
+        #else
+        return false
+        #endif
+    }()
+
+    static func shouldHideOverlay(gamepadConnected: Bool) -> Bool {
+        // Screenshot harness: the simulator's host keyboard registers as a
+        // gamepad, which would hide the overlay in every App Store capture.
+        if INDSLaunchFlags.screenshotHarness { return false }
+        return (gamepadConnected || fakeGamepad) && hidesWithGamepad
     }
 }

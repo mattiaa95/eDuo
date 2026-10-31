@@ -55,6 +55,87 @@ enum DSScreenOrientationClass {
     case landscape
 }
 
+/// Settings > Screens > Orientation (and the pause menu's quick picker):
+/// pins the game screen — DS and 3DS alike — to portrait or landscape, or
+/// leaves it to the device. Only the game screens apply it; the library and
+/// Settings always rotate freely (`release(from:)` on the way out).
+///
+/// iPad: while eDuo shares the screen (Split View, Slide Over, Stage Manager
+/// windows) the system owns the window's shape and turns the geometry
+/// request down. That is expected, not an error: the game keeps laying
+/// itself out for whatever shape it gets, exactly as with Automatic.
+enum INDSOrientationLock: Int, CaseIterable {
+    case automatic, portrait, landscape
+
+    static let didChangeNotification = Notification.Name("INDSOrientationLockDidChange")
+    private static let key = "eduo.orientation"
+    /// Where the 3DS screen kept its own lock before it became one setting
+    /// for both formats; read once as the starting value.
+    private static let legacy3DSKey = "eduo.3ds.orientation"
+
+    static var current: INDSOrientationLock {
+        get {
+            let defaults = UserDefaults.standard
+            // integer(forKey:), not `as? Int`: a value passed as a launch
+            // argument arrives as a string.
+            let raw = defaults.integer(forKey: defaults.object(forKey: key) != nil ? key : legacy3DSKey)
+            return INDSOrientationLock(rawValue: raw) ?? .automatic
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: key)
+            NotificationCenter.default.post(name: didChangeNotification, object: nil)
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .automatic: return NSLocalizedString("Automatic", comment: "")
+        case .portrait: return NSLocalizedString("Portrait", comment: "")
+        case .landscape: return NSLocalizedString("Landscape", comment: "")
+        }
+    }
+
+    var sfSymbolName: String {
+        switch self {
+        case .automatic: return "arrow.triangle.2.circlepath"
+        case .portrait: return "rectangle.portrait"
+        case .landscape: return "rectangle"
+        }
+    }
+
+    var mask: UIInterfaceOrientationMask {
+        switch self {
+        case .automatic: return .all
+        // Upside-down portrait is still portrait on an iPad (the Info.plist
+        // offers it there); the iPhone never lists it.
+        case .portrait: return UIDevice.current.userInterfaceIdiom == .pad ? [.portrait, .portraitUpsideDown] : .portrait
+        case .landscape: return .landscape
+        }
+    }
+
+    /// Narrows the app's orientations to the saved choice and asks the scene
+    /// to rotate now if it is in the wrong one.
+    static func apply(from controller: UIViewController) {
+        set(current.mask, from: controller)
+    }
+
+    /// Back to every orientation (leaving the game screen).
+    static func release(from controller: UIViewController) {
+        set(.all, from: controller)
+    }
+
+    private static func set(_ mask: UIInterfaceOrientationMask, from controller: UIViewController) {
+        AppDelegate.orientationLock = mask
+        controller.setNeedsUpdateOfSupportedInterfaceOrientations()
+        controller.view.window?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+        guard let scene = controller.view.window?.windowScene else { return }
+        scene.requestGeometryUpdate(.iOS(interfaceOrientations: mask)) { error in
+            // Turned down while multitasking on iPad (see above) — nothing to undo.
+            debugLog("Orientation lock not applied: \(error.localizedDescription)")
+        }
+    }
+}
+
 /// UserDefaults-backed persistence for the active screen layout. Keys are
 /// stable and documented here so any future settings screen can read/write
 /// them without going through this type.
@@ -209,7 +290,7 @@ enum DSScreenGeometry {
     }
 
     /// Two equal 256:192 rects stacked vertically, top-anchored (per spec:
-    /// "centered at top"), horizontally centered — leaves the remainder of
+    /// "centered at the top"), horizontally centered — leaves the remainder of
     /// `bounds` below free for controls on any phone-shaped screen.
     private static func stackedPair(in bounds: CGRect) -> (CGRect, CGRect) {
         guard bounds.width > 0, bounds.height > 0 else { return (.zero, .zero) }
@@ -544,13 +625,23 @@ struct DSFoldableLayout {
         ], in: size))
     }
 
-    /// With no on-screen controls the HUD used to go to the control band's
-    /// spot, which without controls is the TOUCH screen: the three pills
-    /// sat on top of the game and blocked touches. They go in a row in the
-    /// leftover strip below the lower panel, or the one above if that doesn't
-    /// fit; if neither does, nil and the default spot is kept. Used by the open
-    /// Duo and any short portrait layout with a controller (closed Duo,
-    /// iPhone SE), where the three-pill column doesn't fit under the screens.
+    /// Portrait with a gamepad and no foldable or console: the bottom strip that
+    /// `DSDualScreenView` leaves free for the Layout/Menu/Speed row (and the
+    /// "Connected" notice). On an iPad the screens used to fill the whole height and
+    /// the pills landed on top of the touch screen; on an iPhone the
+    /// screens are width-limited and the strip takes nothing from them.
+    /// `NDSHUDView.gamepadHUDRow` subtracts the same amount to find the row.
+    static func gamepadHUDStripHeight(for size: CGSize) -> CGFloat {
+        INDSControllerButtonID.menu.baseSize(for: INDSControlBand.effectiveIdiom(for: size)).height + 16
+    }
+
+    /// With no on-screen controls the HUD used to go to the controls band's spot,
+    /// which without controls is the TOUCH screen: the three pills
+    /// sat on top of the game and blocked touches. They go in a row in the strip
+    /// left over below the bottom panel, or, if it does not fit, in the one above; if
+    /// neither fits, nil and the default spot is kept. Used by the open Duo and
+    /// any short portrait layout with a gamepad (closed Duo, iPhone SE), where the
+    /// column of three does not fit under the screens.
     static func hudRow(between top: CGRect, and bottom: CGRect, in size: CGSize,
                        scale: CGFloat = 1) -> INDSControllerLayout? {
         let base = INDSControllerButtonID.menu.baseSize(for: INDSControlBand.effectiveIdiom(for: size))

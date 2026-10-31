@@ -52,6 +52,10 @@ private struct SettingsHubRow: View {
 struct SettingsView: View {
     @ObservedObject private var appearance = INDSAppearanceStore.shared
     @ObservedObject private var entitlements = EntitlementManager.shared
+    @AppStorage("eDuoLegacyDSRender") private var legacyDSRender = false
+    @AppStorage("eDuoPerfOverlay") private var perfOverlay = false
+    @AppStorage("eDuo3DSVSync") private var vsync3DS = -1
+    @AppStorage("eDuo3DSUnlimited") private var unlimited3DS = false
     @State private var showingBIOSSetup = false
     @State private var showProSheet = false
     @State private var showManageSubscription = false
@@ -145,6 +149,28 @@ struct SettingsView: View {
                     } label: {
                         SettingsHubRow(icon: "info.circle.fill", iconColor: .gray,
                                        title: "About", subtitle: "Version, credits & support")
+                    }
+                }
+
+                Section {
+                    Toggle("Performance overlay", isOn: $perfOverlay)
+                } footer: {
+                    Text("Shows frame rate, CPU use and frame time while playing.")
+                }
+
+                if DSPerfProbe.isTestBuild {
+                    Section {
+                        Toggle(isOn: $legacyDSRender) { Text(verbatim: "Legacy DS renderer") }
+                        Picker(selection: $vsync3DS) {
+                            Text(verbatim: "Default").tag(-1)
+                            Text(verbatim: "On").tag(1)
+                            Text(verbatim: "Off").tag(0)
+                        } label: { Text(verbatim: "3DS VSync") }
+                        Toggle(isOn: $unlimited3DS) { Text(verbatim: "3DS unlimited speed (no 100% limit)") }
+                    } header: {
+                        Text(verbatim: "TestFlight diagnostics")
+                    } footer: {
+                        Text(verbatim: "Apply on the next game launch.")
                     }
                 }
 

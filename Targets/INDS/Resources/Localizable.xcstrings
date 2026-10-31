@@ -8065,6 +8065,64 @@
         }
       }
     },
+    "Hide with a Controller" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Controller ausblenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar con un mando"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer avec une manette"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi con un controller"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コントローラー接続時に隠す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "컨트롤러 연결 시 숨기기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar com um comando"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрывать при подключённом контроллере"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接手柄时隐藏"
+          }
+        }
+      }
+    },
     "Hold the top screen to open the menu" : {
       "localizations" : {
         "de" : {
@@ -12469,7 +12527,6 @@
       }
     },
     "Orientation" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -24941,6 +24998,64 @@
         }
       }
     },
+    "🔄 Orientation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Ausrichtung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Orientación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Orientation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Orientamento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 画面の向き"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 화면 방향"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Orientação"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 Ориентация"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔄 屏幕方向"
+          }
+        }
+      }
+    },
     "🔊 Volume" : {
       "localizations" : {
         "de" : {
@@ -29244,6 +29359,885 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "分辨率"
+          }
+        }
+      }
+    },
+    "Import System Font" : {
+      "comment" : "BIOS setup: imports shared_font.bin for 3D games",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Systemschrift importieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar fuente del sistema"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer la police système"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa font di sistema"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムフォントを読み込む"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시스템 글꼴 가져오기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importar tipo de letra do sistema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импорт системного шрифта"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入系统字体"
+          }
+        }
+      }
+    },
+    "System font for 3D games" : {
+      "comment" : "BIOS setup section header",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Systemschrift für 3D-Spiele"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuente del sistema para juegos 3D"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Police système pour les jeux 3D"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Font di sistema per i giochi 3D"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3Dゲーム用のシステムフォント"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D 게임용 시스템 글꼴"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de letra do sistema para jogos 3D"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Системный шрифт для 3D-игр"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D 游戏的系统字体"
+          }
+        }
+      }
+    },
+    "Fixes garbled text in some Japanese games. Use shared_font.bin dumped from your own console." : {
+      "comment" : "BIOS setup section footer",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behebt unleserlichen Text in einigen japanischen Spielen. Verwende shared_font.bin, ausgelesen von deiner eigenen Konsole."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arregla el texto ilegible en algunos juegos japoneses. Usa shared_font.bin volcado de tu propia consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrige le texte illisible dans certains jeux japonais. Utilise shared_font.bin extrait de ta propre console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corregge il testo illeggibile in alcuni giochi giapponesi. Usa shared_font.bin estratto dalla tua console."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部の日本のゲームで文字化けする問題を解消します。ご自身の本体から吸い出した shared_font.bin を使ってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일부 일본 게임에서 글자가 깨지는 문제를 해결합니다. 본인 기기에서 추출한 shared_font.bin을 사용하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Corrige o texto ilegível em alguns jogos japoneses. Usa o shared_font.bin extraído da tua própria consola."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исправляет нечитаемый текст в некоторых японских играх. Используйте shared_font.bin, извлечённый с вашей консоли."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修复部分日本游戏中的乱码。请使用从你自己的主机中提取的 shared_font.bin。"
+          }
+        }
+      }
+    },
+    "That file isn't a system font dump (shared_font.bin)." : {
+      "comment" : "System font import error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Datei ist kein Systemschrift-Dump (shared_font.bin)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ese archivo no es un volcado de la fuente del sistema (shared_font.bin)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier n’est pas une extraction de la police système (shared_font.bin)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo file non è un dump del font di sistema (shared_font.bin)."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイルはシステムフォントの吸い出しデータ（shared_font.bin）ではありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 파일은 시스템 글꼴 덤프(shared_font.bin)가 아닙니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esse ficheiro não é uma extração do tipo de letra do sistema (shared_font.bin)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот файл не является дампом системного шрифта (shared_font.bin)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该文件不是系统字体转储（shared_font.bin）。"
+          }
+        }
+      }
+    },
+    "Keeps DS and 3DS games in portrait or landscape however you hold the device. Automatic follows the device. iPhone only: on iPad the system always decides the orientation." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hält DS- und 3DS-Spiele im Hoch- oder Querformat, egal wie du das Gerät hältst. „Automatisch“ folgt dem Gerät. Nur auf dem iPhone: Auf dem iPad entscheidet immer das System über die Ausrichtung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene los juegos de DS y 3DS en vertical o en horizontal, sujetes el dispositivo como lo sujetes. «Automático» sigue al dispositivo. Solo en iPhone: en el iPad la orientación la decide siempre el sistema."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garde les jeux DS et 3DS en portrait ou en paysage, quelle que soit la façon dont vous tenez l’appareil. « Automatique » suit l’appareil. iPhone uniquement : sur iPad, c’est toujours le système qui décide de l’orientation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantiene i giochi DS e 3DS in verticale o in orizzontale, comunque tieni il dispositivo. «Automatico» segue il dispositivo. Solo iPhone: su iPad l’orientamento lo decide sempre il sistema."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本体の持ち方に関係なく、DS・3DSのゲームを縦向きまたは横向きに固定します。「自動」は本体の向きに合わせます。iPhoneのみ：iPadでは常にシステムが向きを決めます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기기를 어떻게 들든 DS 및 3DS 게임을 세로 또는 가로로 유지합니다. '자동'은 기기 방향을 따릅니다. iPhone 전용: iPad에서는 항상 시스템이 방향을 결정합니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantém os jogos de DS e 3DS na vertical ou na horizontal, seja qual for a forma como seguras o dispositivo. «Automático» segue o dispositivo. Só no iPhone: no iPad, é sempre o sistema que decide a orientação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фиксирует игры DS и 3DS в портретной или альбомной ориентации, как бы вы ни держали устройство. «Автоматически» — по положению устройства. Только iPhone: на iPad ориентацию всегда выбирает система."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无论你怎样握持设备，都让 DS 和 3DS 游戏保持竖屏或横屏。“自动”会跟随设备方向。仅限 iPhone：在 iPad 上始终由系统决定方向。"
+          }
+        }
+      }
+    },
+    "Left Stick Also Moves D-Pad" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linker Stick steuert auch das Steuerkreuz"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El stick izquierdo también mueve la cruceta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le stick gauche actionne aussi la croix"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo stick sinistro muove anche la croce direzionale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "左スティックで十字キーも操作"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "왼쪽 스틱으로 방향 패드도 조작"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Левый стик также нажимает крестовину"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O stick esquerdo também move o D-pad"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "左摇杆同时控制方向键"
+          }
+        }
+      }
+    },
+    "Performance overlay" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leistungsanzeige"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superposición de rendimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affichage des performances"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overlay prestazioni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パフォーマンス表示"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "성능 오버레이"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobreposição de desempenho"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Индикатор производительности"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "性能显示"
+          }
+        }
+      }
+    },
+    "Shows frame rate, CPU use and frame time while playing." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeigt beim Spielen Bildrate, CPU-Auslastung und Frame-Zeit an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra la tasa de fotogramas, el uso de CPU y el tiempo por fotograma mientras juegas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affiche la fréquence d’images, l’utilisation du CPU et le temps par image pendant le jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra frame rate, utilizzo della CPU e tempo per frame durante il gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレイ中にフレームレート、CPU使用率、フレーム時間を表示します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "플레이하는 동안 프레임 속도, CPU 사용량, 프레임 시간을 표시합니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra a taxa de fotogramas, a utilização do CPU e o tempo por fotograma durante o jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывает частоту кадров, нагрузку на ЦП и время кадра во время игры."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏时显示帧率、CPU 使用率和帧时间。"
+          }
+        }
+      }
+    },
+    "Stick Moves the D-Pad (DS)" : {
+      "comment" : "Settings > Controls toggle: on DS games the controller's left stick also presses the D-pad",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stick steuert das Steuerkreuz (DS)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El stick mueve la cruceta (DS)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le stick actionne la croix (DS)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo stick muove la croce direzionale (DS)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スティックで十字キーを操作（DS）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스틱으로 방향 패드 조작 (DS)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O stick move o D-pad (DS)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стик нажимает крестовину (DS)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摇杆控制方向键（DS）"
+          }
+        }
+      }
+    },
+    "Also Hide the HUD" : {
+      "comment" : "Settings > Controls toggle under Hide with a Controller: also hides the Menu/Layout/Speed buttons",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch das HUD ausblenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar también el HUD"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer aussi le HUD"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi anche l'HUD"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HUDも隠す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HUD도 숨기기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar também o HUD"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрывать и HUD"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同时隐藏 HUD"
+          }
+        }
+      }
+    },
+    "Hides the on-screen buttons while a controller is connected and brings them back when it disconnects. The touch screen keeps working. With the HUD hidden too, press the controller's Menu button to pause." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blendet die Bildschirmtasten aus, solange ein Controller verbunden ist, und zeigt sie wieder an, sobald er getrennt wird. Der Touchscreen funktioniert weiterhin. Ist auch das HUD ausgeblendet, drücke die Menütaste des Controllers, um zu pausieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oculta los botones en pantalla mientras haya un mando conectado y los vuelve a mostrar al desconectarlo. La pantalla táctil sigue funcionando. Con el HUD también oculto, pulsa el botón Menú del mando para pausar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masque les boutons à l’écran tant qu’une manette est connectée et les réaffiche dès qu’elle est déconnectée. L’écran tactile reste utilisable. Si le HUD est aussi masqué, appuie sur le bouton Menu de la manette pour mettre en pause."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nasconde i pulsanti su schermo mentre è collegato un controller e li mostra di nuovo quando si scollega. Lo schermo touch continua a funzionare. Con anche l'HUD nascosto, premi il tasto Menu del controller per mettere in pausa."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コントローラーが接続されている間は画面上のボタンを隠し、接続が切れると再び表示します。タッチスクリーンはそのまま使えます。HUDも隠している場合は、コントローラーのメニューボタンで一時停止できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "컨트롤러가 연결되어 있는 동안 화면 버튼을 숨기고, 연결이 끊기면 다시 표시합니다. 터치스크린은 계속 사용할 수 있습니다. HUD도 숨긴 경우 컨트롤러의 메뉴 버튼을 눌러 일시 정지하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oculta os botões no ecrã enquanto houver um comando ligado e volta a mostrá-los quando o desligas. O ecrã tátil continua a funcionar. Com o HUD também oculto, carrega no botão Menu do comando para pausar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрывает экранные кнопки, пока подключён контроллер, и возвращает их после отключения. Сенсорный экран продолжает работать. Если HUD тоже скрыт, нажмите кнопку «Меню» на контроллере, чтобы поставить паузу."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接手柄时隐藏屏幕按钮，断开后重新显示。触摸屏仍可使用。若同时隐藏了 HUD，请按手柄的菜单键暂停。"
+          }
+        }
+      }
+    },
+    "On DS games the left stick moves the D-pad; turn the first switch off to keep the D-pad separate. On 3DS games the left stick always moves the Circle Pad; the second switch makes it press the D-pad too." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In DS-Spielen steuert der linke Stick das Steuerkreuz; schalte den ersten Schalter aus, um das Steuerkreuz getrennt zu halten. In 3DS-Spielen steuert der linke Stick immer das Schiebepad; mit dem zweiten Schalter drückt er auch das Steuerkreuz."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En los juegos de DS el stick izquierdo mueve la cruceta; desactiva el primer interruptor para mantener la cruceta aparte. En los juegos de 3DS el stick izquierdo siempre mueve el Circle Pad; el segundo interruptor hace que también pulse la cruceta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans les jeux DS, le stick gauche actionne la croix ; désactive le premier interrupteur pour garder la croix séparée. Dans les jeux 3DS, le stick gauche actionne toujours le stick circulaire ; le second interrupteur lui fait aussi appuyer sur la croix."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nei giochi DS lo stick sinistro muove la croce direzionale; disattiva il primo interruttore per tenere la croce separata. Nei giochi 3DS lo stick sinistro muove sempre il Circle Pad; il secondo interruttore gli fa premere anche la croce direzionale."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DSのゲームでは左スティックで十字キーを操作します。十字キーを分けたい場合は1つ目のスイッチをオフにしてください。3DSのゲームでは左スティックは常にスライドパッドを動かし、2つ目のスイッチをオンにすると十字キーも押します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DS 게임에서는 왼쪽 스틱이 방향 패드를 움직입니다. 방향 패드를 따로 쓰려면 첫 번째 스위치를 끄세요. 3DS 게임에서는 왼쪽 스틱이 항상 슬라이드 패드를 움직이며, 두 번째 스위치를 켜면 방향 패드도 함께 누릅니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nos jogos DS o stick esquerdo move o D-pad; desliga o primeiro interruptor para manter o D-pad separado. Nos jogos 3DS o stick esquerdo move sempre o Circle Pad; o segundo interruptor faz com que também carregue no D-pad."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В играх DS левый стик нажимает крестовину; выключите первый переключатель, чтобы крестовина работала отдельно. В играх 3DS левый стик всегда двигает круговой пад; второй переключатель заставляет его также нажимать крестовину."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 DS 游戏中，左摇杆控制方向键；关闭第一个开关可让方向键独立使用。在 3DS 游戏中，左摇杆始终控制圆形滑垫；打开第二个开关可让它同时按下方向键。"
+          }
+        }
+      }
+    },
+    "This save state was made by a different version of eDuo and can't be loaded." : {
+      "comment" : "3DS load state error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Speicherzustand wurde mit einer anderen Version von eDuo erstellt und kann nicht geladen werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este estado guardado se creó con otra versión de eDuo y no se puede cargar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette sauvegarde d’état a été créée avec une autre version d’eDuo et ne peut pas être chargée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo stato salvato è stato creato con un'altra versione di eDuo e non può essere caricato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このステートセーブは別のバージョンのeDuoで作成されたため、読み込めません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 상태 저장은 다른 버전의 eDuo에서 만들어져 불러올 수 없습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este estado guardado foi criado com outra versão do eDuo e não pode ser carregado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это сохранённое состояние создано другой версией eDuo и не может быть загружено."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此即时存档由其他版本的 eDuo 创建，无法读取。"
+          }
+        }
+      }
+    },
+    "The state couldn't be saved. Try again in a moment." : {
+      "comment" : "3DS save state error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Zustand konnte nicht gespeichert werden. Versuche es gleich noch einmal."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido guardar el estado. Vuelve a intentarlo en un momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de sauvegarder l’état. Réessaie dans un instant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile salvare lo stato. Riprova tra un momento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステートを保存できませんでした。少し待ってからもう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "상태를 저장할 수 없습니다. 잠시 후 다시 시도하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível guardar o estado. Tenta novamente daqui a pouco."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось сохранить состояние. Попробуйте ещё раз чуть позже."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存即时存档。请稍后再试。"
+          }
+        }
+      }
+    },
+    "The state couldn't be loaded." : {
+      "comment" : "3DS load state error",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Zustand konnte nicht geladen werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido cargar el estado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de charger l’état."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile caricare lo stato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ステートを読み込めませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "상태를 불러올 수 없습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar o estado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить состояние."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取即时存档。"
           }
         }
       }

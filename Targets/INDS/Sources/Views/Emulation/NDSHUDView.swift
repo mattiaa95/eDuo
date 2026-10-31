@@ -224,16 +224,46 @@ final class NDSHUDView: UIView {
         let foldableBand = foldable?.controls != nil
         // The pill row takes the strip under the screens the badge column
         // would use: badges go to the top, as in landscape.
-        let isPortrait = foldableBand || (content.height >= content.width && console == nil
-                                          && (foldable != nil || gamepadHUDRow(in: content.size) == nil))
+        let hasGamepadRow = gamepadHUDRow(in: content.size) != nil
+        let tallColumn = content.height >= content.width && console == nil
+            && (foldable != nil || !hasGamepadRow)
+        // Gamepad row in the strip under the screens: the badge shares that
+        // strip, left of the row, instead of floating over the top screen.
+        let gamepadRow = hasGamepadRow && foldable == nil && console == nil
+        // Plain portrait with the on-screen controls up: Layout/Menu/Speed
+        // fill the centre column to the bottom edge (Speed came after the
+        // badges did), so a badge under them sat on Speed. Top, as in landscape.
+        let controlsColumnFull = tallColumn && foldable == nil && controlsReserved
+        let isPortrait = foldableBand || (tallColumn && !controlsColumnFull) || gamepadRow
 
         // Portrait: the column between the thumb clusters, where Menu and
         // Layout already live. Landscape: plain centre, nothing is there.
         let bandIdiom = INDSControlBand.effectiveIdiom(for: content.size)
-        badgeCenterXConstraint.constant = console != nil ? content.minX + 90 : isPortrait
-            ? content.minX + INDSControlBand.hudColumnCenterX(containerWidth: content.width, idiom: bandIdiom)
-            : bounds.midX
-        badgeWidthConstraint.constant = console != nil ? 160 : INDSControlBand.hudColumnWidth(containerWidth: content.width, idiom: bandIdiom)
+        let columnCenterX = INDSControlBand.hudColumnCenterX(containerWidth: content.width, idiom: bandIdiom)
+        let columnWidth = INDSControlBand.hudColumnWidth(containerWidth: content.width, idiom: bandIdiom)
+        // Gamepad driving in plain portrait: the d-pad/diamond are gone but
+        // Layout/Menu/Speed still fill the centre column down to the bottom
+        // edge, so a badge pinned under them landed on Speed. The empty
+        // left-hand side of the band is free: centre it there instead.
+        let gamepadColumn = isPortrait && !controlsReserved && console == nil && foldable == nil
+        let sideWidth = max(0, columnCenterX - columnWidth / 2)
+        if gamepadRow {
+            let pill = INDSControllerButtonID.menu.baseSize(for: bandIdiom).width
+            // The row is centred: Layout's left edge is 1.5 pills + 12 pt
+            // left of centre; a pill may widen for its caption, so keep
+            // another half pill clear.
+            let side = max(0, content.width / 2 - 2 * pill - 12)
+            badgeCenterXConstraint.constant = content.minX + side / 2
+            badgeWidthConstraint.constant = max(0, side - 12)
+        } else if gamepadColumn {
+            badgeCenterXConstraint.constant = content.minX + sideWidth / 2
+            badgeWidthConstraint.constant = max(0, sideWidth - 12)
+        } else {
+            badgeCenterXConstraint.constant = console != nil ? content.minX + 90 : isPortrait
+                ? content.minX + columnCenterX
+                : bounds.midX
+            badgeWidthConstraint.constant = console != nil ? 160 : columnWidth
+        }
         badgeWidthConstraint.isActive = isPortrait || console != nil
         // Console chrome occupies the top row; transient messages go below
         // that row so a save/speed toast never covers the pause button.
@@ -344,9 +374,13 @@ final class NDSHUDView: UIView {
               DSFoldableLayout.current(in: size, mode: screenLayoutMode, controlsReserved: false,
                                        hinge: DSHingeState.resolve(for: self, content: bounds.inset(by: safeAreaInsets))) == nil
         else { return nil }
+        // Same rect `DSDualScreenView` lays the screens out in: minus the strip
+        // it keeps for this row.
+        let screensRect = CGRect(x: 0, y: 0, width: size.width,
+                                 height: max(1, size.height - DSFoldableLayout.gamepadHUDStripHeight(for: size)))
         let (top, bottom) = DSScreenGeometry.frames(mode: screenLayoutMode, swap: DSScreenLayoutPreferences.swapEnabled,
                                                     stretch: DSScreenLayoutPreferences.stretchEnabled,
-                                                    in: CGRect(origin: .zero, size: size))
+                                                    in: screensRect)
         guard let top, let bottom else { return nil }
         let column = INDSCustomControllerLayout.defaultPortrait(containerSize: size).buttons
             .filter { $0.isVisible && $0.id.isHUDChrome }
@@ -506,11 +540,28 @@ final class NDSHUDView: UIView {
     /// instead of showing them ahead of any actual content. Toasts/badges/
     /// status manage their own visibility separately from this.
     func revealChrome() {
-        guard pauseButton.alpha < 1 else { return }
+        chromeRevealed = true
+        applyChromeAlpha()
+    }
+
+    /// Settings > Controls > "Also Hide the HUD": hides the Menu/Layout/Speed
+    /// buttons (a controller has Menu/hotkeys). Never touches the recording
+    /// and microphone badges — those are privacy indicators.
+    func setChromeHidden(_ hidden: Bool) {
+        chromeHidden = hidden
+        applyChromeAlpha()
+    }
+
+    private var chromeRevealed = false
+    private var chromeHidden = false
+
+    private func applyChromeAlpha() {
+        let target: CGFloat = chromeRevealed && !chromeHidden ? 1 : 0
+        guard pauseButton.alpha != target else { return }
         INDSMotion.fadeUIKit(duration: 0.3) {
-            self.pauseButton.alpha = 1
-            self.layoutButton.alpha = 1
-            self.fastForwardButton.alpha = 1
+            self.pauseButton.alpha = target
+            self.layoutButton.alpha = target
+            self.fastForwardButton.alpha = target
         }
     }
 
@@ -531,11 +582,14 @@ final class NDSHUDView: UIView {
     }
 
     /// Shows/hides the discrete "Connected" badge. No auto-hide — stays up
-    /// for as long as a gamepad is actually connected.
-    func setGamepadConnected(_ connected: Bool) {
+    /// for as long as a gamepad is actually connected. `controlsHidden`
+    /// defaults to `connected`; it differs when the player keeps the touch
+    /// overlay with a controller (Settings > Controls).
+    func setGamepadConnected(_ connected: Bool, controlsHidden: Bool? = nil) {
         setBadge(gamepadBadge, visible: connected)
-        if controlsReserved != !connected {
-            controlsReserved = !connected
+        let reserved = !(controlsHidden ?? connected)
+        if controlsReserved != reserved {
+            controlsReserved = reserved
             setNeedsLayout()
         }
     }

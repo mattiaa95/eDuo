@@ -8,7 +8,7 @@ import UniformTypeIdentifiers
 /// Deliberately small next to `NDSRomViewController`: two Metal layers the
 /// core renders into, the same on-screen controller and physical-controller
 /// mapping the DS screen uses, and a menu with cheats and save import/export.
-/// Save states, rewind and the Duo-specific layouts are DS-only for now.
+/// Rewind and the Duo-specific layouts are DS-only for now.
 final class ThreeDSGameViewController: UIViewController {
     private let rom: ROMFile
     private let onQuit: () -> Void
@@ -27,6 +27,15 @@ final class ThreeDSGameViewController: UIViewController {
     private var pendingSaveImport: URL?
     /// Set when a setting only the next boot picks up (resolution) was changed.
     private var restartAfterStop = false
+    /// TestFlight/Debug-only performance overlay (Settings); nil and untouched when off.
+    private var perfTimer: Timer?
+    private var perfLabel: UILabel?
+    /// Paused by the app resigning active (not by the menu): only that case auto-resumes.
+    private var pausedByLifecycle = false
+    private var pressMerger = INDSPressMerger()
+    /// True from picking a slot until the save/load finishes (the slot sheet's
+    /// onDisappear must not resume the game meanwhile).
+    private var stateOpInFlight = false
 
     init(rom: ROMFile, onQuit: @escaping () -> Void) {
         self.rom = rom
@@ -48,6 +57,23 @@ final class ThreeDSGameViewController: UIViewController {
         controllerView.delegate = self
         view.addSubview(controllerView)
         gamepadManager.delegate = self
+        // The left stick is the Circle Pad (pollStick); don't also press the D-pad.
+        gamepadManager.stickDrivesDPad = { INDSControllerOverlayPreferences.stickAlsoMovesDPad3DS }
+        // A controller can already be connected before the delegate is set.
+        applyGamepadConnectionState()
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(gamepadOverlayPreferenceChanged),
+                           name: INDSControllerOverlayPreferences.didChangeNotification, object: nil)
+        center.addObserver(self, selector: #selector(orientationLockChanged),
+                           name: INDSOrientationLock.didChangeNotification, object: nil)
+        center.addObserver(self, selector: #selector(batterySaverStateChanged),
+                           name: NSNotification.Name.NSProcessInfoPowerStateDidChange, object: nil)
+        center.addObserver(self, selector: #selector(batterySaverStateChanged),
+                           name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+        center.addObserver(self, selector: #selector(appWillResignActive),
+                           name: UIApplication.willResignActiveNotification, object: nil)
+        center.addObserver(self, selector: #selector(appDidBecomeActive),
+                           name: UIApplication.didBecomeActiveNotification, object: nil)
 
         menuButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
         menuButton.tintColor = .white.withAlphaComponent(0.7)
@@ -113,6 +139,8 @@ final class ThreeDSGameViewController: UIViewController {
         try? AVAudioSession.sharedInstance().setActive(true)
         let path = rom.fileURL.path
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
+        applyDiagnostics()
+        batterySaverStateChanged()
         let thread = Thread { [weak self] in
             let result = E3DSRun(path)
             DispatchQueue.main.async { self?.emulationEnded(result: result) }
@@ -147,11 +175,52 @@ final class ThreeDSGameViewController: UIViewController {
         }
     }
 
+    /// Same rule as the DS screen's speed clamp (Settings > Battery): Low Power
+    /// Mode, or a hot device. The core then runs with vsync on and speed capped at 100 %.
+    @objc private func batterySaverStateChanged() {
+        DispatchQueue.main.async {
+            var on = INDSBatterySaverPreferences.respectLowPowerMode && ProcessInfo.processInfo.isLowPowerModeEnabled
+            if INDSBatterySaverPreferences.autoThrottleWhenHot {
+                switch ProcessInfo.processInfo.thermalState {
+                case .serious, .critical: on = true
+                default: break
+                }
+            }
+            E3DSSetBatterySaver(on)
+        }
+    }
+
+    /// Metal work submitted from the background kills the app, so the core
+    /// must be parked (no GPU work in flight) before iOS takes the GPU away.
+    @objc private func appWillResignActive() {
+        guard E3DSIsRunning(), !pausedByLifecycle, presentedViewController == nil else { return }
+        pausedByLifecycle = true
+        E3DSSetPaused(true)
+        var task = UIBackgroundTaskIdentifier.invalid
+        task = UIApplication.shared.beginBackgroundTask(withName: "eDuo.3ds.park") {
+            if task != .invalid { UIApplication.shared.endBackgroundTask(task); task = .invalid }
+        }
+        _ = E3DSWaitParked(150)
+        if task != .invalid { UIApplication.shared.endBackgroundTask(task); task = .invalid }
+    }
+
+    @objc private func appDidBecomeActive() {
+        let resume = pausedByLifecycle && presentedViewController == nil
+        pausedByLifecycle = false
+        if resume { E3DSSetPaused(false) }
+    }
+
     private func showMenu() {
         E3DSSetPaused(true)
         let sheet = UIAlertController(title: rom.displayName, message: nil, preferredStyle: .actionSheet)
         sheet.addAction(UIAlertAction(title: NSLocalizedString("Resume", comment: ""), style: .cancel) { _ in
             E3DSSetPaused(false)
+        })
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("Save State", comment: ""), style: .default) { [weak self] _ in
+            self?.showStateSlots(.save)
+        })
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("Load State", comment: ""), style: .default) { [weak self] _ in
+            self?.showStateSlots(.load)
         })
         sheet.addAction(UIAlertAction(title: NSLocalizedString("Screens", comment: ""), style: .default) { [weak self] _ in
             self?.showScreenOptions()
@@ -175,12 +244,52 @@ final class ThreeDSGameViewController: UIViewController {
         present(sheet, animated: true)
     }
 
+    /// Stats overlay (public, UserDefaults key only) plus TestFlight/Debug-only VSync / unlimited speed A/B.
+    /// Defaults change nothing.
+    private func applyDiagnostics() {
+        perfTimer?.invalidate(); perfTimer = nil
+        perfLabel?.removeFromSuperview(); perfLabel = nil
+        let defaults = UserDefaults.standard
+        if DSPerfProbe.isTestBuild {
+            let vsync = defaults.object(forKey: "eDuo3DSVSync") == nil ? -1 : defaults.integer(forKey: "eDuo3DSVSync")
+            E3DSSetDiagnostics(Int32(vsync), defaults.bool(forKey: "eDuo3DSUnlimited"))
+        }
+        guard defaults.bool(forKey: DSPerfProbe.overlayKey) else { E3DSSetStatsEnabled(false); return }
+        E3DSSetStatsEnabled(true)
+        let label = UILabel()
+        label.numberOfLines = 3
+        label.font = .monospacedSystemFont(ofSize: 10, weight: .semibold)
+        label.textColor = .green
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        label.isUserInteractionEnabled = false
+        label.text = "perf..."
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: view.safeAreaInsets.left + 4, y: view.safeAreaInsets.top + 4)
+        view.addSubview(label)
+        perfLabel = label
+        perfTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self, let label = self.perfLabel else { return }
+            var s = E3DSStats()
+            guard E3DSSampleStats(&s) else { return }
+            let hot = withUnsafePointer(to: &s.hotThread) {
+                $0.withMemoryRebound(to: CChar.self, capacity: 32) { String(cString: $0) }
+            }
+            label.text = String(format: "speed %.0f%%  emu %.0f fps  present %.0f fps\ncore CPU %.0f%%  process %.0f%%\nhot: %@ %.0f%%",
+                                s.emulationSpeed, s.gameFPS, s.presentFPS, s.coreCPU, s.processCPU,
+                                hot.isEmpty ? "?" : hot, s.hotCPU)
+            print("[perf] 3ds", label.text?.replacingOccurrences(of: "\n", with: "  ") ?? "")
+            label.sizeToFit()
+        }
+    }
+
     private func quit() {
+        perfTimer?.invalidate()
         stickLink?.invalidate()
         if E3DSIsRunning() { E3DSStop() } else { onQuit() }
     }
 
     private func emulationEnded(result: Int32) {
+        perfTimer?.invalidate(); perfTimer = nil
         stickLink?.invalidate()
         emulationThread = nil
         if let staged = pendingSaveImport {
@@ -224,30 +333,36 @@ final class ThreeDSGameViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        applyOrientationLock()
+        INDSOrientationLock.apply(from: self)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        INDSOrientationLock.apply(from: self) // the scene exists only now
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        AppDelegate.orientationLock = .all
-        view.window?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+        INDSOrientationLock.release(from: self)
     }
 
-    private func applyOrientationLock() {
-        let mask = ThreeDSScreenPrefs.orientation.mask
-        AppDelegate.orientationLock = mask
-        view.window?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
-        view.window?.windowScene?.requestGeometryUpdate(.iOS(interfaceOrientations: mask)) { _ in }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        INDSOrientationLock.current.mask
+    }
+
+    @objc private func orientationLockChanged() {
+        guard view.window != nil else { return }
+        INDSOrientationLock.apply(from: self)
     }
 
     private func showScreenOptions() {
         let sheet = UIAlertController(title: NSLocalizedString("Screens", comment: ""), message: nil, preferredStyle: .actionSheet)
         let mark = { (on: Bool, title: String) in on ? "✓ " + title : title }
-        for option in ThreeDSScreenPrefs.Orientation.allCases {
+        for option in INDSOrientationLock.allCases {
             let title = NSLocalizedString("Orientation", comment: "") + ": " + option.title
-            sheet.addAction(UIAlertAction(title: mark(ThreeDSScreenPrefs.orientation == option, title), style: .default) { [weak self] _ in
-                ThreeDSScreenPrefs.orientation = option
-                self?.applyOrientationLock()
+            sheet.addAction(UIAlertAction(title: mark(INDSOrientationLock.current == option, title), style: .default) { _ in
+                // The notification re-applies the lock (orientationLockChanged).
+                INDSOrientationLock.current = option
                 E3DSSetPaused(false)
             })
         }
@@ -276,6 +391,54 @@ final class ThreeDSGameViewController: UIViewController {
     }
 
     // MARK: - Cheats and saves
+
+    /// The DS slot picker (slot 1 free, 2-4 PRO when saving). The core's calls
+    /// block (up to ~7 s: pending async ops), so they run off the main thread
+    /// behind a spinner; the game stays paused meanwhile.
+    private func showStateSlots(_ mode: NDSSaveStateSlotsView.Mode) {
+        let slots = (0..<4).map { slot -> NDSSaveStateSlotInfo in
+            var t: Int64 = 0
+            return NDSSaveStateSlotInfo(slot: slot, modifiedDate: E3DSStateInfo(Int32(slot), &t) ? Date(timeIntervalSince1970: TimeInterval(t)) : nil)
+        }
+        let picker = NDSSaveStateSlotsView(mode: mode, slots: slots, onSelectSlot: { [weak self] slot in
+            self?.runStateOp(mode, slot: slot)
+        })
+        .onDisappear { [weak self] in
+            if self?.stateOpInFlight == false { E3DSSetPaused(false) }
+        }
+        present(UIHostingController(rootView: picker), animated: true)
+    }
+
+    private func runStateOp(_ mode: NDSSaveStateSlotsView.Mode, slot: Int) {
+        stateOpInFlight = true
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .white
+        spinner.center = view.center
+        view.addSubview(spinner)
+        spinner.startAnimating()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let code = mode == .save ? E3DSSaveState(Int32(slot)) : E3DSLoadState(Int32(slot))
+            DispatchQueue.main.async {
+                spinner.removeFromSuperview()
+                guard let self else { return }
+                let finish = {
+                    self.stateOpInFlight = false
+                    switch code {
+                    case 0:
+                        E3DSSetPaused(false)
+                    case -6:
+                        self.notice(NSLocalizedString("This save state was made by a different version of eDuo and can't be loaded.", comment: "3DS load state error"))
+                    default:
+                        self.notice(mode == .save
+                            ? NSLocalizedString("The state couldn't be saved. Try again in a moment.", comment: "3DS save state error")
+                            : NSLocalizedString("The state couldn't be loaded.", comment: "3DS load state error"))
+                    }
+                }
+                // The slot sheet may still be up (or dismissing): a notice presented over it is dropped.
+                if let sheet = self.presentedViewController { sheet.dismiss(animated: true, completion: finish) } else { finish() }
+            }
+        }
+    }
 
     private func showCheats() {
         let cheats = NDSCheatsView(romBaseName: "", threeDSProgramID: programID, onCheatsChanged: { E3DSReloadCheats() })
@@ -397,6 +560,26 @@ final class ThreeDSGameViewController: UIViewController {
         return Int32(code.rawValue)
     }
 
+    /// Same as the DS screen: a button stays down while any source holds it, and a
+    /// controller release undone within 25 ms never reaches the game (no double press).
+    private func input(_ button: INDSButton, pressed: Bool, source: String, graced: Bool) {
+        switch pressMerger.handle(button: button.rawValue, pressed: pressed, source: source, graced: graced) {
+        case .none:
+            break
+        case .press:
+            apply(button, pressed: true)
+        case .release(let delay, let token):
+            guard delay > 0 else {
+                if pressMerger.releaseFired(button: button.rawValue, token: token) { apply(button, pressed: false) }
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self, self.pressMerger.releaseFired(button: button.rawValue, token: token) else { return }
+                self.apply(button, pressed: false)
+            }
+        }
+    }
+
     private func apply(_ button: INDSButton, pressed: Bool) {
         let code = Self.code(for: button)
         if code >= 0 { E3DSSetButton(code, pressed) }
@@ -421,50 +604,41 @@ extension ThreeDSGameViewController: UIDocumentPickerDelegate {
 
 extension ThreeDSGameViewController: NDSControllerViewDelegate {
     func controllerView(_ view: NDSControllerView, setButton button: INDSButton, pressed: Bool) {
-        apply(button, pressed: pressed)
+        input(button, pressed: pressed, source: "touch", graced: false)
     }
 }
 
 extension ThreeDSGameViewController: INDSGamepadManagerDelegate {
     func gamepadManager(_ manager: INDSGamepadManager, setButton button: INDSButton, pressed: Bool) {
-        apply(button, pressed: pressed)
+        input(button, pressed: pressed, source: "gamepad", graced: true)
     }
     func gamepadManager(_ manager: INDSGamepadManager, perform action: INDSControllerAppAction) {
         if case .pause = action { showMenu() }
     }
     func gamepadManager(_ manager: INDSGamepadManager, setFastForwardActive active: Bool) {}
     func gamepadManagerDidChangeConnection(_ manager: INDSGamepadManager, connected: Bool) {
-        controllerView.isHidden = connected
+        applyGamepadConnectionState()
+    }
+}
+
+extension ThreeDSGameViewController {
+    /// Settings > Controls > "Hide with a Controller": only the button
+    /// overlay goes; the bottom screen stays touchable.
+    fileprivate func applyGamepadConnectionState() {
+        let hide = INDSControllerOverlayPreferences.shouldHideOverlay(gamepadConnected: gamepadManager.isConnected)
+        if hide { controllerView.releaseAllActiveInputs() }
+        controllerView.isHidden = hide
+        // "Also Hide the HUD": the controller's Menu button still opens the pause menu.
+        menuButton.isHidden = hide && INDSControllerOverlayPreferences.hidesHUDWithGamepad
+    }
+
+    @objc fileprivate func gamepadOverlayPreferenceChanged() {
+        applyGamepadConnectionState()
     }
 }
 
 /// The 3DS screen's own choices, kept apart from the DS layout settings.
 enum ThreeDSScreenPrefs {
-    enum Orientation: Int, CaseIterable {
-        case automatic, portrait, landscape
-
-        var title: String {
-            switch self {
-            case .automatic: return NSLocalizedString("Automatic", comment: "")
-            case .portrait: return NSLocalizedString("Portrait", comment: "")
-            case .landscape: return NSLocalizedString("Landscape", comment: "")
-            }
-        }
-
-        var mask: UIInterfaceOrientationMask {
-            switch self {
-            case .automatic: return .all
-            case .portrait: return .portrait
-            case .landscape: return .landscape
-            }
-        }
-    }
-
-    static var orientation: Orientation {
-        get { Orientation(rawValue: UserDefaults.standard.integer(forKey: "eduo.3ds.orientation")) ?? .automatic }
-        set { UserDefaults.standard.set(newValue.rawValue, forKey: "eduo.3ds.orientation") }
-    }
-
     /// Internal render scale; 2x keeps small text legible on a phone screen.
     static var resolution: Int {
         get { (UserDefaults.standard.object(forKey: "eduo.3ds.resolution") as? Int) ?? 2 }

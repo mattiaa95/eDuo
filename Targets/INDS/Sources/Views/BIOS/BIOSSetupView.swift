@@ -5,6 +5,14 @@ struct BIOSSetupView: View {
     @State private var isImporting = false
     @State private var importError: String?
     @State private var installed = Set(BIOSFileKind.allCases.filter { BIOSManager.isInstalled($0) })
+    @State private var isImportingFont = false
+    @State private var hasSystemFont = FileManager.default.fileExists(atPath: Self.systemFontURL.path)
+
+    /// Where the 3D core looks for a font dumped from the player's own console
+    /// (patch 0004 makes it win over the built-in replacement).
+    static var systemFontURL: URL {
+        URL.documentsDirectory.appendingPathComponent("System/sysdata/shared_font.bin")
+    }
 
     var body: some View {
         NavigationStack {
@@ -35,6 +43,27 @@ struct BIOSSetupView: View {
                                 .foregroundStyle(installed.contains(kind) ? .green : .secondary)
                         }
                     }
+                }
+
+                Section {
+                    HStack {
+                        Text("shared_font.bin").font(.headline)
+                        Spacer()
+                        Image(systemName: hasSystemFont ? "checkmark.circle.fill" : "circle")
+                            .foregroundStyle(hasSystemFont ? .green : .secondary)
+                    }
+                    Button {
+                        isImportingFont = true
+                    } label: {
+                        Label("Import System Font", systemImage: "textformat")
+                    }
+                    .fileImporter(isPresented: $isImportingFont, allowedContentTypes: [.data]) { result in
+                        importSystemFont(result)
+                    }
+                } header: {
+                    Text("System font for 3D games")
+                } footer: {
+                    Text("Fixes garbled text in some Japanese games. Use shared_font.bin dumped from your own console.")
                 }
 
                 Section {
@@ -69,6 +98,25 @@ struct BIOSSetupView: View {
             Button("OK", role: .cancel) { importError = nil }
         } message: {
             Text(importError ?? NSLocalizedString("The selected file could not be imported.", comment: "BIOS import failure alert: fallback when the error carries no message"))
+        }
+    }
+
+    private func importSystemFont(_ result: Result<URL, Error>) {
+        guard case .success(let url) = result else { return }
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        // A dump is the font with a 0x80-byte header in front: "CFNT"/"CFNU" at 0x80.
+        guard let data = try? Data(contentsOf: url), data.count > 0x84, data.count <= 0x332000,
+              [Data("CFNT".utf8), Data("CFNU".utf8)].contains(data.subdata(in: 0x80..<0x84)) else {
+            importError = NSLocalizedString("That file isn't a system font dump (shared_font.bin).", comment: "System font import error")
+            return
+        }
+        do {
+            try FileManager.default.createDirectory(at: Self.systemFontURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try data.write(to: Self.systemFontURL, options: .atomic)
+            hasSystemFont = true
+        } catch {
+            importError = error.localizedDescription
         }
     }
 

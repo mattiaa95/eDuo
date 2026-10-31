@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenerates the second-format section of Resources/Legal/NOTICES.txt with the
-verbatim notices of everything build_3ds_core.sh links (required by the BSD/MIT/
-Apache/zlib/BSL licenses). Between markers: safe to run as many times as needed."""
+verbatim notices of everything build_3ds_core.sh links (the BSD/MIT/
+Apache/zlib/BSL licenses require it). Between markers: safe to run as many times as needed."""
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 EXT = ROOT / "Vendor/azahar/externals"
@@ -11,6 +11,8 @@ BEGIN, END = "# --- second-format core: begin ---", "# --- second-format core: e
 PARTS = [
     ("Second-format emulation core", "GPLv2 or later · © Citra Emulator Project / Azahar Emulator Project",
      ROOT / "Vendor/azahar/misc/licenses/gplv2.txt"),
+    ("Open replacement system font", "GPLv2 (citra_system_archives) · glyphs: GNU Unifont (GPLv2+ with font exception), Montserrat (SIL OFL 1.1)",
+     ROOT / "Native3DS/licenses/OpenSharedFont-NOTICE.txt"),
     ("MoltenVK", "Apache-2.0 · © The Brenwill Workshop Ltd. / Khronos Group", ROOT / "Native3DS/licenses/MoltenVK-LICENSE.txt"),
     ("Boost", "BSL-1.0", EXT / "boost/LICENSE_1_0.txt"),
     ("fmt", "MIT", EXT / "fmt/LICENSE"),

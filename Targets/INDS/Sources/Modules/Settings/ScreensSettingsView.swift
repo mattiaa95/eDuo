@@ -20,6 +20,7 @@ struct ScreensSettingsView: View {
     @State private var stretchEnabled = DSScreenLayoutPreferences.stretchEnabled
     @State private var displayFilter = NDSDisplayFilterPreferences.current
     @State private var pendingFilterOffer: ProGateOffer?
+    @State private var orientationLock = INDSOrientationLock.current
 
     @ObservedObject private var entitlements = EntitlementManager.shared
 
@@ -29,6 +30,21 @@ struct ScreensSettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                Picker("Orientation", selection: $orientationLock) {
+                    ForEach(INDSOrientationLock.allCases, id: \.self) { option in
+                        Label(option.title, systemImage: option.sfSymbolName).tag(option)
+                    }
+                }
+                .onChange(of: orientationLock) { _, newValue in
+                    INDSOrientationLock.current = newValue
+                }
+            } header: {
+                Text("🔄 Orientation")
+            } footer: {
+                Text("Keeps DS and 3DS games in portrait or landscape however you hold the device. Automatic follows the device. iPhone only: on iPad the system always decides the orientation.")
+            }
+
             Section {
                 Picker("Portrait", selection: $portraitMode) {
                     Text("Automatic").tag(DSScreenLayoutMode?.none)

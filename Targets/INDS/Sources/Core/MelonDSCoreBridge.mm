@@ -1261,7 +1261,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
 //    notification" (AVAudioEngine.h), on some other thread, which means it
 //    can land *after* -beginMicrophoneEngineCapture already restarted the
 //    engine: a stopped engine nobody would ever start again, i.e. a game that
-//    plays on in silence until you quit it. This was eNDS 1.0(15)'s "no sound
+//    plays on in silence until you quit it. This showed up as the "no sound
 //    on iPad in some games" — the games in question being the ones that touch
 //    the DS mic at all (which on a DS is any game that samples the TSC's AUX
 //    channel, no explicit open needed — Vendor/melonDS/src/Mic.cpp).
@@ -1508,7 +1508,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
 }
 
 // The `_tearingDown` guard is not an optimization, it is the fix for a hard
-// crash (1.0(9), backgrounding a running game): -dealloc calls -stopEmulation,
+// crash (backgrounding a running game): -dealloc calls -stopEmulation,
 // whose `nds->Stop()` makes melonDS close its mic core, which calls straight
 // back in here — and forming a __weak reference to an object that is already
 // deallocating is an unconditional objc_fatal ("cannot form weak reference to
@@ -1697,7 +1697,7 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
     // (default NO, and it resets with the category, so it has to be re-set
     // here on every window). Without it the controller overlay goes dead-feeling
     // the moment a game samples the DS mic and stays that way for as long as
-    // the window is open: eNDS 1.0(15)'s "you broke the button haptics".
+    // the window is open (reported as "you broke the button haptics").
     if (![session setAllowHapticsAndSystemSoundsDuringRecording:YES error:&sessionError]) {
         // Non-fatal: worst case is the pre-existing behaviour (no haptics
         // while listening), which is not worth losing mic input over.
@@ -1902,6 +1902,25 @@ static void ApplyConsoleProfile(melonDS::Firmware &firmware, NSString *nickname,
     constexpr size_t byteCount = kFramebufferPixels * sizeof(uint32_t);
     memcpy(top, slot.top.data(), byteCount);
     memcpy(bottom, slot.bottom.data(), byteCount);
+    return YES;
+}
+
+- (BOOL)withLatestFramebuffersIfNew:(NS_NOESCAPE void (^)(const uint32_t *top, const uint32_t *bottom))block {
+    if (!block) return NO;
+    std::lock_guard<std::mutex> lock(_runtime->fbMutex);
+    if (_runtime->fbLatest < 0) return NO;
+    if (_runtime->fbGeneration == _runtime->fbPresented) return NO;
+    _runtime->fbPresented = _runtime->fbGeneration;
+    const FramebufferSlot &slot = _runtime->fbSlots[_runtime->fbLatest];
+    block(slot.top.data(), slot.bottom.data());
+    return YES;
+}
+
+- (BOOL)copyLatestTopFramebuffer:(uint32_t *)top {
+    if (!top) return NO;
+    std::lock_guard<std::mutex> lock(_runtime->fbMutex);
+    if (_runtime->fbLatest < 0) return NO;
+    memcpy(top, _runtime->fbSlots[_runtime->fbLatest].top.data(), kFramebufferPixels * sizeof(uint32_t));
     return YES;
 }
 

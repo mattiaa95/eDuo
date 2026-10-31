@@ -143,10 +143,10 @@ struct PurchaseView: View {
     /// The billing period as a word to show the user. `PurchaseProductDetails
     /// .duration` deliberately stays an English token because the plan-card
     /// logic compares against it (`== "lifetime"`, `.contains("year")`), so it
-    /// must be mapped at the point of display — otherwise the subscription
-    /// disclosure reads a mix of localized text and the raw English token in the
-    /// eight non-English locales, which is precisely the line that exists to
-    /// satisfy a legal requirement.
+    /// must be mapped at the point of display — otherwise the 3.1.2(a)
+    /// disclosure reads "Facturado 4,99 € por year" in the eight non-English
+    /// locales, which is precisely the line that exists to satisfy a legal
+    /// requirement.
     private func localizedDuration(_ token: String) -> String {
         switch token {
         case "day":      return NSLocalizedString("day", comment: "Billing period, as in 'billed X per day'")

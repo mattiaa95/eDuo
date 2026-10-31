@@ -45,6 +45,21 @@ void E3DSStop(void);
 void E3DSSetResolution(int factor);
 void E3DSSetPaused(bool paused);
 bool E3DSIsRunning(void);
+/// After E3DSSetPaused(true): waits (1 ms steps) until the core thread is
+/// parked, i.e. no emulation/GPU work in flight, or the game ended. Returns
+/// true if parked/ended, false on timeout.
+bool E3DSWaitParked(int timeoutMs);
+/// Battery saver: vsync on and speed capped at 100 %. Applies live (vsync is
+/// re-read by the presenter each frame) and persists across E3DSRun.
+void E3DSSetBatterySaver(bool on);
+/// Save states (slots 0...11). Blocking (up to ~7 s, works while paused):
+/// call from a background thread, never the core thread. 0 = ok; Load returns
+/// -5 no such state, -6 made by another build (nothing is sent to the core,
+/// the game keeps running); other negatives = failure.
+int E3DSSaveState(int slot);
+int E3DSLoadState(int slot);
+/// True and `unixTime` (seconds) if the slot holds a state.
+bool E3DSStateInfo(int slot, long long *unixTime);
 
 void E3DSSetButton(int button, bool pressed);
 /// x, y in -1...1, y up.
@@ -64,6 +79,28 @@ char *E3DSCopySaveFolder(unsigned long long programID);
 char *E3DSCopyCheatFile(unsigned long long programID);
 /// Re-reads the running game's cheat file into the core.
 void E3DSReloadCheats(void);
+
+/// Diagnostics (pre-release/Debug builds only; the defaults change nothing).
+/// vsync: -1 core default, 0 off, 1 on. unlimitedSpeed: frame limit 0 instead of 100 %.
+/// Read at E3DSRun.
+void E3DSSetDiagnostics(int vsync, bool unlimitedSpeed);
+/// Starts/stops collecting stats; while off nothing is counted or hooked.
+void E3DSSetStatsEnabled(bool enabled);
+
+typedef struct {
+    double emulationSpeed;  ///< % of real time (100 = full speed)
+    double gameFPS;         ///< frames the game submits per second
+    double systemFPS;       ///< emulated vblanks per second
+    double presentFPS;      ///< drawables acquired for the top screen per second
+    double coreCPU;         ///< % of one core used by the eDuo.3DS thread
+    double processCPU;      ///< % of one core used by all threads of the app
+    double hotCPU;          ///< busiest thread other than the core thread
+    char hotThread[32];     ///< its name
+} E3DSStats;
+
+/// Samples since the previous call (call about once a second, from any one
+/// thread). False when stats are off or the game is not running.
+bool E3DSSampleStats(E3DSStats *out);
 
 #ifdef __cplusplus
 }
