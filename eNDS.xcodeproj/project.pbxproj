@@ -39,6 +39,7 @@
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
 		3AE2BA96ABD0AA0349B38390 /* Bcj2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDACB16860CF2ECC472174B0 /* Bcj2.c */; };
 		3BE2C9CA7F82A80484ED1B7D /* INDSExternalDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */; };
+		3BF2327BAA43743D00AC3BF6 /* ThreeDSSaveArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8A5FF74740023A6D3970C /* ThreeDSSaveArchive.swift */; };
 		3CCBB0C95D9AE10FD70361A9 /* ROMStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97C9863C3B2A57CED6BEE5A /* ROMStorageManager.swift */; };
 		3D3B0A26D0B02C4A5A220F1F /* ButtonMappingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */; };
 		3D6FB82EF1A333E5C861AA5D /* NDSControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B94CC3CA4E14AB95B77C0D /* NDSControllerView.swift */; };
@@ -140,11 +141,13 @@
 		EE772FF6DB386ECE13ECF407 /* AudioSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694F451CBABBB3B76AB6436A /* AudioSettingsView.swift */; };
 		EF155704CE31A86A541E0B20 /* NDSDisplayFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA49210A86CF7CAD350D5D8 /* NDSDisplayFilter.swift */; };
 		F26E31472DFED6AE670C6CB5 /* EntitlementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98950CA5D27B39AB88DE84E4 /* EntitlementManager.swift */; };
+		F2727497AA107840BDDA62A4 /* ThreeDSSaveTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9E5237AED440EF8EAA2F59 /* ThreeDSSaveTransfer.swift */; };
 		F3F902CB4DD04E3BF75AC1C7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 983804A16F3F6D204E8E2666 /* PrivacyInfo.xcprivacy */; };
 		F4FF213E54F2C25609FFEBDD /* TuistAssets+ENDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C709888F71280574511B9 /* TuistAssets+ENDS.swift */; };
 		F5C2A862773F40D053B5D99D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 69EED5FB442C79C67F3A2C99 /* InfoPlist.xcstrings */; };
 		F61DA6458086F1A05AF9DE14 /* ThumbnailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33603FF8DD00E3267B32D50D /* ThumbnailManager.swift */; };
 		F621AC947EFA3C4EF1449298 /* NDSBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EEA800CC5C65C0F8242B34 /* NDSBanner.swift */; };
+		F8758A37217EBEEAC40E3D1C /* ROMSaveTransferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7AB6C7D9A4914C9F23B046 /* ROMSaveTransferController.swift */; };
 		F87977C63064A7657A1F9D60 /* INDSBackgroundSkinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17D4BD373B8C7BAE4E63975 /* INDSBackgroundSkinStore.swift */; };
 		F91F12C15C6A9E0B7D28A39C /* TuistBundle+ENDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7976503C72801E12D5B07 /* TuistBundle+ENDS.swift */; };
 		FA4A12CBF8A66A00D178CE8F /* INDSVisualSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B65064657F95120CC6FE300 /* INDSVisualSweep.swift */; };
@@ -243,6 +246,7 @@
 		694F451CBABBB3B76AB6436A /* AudioSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettingsView.swift; sourceTree = "<group>"; };
 		69EED5FB442C79C67F3A2C99 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		6AF4B43544BFE7B25FCE44A4 /* NDSSaveStateSlotsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSSaveStateSlotsView.swift; sourceTree = "<group>"; };
+		6C7AB6C7D9A4914C9F23B046 /* ROMSaveTransferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMSaveTransferController.swift; sourceTree = "<group>"; };
 		6D0BF3C246ADD1320E8093E9 /* eNDSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eNDSApp.swift; sourceTree = "<group>"; };
 		713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMIconStore.swift; sourceTree = "<group>"; };
 		735843C4C8E17E1C9A4F95D1 /* NDSRomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSRomViewController.swift; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 		B7219F8FE31A771BB55DFB19 /* INDSMPLoopback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = INDSMPLoopback.mm; sourceTree = "<group>"; };
 		B789BA70623CD927FED9DB1F /* Localizable.xcstrings */ = {isa = PBXFileReference; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B79114A85DE92146A92D33E8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BA9E5237AED440EF8EAA2F59 /* ThreeDSSaveTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSSaveTransfer.swift; sourceTree = "<group>"; };
 		BB124E8593E5A3AAB1CF4180 /* INDSLayoutSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutSweep.swift; sourceTree = "<group>"; };
 		BC8417730C667A846DFE82B3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		BDACB16860CF2ECC472174B0 /* Bcj2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bcj2.c; sourceTree = "<group>"; };
@@ -316,6 +321,7 @@
 		DCDD22163D73BED3D91DA98A /* Bra.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bra.c; sourceTree = "<group>"; };
 		DE5A1654FBF63E78AD0A4A90 /* ScreensSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensSettingsView.swift; sourceTree = "<group>"; };
 		E12A62F5C9F22C04CE3280B8 /* NDS7zExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDS7zExtractor.swift; sourceTree = "<group>"; };
+		E2B8A5FF74740023A6D3970C /* ThreeDSSaveArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSSaveArchive.swift; sourceTree = "<group>"; };
 		E3FE82B2663ADE6894F327DB /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
 		E465158ABA0236E3E733D0DB /* 7zFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zFile.c; sourceTree = "<group>"; };
 		E517FE7C9A79C0E99662E49A /* BraIA64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = BraIA64.c; sourceTree = "<group>"; };
@@ -629,6 +635,8 @@
 				713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */,
 				E97C9863C3B2A57CED6BEE5A /* ROMStorageManager.swift */,
 				3C671B34D75660A6AEE56EB8 /* Sz7zShim.c */,
+				E2B8A5FF74740023A6D3970C /* ThreeDSSaveArchive.swift */,
+				BA9E5237AED440EF8EAA2F59 /* ThreeDSSaveTransfer.swift */,
 				33603FF8DD00E3267B32D50D /* ThumbnailManager.swift */,
 			);
 			path = Model;
@@ -654,6 +662,7 @@
 				63915A9A489BD4B09B48A302 /* ROMIconView.swift */,
 				74336AADBA8EFD1E5EB9EB00 /* ROMListView.swift */,
 				12BFD3480A8B6F3479DFB063 /* ROMListViewModel.swift */,
+				6C7AB6C7D9A4914C9F23B046 /* ROMSaveTransferController.swift */,
 			);
 			path = ROMList;
 			sourceTree = "<group>";
@@ -960,6 +969,8 @@
 				14D5D7924C8CBA1EEB6FC7E7 /* ROMIconStore.swift in Sources */,
 				3CCBB0C95D9AE10FD70361A9 /* ROMStorageManager.swift in Sources */,
 				55892B949B94E49AC5CB9F89 /* Sz7zShim.c in Sources */,
+				3BF2327BAA43743D00AC3BF6 /* ThreeDSSaveArchive.swift in Sources */,
+				F2727497AA107840BDDA62A4 /* ThreeDSSaveTransfer.swift in Sources */,
 				F61DA6458086F1A05AF9DE14 /* ThumbnailManager.swift in Sources */,
 				0367714089D07BB2950DA10D /* ProGateAlert.swift in Sources */,
 				E9F4C2A0564C0BB12D50E3F2 /* PurchaseView.swift in Sources */,
@@ -1032,6 +1043,7 @@
 				2C2C4C6936F9381033E8FDE5 /* ROMIconView.swift in Sources */,
 				ED9775610FE620C037F3EBE0 /* ROMListView.swift in Sources */,
 				0F1DB859AD024577C66B60C0 /* ROMListViewModel.swift in Sources */,
+				F8758A37217EBEEAC40E3D1C /* ROMSaveTransferController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

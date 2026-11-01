@@ -39,6 +39,14 @@ struct INDSAutoOpenModifier: ViewModifier {
             }
             .onAppear(perform: open)
             .onChange(of: roms) { open() }
+            #if DEBUG
+            // `-eDuoAutoplayExitLoop N` reopens the same game after each exit (INDSDebugAutoplay).
+            .onReceive(NotificationCenter.default.publisher(for: .init("eDuoAutoOpenAgain"))) { _ in
+                guard let key = INDSLaunchFlags.autoOpen else { return }
+                rom = roms.first { $0.filename.localizedCaseInsensitiveContains(key) }
+                isOpen = rom != nil
+            }
+            #endif
     }
 
     private func open() {

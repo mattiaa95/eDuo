@@ -1,5 +1,6 @@
 import AVFoundation
 import GameController
+import os.log
 import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
@@ -12,6 +13,9 @@ import UniformTypeIdentifiers
 final class ThreeDSGameViewController: UIViewController {
     private let rom: ROMFile
     private let onQuit: () -> Void
+    /// The core finished for good (the player quit, or the game exited by itself): a layout pass
+    /// while the screen is being dismissed must not boot the game again.
+    private var runEnded = false
 
     private let topView = MetalLayerView()
     private let bottomView = MetalLayerView()
@@ -19,9 +23,12 @@ final class ThreeDSGameViewController: UIViewController {
     private let gamepadManager = INDSGamepadManager()
     private let menuButton = UIButton(type: .system)
     private var stickLink: CADisplayLink?
+    /// Effective Battery Saver state last pushed to the core (see `batterySaverStateChanged`).
+    private var batterySaverActive = false
+    private static let saverLog = OSLog(subsystem: "com.eduo.3ds", category: "BatterySaver")
     private var emulationThread: Thread?
     private var lastStick = CGPoint.zero
-    private lazy var programID = E3DSProgramID(rom.fileURL.path)
+    private lazy var programID = ThreeDSSaveTransfer.programID(for: rom) ?? E3DSProgramID(rom.fileURL.path)
     /// Picked save files, copied out of the picker's sandbox; they replace
     /// the game's save once the core has stopped (see `emulationEnded`).
     private var pendingSaveImport: URL?
@@ -40,6 +47,9 @@ final class ThreeDSGameViewController: UIViewController {
     init(rom: ROMFile, onQuit: @escaping () -> Void) {
         self.rom = rom
         self.onQuit = onQuit
+        #if DEBUG
+        INDSDebugAutoplay.liveGames.lock(); INDSDebugAutoplay.liveGameCount += 1; INDSDebugAutoplay.liveGames.unlock()
+        #endif
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -70,6 +80,8 @@ final class ThreeDSGameViewController: UIViewController {
                            name: NSNotification.Name.NSProcessInfoPowerStateDidChange, object: nil)
         center.addObserver(self, selector: #selector(batterySaverStateChanged),
                            name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+        center.addObserver(self, selector: #selector(batterySaverStateChanged),
+                           name: INDSBatterySaverPreferences.didChangeNotification, object: nil)
         center.addObserver(self, selector: #selector(appWillResignActive),
                            name: UIApplication.willResignActiveNotification, object: nil)
         center.addObserver(self, selector: #selector(appDidBecomeActive),
@@ -134,7 +146,7 @@ final class ThreeDSGameViewController: UIViewController {
     }
 
     private func startIfNeeded() {
-        guard emulationThread == nil, topView.bounds.width > 0 else { return }
+        guard emulationThread == nil, !runEnded, topView.bounds.width > 0 else { return }
         try? AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
         try? AVAudioSession.sharedInstance().setActive(true)
         let path = rom.fileURL.path
@@ -154,6 +166,7 @@ final class ThreeDSGameViewController: UIViewController {
         let link = CADisplayLink(target: self, selector: #selector(pollStick))
         link.add(to: .main, forMode: .common)
         stickLink = link
+        applyBatterySaverFrameRate()
     }
 
     /// The physical left stick drives the Circle Pad directly — the DS
@@ -175,19 +188,38 @@ final class ThreeDSGameViewController: UIViewController {
         }
     }
 
-    /// Same rule as the DS screen's speed clamp (Settings > Battery): Low Power
-    /// Mode, or a hot device. The core then runs with vsync on and speed capped at 100 %.
+    /// Effective saver state = manual switch || (Low Power Mode && respected) || (hot &&
+    /// auto-throttle), see `INDSBatterySaverPreferences.isEffectivelyActive`. The core then
+    /// renders at native resolution, presents without vsync and holds speed at 100 %
+    /// (E3DSSetBatterySaver), and the display is asked for 30 Hz (below). Re-derived on every
+    /// power/thermal/manual-toggle notification, so it applies live to a running game.
     @objc private func batterySaverStateChanged() {
-        DispatchQueue.main.async {
-            var on = INDSBatterySaverPreferences.respectLowPowerMode && ProcessInfo.processInfo.isLowPowerModeEnabled
-            if INDSBatterySaverPreferences.autoThrottleWhenHot {
-                switch ProcessInfo.processInfo.thermalState {
-                case .serious, .critical: on = true
-                default: break
-                }
-            }
+        DispatchQueue.main.async { [weak self] in
+            let on = INDSBatterySaverPreferences.isEffectivelyActive
             E3DSSetBatterySaver(on)
+            self?.batterySaverActive = on
+            self?.applyBatterySaverFrameRate()
         }
+    }
+
+    /// 30 Hz presentation while the saver is on. Emulation is not driven by any display link:
+    /// it runs on its own `eDuo.3DS` thread paced by the core's 100 % frame limiter, and the
+    /// core presents through a non-blocking (vsync-off) swapchain, so the display rate only
+    /// decides how often iOS composites the latest frame. The only link in this controller
+    /// is the physical-stick poll, which is also what tells iOS the app's preferred rate
+    /// (CAMetalLayer has no rate API of its own), so the cap goes on that link. On ProMotion
+    /// the 30/30 range lets the panel drop to 30 Hz instead of 120. Debug A/B escape hatch:
+    /// `defaults write <bundle> eDuo3DSBatteryCap30 -bool NO` keeps the other savings only.
+    private func applyBatterySaverFrameRate() {
+        let capEnabled = UserDefaults.standard.object(forKey: "eDuo3DSBatteryCap30") as? Bool ?? true
+        let cap = batterySaverActive && capEnabled
+        stickLink?.preferredFrameRateRange = cap
+            ? CAFrameRateRange(minimum: 30, maximum: 30, preferred: 30)
+            : CAFrameRateRange.default
+        os_log("[eDuo3DS] battery saver %{public}@: presentation %{public}@, resolution_factor %d (chosen %d)",
+               log: Self.saverLog, type: .default, batterySaverActive ? "on" : "off",
+               cap ? "30 Hz" : "display rate", batterySaverActive ? 1 : ThreeDSScreenPrefs.resolution,
+               ThreeDSScreenPrefs.resolution)
     }
 
     /// Metal work submitted from the background kills the app, so the core
@@ -303,6 +335,7 @@ final class ThreeDSGameViewController: UIViewController {
             startIfNeeded()
             return
         }
+        runEnded = true
         guard let message = Self.message(for: result) else { onQuit(); return }
         let alert = UIAlertController(title: rom.displayName, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Share Log", comment: "Shares the emulator log file so a tester can send it"), style: .default) { [weak self] _ in
@@ -448,71 +481,27 @@ final class ThreeDSGameViewController: UIViewController {
         present(host, animated: true)
     }
 
-    /// The core's save folder for this game: `.../data/00000001/`, with
-    /// `00000001.metadata` beside it once the game has formatted its save.
-    private var saveFolder: URL? {
-        guard let path = E3DSCopySaveFolder(programID) else { return nil }
-        defer { free(path) }
-        return URL(fileURLWithPath: String(cString: path), isDirectory: true)
-    }
+    // The save logic (folder, zip export, staging, replace + backup) lives in
+    // `ThreeDSSaveTransfer`, shared with the library's Export/Import Save.
 
     private func pickSaveToImport() {
-        // A save folder the game never formatted has no metadata, and the
-        // game would refuse it; one in-game save creates both.
-        guard let folder = saveFolder,
-              FileManager.default.fileExists(atPath: folder.deletingLastPathComponent().appendingPathComponent("00000001.metadata").path) else {
-            return notice(NSLocalizedString("Start the game and save once, then import your save.", comment: "3DS save import: the game has no save yet"))
-        }
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.folder, .data])
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.folder, .zip, .data])
         picker.allowsMultipleSelection = true
         picker.delegate = self
         present(picker, animated: true)
     }
 
     private func exportSave() {
-        let fm = FileManager.default
-        guard let folder = saveFolder, let files = try? fm.contentsOfDirectory(atPath: folder.path), !files.isEmpty else {
+        guard let archive = try? ThreeDSSaveTransfer.exportArchive(for: rom) else {
             return notice(NSLocalizedString("This game has no save yet.", comment: "3DS save export"))
         }
-        let copy = fm.temporaryDirectory.appendingPathComponent(String(format: NSLocalizedString("%@ save", comment: "Exported 3DS save folder name"), rom.displayName))
-        try? fm.removeItem(at: copy)
-        guard (try? fm.copyItem(at: folder, to: copy)) != nil else { return E3DSSetPaused(false) }
-        let picker = UIDocumentPickerViewController(forExporting: [copy], asCopy: true)
+        let picker = UIDocumentPickerViewController(forExporting: [archive], asCopy: true)
         picker.delegate = self
         present(picker, animated: true)
     }
 
-    /// Copies what was picked into a staging folder while the picker's
-    /// access lasts. A folder counts as its contents: that is what a save
-    /// manager exports (e.g. `main`), and what the core keeps per game.
-    private func stageSave(from urls: [URL]) -> URL? {
-        let fm = FileManager.default
-        let staged = fm.temporaryDirectory.appendingPathComponent("save-import", isDirectory: true)
-        try? fm.removeItem(at: staged)
-        guard (try? fm.createDirectory(at: staged, withIntermediateDirectories: true)) != nil else { return nil }
-        for url in urls {
-            let scoped = url.startAccessingSecurityScopedResource()
-            defer { if scoped { url.stopAccessingSecurityScopedResource() } }
-            let items = url.hasDirectoryPath ? (try? fm.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)) ?? [] : [url]
-            for item in items where !item.lastPathComponent.hasPrefix(".") {
-                // A raw console save (DISA container) is still encrypted
-                // for that console; only a save manager's export works.
-                if let head = try? FileHandle(forReadingFrom: item), let bytes = try? head.read(upToCount: 0x104),
-                   bytes.count == 0x104, bytes.suffix(4) == Data("DISA".utf8) { return nil }
-                guard (try? fm.copyItem(at: item, to: staged.appendingPathComponent(item.lastPathComponent))) != nil else { return nil }
-            }
-        }
-        return (try? fm.contentsOfDirectory(atPath: staged.path))?.isEmpty == false ? staged : nil
-    }
-
     private func replaceSave(with staged: URL) {
-        let fm = FileManager.default
-        guard let folder = saveFolder else { return }
-        try? fm.removeItem(at: folder)
-        try? fm.createDirectory(at: folder, withIntermediateDirectories: true)
-        for name in (try? fm.contentsOfDirectory(atPath: staged.path)) ?? [] {
-            try? fm.moveItem(at: staged.appendingPathComponent(name), to: folder.appendingPathComponent(name))
-        }
+        try? ThreeDSSaveTransfer.install(staged: staged, for: rom)
     }
 
     private func notice(_ message: String) {
@@ -537,7 +526,12 @@ final class ThreeDSGameViewController: UIViewController {
     }
 
     deinit {
-        if E3DSIsRunning() { E3DSStop() }
+        #if DEBUG
+        INDSDebugAutoplay.liveGames.lock(); INDSDebugAutoplay.liveGameCount -= 1; INDSDebugAutoplay.liveGames.unlock()
+        #endif
+        // Only a run this screen started and that has not ended: a newer screen's run (the same
+        // game reopened right after a quit) must not be stopped by the old one going away.
+        if emulationThread != nil, E3DSIsRunning() { E3DSStop() }
     }
 
     private static func code(for button: INDSButton) -> Int32 {
@@ -589,8 +583,9 @@ final class ThreeDSGameViewController: UIViewController {
 extension ThreeDSGameViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard controller.documentPickerMode == .open else { return E3DSSetPaused(false) } // export done
-        guard let staged = stageSave(from: urls) else {
-            return notice(NSLocalizedString("That isn't a save eDuo can use. Pick the folder your save manager exported, with the save files inside.", comment: "3DS save import error"))
+        let staged: URL
+        do { staged = try ThreeDSSaveTransfer.stage(from: urls, for: rom) } catch {
+            return notice(error.localizedDescription)
         }
         // The game restarts on the imported save once the core has let go of the old one.
         pendingSaveImport = staged

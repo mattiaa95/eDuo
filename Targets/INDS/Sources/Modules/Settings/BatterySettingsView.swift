@@ -17,6 +17,7 @@ struct BatterySettingsView: View {
     /// (`INDSThreadedRenderingEnabled`), default ON.
     fileprivate static let threadedRenderingKey = "eNDSThreadedRendering"
 
+    @State private var manualSaver = INDSBatterySaverPreferences.manualEnabled
     @State private var respectLowPowerMode = INDSBatterySaverPreferences.respectLowPowerMode
     @State private var autoThrottleWhenHot = INDSBatterySaverPreferences.autoThrottleWhenHot
     @State private var threadedRendering =
@@ -24,6 +25,15 @@ struct BatterySettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                Toggle("Battery Saver", isOn: $manualSaver)
+                    .onChange(of: manualSaver) { _, newValue in
+                        INDSBatterySaverPreferences.manualEnabled = newValue
+                    }
+            } footer: {
+                Text("Saves battery in every game: 3DS games render at native resolution, and DS and 3DS games show 30 frames per second on screen. Game speed stays the same; Fast Forward is limited to 1x. Your own settings come back when you turn it off. Low Power Mode and a hot device can also turn it on (below).")
+            }
+
             Section {
                 Toggle("Respect Low Power Mode", isOn: $respectLowPowerMode)
                     .onChange(of: respectLowPowerMode) { _, newValue in

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Long-press context-menu preview card — shown above the Rename/Share/
-/// Export Save/Delete menu, matching iGBA's `ROMDetailView` role and size
+/// Export Save/Import Save/Delete menu, matching iGBA's `ROMDetailView` role and size
 /// (`.frame(width: 320)`) exactly. Tapping the card commits the row's
 /// default action (Play), same as iGBA's; the "Play" affordance at the
 /// bottom is a visual CTA rather than a separately-wired button.
@@ -59,10 +59,12 @@ struct ROMDetailView: View {
                 statItem(icon: "calendar", label: "Added", value: Self.dateFormatter.string(from: rom.creationDate))
                 statItem(icon: "number", label: "Game Code", value: rom.gameCode)
                 statItem(icon: "internaldrive",
-                         label: "Battery Save",
-                         value: rom.hasSaveFile
-                            ? NSLocalizedString("Present", comment: "ROM preview stat value: a battery save file exists")
-                            : NSLocalizedString("None", comment: "ROM preview stat value: no battery save file exists"))
+                         label: "Save Data",
+                         // 3DS homebrew keeps its data in its own sdmc folder: "—", not a misleading "None".
+                         value: !ROMSaveTransfer.supportsTransfer(rom) ? "—"
+                            : ROMSaveTransfer.hasSave(rom)
+                            ? NSLocalizedString("Present", comment: "ROM preview stat value: the game has save data (in-game save)")
+                            : NSLocalizedString("None", comment: "ROM preview stat value: the game has no save data yet"))
             }
 
             if !saveStates.isEmpty {

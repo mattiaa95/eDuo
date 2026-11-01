@@ -55,7 +55,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“%1$@”已在您的库中存在。"
+            "value" : "“%1$@”已在你的游戏库中。"
           }
         }
       }
@@ -142,13 +142,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'opzione \"Solo ROM\" conserva il salvataggio della cartuccia e gli stati di salvataggio nel caso in cui si voglia reimportare il gioco in un secondo momento. L'opzione \"ROM + Dati di salvataggio\" elimina tutto ciò che riguarda questo gioco."
+            "value" : "L'opzione “Solo ROM” conserva il salvataggio della cartuccia e gli stati di salvataggio nel caso in cui tu voglia reimportare il gioco in un secondo momento. L'opzione “ROM + Dati di salvataggio” elimina tutto ciò che riguarda questo gioco."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「ROMのみ」を選択すると、後で再インポートする際に備えて、バッテリーセーブデータとセーブデータが保持されます。「ROM＋セーブデータ」を選択すると、このゲームに関するすべてのデータが削除されます。"
+            "value" : "「ROMのみ」を選択すると、後でもう一度読み込む際に備えて、バッテリーセーブデータとセーブステートが保持されます。「ROM＋セーブデータ」を選択すると、このゲームに関するすべてのデータが削除されます。"
           }
         },
         "ko" : {
@@ -160,19 +160,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A opção «Apenas ROM» mantém o jogo guardado do cartucho e os estados guardados, caso queira reimportá-la mais tarde. A opção «ROM + Dados Guardados» elimina tudo relativo a este jogo."
+            "value" : "A opção «Apenas ROM» mantém a gravação do cartucho e os estados guardados, caso queira reimportá-la mais tarde. A opção «ROM + Dados de gravação» elimina tudo relativo a este jogo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вариант «Только ROM» сохраняет сохранение картриджа и сохранённые состояния на случай, если вы снова импортируете игру позже. Вариант «ROM + данные сохранения» удаляет все данные этой игры."
+            "value" : "Вариант «Только ROM» оставляет сохранение картриджа и сохранённые состояния на случай, если вы снова импортируете игру позже. Вариант «ROM + данные сохранения» удаляет все данные этой игры."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“仅ROM”会保留其电池存档和存档状态，以便您日后重新导入。“ROM + 存档数据”会删除该游戏的所有内容。"
+            "value" : "“仅ROM”会保留其电池存档和保存状态，以便你日后重新导入。“ROM + 存档数据”会删除该游戏的所有内容。"
           }
         }
       }
@@ -739,7 +739,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Un tasto turbo spara da solo finché lo tieni premuto. Funziona con i comandi a schermo, un controller e una tastiera."
+            "value" : "Un pulsante turbo spara da solo finché lo tieni premuto. Funziona con i comandi a schermo, un controller e una tastiera."
           }
         },
         "ja" : {
@@ -1028,13 +1028,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur d’accent"
+            "value" : "Couleur d'accentuation"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Colore d’accento"
+            "value" : "Colore d'accento"
           }
         },
         "ja" : {
@@ -1144,7 +1144,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajouter une astuce"
+            "value" : "Ajouter un code de triche"
           }
         },
         "it" : {
@@ -1168,7 +1168,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adicionar código de trapaça"
+            "value" : "Adicionar truque"
           }
         },
         "ru" : {
@@ -1238,7 +1238,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "添加您的游戏"
+            "value" : "添加你的游戏"
           }
         }
       }
@@ -1542,7 +1542,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alle Speicherplätze"
+            "value" : "Alle Spielstand-Slots"
           }
         },
         "es" : {
@@ -1578,19 +1578,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todos os espaços de gravação de estado"
+            "value" : "Todas as ranhuras de estados guardados"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Все ячейки для сохранения состояния"
+            "value" : "Все слоты для сохранённых состояний"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所有存档槽位"
+            "value" : "所有存档位"
           }
         }
       }
@@ -1736,7 +1736,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'impostazione verrà applicata alla prossima apertura del gioco. È inoltre possibile regolare il volume dal menu di pausa durante il gioco."
+            "value" : "Si applica alla prossima apertura di un gioco. Puoi anche regolare il volume dal menu di pausa durante il gioco."
           }
         },
         "ja" : {
@@ -1766,7 +1766,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "该设置将在您下次启动游戏时生效。您也可以在游戏过程中通过暂停菜单调整音量。"
+            "value" : "该设置将在你下次启动游戏时生效。你也可以在游戏过程中通过暂停菜单调整音量。"
           }
         }
       }
@@ -1912,7 +1912,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salvataggio automatico all’uscita"
+            "value" : "Salvataggio automatico all'uscita"
           }
         },
         "ja" : {
@@ -1964,7 +1964,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrement automatique"
+            "value" : "Sauvegarde automatique"
           }
         },
         "it" : {
@@ -1976,7 +1976,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動保存"
+            "value" : "自動セーブ"
           }
         },
         "ko" : {
@@ -2000,7 +2000,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自动保存"
+            "value" : "自动存档"
           }
         }
       }
@@ -2094,7 +2094,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動保存"
+            "value" : "自動セーブしました"
           }
         },
         "ko" : {
@@ -2118,7 +2118,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自动保存"
+            "value" : "已自动存档"
           }
         }
       }
@@ -2265,7 +2265,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salvataggio automatico all’uscita"
+            "value" : "Salvataggio automatico all'uscita"
           }
         },
         "ja" : {
@@ -2612,19 +2612,19 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les fichiers BIOS/firmware sont facultatifs. eDuo peut démarrer et exécuter presque tous les jeux grâce à un BIOS de compatibilité intégré. L'importation de sauvegardes réelles depuis votre propre console peut améliorer la compatibilité pour certains jeux. eDuo n'inclut ni ne télécharge de fichiers BIOS."
+            "value" : "Les fichiers BIOS/firmware sont facultatifs. eDuo peut démarrer et exécuter presque tous les jeux grâce à un BIOS de compatibilité intégré. L'importation de vrais dumps de votre propre console peut améliorer la compatibilité pour certains jeux. eDuo n'inclut ni ne télécharge de fichiers BIOS."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I file BIOS/firmware sono facoltativi. eDuo è in grado di avviare ed eseguire quasi tutti i giochi grazie a un BIOS di compatibilità integrato. L'importazione di dump originali dalla propria console può migliorare la compatibilità per alcuni giochi. eDuo non include né scarica file BIOS."
+            "value" : "I file BIOS/firmware sono facoltativi. eDuo è in grado di avviare ed eseguire quasi tutti i giochi grazie a un BIOS di compatibilità integrato. L'importazione di dump originali dalla tua console può migliorare la compatibilità per alcuni giochi. eDuo non include né scarica file BIOS."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS/ファームウェアファイルは任意です。eDuoは、内蔵の互換BIOSを使用して、ほぼすべてのゲームを起動・実行できます。お手持ちのコンソールから実際のダンプデータをインポートすることで、一部のゲームの互換性が向上する場合があります。eDuoにはBIOSファイルは含まれておらず、BIOSファイルのダウンロードも行いません。"
+            "value" : "BIOS/ファームウェアファイルは任意です。eDuoは、内蔵の互換BIOSを使用して、ほぼすべてのゲームを起動・実行できます。お手持ちのコンソールから実際のダンプデータを読み込むことで、一部のゲームの互換性が向上する場合があります。eDuoにはBIOSファイルは含まれておらず、BIOSファイルのダウンロードも行いません。"
           }
         },
         "ko" : {
@@ -2648,7 +2648,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BIOS/固件文件为可选。eDuo 可以利用内置的兼容性 BIOS 启动并运行几乎所有游戏。从您自己的游戏机导入真实的转储文件，可以提高部分游戏的兼容性。eDuo 不包含也不下载 BIOS 文件。"
+            "value" : "BIOS/固件文件为可选。eDuo 可以利用内置的兼容性 BIOS 启动并运行几乎所有游戏。从你自己的游戏机导入真实的转储文件，可以提高部分游戏的兼容性。eDuo 不包含也不下载 BIOS 文件。"
           }
         }
       }
@@ -2688,7 +2688,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "도서관으로 돌아가기"
+            "value" : "라이브러리로 돌아가기"
           }
         },
         "pt-PT" : {
@@ -2706,7 +2706,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "返回图书馆"
+            "value" : "返回游戏库"
           }
         }
       }
@@ -2947,61 +2947,61 @@
         }
       }
     },
-    "Battery Save" : {
-      "extractionState" : "stale",
+    "Save Data" : {
+      "comment" : "ROM preview stat label: whether the game has in-game save data (not a battery-saving feature)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Batteriespeicher"
+            "value" : "Spielstand"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Partida del cartucho"
+            "value" : "Datos de guardado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sauvegarde de la batterie"
+            "value" : "Données de sauvegarde"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Salvataggio su batteria"
+            "value" : "Dati di salvataggio"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "バッテリーセーブ"
+            "value" : "セーブデータ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "배터리 저장"
+            "value" : "저장 데이터"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gravação de bateria"
+            "value" : "Dados guardados"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохранение картриджа"
+            "value" : "Данные сохранения"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "电池存档"
+            "value" : "存档数据"
           }
         }
       }
@@ -3101,7 +3101,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@ごとに%1$@が請求されます。現在の期間が終了する24時間前までに解約しない限り、自動的に更新されます。App Storeのアカウント設定で管理・解約できます。 購入の確認時に、支払いは Apple ID に請求されます。"
+            "value" : "%2$@ごとに%1$@が請求されます。現在の期間が終了する24時間前までに解約しない限り、自動的に更新されます。App Storeのアカウント設定で管理・解約できます。購入の確認時に、支払いは Apple ID に請求されます。"
           }
         },
         "ko" : {
@@ -3125,7 +3125,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "每%2$@收取%1$@。除非在当前周期结束前至少24小时取消，否则将自动续订。您可以在 App Store 账户设置中管理或取消。 确认购买后，将从您的 Apple ID 中扣款。"
+            "value" : "每%2$@收取%1$@。除非在当前周期结束前至少24小时取消，否则将自动续订。你可以在 App Store 账户设置中管理或取消。确认购买后，将从你的 Apple ID 中扣款。"
           }
         }
       }
@@ -3289,13 +3289,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Largura da moldura"
+            "value" : "Largura do contorno"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ширина границы"
+            "value" : "Ширина рамки"
           }
         },
         "zh-Hans" : {
@@ -3336,7 +3336,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下部画面のみ"
+            "value" : "下画面のみ"
           }
         },
         "ko" : {
@@ -3360,7 +3360,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅显示底部屏幕"
+            "value" : "仅显示下屏"
           }
         }
       }
@@ -3734,7 +3734,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nom de l'astuce"
+            "value" : "Nom du code de triche"
           }
         },
         "it" : {
@@ -3792,7 +3792,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Astuces"
+            "value" : "Codes de triche"
           }
         },
         "it" : {
@@ -3887,7 +3887,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请检查您的网络连接，然后重试。在此期间您可以继续游戏——除 PRO 附加功能外，此页面不会锁定任何内容。"
+            "value" : "请检查你的网络连接，然后重试。在此期间你可以继续游戏——除 PRO 附加功能外，此页面不会锁定任何内容。"
           }
         }
       }
@@ -4226,7 +4226,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Liga um comando"
+            "value" : "Ligue um comando"
           }
         },
         "ru" : {
@@ -4307,13 +4307,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verbinde ein beliebiges MFi- oder Bluetooth-Gamepad – die Tasten landen automatisch auf einem echten Layout."
+            "value" : "Verbinde ein beliebiges MFi- oder Bluetooth-Gamepad – die Tasten werden automatisch dem ursprünglichen Layout zugeordnet."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conecta cualquier mando MFi o Bluetooth: los botones se asignan solos a una disposición real."
+            "value" : "Conecta cualquier mando MFi o Bluetooth: los botones se asignan solos a la disposición original."
           }
         },
         "fr" : {
@@ -4337,7 +4337,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MFi 또는 Bluetooth 게임패드를 연결하세요 — 버튼이 실제 배치에 맞춰 자동으로 매핑됩니다."
+            "value" : "MFi 또는 Bluetooth 게임패드를 연결하세요 — 버튼이 원래 배치에 맞춰 자동으로 매핑됩니다."
           }
         },
         "pt-PT" : {
@@ -4349,13 +4349,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подключите любой геймпад MFi или Bluetooth — кнопки автоматически встанут так же, как на настоящей."
+            "value" : "Подключите любой геймпад MFi или Bluetooth — кнопки автоматически назначатся по оригинальной раскладке."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连接任意 MFi 或 Bluetooth 手柄——按键会自动映射为真实的布局。"
+            "value" : "连接任意 MFi 或蓝牙手柄——按键会自动映射为原始布局。"
           }
         }
       }
@@ -4706,7 +4706,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "继续播放"
+            "value" : "继续游戏"
           }
         }
       }
@@ -4735,7 +4735,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mappatura dei tasti"
+            "value" : "Mappatura dei pulsanti"
           }
         },
         "ja" : {
@@ -4899,7 +4899,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Radio de la curva"
+            "value" : "Radio de las esquinas"
           }
         },
         "fr" : {
@@ -4929,19 +4929,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Raio do ângulo"
+            "value" : "Raio dos cantos"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Радиус поворота"
+            "value" : "Радиус скругления"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "转角半径"
+            "value" : "圆角半径"
           }
         }
       }
@@ -5010,7 +5010,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zustand konnte nicht geladen werden: %@"
+            "value" : "Spielstand konnte nicht geladen werden: %@"
           }
         },
         "es" : {
@@ -5127,7 +5127,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zustand konnte nicht gespeichert werden: %@"
+            "value" : "Spielstand konnte nicht gespeichert werden: %@"
           }
         },
         "es" : {
@@ -5216,7 +5216,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "선명"
+            "value" : "선명하게"
           }
         },
         "pt-PT" : {
@@ -5404,7 +5404,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сменить компоновку экрана"
+            "value" : "Сменить расположение экранов"
           }
         },
         "zh-Hans" : {
@@ -5444,13 +5444,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dパッド"
+            "value" : "十字キー"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "D-패드"
+            "value" : "방향키"
           }
         },
         "pt-PT" : {
@@ -5632,7 +5632,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apagar"
+            "value" : "Eliminar"
           }
         },
         "ru" : {
@@ -5691,7 +5691,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eliminar a ROM e os jogos guardados"
+            "value" : "Eliminar a ROM e as gravações"
           }
         },
         "ru" : {
@@ -5874,7 +5874,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалить сохранение"
+            "value" : "Удалить сохранённое состояние"
           }
         },
         "zh-Hans" : {
@@ -5903,7 +5903,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Supprimer cet état sauvegardé ?"
+            "value" : "Supprimer cet état de sauvegarde ?"
           }
         },
         "it" : {
@@ -5933,7 +5933,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалить это сохранение?"
+            "value" : "Удалить это сохранённое состояние?"
           }
         },
         "zh-Hans" : {
@@ -5974,19 +5974,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "十字ボタン"
+            "value" : "十字キー"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "방향 패드"
+            "value" : "방향키"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Botão direcional"
+            "value" : "Cruzeta"
           }
         },
         "ru" : {
@@ -6038,7 +6038,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "필터 표시"
+            "value" : "화면 필터"
           }
         },
         "pt-PT" : {
@@ -6056,7 +6056,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示筛选器"
+            "value" : "画面滤镜"
           }
         }
       }
@@ -6090,7 +6090,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "映像フィルタ"
+            "value" : "表示フィルター"
           }
         },
         "ko" : {
@@ -6396,7 +6396,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Editar código de trapaça"
+            "value" : "Editar truque"
           }
         },
         "ru" : {
@@ -6418,19 +6418,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stil der Schaltfläche „Bearbeiten“"
+            "value" : "Tastenstil bearbeiten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estilo del botón «Editar»"
+            "value" : "Editar el estilo del botón"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modifier le style du bouton « Modifier »"
+            "value" : "Modifier le style du bouton"
           }
         },
         "it" : {
@@ -6442,25 +6442,25 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「編集」ボタンのスタイル"
+            "value" : "ボタンのスタイルを編集"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'편집' 버튼 스타일"
+            "value" : "버튼 스타일 편집"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estilo do botão «Editar»"
+            "value" : "Editar o estilo do botão"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Изменить стиль кнопки «Редактировать»"
+            "value" : "Изменить стиль кнопки"
           }
         },
         "zh-Hans" : {
@@ -6734,7 +6734,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべて込み"
+            "value" : "すべて含まれています"
           }
         },
         "ko" : {
@@ -6805,7 +6805,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exportar o jogo guardado"
+            "value" : "Exportar a gravação"
           }
         },
         "ru" : {
@@ -6840,7 +6840,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible de créer l'état de jeu."
+            "value" : "Impossible de créer l'état de sauvegarde."
           }
         },
         "it" : {
@@ -6899,7 +6899,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible d'écrire le fichier d'état de jeu."
+            "value" : "Impossible d'écrire le fichier d'état de sauvegarde."
           }
         },
         "it" : {
@@ -7005,7 +7005,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vorspulen (halten)"
+            "value" : "Schnellvorlauf (halten)"
           }
         },
         "es" : {
@@ -7023,13 +7023,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avanti veloce (tieni premuto)"
+            "value" : "Avanzamento rapido (tieni premuto)"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "早送り(長押し)"
+            "value" : "早送り（長押し）"
           }
         },
         "ko" : {
@@ -7047,13 +7047,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перемотка вперёд (удерживать)"
+            "value" : "Ускорение (удерживать)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "快进(按住)"
+            "value" : "快进（按住）"
           }
         }
       }
@@ -7275,7 +7275,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Preenche o espaço à volta e entre os dois ecrãs durante o jogo. Aplica-se na próxima vez que abrires um jogo."
+            "value" : "Preenche o espaço à volta e entre os dois ecrãs durante o jogo. Aplica-se na próxima vez que abrir um jogo."
           }
         },
         "ru" : {
@@ -7533,7 +7533,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "免费试用后，每%2$@收取%1$@。除非在当前周期结束前至少24小时取消，否则将自动续订。您可以在 App Store 账户设置中管理或取消。确认购买后，将从您的 Apple ID 中扣款。"
+            "value" : "免费试用后，每%2$@收取%1$@。除非在当前周期结束前至少24小时取消，否则将自动续订。你可以在 App Store 账户设置中管理或取消。确认购买后，将从你的 Apple ID 中扣款。"
           }
         }
       }
@@ -7731,7 +7731,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les jeux lisent l'horloge de la console: cycles jour/nuit, événements quotidiens et déblocages journaliers en dépendent. S'applique à la prochaine ouverture d'un jeu."
+            "value" : "Les jeux lisent l'horloge de la console : cycles jour/nuit, événements quotidiens et déblocages journaliers en dépendent. S'applique à la prochaine ouverture d'un jeu."
           }
         },
         "it" : {
@@ -8012,13 +8012,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schaltfläche „Ausblenden“"
+            "value" : "Taste ausblenden"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Botón «Ocultar»"
+            "value" : "Ocultar botón"
           }
         },
         "fr" : {
@@ -8030,37 +8030,37 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pulsante \"Nascondi\""
+            "value" : "Nascondi pulsante"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「非表示」ボタン"
+            "value" : "ボタンを非表示"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "숨기기 버튼"
+            "value" : "버튼 숨기기"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Botão «Ocultar»"
+            "value" : "Ocultar botão"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Кнопка «Скрыть»"
+            "value" : "Скрыть кнопку"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“隐藏”按钮"
+            "value" : "隐藏按钮"
           }
         }
       }
@@ -8211,7 +8211,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A che velocità gira il gioco mentre l’avanzamento rapido è attivo, sia dal pulsante Velocità sullo schermo sia da un controller. Ogni tocco sul pulsante passa alla velocità successiva. Un gioco 3D pesante potrebbe non raggiungere la più alta su tutti i dispositivi."
+            "value" : "A che velocità gira il gioco mentre l'avanzamento rapido è attivo, sia dal pulsante Velocità sullo schermo sia da un controller. Ogni tocco sul pulsante passa alla velocità successiva. Un gioco 3D pesante potrebbe non raggiungere la più alta su tutti i dispositivi."
           }
         },
         "pt-PT" : {
@@ -8223,7 +8223,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скорость игры при включённом ускорении — и с экранной кнопки «Скорость», и с контроллера. Каждое касание экранной кнопки переключает на следующую скорость. Тяжёлая 3D-игра может не выйти на самую высокую скорость на любом устройстве."
+            "value" : "Скорость игры при включённом ускорении — и с экранной кнопки «Скорость», и с контроллера. Каждое касание экранной кнопки переключает на следующую скорость. Тяжёлая 3D-игра может не достичь самой высокой скорости на некоторых устройствах."
           }
         },
         "ja" : {
@@ -8241,7 +8241,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "快进开启时游戏运行的速度，屏幕上的「速度」按钮和手柄都用这一档。每点一次屏幕按钮就切换到下一档。较吃性能的 3D 游戏在部分设备上达不到最快的一档。"
+            "value" : "快进开启时游戏运行的速度，屏幕上的“速度”按钮和手柄都用这一档。每点一次屏幕按钮就切换到下一档。较吃性能的 3D 游戏在部分设备上达不到最快的一档。"
           }
         }
       }
@@ -8293,7 +8293,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сначала я изучу ситуацию"
+            "value" : "Сначала осмотрюсь"
           }
         },
         "zh-Hans" : {
@@ -8339,7 +8339,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "기기가 과열되기 시작하면, eDuo는 자동으로 속도를 1x로 제한합니다. 과열 현상이 계속되면, eDuo는 기기가 식을 수 있도록 화면의 재생 빈도도 낮춥니다."
+            "value" : "기기가 과열되기 시작하면, eDuo는 자동으로 속도를 1x로 제한합니다. 과열 현상이 계속되면, eDuo는 기기가 식을 수 있도록 화면의 주사율도 낮춥니다."
           }
         },
         "pt-PT" : {
@@ -8357,7 +8357,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果您的设备开始发热，eDuo 会自动将运行速度限制在 1x。如果设备持续发热，eDuo 还会降低屏幕刷新率，以帮助设备散热。"
+            "value" : "如果你的设备开始发热，eDuo 会自动将运行速度限制在 1x。如果设备持续发热，eDuo 还会降低屏幕刷新率，以帮助设备散热。"
           }
         }
       }
@@ -8603,25 +8603,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importiere Dateien — oder .zip/.7z-Archive mit ihnen — direkt aus der Dateien-App."
+            "value" : "Importiere deine Spieldateien – oder .zip/.7z-Archive mit ihnen – direkt aus der Dateien-App."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa archivos — o archivos .zip/.7z que los contengan — directamente desde la app Archivos."
+            "value" : "Importa tus archivos de juego — o archivos .zip/.7z que los contengan — directamente desde la app Archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importez des fichiers — ou des archives .zip/.7z qui en contiennent — directement depuis l'app Fichiers."
+            "value" : "Importez vos fichiers de jeu — ou des archives .zip/.7z qui en contiennent — directement depuis l'app Fichiers."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa file — o archivi .zip/.7z che li contengono — direttamente dall'app File."
+            "value" : "Importa i tuoi file di gioco — o archivi .zip/.7z che li contengono — direttamente dall'app File."
           }
         },
         "ja" : {
@@ -8633,19 +8633,19 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임 파일 — 또는 이를 담은 .zip/.7z 아카이브 — 을 파일 앱에서 바로 가져오세요."
+            "value" : "게임 파일(또는 이를 담은 .zip/.7z 아카이브)을 파일 앱에서 바로 가져오세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importe ficheiros — ou arquivos .zip/.7z que os contenham — diretamente da app Ficheiros."
+            "value" : "Importe os seus ficheiros de jogo — ou arquivos .zip/.7z que os contenham — diretamente da app Ficheiros."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Импортируйте файлы — или архивы .zip/.7z с ними — прямо из приложения «Файлы»."
+            "value" : "Импортируйте свои игровые файлы — или архивы .zip/.7z с ними — прямо из приложения «Файлы»."
           }
         },
         "zh-Hans" : {
@@ -8661,25 +8661,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importiere legale Backups — oder .zip/.7z-Archive mit ihnen — aus der Dateien-App und baue deine eDuo-Bibliothek auf."
+            "value" : "Importiere deine eigenen legalen Spiel-Backups – oder .zip/.7z-Archive – aus der Dateien-App und baue deine eDuo-Bibliothek auf."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa copias legales — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eDuo."
+            "value" : "Importa tus propias copias de seguridad legales — o archivos .zip/.7z que las contengan — desde la app Archivos para empezar tu biblioteca eDuo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importez des sauvegardes légales — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eDuo."
+            "value" : "Importez des copies de sauvegarde légales de vos propres jeux — ou des archives .zip/.7z — depuis l'app Fichiers pour créer votre bibliothèque eDuo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importa backup legali — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eDuo."
+            "value" : "Importa i backup legali dei tuoi giochi — o archivi .zip/.7z — dall'app File per iniziare la tua libreria eDuo."
           }
         },
         "ja" : {
@@ -8691,19 +8691,19 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "합법적인 백업 — 또는 .zip/.7z 아카이브 — 을 파일 앱에서 가져와 eDuo 라이브러리를 시작하세요."
+            "value" : "합법적인 백업(또는 .zip/.7z 아카이브)을 파일 앱에서 가져와 eDuo 라이브러리를 시작하세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importe cópias legais — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eDuo."
+            "value" : "Importe as suas próprias cópias de segurança legais — ou arquivos .zip/.7z — da app Ficheiros para começar a sua biblioteca eDuo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Импортируйте легальные копии — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eDuo."
+            "value" : "Импортируйте свои легальные резервные копии игр — или архивы .zip/.7z — из «Файлов», чтобы собрать свою библиотеку eDuo."
           }
         },
         "zh-Hans" : {
@@ -8880,7 +8880,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Некорректный ROM. %1$@"
+            "value" : "Некорректный файл ROM. %1$@"
           }
         },
         "zh-Hans" : {
@@ -9230,7 +9230,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Этикетка"
+            "value" : "Подпись"
           }
         },
         "zh-Hans" : {
@@ -9529,7 +9529,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "让游戏能听到你——有的游戏对麦克风吹气，有的游戏对它说话。eDuo只会在游戏第一次真正需要时请求麦克风权限，绝不会在启动时请求，音频也绝不会离开你的设备。关闭后麦克风将保持静音。"
+            "value" : "让游戏能听到你——有的游戏对麦克风吹气，有的游戏对它说话。eDuo 只会在游戏第一次真正需要时请求麦克风权限，绝不会在启动时请求，音频也绝不会离开你的设备。关闭后麦克风将保持静音。"
           }
         }
       }
@@ -9598,7 +9598,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einmalig freigeschaltet — nichts zu verwalten"
+            "value" : "Einmalig freigeschaltet – nichts zu verwalten"
           }
         },
         "es" : {
@@ -9699,13 +9699,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lifetime — %@. Без подписки, навсегда."
+            "value" : "Пожизненный доступ — %@. Без подписки, навсегда."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lifetime — %@。无需订阅，永远免费。"
+            "value" : "Lifetime — %@。无需订阅，永不续费。"
           }
         }
       }
@@ -9881,7 +9881,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "读取存档"
+            "value" : "加载状态"
           }
         }
       }
@@ -9939,7 +9939,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在加载……"
+            "value" : "正在加载…"
           }
         }
       }
@@ -9986,7 +9986,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poupança de energia e calor"
+            "value" : "Modo de baixo consumo e calor"
           }
         },
         "ru" : {
@@ -10008,25 +10008,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entwickelt für den"
+            "value" : "Für zwei Bildschirme entwickelt"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Creado para"
+            "value" : "Hecho para dos pantallas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conçu pour la"
+            "value" : "Conçu pour deux écrans"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Realizzato per"
+            "value" : "Pensato per due schermi"
           }
         },
         "ja" : {
@@ -10038,19 +10038,19 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "전용"
+            "value" : "듀얼 스크린 전용"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Concebido para a"
+            "value" : "Concebido para dois ecrãs"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Разработано"
+            "value" : "Создано для двух экранов"
           }
         },
         "zh-Hans" : {
@@ -10173,7 +10173,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "管理您的订阅"
+            "value" : "管理你的订阅"
           }
         }
       }
@@ -10184,7 +10184,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manuelle Speicherplätze plus eine automatische Speicherung, wann immer du ein Spiel verlässt. Platz 1 ist gratis; PRO ergänzt drei weitere."
+            "value" : "Manuelle Speicher-Slots plus eine automatische Speicherung, wann immer du ein Spiel verlässt. Slot 1 ist gratis; PRO ergänzt drei weitere."
           }
         },
         "es" : {
@@ -10232,7 +10232,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "手动存档栏位，外加每次离开游戏时的自动存档。栏位1免费，PRO再加3个。"
+            "value" : "手动存档位，外加每次离开游戏时的自动存档。存档位 1 免费，PRO 再加 3 个。"
           }
         }
       }
@@ -10555,7 +10555,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La maggior parte dei giochi contiene tutte le lingue europee nella cartuccia e ne sceglie una in base a questa impostazione, senza chiedere. I giochi giapponesi quasi mai lasciano scegliere.\n\nEntrambi si applicano alla prossima apertura di un gioco: la console li legge una sola volta, all’avvio."
+            "value" : "La maggior parte dei giochi contiene tutte le lingue europee nella cartuccia e ne sceglie una in base a questa impostazione, senza chiedere. I giochi giapponesi quasi mai lasciano scegliere.\n\nEntrambi si applicano alla prossima apertura di un gioco: la console li legge una sola volta, all'avvio."
           }
         },
         "ja" : {
@@ -10573,7 +10573,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A maioria dos jogos traz todos os idiomas europeus na cassete e escolhe um a partir desta definição, em vez de perguntar. Os jogos japoneses quase nunca dão hipótese de escolha.\n\nAmbos se aplicam da próxima vez que abrires um jogo: a consola lê-os apenas uma vez, ao arrancar."
+            "value" : "A maioria dos jogos traz todos os idiomas europeus no cartucho e escolhe um a partir desta definição, em vez de perguntar. Os jogos japoneses quase nunca dão hipótese de escolha.\n\nAmbos se aplicam na próxima vez que abrir um jogo: a consola lê-os apenas uma vez, ao arrancar."
           }
         },
         "ru" : {
@@ -10842,7 +10842,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nouvelle astuce"
+            "value" : "Nouveau code de triche"
           }
         },
         "it" : {
@@ -10878,7 +10878,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新作弊码"
+            "value" : "新建作弊码"
           }
         }
       }
@@ -11018,7 +11018,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pas encore de triches"
+            "value" : "Pas encore de codes de triche"
           }
         },
         "it" : {
@@ -11030,7 +11030,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "まだチートは見つかっていない"
+            "value" : "まだチートがありません"
           }
         },
         "ko" : {
@@ -11054,7 +11054,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目前尚无作弊手段"
+            "value" : "还没有作弊码"
           }
         }
       }
@@ -11065,7 +11065,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Es ist keine ROM geladen."
+            "value" : "Es ist kein ROM geladen."
           }
         },
         "es" : {
@@ -11500,13 +11500,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今はだめ"
+            "value" : "今はしない"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지금은 아니에요"
+            "value" : "나중에"
           }
         },
         "pt-PT" : {
@@ -11524,7 +11524,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "现在不行"
+            "value" : "暂不"
           }
         }
       }
@@ -11681,7 +11681,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "알겠습니다"
+            "value" : "확인"
           }
         },
         "pt-PT" : {
@@ -11693,7 +11693,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Хорошо"
+            "value" : "ОК"
           }
         },
         "zh-Hans" : {
@@ -11858,7 +11858,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "화면 내 컨트롤러"
+            "value" : "화면 컨트롤러"
           }
         },
         "pt-PT" : {
@@ -11876,7 +11876,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "屏幕控制器"
+            "value" : "屏幕手柄"
           }
         }
       }
@@ -12444,7 +12444,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "선택 사항 — eDuo는 BIOS 파일 없이도 게임을 실행합니다. 특정 게임에서 BIOS 파일이 필요한 경우에만 추가하십시오."
+            "value" : "선택 사항 — eDuo는 BIOS 파일 없이도 게임을 실행합니다. 특정 게임에서 BIOS 파일이 필요한 경우에만 추가하세요."
           }
         },
         "pt-PT" : {
@@ -13025,13 +13025,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再生"
+            "value" : "プレイ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "재생"
+            "value" : "플레이"
           }
         },
         "pt-PT" : {
@@ -13049,7 +13049,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "播放"
+            "value" : "开始游戏"
           }
         }
       }
@@ -13102,7 +13102,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Играли"
+            "value" : "Недавние"
           }
         },
         "zh-Hans" : {
@@ -13285,7 +13285,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已导入"
+            "value" : "有"
           }
         }
       }
@@ -13331,7 +13331,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carrega num botão…"
+            "value" : "Prima um botão…"
           }
         },
         "ru" : {
@@ -13343,7 +13343,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按一下按钮……"
+            "value" : "按一下按钮…"
           }
         }
       }
@@ -13389,7 +13389,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Política de Privacidade"
+            "value" : "Política de privacidade"
           }
         },
         "ru" : {
@@ -13651,13 +13651,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compras recuperadas"
+            "value" : "Compras restauradas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Achats rétablis"
+            "value" : "Achats restaurés"
           }
         },
         "it" : {
@@ -13681,13 +13681,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compras recuperadas"
+            "value" : "Compras restauradas"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Восстановлены покупки"
+            "value" : "Покупки восстановлены"
           }
         },
         "zh-Hans" : {
@@ -13746,13 +13746,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Возвращает собственный файл сохранения игры в том виде, в каком он был до загрузки состояния сохранения в этой сессии, и перезапускает игру. Используйте, если после загрузки состояния внутриигровой прогресс откатился назад."
+            "value" : "Возвращает собственный файл сохранения игры в том виде, в каком он был до загрузки сохранённого состояния в этой сессии, и перезапускает игру. Используйте, если после загрузки состояния внутриигровой прогресс откатился назад."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将游戏自身的存档文件恢复为本次会话中加载保存状态之前的样子，然后重启游戏。如果加载保存状态导致您的游戏内进度回退，请使用此功能。"
+            "value" : "将游戏自身的存档文件恢复为本次会话中加载保存状态之前的样子，然后重启游戏。如果加载保存状态导致你的游戏内进度回退，请使用此功能。"
           }
         }
       }
@@ -13769,7 +13769,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carga rápida"
+            "value" : "Cargar rápido"
           }
         },
         "fr" : {
@@ -13793,13 +13793,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "빠른 로딩"
+            "value" : "빠른 불러오기"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carregamento Rápido"
+            "value" : "Carregamento rápido"
           }
         },
         "ru" : {
@@ -13834,7 +13834,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrement rapide"
+            "value" : "Sauvegarde rapide"
           }
         },
         "it" : {
@@ -13898,7 +13898,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esci e torna alla Libreria"
+            "value" : "Esci e torna alla libreria"
           }
         },
         "ja" : {
@@ -13910,13 +13910,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "라이브러리로 이동"
+            "value" : "라이브러리로 나가기"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sair para a Biblioteca"
+            "value" : "Sair para a biblioteca"
           }
         },
         "ru" : {
@@ -13928,7 +13928,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "退出并返回库"
+            "value" : "退出并返回游戏库"
           }
         }
       }
@@ -14413,19 +14413,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reasigna los botones de un mando físico, incluidas las teclas de acceso rápido para «Guardar rápido», «Cargar rápido», «Cambiar la disposición de la pantalla» y «Intercambiar pantallas»."
+            "value" : "Reasigna los botones de un mando físico, incluidas las teclas de acceso rápido para «Guardar rápido», «Cargar rápido», «Cambiar disposición de pantalla» y «Intercambiar pantallas»."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reconfigurez les boutons d'une manette physique, y compris les raccourcis clavier pour la sauvegarde rapide, la charge rapide, le changement de disposition d'écran et l'alternance entre les écrans."
+            "value" : "Reconfigurez les boutons d'une manette physique, y compris les raccourcis pour la sauvegarde rapide, le chargement rapide, le changement de disposition d'écran et l'alternance entre les écrans."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rimappa i pulsanti di un controller fisico, inclusi i tasti di scelta rapida per “Salvataggio rapido”, “Caricamento rapido”, “Cambio layout schermata” e “Scambio schermate”."
+            "value" : "Rimappa i pulsanti di un controller fisico, inclusi i tasti di scelta rapida per “Salvataggio rapido”, “Caricamento rapido”, “Cambia disposizione schermo” e “Scambia schermi”."
           }
         },
         "ja" : {
@@ -14437,25 +14437,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "물리적 컨트롤러의 버튼을 재매핑할 수 있으며, 여기에는 빠른 저장, 빠른 불러오기, 화면 레이아웃 순환 및 화면 전환을 위한 단축키도 포함됩니다."
+            "value" : "물리적 컨트롤러의 버튼을 재매핑할 수 있으며, 여기에는 빠른 저장, 빠른 불러오기, 화면 배치 전환 및 화면 교체를 위한 단축키도 포함됩니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reatribuir as teclas de um comando físico, incluindo teclas de atalho para «Gravação Rápida», «Carregamento Rápido», «Alternar o Layout do Ecrã» e «Trocar de Ecrã»."
+            "value" : "Reatribuir as teclas de um comando físico, incluindo teclas de atalho para «Gravação rápida», «Carregamento rápido», «Alternar disposição do ecrã» e «Trocar ecrãs»."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переназначить кнопки физического контроллера, включая горячие клавиши для быстрой записи, быстрой загрузки, переключения схемы расположения экранов и смены экранов."
+            "value" : "Переназначить кнопки физического контроллера, включая горячие клавиши для быстрого сохранения, быстрой загрузки, смены расположения экранов и смены экранов местами."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重新映射物理控制器的按键，包括“快速保存”、“快速加载”、“循环屏幕布局”和“切换屏幕”的快捷键。"
+            "value" : "重新映射实体手柄的按键，包括“快速保存”、“快速加载”、“切换屏幕布局”和“交换屏幕”的快捷键。"
           }
         }
       }
@@ -14718,13 +14718,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La ridenominazione di “%@” comporta anche la ridenominazione del file di salvataggio, degli stati di salvataggio, della miniatura e dell’icona, in modo che nulla vada perso."
+            "value" : "La ridenominazione di “%@” comporta anche la ridenominazione del file di salvataggio, degli stati di salvataggio, della miniatura e dell'icona, in modo che nulla vada perso."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「%@」の名前を変更すると、そのセーブデータ、セーブ状態、サムネイル、アイコンの名前も変更されるため、データが失われることはありません。"
+            "value" : "「%@」の名前を変更すると、そのセーブデータ、セーブステート、サムネイル、アイコンの名前も変更されるため、データが失われることはありません。"
           }
         },
         "ko" : {
@@ -14736,13 +14736,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ao renomear «%@», o ficheiro de gravação, os estados guardados, a miniatura e o ícone também são renomeados, para que nada se perca."
+            "value" : "Ao mudar o nome de «%@», o ficheiro de gravação, os estados guardados, a miniatura e o ícone também mudam de nome, para que nada se perca."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "При переименовании игры «%@» также переименовываются файл сохранения, состояния сохранения, миниатюра и значок, поэтому ничего не теряется."
+            "value" : "При переименовании игры «%@» также переименовываются файл сохранения, сохранённые состояния, миниатюра и значок, поэтому ничего не теряется."
           }
         },
         "zh-Hans" : {
@@ -14789,7 +14789,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "대치"
+            "value" : "교체"
           }
         },
         "pt-PT" : {
@@ -14823,7 +14823,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cambia la posición, el tamaño, oculta y modifica el estilo de cada botón, según la orientación."
+            "value" : "Cambia la posición y el tamaño de cada botón, ocúltalo o modifica su estilo, según la orientación."
           }
         },
         "fr" : {
@@ -14835,13 +14835,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "È possibile riposizionare, ridimensionare, nascondere e modificare lo stile di ogni pulsante, a seconda dell'orientamento."
+            "value" : "Riposiziona, ridimensiona, nascondi e modifica lo stile di ogni pulsante, a seconda dell'orientamento."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画面の向きごとに、各ボタンの位置変更、サイズ変更、非表示、およびスタイル変更を行う。"
+            "value" : "画面の向きごとに、各ボタンの位置変更、サイズ変更、非表示、スタイル変更ができます。"
           }
         },
         "ko" : {
@@ -14939,7 +14939,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Restablecer la consola?"
+            "value" : "¿Reiniciar la consola?"
           }
         },
         "fr" : {
@@ -14951,19 +14951,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reimpostare la console?"
+            "value" : "Riavviare la console?"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "コンソールをリセットしますか？"
+            "value" : "本体をリセットしますか？"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "콘솔을 초기화하시겠습니까?"
+            "value" : "본체를 초기화할까요?"
           }
         },
         "pt-PT" : {
@@ -14975,13 +14975,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сбросить настройки консоли?"
+            "value" : "Перезапустить консоль?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置控制台？"
+            "value" : "重置主机？"
           }
         }
       }
@@ -15063,7 +15063,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Réinitialiser le mappage de la manette ?"
+            "value" : "Réinitialiser l'attribution de la manette ?"
           }
         },
         "it" : {
@@ -15093,7 +15093,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сбросить раскладку контроллера?"
+            "value" : "Сбросить назначение кнопок контроллера?"
           }
         },
         "zh-Hans" : {
@@ -15323,7 +15323,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respeitar a poupança de energia"
+            "value" : "Respeitar o modo de baixo consumo"
           }
         },
         "ru" : {
@@ -15351,13 +15351,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recuperar compras"
+            "value" : "Restaurar compras"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Récupérer les achats"
+            "value" : "Restaurer les achats"
           }
         },
         "it" : {
@@ -15451,7 +15451,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "还原失败：%@。请检查您的互联网连接，然后重试。"
+            "value" : "恢复失败：%@。请检查你的互联网连接，然后重试。"
           }
         }
       }
@@ -15509,7 +15509,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在恢复……"
+            "value" : "正在恢复…"
           }
         }
       }
@@ -15614,7 +15614,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Continuar de onde ficaste"
+            "value" : "Continuar de onde ficou"
           }
         },
         "ru" : {
@@ -15667,7 +15667,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이어서 재개됨"
+            "value" : "재개됨"
           }
         },
         "pt-PT" : {
@@ -15685,7 +15685,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已恢复"
+            "value" : "已继续"
           }
         }
       }
@@ -16046,7 +16046,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieser Speicherplatz ist PRO"
+            "value" : "Dieser Slot ist PRO"
           }
         },
         "es" : {
@@ -16070,7 +16070,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「スロットを保存」はPRO版です"
+            "value" : "セーブスロットはPRO機能です"
           }
         },
         "ko" : {
@@ -16088,13 +16088,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "«Save Slot» — это версия PRO"
+            "value" : "Слот сохранения — функция PRO"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“保存槽位”是 PRO 功能"
+            "value" : "存档位是 PRO 功能"
           }
         }
       }
@@ -16116,7 +16116,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrer l'état de jeu"
+            "value" : "Enregistrer l'état"
           }
         },
         "it" : {
@@ -16128,7 +16128,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セーブ状態"
+            "value" : "ステートをセーブ"
           }
         },
         "ko" : {
@@ -16186,13 +16186,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セーブ状態"
+            "value" : "セーブステート"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상태 저장"
+            "value" : "세이브 스테이트"
           }
         },
         "pt-PT" : {
@@ -16204,7 +16204,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохранение состояний"
+            "value" : "Сохранённые состояния"
           }
         },
         "zh-Hans" : {
@@ -16263,13 +16263,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Состояния сохранения и автосохранение"
+            "value" : "Сохранённые состояния и автосохранение"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保存状态与自动保存"
+            "value" : "保存状态与自动存档"
           }
         }
       }
@@ -16351,7 +16351,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'état de jeu est invalide ou incompatible."
+            "value" : "L'état de sauvegarde est invalide ou incompatible."
           }
         },
         "it" : {
@@ -16397,7 +16397,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In Speicherplatz %d gespeichert"
+            "value" : "In Slot %d gespeichert"
           }
         },
         "es" : {
@@ -16421,13 +16421,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スロット「%d」に保存されました"
+            "value" : "スロット%dにセーブしました"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d 슬롯에 저장됨"
+            "value" : "슬롯 %d에 저장됨"
           }
         },
         "pt-PT" : {
@@ -16439,13 +16439,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохранено в слоте «%d»"
+            "value" : "Сохранено в слот %d"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已保存至插槽 %d"
+            "value" : "已保存至存档位 %d"
           }
         }
       }
@@ -16492,7 +16492,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jogos guardados"
+            "value" : "Gravação"
           }
         },
         "ru" : {
@@ -16557,7 +16557,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сканирующие линии"
+            "value" : "Скан-линии"
           }
         },
         "zh-Hans" : {
@@ -16574,7 +16574,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlinien ist PRO"
+            "value" : "Scanlinien sind PRO"
           }
         },
         "es" : {
@@ -16598,13 +16598,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「Scanlines」はPRO版です"
+            "value" : "「走査線」はPRO機能です"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines는 PRO입니다"
+            "value" : "스캔라인은 PRO 기능입니다"
           }
         },
         "pt-PT" : {
@@ -16616,13 +16616,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines — это PRO"
+            "value" : "Скан-линии — функция PRO"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines 是 PRO 版"
+            "value" : "扫描线是 PRO 功能"
           }
         }
       }
@@ -16632,25 +16632,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines für den Röhrenlook"
+            "value" : "Scanlinien für den Röhrenlook"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines, para el aspecto CRT"
+            "value" : "Líneas de exploración, para el aspecto CRT"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines, pour le rendu CRT"
+            "value" : "Lignes de balayage, pour le rendu CRT"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanlines, per l'effetto CRT"
+            "value" : "Linee di scansione, per l'effetto CRT"
           }
         },
         "ja" : {
@@ -16690,13 +16690,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bildschirmaufbau"
+            "value" : "Bildschirmlayout"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diseño de la pantalla"
+            "value" : "Disposición de la pantalla"
           }
         },
         "fr" : {
@@ -16732,7 +16732,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Расположение элементов на экране"
+            "value" : "Расположение экранов"
           }
         },
         "zh-Hans" : {
@@ -17043,25 +17043,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einmal einstellen, dann läuft sie weiter – die Konsolenuhr tickt von selbst vorwärts und bleibt nicht bei diesem Moment stehen. Der kann nur Jahre von 2000 bis 2099 speichern."
+            "value" : "Einmal einstellen, dann läuft sie weiter – die Konsolenuhr tickt von selbst vorwärts und bleibt nicht bei diesem Moment stehen. Die Konsole kann nur Jahre von 2000 bis 2099 speichern."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ponla una vez y sigue corriendo desde ahí: el reloj de la consola avanza solo, no se queda congelado en este momento. La solo puede guardar años del 2000 al 2099."
+            "value" : "Ponla una vez y sigue corriendo desde ahí: el reloj de la consola avanza solo, no se queda congelado en este momento. La consola solo puede guardar años del 2000 al 2099."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Réglez-la une fois et elle continue d'avancer — l'horloge de la console tourne toute seule, elle ne se fige pas à cet instant. La ne peut stocker que les années 2000 à 2099."
+            "value" : "Réglez-la une fois et elle continue d'avancer — l'horloge de la console tourne toute seule, elle ne se fige pas à cet instant. La console ne peut stocker que les années 2000 à 2099."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impostala una volta e continua ad andare avanti: l'orologio della console scorre da solo, non si blocca su questo istante. Il può memorizzare solo gli anni dal 2000 al 2099."
+            "value" : "Impostala una volta e continua ad andare avanti: l'orologio della console scorre da solo, non si blocca su questo istante. La console può memorizzare solo gli anni dal 2000 al 2099."
           }
         },
         "ja" : {
@@ -17079,13 +17079,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Defina uma vez e continua a andar a partir daí — o relógio da consola avança sozinho, não fica parado neste instante. A só consegue guardar anos de 2000 a 2099."
+            "value" : "Defina uma vez e continua a andar a partir daí — o relógio da consola avança sozinho, não fica parado neste instante. A consola só consegue guardar anos de 2000 a 2099."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Задайте один раз — дальше часы идут сами и не застывают на этом моменте. хранит только годы с 2000 по 2099."
+            "value" : "Задайте один раз — дальше часы идут сами и не застывают на этом моменте. Консоль хранит только годы с 2000 по 2099."
           }
         },
         "zh-Hans" : {
@@ -17132,7 +17132,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "화면과 컨트롤 뒤에 원하는 사진을 설정하고, 세로와 가로에 각각 다른 이미지를 사용할 수 있습니다. ePRO에 포함됩니다."
+            "value" : "화면과 컨트롤 뒤에 원하는 사진을 설정하고, 세로와 가로에 각각 다른 이미지를 사용할 수 있습니다. eDuo PRO에 포함됩니다."
           }
         },
         "pt-PT" : {
@@ -17150,7 +17150,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将自己的照片设置在屏幕和操作按键的后方，竖屏和横屏可使用不同的图片。ePRO 已包含此功能。"
+            "value" : "将自己的照片设置在屏幕和操作按键的后方，竖屏和横屏可使用不同的图片。eDuo PRO 已包含此功能。"
           }
         }
       }
@@ -17413,7 +17413,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostra l’indicatore di salvataggio"
+            "value" : "Mostra l'indicatore di salvataggio"
           }
         },
         "ja" : {
@@ -17478,7 +17478,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "並んで"
+            "value" : "左右に並べる"
           }
         },
         "ko" : {
@@ -17502,7 +17502,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "并肩而立"
+            "value" : "并排"
           }
         }
       }
@@ -17606,7 +17606,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ignorar"
+            "value" : "Saltar"
           }
         },
         "ru" : {
@@ -17745,7 +17745,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slot 1 + automatische Speicherung sind kostenlos – Mit der PRO-Version werden die Slots 2–4 freigeschaltet"
+            "value" : "Slot 1 + automatische Speicherung sind kostenlos – mit der PRO-Version werden die Slots 2–4 freigeschaltet"
           }
         },
         "es" : {
@@ -17763,13 +17763,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lo slot 1 e il salvataggio automatico sono gratuiti — La versione PRO sblocca gli slot 2-4"
+            "value" : "Lo slot 1 e il salvataggio automatico sono gratuiti — PRO sblocca gli slot 2-4"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スロット1と自動保存機能は無料で利用可能 — PROプランではスロット2～4が利用可能になります"
+            "value" : "スロット1と自動セーブは無料で利用可能 — PROプランではスロット2～4が利用可能になります"
           }
         },
         "ko" : {
@@ -17781,7 +17781,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Slot 1 + o salvamento automático são gratuitos — a versão PRO desbloqueia os slots 2 a 4"
+            "value" : "A ranhura 1 e a gravação automática são gratuitas — a versão PRO desbloqueia as ranhuras 2 a 4"
           }
         },
         "ru" : {
@@ -17793,7 +17793,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "插槽 1 + 自动保存功能免费 — PRO 版可解锁插槽 2-4"
+            "value" : "存档位 1 + 自动存档免费 — PRO 版可解锁存档位 2-4"
           }
         }
       }
@@ -17804,13 +17804,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Plätze 2–4 sind eine PRO-Funktion — Platz 1 und die automatische Speicherung sind immer kostenlos."
+            "value" : "Die Slots 2–4 sind eine PRO-Funktion – Slot 1 und die automatische Speicherung sind immer kostenlos."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los espacios 2–4 son una función PRO — el espacio 1 y el autoguardado son siempre gratis."
+            "value" : "Las ranuras 2–4 son una función PRO — la ranura 1 y el guardado automático son siempre gratis."
           }
         },
         "fr" : {
@@ -17840,7 +17840,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "As posições 2–4 são uma função PRO — a posição 1 e o guardar automático são sempre gratuitos."
+            "value" : "As ranhuras 2–4 são uma função PRO — a ranhura 1 e a gravação automática são sempre gratuitas."
           }
         },
         "ru" : {
@@ -17893,7 +17893,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "부드러운"
+            "value" : "부드럽게"
           }
         },
         "pt-PT" : {
@@ -17911,7 +17911,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "流畅"
+            "value" : "平滑"
           }
         }
       }
@@ -17934,7 +17934,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisse et Net sont toujours gratuits. Passez PRO pour débloquer le filtre Lignes de balayage."
+            "value" : "Lisse et Net sont toujours gratuits. Passez à PRO pour débloquer le filtre Lignes de balayage."
           }
         },
         "it" : {
@@ -17946,13 +17946,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth と Crisp は常に無料です。Scanlines フィルターは PRO で解放できます。"
+            "value" : "「滑らか」と「くっきり」は常に無料です。「走査線」フィルターは PRO で解放できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth와 Crisp는 항상 무료입니다. PRO로 Scanlines 필터를 잠금 해제하세요."
+            "value" : "‘부드럽게’와 ‘선명하게’는 항상 무료입니다. PRO로 ‘스캔라인’ 필터를 잠금 해제하세요."
           }
         },
         "pt-PT" : {
@@ -17964,13 +17964,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth и Crisp всегда бесплатны. Оформите PRO, чтобы открыть фильтр Scanlines."
+            "value" : "Плавный и Чёткий всегда бесплатны. Оформите PRO, чтобы открыть фильтр «Скан-линии»."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth 与 Crisp 始终免费。升级 PRO 即可解锁 Scanlines 滤镜。"
+            "value" : "“平滑”与“锐利”始终免费。升级 PRO 即可解锁“扫描线”滤镜。"
           }
         }
       }
@@ -17980,7 +17980,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Glatt und Scharf sind immer kostenlos; Scanlinien ist eine PRO-Funktion. Dies ist der Standard für Spiele ohne eigenen Filter — im Spiel jederzeit über das Pausenmenü änderbar."
+            "value" : "Glatt und Scharf sind immer kostenlos; Scanlinien sind eine PRO-Funktion. Dies ist der Standard für Spiele ohne eigenen Filter – im Spiel jederzeit über das Pausenmenü änderbar."
           }
         },
         "es" : {
@@ -18004,13 +18004,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth と Crisp は常に無料、Scanlines は PRO 機能です。フィルター未設定のゲームの既定値で、ゲーム中でもポーズメニューからいつでも変更できます。"
+            "value" : "「滑らか」と「くっきり」は常に無料、「走査線」は PRO 機能です。フィルター未設定のゲームの既定値で、ゲーム中でもポーズメニューからいつでも変更できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth와 Crisp는 항상 무료이며 Scanlines는 PRO 기능입니다. 자체 필터가 없는 게임의 기본값이며, 게임 중 일시정지 메뉴에서 언제든 변경할 수 있습니다."
+            "value" : "‘부드럽게’와 ‘선명하게’는 항상 무료이며 ‘스캔라인’은 PRO 기능입니다. 자체 필터가 없는 게임의 기본값이며, 게임 중 일시정지 메뉴에서 언제든 변경할 수 있습니다."
           }
         },
         "pt-PT" : {
@@ -18022,13 +18022,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth и Crisp всегда бесплатны; Scanlines — функция PRO. Это значение по умолчанию для игр без собственного фильтра — можно сменить прямо в игре через меню паузы."
+            "value" : "Плавный и Чёткий всегда бесплатны; «Скан-линии» — функция PRO. Это значение по умолчанию для игр без собственного фильтра — можно сменить прямо в игре через меню паузы."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Smooth 与 Crisp 始终免费；Scanlines 为 PRO 功能。这是无自定义滤镜游戏的默认值——游戏中可随时在暂停菜单更改。"
+            "value" : "“平滑”与“锐利”始终免费；“扫描线”为 PRO 功能。这是无自定义滤镜游戏的默认值——游戏中可随时在暂停菜单更改。"
           }
         }
       }
@@ -18263,7 +18263,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将 3D 渲染分摊到设备的多个 CPU 核心上，而不是只用一个。建议保持开启——它能大幅提升 3D 游戏的速度，且没有任何代价。仅当某款游戏出现画面错乱时才将其关闭。该设置将在您下次启动游戏时生效。"
+            "value" : "将 3D 渲染分摊到设备的多个 CPU 核心上，而不是只用一个。建议保持开启——它能大幅提升 3D 游戏的速度，且没有任何代价。仅当某款游戏出现画面错乱时才将其关闭。该设置将在你下次启动游戏时生效。"
           }
         }
       }
@@ -18292,7 +18292,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impila i due schermi, mettili fianco a fianco o concentrati su uno solo — cambi quando vuoi."
+            "value" : "Impila i due schermi, mettili fianco a fianco o concentrati su uno solo — cambia quando vuoi."
           }
         },
         "ja" : {
@@ -18357,7 +18357,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "積み重ねられた"
+            "value" : "上下に重ねる"
           }
         },
         "ko" : {
@@ -18375,7 +18375,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сложенные"
+            "value" : "Друг над другом"
           }
         },
         "zh-Hans" : {
@@ -18492,7 +18492,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Начать бесплатную пробную версию"
+            "value" : "Начать пробный период"
           }
         },
         "zh-Hans" : {
@@ -18690,7 +18690,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Amplía cada pantalla para que ocupe por completo el área que se le ha asignado, en lugar de mantener la relación de aspecto original de 4:3. El cambio se aplica de forma inmediata, en cualquier modo de diseño."
+            "value" : "Amplía cada pantalla para que ocupe por completo el área que se le ha asignado, en lugar de mantener la relación de aspecto original de 4:3. El cambio se aplica de forma inmediata, en cualquier modo de disposición."
           }
         },
         "fr" : {
@@ -18702,7 +18702,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allarga lo schermo di ogni in modo da riempire completamente l'area assegnata, invece di mantenere il formato originale 4:3. L'effetto è immediato, in ogni modalità di layout."
+            "value" : "Allarga ogni schermo in modo da riempire completamente l'area assegnata, invece di mantenere il formato originale 4:3. L'effetto è immediato, in ogni modalità di layout."
           }
         },
         "ja" : {
@@ -18726,7 +18726,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Растягивает каждый экран так, чтобы он полностью заполнял отведенную ему область, вместо того чтобы сохранять исходное соотношение сторон 4:3. Вступает в силу немедленно в любом режиме макета."
+            "value" : "Растягивает каждый экран так, чтобы он полностью заполнял отведенную ему область, вместо того чтобы сохранять исходное соотношение сторон 4:3. Вступает в силу немедленно в любом режиме расположения."
           }
         },
         "zh-Hans" : {
@@ -18773,7 +18773,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "강한"
+            "value" : "강하게"
           }
         },
         "pt-PT" : {
@@ -18949,25 +18949,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "화면 전환"
+            "value" : "화면 교체"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alternar ecrãs"
+            "value" : "Trocar ecrãs"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переключение экранов"
+            "value" : "Поменять экраны местами"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "切换屏幕"
+            "value" : "交换屏幕"
           }
         }
       }
@@ -19154,7 +19154,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TV verbunden — hier wird der Touchscreen angezeigt"
+            "value" : "TV verbunden – hier wird der Touchscreen angezeigt"
           }
         },
         "es" : {
@@ -19276,7 +19276,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca una fila de las que aparecen a continuación y, a continuación, pulsa el botón que quieras asignar."
+            "value" : "Toca una fila de la lista y, a continuación, pulsa el botón que quieras asignar."
           }
         },
         "fr" : {
@@ -19318,7 +19318,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击下方的一行，然后点击要分配的按钮。"
+            "value" : "点击下方的一行，然后按下要分配的按键。"
           }
         }
       }
@@ -19334,13 +19334,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca una fila y, a continuación, pulsa el botón del mando con el que quieras activarla. El pad direccional, el joystick izquierdo y el botón de menú del sistema siempre controlan el movimiento y la pausa, y no se pueden reasignar."
+            "value" : "Toca una fila y, a continuación, pulsa el botón del mando con el que quieras activarla. La cruceta, el joystick izquierdo y el botón de menú del sistema siempre controlan el movimiento y la pausa, y no se pueden reasignar."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appuyez sur une ligne, puis sur le bouton de la manette que vous souhaitez utiliser pour l'activer. Le pavé directionnel, le joystick gauche et le bouton Menu du système contrôlent toujours le déplacement et la pause ; ils ne peuvent pas être réattribués."
+            "value" : "Appuyez sur une ligne, puis sur le bouton de la manette que vous souhaitez utiliser pour l'activer. La croix directionnelle, le joystick gauche et le bouton Menu du système contrôlent toujours le déplacement et la pause ; ils ne peuvent pas être réattribués."
           }
         },
         "it" : {
@@ -19352,13 +19352,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "行をタップし、その操作を実行したいコントローラーのボタンを押してください。Dパッド、左スティック、およびシステムメニューボタンは、常に移動と一時停止を制御するため、割り当てを変更することはできません。"
+            "value" : "行をタップし、その操作を実行したいコントローラーのボタンを押してください。十字キー、左スティック、およびシステムメニューボタンは、常に移動と一時停止を制御するため、割り当てを変更することはできません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "행 하나를 탭한 다음, 해당 기능을 실행할 컨트롤러 버튼을 누르세요. D-패드, 왼쪽 스틱, 시스템 메뉴 버튼은 항상 이동과 일시 정지 기능을 제어하며, 이 버튼들의 기능을 재할당할 수 없습니다."
+            "value" : "행 하나를 탭한 다음, 해당 기능을 실행할 컨트롤러 버튼을 누르세요. 방향키, 왼쪽 스틱, 시스템 메뉴 버튼은 항상 이동과 일시 정지 기능을 제어하며, 이 버튼들의 기능을 재할당할 수 없습니다."
           }
         },
         "pt-PT" : {
@@ -19376,7 +19376,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击一行，然后按下要用于触发该行的控制器按钮。方向键、左摇杆和系统菜单按钮始终用于控制移动和暂停，无法重新分配功能。"
+            "value" : "点击一行，然后按下要用于触发该行的手柄按钮。方向键、左摇杆和系统菜单按钮始终用于控制移动和暂停，无法重新分配功能。"
           }
         }
       }
@@ -19458,7 +19458,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appuie sur ⏸ pour mettre en pause · enregistrer · afficher les astuces"
+            "value" : "Appuyez sur ⏸ pour mettre en pause · enregistrer · codes de triche"
           }
         },
         "it" : {
@@ -19494,7 +19494,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击 ⏸ 可暂停 · 保存 · 查看秘籍"
+            "value" : "点击 ⏸ 可暂停 · 保存 · 使用作弊码"
           }
         }
       }
@@ -19540,7 +19540,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Termos de Utilização"
+            "value" : "Termos de utilização"
           }
         },
         "ru" : {
@@ -19670,7 +19670,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "感谢您的支持！\n尽情享受完整的体验吧。"
+            "value" : "感谢你的支持！\n尽情享受完整的体验吧。"
           }
         }
       }
@@ -19681,25 +19681,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Header ist unvollständig."
+            "value" : "Der ROM-Header ist unvollständig."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La cabecera está incompleta."
+            "value" : "La cabecera de la ROM está incompleta."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'en-tête est incomplet."
+            "value" : "L'en-tête de la ROM est incomplet."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'intestazione è incompleta."
+            "value" : "L'intestazione della ROM è incompleta."
           }
         },
         "ja" : {
@@ -19711,25 +19711,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "헤더가 불완전합니다."
+            "value" : "ROM 헤더가 불완전합니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O cabeçalho está incompleto."
+            "value" : "O cabeçalho da ROM está incompleto."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Заголовок неполный."
+            "value" : "Заголовок ROM неполный."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文件头不完整。"
+            "value" : "ROM 文件头不完整。"
           }
         }
       }
@@ -19770,7 +19770,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "앱 도큐멘트 디렉터리를 사용할 수 없습니다."
+            "value" : "앱 문서 디렉터리를 사용할 수 없습니다."
           }
         },
         "pt-PT" : {
@@ -19916,13 +19916,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Spiel wird von vorne gestartet. Die automatische Speicherung bleibt erhalten, aber der Spielfortschritt seit deinem letzten Speicherstand geht verloren."
+            "value" : "Das Spiel wird von vorne gestartet. Die automatische Speicherung bleibt erhalten, aber der Spielfortschritt seit deinem letzten Spielstand geht verloren."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La partida se reiniciará desde el principio. Se conservará una copia de seguridad automática, pero se perderá el progreso realizado desde la última vez que guardaste la partida."
+            "value" : "La partida se reiniciará desde el principio. Se conservará un guardado automático, pero se perderá el progreso desde tu último estado guardado."
           }
         },
         "fr" : {
@@ -19940,7 +19940,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームは最初から再開されます。自動セーブデータは保持されますが、前回のセーブ状態以降の進行状況は失われます。"
+            "value" : "ゲームは最初から再開されます。自動セーブデータは保持されますが、前回のセーブステート以降の進行状況は失われます。"
           }
         },
         "ko" : {
@@ -19952,13 +19952,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O jogo vai recomeçar do início. É mantida uma gravação automática, mas o progresso alcançado desde a última gravação será perdido."
+            "value" : "O jogo vai recomeçar do início. É mantida uma gravação automática, mas o progresso alcançado desde o último estado guardado será perdido."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Игра начнётся с самого начала. Автосохранение останется, но прогресс, достигнутый с момента последнего сохранения, будет утрачен."
+            "value" : "Игра начнётся с самого начала. Автосохранение останется, но прогресс с момента последнего сохранённого состояния будет утрачен."
           }
         },
         "zh-Hans" : {
@@ -20045,7 +20045,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L’état sauvegardé présent dans cet emplacement sera remplacé. La sauvegarde du jeu lui-même n’est pas touchée."
+            "value" : "L’état de sauvegarde présent dans cet emplacement sera remplacé. Le fichier de sauvegarde du jeu lui-même n’est pas touché."
           }
         },
         "it" : {
@@ -20069,13 +20069,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O estado guardado que está nesta ranhura será substituído. O ficheiro de jogo guardado não é afetado."
+            "value" : "O estado guardado que está nesta ranhura será substituído. O ficheiro de gravação do jogo não é afetado."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохранение в этом слоте будет заменено. Собственное сохранение игры не затрагивается."
+            "value" : "Сохранённое состояние в этом слоте будет заменено. Файл сохранения самой игры не затрагивается."
           }
         },
         "zh-Hans" : {
@@ -20209,25 +20209,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das ultimative Erlebnis"
+            "value" : "Das ultimative Dual-Screen-Erlebnis"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La experiencia definitiva"
+            "value" : "La experiencia definitiva de doble pantalla"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'expérience ultime"
+            "value" : "L'expérience double écran ultime"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'esperienza definitiva"
+            "value" : "L'esperienza definitiva a doppio schermo"
           }
         },
         "ja" : {
@@ -20239,19 +20239,19 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "최고의 경험"
+            "value" : "최고의 듀얼 스크린 경험"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A experiência definitiva"
+            "value" : "A experiência definitiva de dois ecrãs"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Лучший опыт"
+            "value" : "Идеальный опыт игры на двух экранах"
           }
         },
         "zh-Hans" : {
@@ -20273,19 +20273,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estos son los ajustes predeterminados que se utilizarán la próxima vez que abras un juego que aún no tenga su propia configuración. Siempre puedes cambiar la configuración dentro del juego desde el menú de pausa o mediante el botón de configuración del HUD; eDuo recuerda tu elección para cada juego."
+            "value" : "Estos son los ajustes predeterminados que se utilizarán la próxima vez que abras un juego que aún no tenga su propia disposición. Siempre puedes cambiar la disposición dentro del juego desde el menú de pausa o con el botón Diseño del HUD; eDuo recuerda tu elección para cada juego."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce sont les paramètres par défaut qui seront utilisés la prochaine fois que vous lancerez un jeu qui ne dispose pas encore de sa propre configuration. Vous pouvez à tout moment modifier la configuration en cours de jeu depuis le menu de pause ou via le bouton de configuration du HUD — eDuo mémorise votre choix pour chaque jeu."
+            "value" : "Ce sont les paramètres par défaut qui seront utilisés la prochaine fois que vous lancerez un jeu qui n'a pas encore sa propre disposition. Vous pouvez à tout moment modifier la disposition en cours de jeu depuis le menu de pause ou via le bouton Disposition du HUD — eDuo mémorise votre choix pour chaque jeu."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Queste sono le impostazioni predefinite che verranno utilizzate la prossima volta che aprirai un gioco che non dispone ancora di un proprio layout. Puoi sempre modificare il layout durante il gioco dal menu di pausa o dal pulsante \"Layout\" dell'HUD: eDuo memorizza la tua scelta per ogni singolo gioco."
+            "value" : "Queste sono le impostazioni predefinite che verranno utilizzate la prossima volta che aprirai un gioco che non dispone ancora di un proprio layout. Puoi sempre modificare il layout durante il gioco dal menu di pausa o dal pulsante “Layout” dell'HUD: eDuo memorizza la tua scelta per ogni singolo gioco."
           }
         },
         "ja" : {
@@ -20309,13 +20309,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Эти настройки будут использоваться по умолчанию при следующем запуске игры, для которой ещё не создана собственная схема расположения элементов. Вы всегда можете изменить схему расположения элементов прямо в игре через меню паузы или с помощью кнопки «Схема расположения» на панели управления — eDuo запоминает ваш выбор для каждой игры."
+            "value" : "Эти настройки будут использоваться по умолчанию при следующем запуске игры, для которой ещё не задано собственное расположение экранов. Вы всегда можете изменить расположение прямо в игре через меню паузы или кнопкой «Макет» на экране — eDuo запоминает ваш выбор для каждой игры."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "这些是您下次打开尚未设置自定义布局的游戏时将采用的默认设置。您随时可以通过暂停菜单或HUD中的布局按钮在游戏中更改布局——eDuo会为每款游戏记住您的选择。"
+            "value" : "这些是你下次打开尚未设置自定义布局的游戏时将采用的默认设置。你随时可以通过暂停菜单或HUD中的布局按钮在游戏中更改布局——eDuo会为每款游戏记住你的选择。"
           }
         }
       }
@@ -20607,7 +20607,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法加载该文档。您也可以在 github.com/mattiaa95/eDuo 上阅读。"
+            "value" : "无法加载该文档。你也可以在 github.com/mattiaa95/eDuo 上阅读。"
           }
         }
       }
@@ -20647,7 +20647,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 파일은 라이브러리에 이미 존재합니다. 덮어쓰시겠습니까?"
+            "value" : "이 파일은 라이브러리에 이미 존재합니다. 덮어쓸까요?"
           }
         },
         "pt-PT" : {
@@ -20665,7 +20665,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "该文件已在您的库中存在。是否要替换它？"
+            "value" : "该文件已在你的游戏库中存在。是否要替换它？"
           }
         }
       }
@@ -20793,7 +20793,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Zuordnung wird für dieses Controller-Modell gespeichert und bei jeder erneuten Verbindung wiederhergestellt."
+            "value" : "Diese Belegung wird für dieses Controller-Modell gespeichert und bei jeder erneuten Verbindung wiederhergestellt."
           }
         },
         "es" : {
@@ -20805,7 +20805,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce mappage est mémorisé pour ce modèle de manette et rétabli à chaque fois que celle-ci se reconnecte."
+            "value" : "Cette attribution est mémorisée pour ce modèle de manette et rétablie à chaque fois que celle-ci se reconnecte."
           }
         },
         "it" : {
@@ -20835,13 +20835,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Это сопоставление сохраняется для данной модели контроллера и восстанавливается при каждом повторном подключении."
+            "value" : "Это назначение кнопок сохраняется для данной модели контроллера и восстанавливается при каждом повторном подключении."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "该映射会为该控制器型号保存下来，并在其重新连接时恢复。"
+            "value" : "该映射会为该手柄型号保存下来，并在其重新连接时恢复。"
           }
         }
       }
@@ -20922,7 +20922,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cet état sauvegardé sera définitivement perdu. La sauvegarde du jeu lui-même n’est pas touchée."
+            "value" : "Cet état de sauvegarde sera définitivement perdu. Le fichier de sauvegarde du jeu lui-même n’est pas touché."
           }
         },
         "it" : {
@@ -20946,13 +20946,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este estado guardado desaparece para sempre. O ficheiro de jogo guardado não é afetado."
+            "value" : "Este estado guardado desaparece para sempre. O ficheiro de gravação do jogo não é afetado."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Это сохранение исчезнет навсегда. Собственное сохранение игры не затрагивается."
+            "value" : "Это сохранённое состояние исчезнет навсегда. Файл сохранения самой игры не затрагивается."
           }
         },
         "zh-Hans" : {
@@ -21051,13 +21051,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dパッド／ジョイスティックの切り替え"
+            "value" : "十字キー／ジョイスティックの切り替え"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "D-패드/조이스틱 전환"
+            "value" : "방향키/조이스틱 전환"
           }
         },
         "pt-PT" : {
@@ -21104,13 +21104,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo schermata superiore"
+            "value" : "Solo schermo superiore"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "トップ画面のみ"
+            "value" : "上画面のみ"
           }
         },
         "ko" : {
@@ -21134,7 +21134,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅限顶部屏幕"
+            "value" : "仅显示上屏"
           }
         }
       }
@@ -21416,7 +21416,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Experimenta um título ou código de jogo diferente."
+            "value" : "Experimente um título ou código de jogo diferente."
           }
         },
         "ru" : {
@@ -21527,7 +21527,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "세이브 폴더를 만들 수 없습니다."
+            "value" : "저장 데이터 폴더를 만들 수 없습니다."
           }
         },
         "pt-PT" : {
@@ -21568,7 +21568,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible de créer le dossier des états de jeu."
+            "value" : "Impossible de créer le dossier des états de sauvegarde."
           }
         },
         "it" : {
@@ -21716,7 +21716,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Неназначенный"
+            "value" : "Не назначено"
           }
         },
         "zh-Hans" : {
@@ -21827,7 +21827,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desbloqueie todas as funcionalidades PRO"
+            "value" : "Desbloqueie todas as funções PRO"
           }
         },
         "ru" : {
@@ -22167,13 +22167,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ボタンを押したときやメニュー操作を一時停止したときに振動する。"
+            "value" : "ボタンを押したときやポーズメニューを操作したときに振動します。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "버튼을 누르거나 메뉴에서 일시 정지 작업을 수행할 때 진동이 발생합니다."
+            "value" : "버튼을 누르거나 일시 정지 메뉴를 사용할 때 진동이 발생합니다."
           }
         },
         "pt-PT" : {
@@ -22191,7 +22191,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按下按钮和执行菜单暂停操作时产生振动。"
+            "value" : "按下按钮和使用暂停菜单时产生振动。"
           }
         }
       }
@@ -22220,7 +22220,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Volume e silenzioso"
+            "value" : "Volume e silenzio"
           }
         },
         "ja" : {
@@ -22267,7 +22267,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¡Te echamos de menos! Tu suscripción ha caducado.\nVuelve y vuelve a desbloquear todo."
+            "value" : "¡Te echamos de menos! Tu suscripción ha caducado.\nVuelve y desbloquea todo de nuevo."
           }
         },
         "fr" : {
@@ -22378,55 +22378,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gewicht"
+            "value" : "Schriftstärke"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Peso"
+            "value" : "Grosor"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poids"
+            "value" : "Graisse"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Peso"
+            "value" : "Spessore"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重量"
+            "value" : "太さ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "무게"
+            "value" : "굵기"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Peso"
+            "value" : "Espessura"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вес"
+            "value" : "Толщина"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重量"
+            "value" : "字重"
           }
         }
       }
@@ -22671,31 +22671,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn diese Funktion aktiviert ist, speichert eDuo automatisch einen Schnappschuss, sobald du ein Spiel verlässt oder die App in den Hintergrund wechselt, und bietet dir an, das Spiel beim nächsten Mal von diesem Punkt aus fortzusetzen. Die Speicheranzeige zeigt in diesem Fall kurz „Automatisch gespeichert“ auf dem Bildschirm an; deaktiviere die Funktion, um unauffällig zu speichern.\n\nDies ist unabhängig vom spielinternen Speicherzustand (.sav) – dem Speichersystem des Spiels, das beim Speichern innerhalb des Spiels selbst geschrieben wird, genau wie bei einer echten Spielkassette. Speicherstände sind manuelle Momentaufnahmen, die du jederzeit über das Pausenmenü erstellen kannst und zu denen du sofort zurückkehren kannst, sogar mitten im Level; die automatische Speicherung ist lediglich ein Speicherstand, den eDuo automatisch für dich auf dem neuesten Stand hält."
+            "value" : "Wenn diese Funktion aktiviert ist, speichert eDuo automatisch einen Schnappschuss, sobald du ein Spiel verlässt oder die App in den Hintergrund wechselt, und bietet dir an, das Spiel beim nächsten Mal von diesem Punkt aus fortzusetzen. Die Speicheranzeige zeigt in diesem Fall kurz „Automatisch gespeichert“ auf dem Bildschirm an; deaktiviere die Funktion, um unauffällig zu speichern.\n\nDies ist unabhängig vom Batteriespeicher (.sav) des Spiels – dem spieleigenen Speichersystem, das beim Speichern im Spiel selbst geschrieben wird, genau wie bei einem echten Modul. Spielstände sind manuelle Momentaufnahmen, die du jederzeit über das Pausenmenü erstellen kannst und zu denen du sofort zurückkehren kannst, sogar mitten im Level; die automatische Speicherung ist lediglich ein Spielstand, den eDuo automatisch für dich auf dem neuesten Stand hält."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cuando está activado, eDuo guarda automáticamente una instantánea cada vez que sales de un juego o la aplicación pasa a segundo plano, y te ofrece la opción de reanudar desde ese punto la próxima vez. El indicador de guardado muestra brevemente «Guardado automáticamente» en pantalla cada vez que esto ocurre; desactívalo para guardar de forma silenciosa.\n\nEsto es independiente del archivo de guardado del juego (.sav), es decir, el sistema de guardado integrado en el juego, que se graba cuando guardas desde dentro del propio juego, exactamente igual que en un cartucho real. Los estados de guardado son instantáneas manuales que puedes crear en cualquier momento desde el menú de pausa y a las que puedes volver al instante, incluso en mitad de un nivel; el guardado automático es simplemente un estado de guardado que eDuo mantiene actualizado automáticamente por ti."
+            "value" : "Cuando está activado, eDuo guarda automáticamente una instantánea cada vez que sales de un juego o la aplicación pasa a segundo plano, y te ofrece la opción de reanudar desde ese punto la próxima vez. El indicador de guardado muestra brevemente «Guardado automáticamente» en pantalla cada vez que esto ocurre; desactívalo para guardar de forma silenciosa.\n\nEsto es independiente del archivo de guardado del juego (.sav), es decir, el sistema de guardado integrado en el juego, que se graba cuando guardas desde dentro del propio juego, exactamente igual que en un cartucho real. Los estados guardados son instantáneas manuales que puedes crear en cualquier momento desde el menú de pausa y a las que puedes volver al instante, incluso en mitad de un nivel; el guardado automático es simplemente un estado guardado que eDuo mantiene actualizado automáticamente por ti."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lorsqu'il est activé, eDuo enregistre automatiquement un instantané chaque fois que vous quittez un jeu ou que l'application passe en arrière-plan, et vous propose de reprendre à partir de cet instantané la prochaine fois. L'indicateur de sauvegarde affiche brièvement « Sauvegarde automatique » à l'écran chaque fois que cela se produit ; désactivez-le pour que la sauvegarde s'effectue en arrière-plan.\n\nCette fonctionnalité est distincte de la sauvegarde sur batterie (.sav) propre au jeu — le système de sauvegarde intégré au jeu, qui s'enregistre lorsque vous sauvegardez depuis le jeu lui-même, exactement comme sur une vraie cartouche. Les états de sauvegarde sont des instantanés manuels que vous créez à tout moment depuis le menu de pause et auxquels vous pouvez revenir instantanément, même en cours de niveau ; la sauvegarde automatique n’est qu’un état de sauvegarde parmi d’autres qu’eDuo met à jour automatiquement pour vous."
+            "value" : "Lorsqu'il est activé, eDuo enregistre automatiquement un instantané chaque fois que vous quittez un jeu ou que l'application passe en arrière-plan, et vous propose de reprendre à partir de cet instantané la prochaine fois. L'indicateur de sauvegarde affiche brièvement « Enregistré automatiquement » à l'écran chaque fois que cela se produit ; désactivez-le pour sauvegarder en silence.\n\nCette fonctionnalité est distincte de la sauvegarde sur batterie (.sav) propre au jeu — le système de sauvegarde intégré au jeu, qui s'enregistre lorsque vous sauvegardez depuis le jeu lui-même, exactement comme sur une vraie cartouche. Les états de sauvegarde sont des instantanés manuels que vous créez à tout moment depuis le menu de pause et auxquels vous pouvez revenir instantanément, même en cours de niveau ; la sauvegarde automatique n’est qu’un état de sauvegarde parmi d’autres qu’eDuo met à jour automatiquement pour vous."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando è attivo, eDuo salva automaticamente un’istantanea ogni volta che esci da un gioco o l’app passa in secondo piano, e ti propone di riprendere da lì la prossima volta. L’indicatore di salvataggio mostra brevemente la scritta “Salvataggio automatico” sullo schermo ogni volta che ciò accade; disattivalo per salvare in modo silenzioso.\n\nQuesto è distinto dal salvataggio su batteria (.sav) proprio del gioco — il sistema di salvataggio integrato nel gioco, che viene scritto quando si salva all’interno del gioco stesso, esattamente come su una vera cartuccia. Gli stati di salvataggio sono istantanee manuali che puoi creare in qualsiasi momento dal menu di pausa e a cui puoi tornare all’istante, anche nel bel mezzo di un livello; il salvataggio automatico è semplicemente uno stato di salvataggio che eDuo mantiene aggiornato automaticamente per te."
+            "value" : "Quando è attivo, eDuo salva automaticamente un'istantanea ogni volta che esci da un gioco o l'app passa in secondo piano, e ti propone di riprendere da lì la prossima volta. L'indicatore di salvataggio mostra brevemente la scritta “Salvataggio automatico” sullo schermo ogni volta che ciò accade; disattivalo per salvare in modo silenzioso.\n\nQuesto è distinto dal salvataggio su batteria (.sav) proprio del gioco — il sistema di salvataggio integrato nel gioco, che viene scritto quando salvi all'interno del gioco stesso, esattamente come su una vera cartuccia. Gli stati di salvataggio sono istantanee manuali che puoi creare in qualsiasi momento dal menu di pausa e a cui puoi tornare all'istante, anche nel bel mezzo di un livello; il salvataggio automatico è semplicemente uno stato di salvataggio che eDuo mantiene aggiornato automaticamente per te."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "この機能がオンになっていると、eDuoはゲームを終了したりアプリがバックグラウンドに移行したりするたびに自動的にスナップショットを保存し、次回その時点から再開するよう提案します。その際、画面に「自動保存」という表示が一時的に表示されます。保存を通知せずに実行したい場合は、この機能をオフにしてください。\n\nこれは、ゲーム独自のバッテリーセーブ（.sav）とは別物です。バッテリーセーブとは、ゲーム内でセーブ操作を行った際に記録される、本物のカートリッジと全く同じ仕組みのセーブシステムのことです。 セーブステートは、ポーズメニューからいつでも手動で作成できるスナップショットであり、ステージの途中であっても即座にその状態に戻ることができます。自動保存は、eDuoが自動的に最新の状態に保ってくれるセーブステートの一つに過ぎません。"
+            "value" : "この機能がオンになっていると、eDuoはゲームを終了したりアプリがバックグラウンドに移行したりするたびに自動的にスナップショットを保存し、次回その時点から再開するよう提案します。その際、画面に「自動セーブしました」という表示が一時的に表示されます。保存を通知せずに実行したい場合は、この機能をオフにしてください。\n\nこれは、ゲーム独自のバッテリーセーブ（.sav）とは別物です。バッテリーセーブとは、ゲーム内でセーブ操作を行った際に記録される、本物のカートリッジと全く同じ仕組みのセーブシステムのことです。セーブステートは、ポーズメニューからいつでも手動で作成できるスナップショットであり、ステージの途中であっても即座にその状態に戻ることができます。自動セーブは、eDuoが自動的に最新の状態に保ってくれるセーブステートの一つに過ぎません。"
           }
         },
         "ko" : {
@@ -22707,19 +22707,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando está ativado, o eDuo guarda automaticamente um instantâneo sempre que sair de um jogo ou a aplicação passar para segundo plano, e oferece a possibilidade de retomar a partir desse ponto na próxima vez. O indicador de gravação mostra brevemente «Guardado automaticamente» no ecrã sempre que isso acontece; desative-o para guardar em silêncio.\n\nIsto é diferente do próprio ficheiro de gravação do jogo (.sav) — o sistema de gravação do jogo, que é gravado quando guarda dentro do próprio jogo, exatamente como num cartucho real. Os estados de gravação são instantâneos manuais que cria a qualquer momento a partir do menu de pausa e aos quais pode regressar instantaneamente, mesmo a meio de um nível; a gravação automática é apenas um estado de gravação que o eDuo mantém atualizado automaticamente por si."
+            "value" : "Quando está ativado, o eDuo guarda automaticamente um instantâneo sempre que sair de um jogo ou a aplicação passar para segundo plano, e oferece a possibilidade de retomar a partir desse ponto na próxima vez. O indicador de gravação mostra brevemente «Guardado automaticamente» no ecrã sempre que isso acontece; desative-o para guardar em silêncio.\n\nIsto é diferente do próprio ficheiro de gravação do jogo (.sav) — o sistema de gravação do jogo, que é gravado quando guarda dentro do próprio jogo, exatamente como num cartucho real. Os estados guardados são instantâneos manuais que cria a qualquer momento a partir do menu de pausa e aos quais pode regressar instantaneamente, mesmo a meio de um nível; a gravação automática é apenas um estado guardado que o eDuo mantém atualizado automaticamente por si."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда функция eDuo включена, она автоматически сохраняет моментальный снимок при выходе из игры или переходе приложения в фоновый режим и предлагает возобновить игру с этого момента в следующий раз. При каждом таком событии на экране на короткое время появляется надпись «Автосохранено»; отключите эту функцию, чтобы сохранение происходило незаметно.\n\nЭто отличается от собственного файла сохранения игры (.sav) — встроенной системы сохранения, которая записывается при сохранении непосредственно в самой игре, точно так же, как на настоящем картридже. Состояния сохранения — это ручные снимки, которые вы можете создавать в любое время из меню паузы и к которым можно мгновенно вернуться даже посреди уровня; автосохранение — это всего лишь одно из состояний сохранения, которое eDuo автоматически обновляет для вас."
+            "value" : "Когда функция включена, eDuo автоматически сохраняет моментальный снимок при выходе из игры или переходе приложения в фоновый режим и предлагает возобновить игру с этого момента в следующий раз. При каждом таком событии на экране на короткое время появляется надпись «Сохранено автоматически»; отключите эту функцию, чтобы сохранение происходило незаметно.\n\nЭто отличается от собственного файла сохранения игры (.sav) — встроенной системы сохранения, которая записывается при сохранении непосредственно в самой игре, точно так же, как на настоящем картридже. Сохранённые состояния — это ручные снимки, которые вы можете создавать в любое время из меню паузы и к которым можно мгновенно вернуться даже посреди уровня; автосохранение — это всего лишь одно из сохранённых состояний, которое eDuo автоматически обновляет для вас."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用该功能后，每当您退出游戏或应用进入后台时，eDuo 会自动保存一个快照，并会在下次使用时提示您从中继续。每次发生这种情况时，屏幕上都会短暂显示“已自动保存”的提示；若需静默保存，请关闭此功能。\n\n这与游戏自身的电池存档（.sav）不同——后者是游戏内的存档系统，当您在游戏内进行保存时生成，与真实的卡带完全相同。 保存状态是您随时可通过暂停菜单手动创建的快照，即使在关卡进行中也能立即返回；而自动保存只是 eDuo 为您自动保持最新状态的一个保存状态。"
+            "value" : "启用该功能后，每当你退出游戏或应用进入后台时，eDuo 会自动保存一个快照，并会在下次使用时提示你从中继续。每次发生这种情况时，屏幕上都会短暂显示“已自动存档”的提示；若需静默保存，请关闭此功能。\n\n这与游戏自身的电池存档（.sav）不同——后者是游戏内的存档系统，当你在游戏内进行保存时生成，与真实的卡带完全相同。保存状态是你随时可通过暂停菜单手动创建的快照，即使在关卡进行中也能立即返回；而自动存档只是 eDuo 为你自动保持最新状态的一个保存状态。"
           }
         }
       }
@@ -22729,7 +22729,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn eDuo aktiviert ist, schaltet es sich stumm, sobald Musik oder der Ton einer anderen App abgespielt wird, anstatt sich damit zu vermischen. Dies tritt sofort in Kraft, auch in einem laufenden Spiel. Es weicht dem Mikrofon zurück, sobald ein Spiel aktiv auf Töne achtet."
+            "value" : "Wenn eDuo aktiviert ist, schaltet es sich stumm, sobald Musik oder der Ton einer anderen App abgespielt wird, anstatt sich damit zu vermischen. Dies tritt sofort in Kraft, auch in einem laufenden Spiel. Es lässt dem Mikrofon den Vortritt, sobald ein Spiel aktiv zuhört."
           }
         },
         "es" : {
@@ -22747,7 +22747,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando è attivo, eDuo si disattiva automaticamente durante la riproduzione di musica o dell'audio di un'altra app, invece di sovrapporsi ad esso. L'effetto è immediato, anche durante una partita in corso. Cede il posto al microfono ogni volta che un gioco è in fase di ascolto attivo."
+            "value" : "Quando è attivo, eDuo disattiva il proprio audio durante la riproduzione di musica o dell'audio di un'altra app, invece di sovrapporsi ad esso. L'effetto è immediato, anche durante una partita in corso. Cede il posto al microfono ogni volta che un gioco è in fase di ascolto attivo."
           }
         },
         "ja" : {
@@ -22771,7 +22771,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда функция eDuo включена, она отключает собственный звук во время воспроизведения музыки или звука из другого приложения, вместо того чтобы смешиваться с ним. Эффект вступает в силу немедленно, даже в запущенной игре. Функция уступает приоритет микрофону всякий раз, когда игра активно прослушивает звук."
+            "value" : "Когда функция включена, eDuo отключает свой звук во время воспроизведения музыки или звука из другого приложения, вместо того чтобы смешиваться с ним. Эффект вступает в силу немедленно, даже в запущенной игре. Функция уступает приоритет микрофону всякий раз, когда игра активно прослушивает звук."
           }
         },
         "zh-Hans" : {
@@ -22787,7 +22787,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn diese Option aktiviert ist, wird ein Spiel mit automatischer Speicherung direkt nach dem Start automatisch geladen, sodass du genau dort weitermachst, wo du aufgehört hast. Deaktiviere diese Option, um das Spiel immer neu zu starten und Speicherstände stattdessen manuell über das Pausenmenü zu laden."
+            "value" : "Wenn diese Option aktiviert ist, wird ein Spiel mit automatischer Speicherung direkt nach dem Start automatisch geladen, sodass du genau dort weitermachst, wo du aufgehört hast. Deaktiviere diese Option, um das Spiel immer neu zu starten und Spielstände stattdessen manuell über das Pausenmenü zu laden."
           }
         },
         "es" : {
@@ -22799,7 +22799,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lorsque cette option est activée, le fait d'ouvrir une partie avec une sauvegarde automatique la charge automatiquement dès le démarrage, ce qui vous permet de reprendre là où vous vous étiez arrêté. Désactivez cette option pour démarrer à chaque fois à zéro et charger manuellement vos sauvegardes depuis le menu de pause."
+            "value" : "Lorsque cette option est activée, le fait d'ouvrir une partie avec une sauvegarde automatique la charge automatiquement dès le démarrage, ce qui vous permet de reprendre là où vous vous étiez arrêté. Désactivez cette option pour démarrer à chaque fois à zéro et charger manuellement vos états de sauvegarde depuis le menu de pause."
           }
         },
         "it" : {
@@ -22811,31 +22811,31 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "この機能をオンにしている場合、自動セーブが設定されたゲームを起動すると、起動直後に自動的にそのゲームが読み込まれ、中断した箇所から再開できます。常に新しい状態でゲームを起動し、セーブ状態は一時停止メニューから手動で読み込みたい場合は、この機能をオフにしてください。"
+            "value" : "この機能をオンにしている場合、自動セーブが設定されたゲームを起動すると、起動直後に自動的にそのゲームが読み込まれ、中断した箇所から再開できます。常に新しい状態でゲームを起動し、セーブステートはポーズメニューから手動で読み込みたい場合は、この機能をオフにしてください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 기능이 켜져 있으면, 자동 저장된 상태로 게임을 시작하면 부팅 직후 게임이 자동으로 로드되어 중단했던 지점부터 이어서 플레이할 수 있습니다. 항상 처음부터 시작하고 싶다면 이 기능을 끄고, 대신 일시 정지 메뉴에서 수동으로 저장 상태를 불러오세요."
+            "value" : "이 기능이 켜져 있으면, 자동 저장된 상태로 게임을 시작하면 부팅 직후 게임이 자동으로 로드되어 중단했던 지점부터 이어서 플레이할 수 있습니다. 항상 처음부터 시작하고 싶다면 이 기능을 끄고, 대신 일시 정지 메뉴에서 수동으로 세이브 스테이트를 불러오세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando esta opção está ativada, ao iniciar um jogo com um auto-salvamento, este é carregado automaticamente logo após o arranque, para que possas retomar exatamente de onde paraste. Desativa esta opção para iniciar sempre o jogo do zero e, em vez disso, carregar manualmente os estados guardados a partir do menu de pausa."
+            "value" : "Quando esta opção está ativada, ao iniciar um jogo com uma gravação automática, esta é carregada automaticamente logo após o arranque, para que retome exatamente de onde parou. Desative esta opção para iniciar sempre o jogo do zero e, em vez disso, carregar manualmente os estados guardados a partir do menu de pausa."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Если эта функция включена, при запуске игры с автосохранением она загружается автоматически сразу после запуска, и вы продолжаете игру с того места, где остановились. Отключите эту функцию, чтобы игра всегда запускалась с нуля, а состояния сохранения загружались вручную из меню паузы."
+            "value" : "Если эта функция включена, при запуске игры с автосохранением она загружается автоматически сразу после запуска, и вы продолжаете игру с того места, где остановились. Отключите эту функцию, чтобы игра всегда запускалась с нуля, а сохранённые состояния загружались вручную из меню паузы."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开启此功能后，若以自动存档状态启动游戏，系统会在启动后立即自动加载该存档，让你从上次中断的地方继续游戏。关闭此功能可确保每次启动时都是全新状态，并需通过暂停菜单手动加载存档状态。"
+            "value" : "开启此功能后，若以自动存档状态启动游戏，系统会在启动后立即自动加载该存档，让你从上次中断的地方继续游戏。关闭此功能可确保每次启动时都是全新状态，并需通过暂停菜单手动加载保存状态。"
           }
         }
       }
@@ -22863,7 +22863,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando la modalità a basso consumo di iOS è attiva, eDuo limita la velocità di emulazione a 1x — anche se si tiene premuto il tasto di avanzamento rapido — e riduce la frequenza di aggiornamento dello schermo. La console emulata non subisce rallentamenti né viene messa in pausa."
+            "value" : "Quando la modalità Risparmio energetico di iOS è attiva, eDuo limita la velocità di emulazione a 1x — anche se tieni premuto il pulsante di avanzamento rapido — e riduce la frequenza di aggiornamento dello schermo. La console emulata non subisce rallentamenti né viene messa in pausa."
           }
         },
         "ja" : {
@@ -22875,25 +22875,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iOS 저전력 모드가 켜져 있는 동안, eDuo는 ‘빠른 감기’ 버튼을 길게 누르는 경우에도 에뮬레이션 속도를 1x로 제한하며 화면의 재생 빈도를 낮춥니다. 에뮬레이션되는 콘솔 자체의 속도가 느려지거나 일시 정지되지는 않습니다."
+            "value" : "iOS 저전력 모드가 켜져 있는 동안, eDuo는 ‘빨리 감기’ 버튼을 길게 누르는 경우에도 에뮬레이션 속도를 1x로 제한하며 화면의 주사율을 낮춥니다. 에뮬레이션되는 콘솔 자체의 속도가 느려지거나 일시 정지되지는 않습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enquanto o Modo de Baixo Consumo do iOS estiver ativado, o eDuo limita a velocidade de emulação a 1x — mesmo que se mantenha premido o botão de avanço rápido — e reduz a taxa de atualização do ecrã. A própria consola emulada não fica mais lenta nem é pausada."
+            "value" : "Enquanto o modo de baixo consumo do iOS estiver ativado, o eDuo limita a velocidade de emulação a 1x — mesmo que se mantenha premido o botão de avanço rápido — e reduz a taxa de atualização do ecrã. A própria consola emulada não fica mais lenta nem é pausada."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Когда в iOS включен режим энергосбережения, eDuo ограничивает скорость эмуляции до 1x — даже при удерживании кнопки «Fast Forward» — и снижает частоту обновления экрана. Сама эмулируемая консоль при этом не замедляется и не приостанавливается."
+            "value" : "Когда в iOS включен режим энергосбережения, eDuo ограничивает скорость эмуляции до 1x — даже при удерживании кнопки «Ускорение» — и снижает частоту обновления экрана. Сама эмулируемая консоль при этом не замедляется и не приостанавливается."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当 iOS 低功耗模式开启时，eDuo 会将模拟速度限制在 1x —— 即使长按“快进”按钮也是如此 —— 并降低屏幕刷新率。被模拟的游戏机本身并不会因此变慢或暂停。"
+            "value" : "当 iOS 低电量模式开启时，eDuo 会将模拟速度限制在 1x —— 即使长按“快进”按钮也是如此 —— 并降低屏幕刷新率。被模拟的游戏机本身并不会因此变慢或暂停。"
           }
         }
       }
@@ -23238,7 +23238,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ваши-игры снова у вас в кармане."
+            "value" : "Ваши игры снова у вас в кармане."
           }
         },
         "zh-Hans" : {
@@ -23570,19 +23570,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo PROが復旧しました。お楽しみください！"
+            "value" : "eDuo PROを復元しました。お楽しみください！"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo PRO가 복구되었습니다. 즐겁게 이용하세요!"
+            "value" : "eDuo PRO가 복원되었습니다. 즐겁게 이용하세요!"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eDuo PRO foi restaurado. Divirtam-se!"
+            "value" : "O eDuo PRO foi restaurado. Divirta-se!"
           }
         },
         "ru" : {
@@ -23594,7 +23594,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo PRO 已恢复正常。尽情享受吧！"
+            "value" : "eDuo PRO 已恢复。尽情享受吧！"
           }
         }
       }
@@ -23704,7 +23704,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo — программное обеспечение с открытым кодом под лицензией GNU General Public License v3 (GPLv3). Использует ядро эмуляции melonDS, © Arisotura и команда melonDS, также GPLv3. eDuo не связан с командой melonDS или каким-либо производителем консолей."
+            "value" : "eDuo — программное обеспечение с открытым кодом под лицензией GNU General Public License v3 (GPLv3). Использует ядро эмуляции melonDS, © Arisotura и команда melonDS, также GPLv3. eDuo не связан с командой melonDS или каким-либо производителем консолей и не одобрен ими."
           }
         },
         "zh-Hans" : {
@@ -23744,7 +23744,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuoは、お客様が合法的に所有しているゲームファイルを再生します。ゲーム本体が同梱されているわけではありません。"
+            "value" : "eDuoは、お客様が合法的に所有しているゲームファイルを実行します。ゲーム本体が同梱されているわけではありません。"
           }
         },
         "ko" : {
@@ -23768,7 +23768,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo 可播放您合法拥有的游戏文件。本产品不包含任何游戏。"
+            "value" : "eDuo 可运行你合法拥有的游戏文件。本产品不包含任何游戏。"
           }
         }
       }
@@ -23837,7 +23837,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo – „%@“"
+            "value" : "eDuo – %@"
           }
         },
         "es" : {
@@ -24072,7 +24072,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "melonDS hat den Header dieser ROM abgelehnt."
+            "value" : "melonDS hat den Header dieses ROM abgelehnt."
           }
         },
         "es" : {
@@ -24423,7 +24423,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ℹ️ Über"
+            "value" : "ℹ️ Info"
           }
         },
         "es" : {
@@ -24459,13 +24459,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ℹ️ Sobre"
+            "value" : "ℹ️ Acerca de"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ℹ️ О нас"
+            "value" : "ℹ️ О программе"
           }
         },
         "zh-Hans" : {
@@ -24569,7 +24569,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎛️ 표시 필터"
+            "value" : "🎛️ 화면 필터"
           }
         },
         "pt-PT" : {
@@ -24587,7 +24587,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎛️ 显示筛选器"
+            "value" : "🎛️ 画面滤镜"
           }
         }
       }
@@ -24685,7 +24685,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎨 포인트 컬러"
+            "value" : "🎨 강조 색상"
           }
         },
         "pt-PT" : {
@@ -24703,7 +24703,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎨 点缀色"
+            "value" : "🎨 强调色"
           }
         }
       }
@@ -24743,7 +24743,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎮 화면 내 컨트롤러"
+            "value" : "🎮 화면 컨트롤러"
           }
         },
         "pt-PT" : {
@@ -24761,7 +24761,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🎮 屏幕控制器"
+            "value" : "🎮 屏幕手柄"
           }
         }
       }
@@ -24899,7 +24899,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💾 Enregistrement"
+            "value" : "💾 Sauvegardes"
           }
         },
         "it" : {
@@ -24911,7 +24911,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💾 保存"
+            "value" : "💾 セーブ"
           }
         },
         "ko" : {
@@ -24935,7 +24935,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "💾 保存"
+            "value" : "💾 存档"
           }
         }
       }
@@ -24945,7 +24945,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📺 Standard-Bildschirmaufteilung"
+            "value" : "📺 Standard-Bildschirmlayout"
           }
         },
         "es" : {
@@ -24987,7 +24987,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📺 Стандартная компоновка экрана"
+            "value" : "📺 Расположение экранов по умолчанию"
           }
         },
         "zh-Hans" : {
@@ -25265,7 +25265,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@에 지정된 버튼이 없어요."
+            "value" : "%@에 지정된 버튼이 없습니다."
           }
         },
         "pt-PT" : {
@@ -25323,7 +25323,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@: %2$@"
+            "value" : "%1$@의 기능: %2$@"
           }
         },
         "pt-PT" : {
@@ -25335,7 +25335,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ теперь: %@"
+            "value" : "%@ теперь выполняет: %@"
           }
         },
         "zh-Hans" : {
@@ -25351,7 +25351,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%d Drücke/s"
+            "value" : "%d Tastendrücke/s"
           }
         },
         "es" : {
@@ -25485,7 +25485,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Un pulsante a fuoco automatico si preme da solo in continuazione. Non è avanti veloce: il gioco mantiene la velocità normale."
+            "value" : "Un pulsante a fuoco automatico si preme da solo in continuazione. Non è l'avanzamento rapido: il gioco mantiene la velocità normale."
           }
         },
         "ja" : {
@@ -25497,7 +25497,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "연사 버튼은 스스로 계속 반복해서 눌러 주는 버튼이에요. 빠르게 감기와 달리 게임 속도는 그대로입니다."
+            "value" : "연사 버튼은 스스로 계속 반복해서 눌러 주는 버튼입니다. 빨리 감기와 달리 게임 속도는 그대로입니다."
           }
         },
         "pt-PT" : {
@@ -25509,7 +25509,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Турбо-кнопка сама нажимается снова и снова. Это не перемотка вперёд: игра идёт с обычной скоростью."
+            "value" : "Турбо-кнопка сама нажимается снова и снова. Это не ускорение: игра идёт с обычной скоростью."
           }
         },
         "zh-Hans" : {
@@ -25589,7 +25589,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuración de botones"
+            "value" : "Asignación de botones"
           }
         },
         "fr" : {
@@ -25625,7 +25625,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Настройка кнопок"
+            "value" : "Назначение кнопок"
           }
         },
         "zh-Hans" : {
@@ -25671,7 +25671,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bluetooth 또는 USB-C로 연결하세요. 지금 설정해 두면 연결될 때 적용돼요."
+            "value" : "Bluetooth 또는 USB-C로 연결하세요. 지금 설정해 두면 연결될 때 적용됩니다."
           }
         },
         "pt-PT" : {
@@ -25689,7 +25689,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过 Bluetooth 或 USB-C 连接。现在就可以设置，连接后自动生效。"
+            "value" : "通过蓝牙或 USB-C 连接。现在就可以设置，连接后自动生效。"
           }
         }
       }
@@ -26065,7 +26065,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avanti veloce (tieni premuto)"
+            "value" : "Avanzamento rapido (tieni premuto)"
           }
         },
         "ja" : {
@@ -26077,7 +26077,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "빠르게 감기 (누르는 동안)"
+            "value" : "빨리 감기 (누르는 동안)"
           }
         },
         "pt-PT" : {
@@ -26089,7 +26089,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перемотка вперёд (удержание)"
+            "value" : "Ускорение (удержание)"
           }
         },
         "zh-Hans" : {
@@ -26123,7 +26123,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avanti veloce (on/off)"
+            "value" : "Avanzamento rapido (on/off)"
           }
         },
         "ja" : {
@@ -26135,7 +26135,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "빠르게 감기 (켜기/끄기)"
+            "value" : "빨리 감기 (켜기/끄기)"
           }
         },
         "pt-PT" : {
@@ -26147,7 +26147,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перемотка вперёд (вкл/выкл)"
+            "value" : "Ускорение (вкл/выкл)"
           }
         },
         "zh-Hans" : {
@@ -26169,7 +26169,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Borra la configuración guardada de todos los mandos que has conectado."
+            "value" : "Borra la asignación guardada de todos los mandos que has conectado."
           }
         },
         "fr" : {
@@ -26309,7 +26309,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "잠깐 길게 누르면 일시정지 메뉴가 그대로 열려요."
+            "value" : "잠깐 길게 누르면 일시정지 메뉴가 그대로 열립니다."
           }
         },
         "pt-PT" : {
@@ -26367,7 +26367,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "누르고 있으면 빨라져요. 짧게 탭하면 다음 속도로 바뀝니다."
+            "value" : "누르고 있으면 빨라집니다. 짧게 탭하면 다음 속도로 바뀝니다."
           }
         },
         "pt-PT" : {
@@ -26495,7 +26495,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вернись на ~10 секунд назад — исправ эту ошибку"
+            "value" : "Вернитесь на ~10 секунд назад — исправьте ошибку"
           }
         },
         "zh-Hans" : {
@@ -26541,7 +26541,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "매핑을 기본값으로 되돌렸어요"
+            "value" : "매핑을 기본값으로 되돌렸습니다"
           }
         },
         "pt-PT" : {
@@ -26553,7 +26553,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Настройки кнопок сброшены по умолчанию"
+            "value" : "Назначение кнопок сброшено"
           }
         },
         "zh-Hans" : {
@@ -26657,7 +26657,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "대부분의 게임에 필요해요. 각각에 버튼을 지정해 주세요."
+            "value" : "대부분의 게임에 필요합니다. 각각에 버튼을 지정해 주세요."
           }
         },
         "pt-PT" : {
@@ -26715,7 +26715,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 동작에 쓰는 버튼이 없어요"
+            "value" : "이 동작에 쓰는 버튼이 없습니다"
           }
         },
         "pt-PT" : {
@@ -26743,7 +26743,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vom Controller kam nichts an. iOS behält bei manchen Controllern einige Tasten (Home, Share) für sich, sie erreichen Apps nie — probiere einen anderen."
+            "value" : "Vom Controller kam nichts an. iOS behält bei manchen Controllern einige Tasten (Home, Share) für sich, sie erreichen Apps nie – probiere einen anderen."
           }
         },
         "es" : {
@@ -26755,7 +26755,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rien n'est arrivé de la manette. iOS garde certains boutons (Home, Share) sur certaines manettes et ils n'arrivent jamais aux apps : essayez-en un autre."
+            "value" : "Rien n'est arrivé de la manette. iOS garde certains boutons (Home, Share) sur certaines manettes et ils n'arrivent jamais aux apps : essayez-en une autre."
           }
         },
         "it" : {
@@ -26773,7 +26773,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "컨트롤러에서 아무 입력도 오지 않았어요. 일부 컨트롤러의 Home, Share 같은 버튼은 iOS가 가져가서 앱에는 전달되지 않아요. 다른 버튼을 눌러 보세요."
+            "value" : "컨트롤러에서 아무 입력도 오지 않았습니다. 일부 컨트롤러의 Home, Share 같은 버튼은 iOS가 가져가서 앱에는 전달되지 않습니다. 다른 버튼을 눌러 보세요."
           }
         },
         "pt-PT" : {
@@ -26785,7 +26785,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "От контроллера ничего не пришло. Некоторые кнопки (Home, Share) на ряде контроллеров забирает себе iOS, и приложения их не получают — попробуйте другую."
+            "value" : "От контроллера ничего не пришло. Некоторые кнопки (Home, Share) на ряде контроллеров забирает себе iOS, и приложения их не получают — попробуйте другой."
           }
         },
         "zh-Hans" : {
@@ -26947,7 +26947,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "아무 버튼이나 누르면 여기와 목록에서 불이 들어와요. 버튼을 탭해 기능을 바꿀 수 있어요."
+            "value" : "아무 버튼이나 누르면 여기와 목록에서 불이 들어옵니다. 버튼을 탭해 기능을 바꿀 수 있습니다."
           }
         },
         "pt-PT" : {
@@ -27005,7 +27005,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "한 번 누르면 빨라지고, 다시 누르면 원래대로 돌아가요."
+            "value" : "한 번 누르면 빨라지고, 다시 누르면 원래대로 돌아갑니다."
           }
         },
         "pt-PT" : {
@@ -27643,7 +27643,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 컨트롤러 모델별로 저장돼요. 다시 연결하면 자동으로 불러옵니다."
+            "value" : "이 컨트롤러 모델별로 저장됩니다. 다시 연결하면 자동으로 불러옵니다."
           }
         },
         "pt-PT" : {
@@ -27671,7 +27671,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teilen Sie"
+            "value" : "Teilen"
           }
         },
         "es" : {
@@ -27933,13 +27933,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "왼쪽 스틱으로는 계속 이동할 수 있어요."
+            "value" : "왼쪽 스틱으로는 계속 이동할 수 있습니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O joystick esquerdo continua a movimentar-te."
+            "value" : "O joystick esquerdo continua a movimentá-lo."
           }
         },
         "ru" : {
@@ -28165,7 +28165,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 버튼은 iOS가 직접 사용해요(게임 앱, 스크린샷). 여기서 기능을 지정하면 eDuo가 열려 있는 동안 해당 동작이 꺼집니다. 일부 컨트롤러는 이 버튼을 앱에 전달하지 않아요."
+            "value" : "이 버튼은 iOS가 직접 사용합니다(게임 앱, 스크린샷). 여기서 기능을 지정하면 eDuo가 열려 있는 동안 해당 동작이 꺼집니다. 일부 컨트롤러는 이 버튼을 앱에 전달하지 않습니다."
           }
         },
         "pt-PT" : {
@@ -28251,7 +28251,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vorspulen: %@"
+            "value" : "Schnellvorlauf: %@"
           }
         },
         "es" : {
@@ -28269,7 +28269,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avanti veloce: %@"
+            "value" : "Avanzamento rapido: %@"
           }
         },
         "ja" : {
@@ -28345,19 +28345,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guarda no espaço 1 sem abrir o menu."
+            "value" : "Guarda na ranhura 1 sem abrir o menu."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохраняет в ячейку 1, не открывая меню."
+            "value" : "Сохраняет в слот 1, не открывая меню."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不打开菜单，直接存到槽位 1。"
+            "value" : "不打开菜单，直接存到存档位 1。"
           }
         }
       }
@@ -28403,19 +28403,19 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Carrega o espaço 1 sem abrir o menu."
+            "value" : "Carrega a ranhura 1 sem abrir o menu."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Загружает ячейку 1, не открывая меню."
+            "value" : "Загружает слот 1, не открывая меню."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不打开菜单，直接读取槽位 1。"
+            "value" : "不打开菜单，直接读取存档位 1。"
           }
         }
       }
@@ -28443,19 +28443,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Funziona con i comandi a schermo, un controller e una tastiera. Un tasto del controller impostato su «Fuoco automatico on/off» lo mette in pausa durante il gioco."
+            "value" : "Funziona con i comandi a schermo, un controller e una tastiera. Un pulsante del controller impostato su «Fuoco automatico on/off» lo mette in pausa durante il gioco."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "画面上のボタン、コントローラ、キーボードで使えます。「連射オン/オフ」を割り当てたコントローラのボタンで、プレイ中に一時停止できます。"
+            "value" : "画面上のボタン、コントローラー、キーボードで使えます。「連射オン/オフ」を割り当てたコントローラーのボタンで、プレイ中に一時停止できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "화면 버튼, 컨트롤러, 키보드에서 작동합니다. 「연사 켜기/끄기」를 지정한 컨트롤러 버튼으로 게임 중에 잠시 끌 수 있습니다."
+            "value" : "화면 버튼, 컨트롤러, 키보드에서 작동합니다. “연사 켜기/끄기”를 지정한 컨트롤러 버튼으로 게임 중에 잠시 끌 수 있습니다."
           }
         },
         "pt-PT" : {
@@ -28850,7 +28850,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ce fichier de jeu est chiffré. eDuo n’ouvre que les copies déchiffrées : déchiffre-le d’abord sur ta propre console."
+            "value" : "Ce fichier de jeu est chiffré. eDuo n’ouvre que les copies déchiffrées : déchiffrez-le d’abord sur votre propre console."
           }
         },
         "it" : {
@@ -28874,7 +28874,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este ficheiro de jogo está encriptado. O eDuo só abre cópias desencriptadas: desencripta-o primeiro na tua própria consola."
+            "value" : "Este ficheiro de jogo está encriptado. O eDuo só abre cópias desencriptadas: desencripte-o primeiro na sua própria consola."
           }
         },
         "ru" : {
@@ -28992,7 +28992,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importar o jogo guardado"
+            "value" : "Importar a gravação"
           }
         },
         "ru" : {
@@ -29027,7 +29027,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lance le jeu et sauvegarde une fois, puis importe ta sauvegarde."
+            "value" : "Lancez le jeu et sauvegardez une fois, puis importez votre sauvegarde."
           }
         },
         "it" : {
@@ -29045,13 +29045,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임을 시작해 한 번 저장한 다음 세이브를 가져오세요."
+            "value" : "게임을 시작해 한 번 저장한 다음 저장 데이터를 가져오세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicia o jogo e grava uma vez; depois importa a tua gravação."
+            "value" : "Inicie o jogo e guarde uma vez; depois importe a sua gravação."
           }
         },
         "ru" : {
@@ -29104,7 +29104,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 게임에는 아직 세이브가 없습니다."
+            "value" : "이 게임에는 아직 저장 데이터가 없습니다."
           }
         },
         "pt-PT" : {
@@ -29163,7 +29163,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 세이브"
+            "value" : "%@ 저장 데이터"
           }
         },
         "pt-PT" : {
@@ -29204,7 +29204,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo ne peut pas utiliser cette sauvegarde. Choisis le dossier exporté par ton gestionnaire de sauvegardes, avec les fichiers dedans."
+            "value" : "eDuo ne peut pas utiliser cette sauvegarde. Choisissez le dossier exporté par votre gestionnaire de sauvegardes, avec les fichiers dedans."
           }
         },
         "it" : {
@@ -29222,13 +29222,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "eDuo에서 사용할 수 없는 세이브입니다. 세이브 관리 도구로 내보낸, 파일이 들어 있는 폴더를 선택하세요."
+            "value" : "eDuo에서 사용할 수 없는 저장 데이터입니다. 저장 데이터 관리 도구로 내보낸, 파일이 들어 있는 폴더를 선택하세요."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eDuo não consegue usar essa gravação. Escolhe a pasta que o teu gestor de gravações exportou, com os ficheiros lá dentro."
+            "value" : "O eDuo não consegue usar essa gravação. Escolha a pasta que o seu gestor de gravações exportou, com os ficheiros lá dentro."
           }
         },
         "ru" : {
@@ -29263,7 +29263,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Touche + pour ajouter un code de triche à ce jeu."
+            "value" : "Appuyez sur + pour ajouter un code de triche à ce jeu."
           }
         },
         "it" : {
@@ -29287,7 +29287,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca em + para adicionar um código de batota a este jogo."
+            "value" : "Toque em + para adicionar um truque a este jogo."
           }
         },
         "ru" : {
@@ -29499,7 +29499,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Corrige le texte illisible dans certains jeux japonais. Utilise shared_font.bin extrait de ta propre console."
+            "value" : "Corrige le texte illisible dans certains jeux japonais. Utilisez shared_font.bin extrait de votre propre console."
           }
         },
         "it" : {
@@ -29523,7 +29523,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Corrige o texto ilegível em alguns jogos japoneses. Usa o shared_font.bin extraído da tua própria consola."
+            "value" : "Corrige o texto ilegível em alguns jogos japoneses. Use o shared_font.bin extraído da sua própria consola."
           }
         },
         "ru" : {
@@ -29622,7 +29622,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantiene i giochi DS e 3DS in verticale o in orizzontale, comunque tieni il dispositivo. «Automatico» segue il dispositivo. Solo iPhone: su iPad l’orientamento lo decide sempre il sistema."
+            "value" : "Mantiene i giochi DS e 3DS in verticale o in orizzontale, comunque tieni il dispositivo. «Automatico» segue il dispositivo. Solo iPhone: su iPad l'orientamento lo decide sempre il sistema."
           }
         },
         "ja" : {
@@ -29640,13 +29640,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mantém os jogos de DS e 3DS na vertical ou na horizontal, seja qual for a forma como seguras o dispositivo. «Automático» segue o dispositivo. Só no iPhone: no iPad, é sempre o sistema que decide a orientação."
+            "value" : "Mantém os jogos de DS e 3DS na vertical ou na horizontal, seja qual for a forma como segurar o dispositivo. «Automático» segue o dispositivo. Só no iPhone: no iPad, é sempre o sistema que decide a orientação."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Фиксирует игры DS и 3DS в портретной или альбомной ориентации, как бы вы ни держали устройство. «Автоматически» — по положению устройства. Только iPhone: на iPad ориентацию всегда выбирает система."
+            "value" : "Фиксирует игры DS и 3DS в вертикальной или горизонтальной ориентации, как бы вы ни держали устройство. «Автоматически» — по положению устройства. Только iPhone: на iPad ориентацию всегда выбирает система."
           }
         },
         "zh-Hans" : {
@@ -29692,7 +29692,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "왼쪽 스틱으로 방향 패드도 조작"
+            "value" : "왼쪽 스틱으로 방향키도 조작"
           }
         },
         "ru" : {
@@ -29867,7 +29867,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스틱으로 방향 패드 조작 (DS)"
+            "value" : "스틱으로 방향키 조작 (DS)"
           }
         },
         "pt-PT" : {
@@ -29966,13 +29966,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Masque les boutons à l’écran tant qu’une manette est connectée et les réaffiche dès qu’elle est déconnectée. L’écran tactile reste utilisable. Si le HUD est aussi masqué, appuie sur le bouton Menu de la manette pour mettre en pause."
+            "value" : "Masque les boutons à l’écran tant qu’une manette est connectée et les réaffiche dès qu’elle est déconnectée. L’écran tactile reste utilisable. Si le HUD est aussi masqué, appuyez sur le bouton Menu de la manette pour mettre en pause."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nasconde i pulsanti su schermo mentre è collegato un controller e li mostra di nuovo quando si scollega. Lo schermo touch continua a funzionare. Con anche l'HUD nascosto, premi il tasto Menu del controller per mettere in pausa."
+            "value" : "Nasconde i pulsanti su schermo mentre è collegato un controller e li mostra di nuovo quando si scollega. Lo schermo touch continua a funzionare. Con anche l'HUD nascosto, premi il pulsante Menu del controller per mettere in pausa."
           }
         },
         "ja" : {
@@ -29990,7 +29990,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oculta os botões no ecrã enquanto houver um comando ligado e volta a mostrá-los quando o desligas. O ecrã tátil continua a funcionar. Com o HUD também oculto, carrega no botão Menu do comando para pausar."
+            "value" : "Oculta os botões no ecrã enquanto houver um comando ligado e volta a mostrá-los quando este se desliga. O ecrã tátil continua a funcionar. Com o HUD também oculto, prima o botão Menu do comando para pausar."
           }
         },
         "ru" : {
@@ -30018,19 +30018,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En los juegos de DS el stick izquierdo mueve la cruceta; desactiva el primer interruptor para mantener la cruceta aparte. En los juegos de 3DS el stick izquierdo siempre mueve el Circle Pad; el segundo interruptor hace que también pulse la cruceta."
+            "value" : "En los juegos de DS el stick izquierdo mueve la cruceta; desactiva el primer interruptor para mantener la cruceta aparte. En los juegos de 3DS el stick izquierdo siempre mueve el botón deslizante; el segundo interruptor hace que también pulse la cruceta."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dans les jeux DS, le stick gauche actionne la croix ; désactive le premier interrupteur pour garder la croix séparée. Dans les jeux 3DS, le stick gauche actionne toujours le stick circulaire ; le second interrupteur lui fait aussi appuyer sur la croix."
+            "value" : "Dans les jeux DS, le stick gauche actionne la croix ; désactivez le premier interrupteur pour garder la croix séparée. Dans les jeux 3DS, le stick gauche actionne toujours le Pad circulaire ; le second interrupteur lui fait aussi appuyer sur la croix."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nei giochi DS lo stick sinistro muove la croce direzionale; disattiva il primo interruttore per tenere la croce separata. Nei giochi 3DS lo stick sinistro muove sempre il Circle Pad; il secondo interruttore gli fa premere anche la croce direzionale."
+            "value" : "Nei giochi DS lo stick sinistro muove la croce direzionale; disattiva il primo interruttore per tenere la croce separata. Nei giochi 3DS lo stick sinistro muove sempre il pad scorrevole; il secondo interruttore gli fa premere anche la croce direzionale."
           }
         },
         "ja" : {
@@ -30042,13 +30042,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DS 게임에서는 왼쪽 스틱이 방향 패드를 움직입니다. 방향 패드를 따로 쓰려면 첫 번째 스위치를 끄세요. 3DS 게임에서는 왼쪽 스틱이 항상 슬라이드 패드를 움직이며, 두 번째 스위치를 켜면 방향 패드도 함께 누릅니다."
+            "value" : "DS 게임에서는 왼쪽 스틱이 방향키를 움직입니다. 방향키를 따로 쓰려면 첫 번째 스위치를 끄세요. 3DS 게임에서는 왼쪽 스틱이 항상 슬라이드 패드를 움직이며, 두 번째 스위치를 켜면 방향키도 함께 누릅니다."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nos jogos DS o stick esquerdo move o D-pad; desliga o primeiro interruptor para manter o D-pad separado. Nos jogos 3DS o stick esquerdo move sempre o Circle Pad; o segundo interruptor faz com que também carregue no D-pad."
+            "value" : "Nos jogos DS o stick esquerdo move o D-pad; desligue o primeiro interruptor para manter o D-pad separado. Nos jogos 3DS o stick esquerdo move sempre o Circle Pad; o segundo interruptor faz com que também prima o D-pad."
           }
         },
         "ru" : {
@@ -30060,7 +30060,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在 DS 游戏中，左摇杆控制方向键；关闭第一个开关可让方向键独立使用。在 3DS 游戏中，左摇杆始终控制圆形滑垫；打开第二个开关可让它同时按下方向键。"
+            "value" : "在 DS 游戏中，左摇杆控制方向键；关闭第一个开关可让方向键独立使用。在 3DS 游戏中，左摇杆始终控制滑动板；打开第二个开关可让它同时按下方向键。"
           }
         }
       }
@@ -30071,7 +30071,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieser Speicherzustand wurde mit einer anderen Version von eDuo erstellt und kann nicht geladen werden."
+            "value" : "Dieser Spielstand wurde mit einer anderen Version von eDuo erstellt und kann nicht geladen werden."
           }
         },
         "es" : {
@@ -30083,7 +30083,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cette sauvegarde d’état a été créée avec une autre version d’eDuo et ne peut pas être chargée."
+            "value" : "Cet état de sauvegarde a été créé avec une autre version d’eDuo et ne peut pas être chargé."
           }
         },
         "it" : {
@@ -30095,13 +30095,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このステートセーブは別のバージョンのeDuoで作成されたため、読み込めません。"
+            "value" : "このセーブステートは別のバージョンのeDuoで作成されたため、読み込めません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 상태 저장은 다른 버전의 eDuo에서 만들어져 불러올 수 없습니다."
+            "value" : "이 세이브 스테이트는 다른 버전의 eDuo에서 만들어져 불러올 수 없습니다."
           }
         },
         "pt-PT" : {
@@ -30119,7 +30119,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此即时存档由其他版本的 eDuo 创建，无法读取。"
+            "value" : "此保存状态由其他版本的 eDuo 创建，无法加载。"
           }
         }
       }
@@ -30130,7 +30130,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Zustand konnte nicht gespeichert werden. Versuche es gleich noch einmal."
+            "value" : "Der Spielstand konnte nicht gespeichert werden. Versuche es gleich noch einmal."
           }
         },
         "es" : {
@@ -30142,7 +30142,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible de sauvegarder l’état. Réessaie dans un instant."
+            "value" : "Impossible d’enregistrer l’état. Réessayez dans un instant."
           }
         },
         "it" : {
@@ -30166,7 +30166,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não foi possível guardar o estado. Tenta novamente daqui a pouco."
+            "value" : "Não foi possível guardar o estado. Tente novamente daqui a pouco."
           }
         },
         "ru" : {
@@ -30178,7 +30178,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法保存即时存档。请稍后再试。"
+            "value" : "无法保存状态。请稍后再试。"
           }
         }
       }
@@ -30189,7 +30189,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Zustand konnte nicht geladen werden."
+            "value" : "Der Spielstand konnte nicht geladen werden."
           }
         },
         "es" : {
@@ -30237,7 +30237,538 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法读取即时存档。"
+            "value" : "无法加载状态。"
+          }
+        }
+      }
+    },
+    "Battery Saver" : {
+      "comment" : "Settings > Battery manual toggle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Energiesparen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorro de batería"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Économiseur de batterie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risparmio batteria"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バッテリー節約"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "배터리 절약"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poupança de bateria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экономия заряда"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "省电模式"
+          }
+        }
+      }
+    },
+    "Saves battery in every game: 3DS games render at native resolution, and DS and 3DS games show 30 frames per second on screen. Game speed stays the same; Fast Forward is limited to 1x. Your own settings come back when you turn it off. Low Power Mode and a hot device can also turn it on (below)." : {
+      "comment" : "Settings > Battery footer for the manual Battery Saver toggle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spart in jedem Spiel Akku: 3DS-Spiele werden in nativer Auflösung gerendert, und DS- und 3DS-Spiele zeigen 30 Bilder pro Sekunde an. Die Spielgeschwindigkeit bleibt gleich; der Schnellvorlauf ist auf 1x begrenzt. Deine eigenen Einstellungen kehren zurück, sobald du es ausschaltest. Auch der Stromsparmodus und ein heißes Gerät können es einschalten (unten)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorra batería en cualquier juego: los juegos de 3DS se renderizan a resolución nativa y los de DS y 3DS se muestran a 30 fotogramas por segundo. La velocidad del juego no cambia; el avance rápido se limita a 1x. Tus ajustes vuelven al desactivarlo. El modo de bajo consumo y un dispositivo caliente también pueden activarlo (abajo)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Économise la batterie dans tous les jeux : les jeux 3DS sont rendus en résolution native, et les jeux DS et 3DS s’affichent à 30 images par seconde. La vitesse du jeu ne change pas ; l’avance rapide est limitée à 1x. Vos réglages reviennent dès que vous le désactivez. Le mode Économie d’énergie et un appareil chaud peuvent aussi l’activer (ci-dessous)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risparmia batteria in ogni gioco: i giochi 3DS vengono renderizzati alla risoluzione nativa e i giochi DS e 3DS mostrano 30 fotogrammi al secondo. La velocità di gioco non cambia; l'avanzamento rapido è limitato a 1x. Le tue impostazioni tornano quando lo disattivi. Anche la modalità Risparmio energetico e un dispositivo caldo possono attivarlo (sotto)."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのゲームでバッテリーを節約します。3DSゲームはネイティブ解像度で描画され、DSと3DSのゲームは画面上で毎秒30フレームで表示されます。ゲームの速度は変わりません。早送りは1xに制限されます。オフにすると元の設定に戻ります。低電力モードや本体の発熱でも自動的にオンになります（下記）。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 게임에서 배터리를 아낍니다. 3DS 게임은 기본 해상도로 렌더링되고, DS와 3DS 게임은 화면에 초당 30프레임으로 표시됩니다. 게임 속도는 그대로이며 빨리 감기는 1x로 제한됩니다. 끄면 원래 설정으로 돌아갑니다. 저전력 모드나 기기 발열 시에도 켜질 수 있습니다(아래)."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poupa bateria em todos os jogos: os jogos 3DS são renderizados na resolução nativa e os jogos DS e 3DS são mostrados a 30 fotogramas por segundo. A velocidade do jogo não muda; o avanço rápido fica limitado a 1x. As suas definições voltam quando o desativar. O modo de baixo consumo e um dispositivo quente também o podem ativar (abaixo)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экономит заряд в любой игре: игры 3DS отрисовываются в родном разрешении, а игры DS и 3DS показываются с частотой 30 кадров в секунду. Скорость игры не меняется; ускорение ограничено 1x. При выключении ваши настройки вернутся. Режим энергосбережения и нагрев устройства тоже могут его включить (ниже)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在所有游戏中节省电量：3DS 游戏以原生分辨率渲染，DS 和 3DS 游戏在屏幕上以每秒 30 帧显示。游戏速度不变；快进限制为 1x。关闭后会恢复你自己的设置。低电量模式和设备过热也会自动开启它（见下方）。"
+          }
+        }
+      }
+    },
+    "Replace Save?" : {
+      "comment" : "Library: confirm before importing a save over the current one",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielstand ersetzen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Reemplazar la partida?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacer la sauvegarde ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituire il salvataggio?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セーブデータを置き換えますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장 데이터를 바꿀까요?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir a gravação?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить сохранение?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换存档？"
+          }
+        }
+      }
+    },
+    "This overwrites the save this game has now. A copy of the current save is kept first." : {
+      "comment" : "Library: Replace Save? message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dies überschreibt den aktuellen Spielstand dieses Spiels. Vorher wird eine Kopie davon behalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esto sobrescribe la partida que tiene ahora este juego. Antes se guarda una copia de la actual."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cela écrase la sauvegarde actuelle de ce jeu. Une copie de la sauvegarde actuelle est conservée avant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo sovrascrive il salvataggio attuale del gioco. Prima ne viene conservata una copia."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲームの現在のセーブデータを上書きします。先に現在のセーブデータのコピーを保存します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임의 현재 저장 데이터를 덮어씁니다. 먼저 현재 저장 데이터의 사본을 보관합니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isto substitui a gravação atual deste jogo. Antes é guardada uma cópia da gravação atual."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущее сохранение этой игры будет перезаписано. Сначала сохраняется его копия."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这会覆盖该游戏当前的存档。覆盖前会先保留一份当前存档的副本。"
+          }
+        }
+      }
+    },
+    "Save imported. Your previous save was kept as a copy in the Saves folder." : {
+      "comment" : "Library: save import succeeded",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielstand importiert. Dein vorheriger Spielstand wurde als Kopie im Ordner „Saves“ behalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partida importada. Tu partida anterior se ha guardado como copia en la carpeta Saves."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarde importée. Votre sauvegarde précédente a été conservée en copie dans le dossier Saves."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvataggio importato. Il salvataggio precedente è stato conservato come copia nella cartella Saves."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セーブデータを読み込みました。以前のセーブデータはSavesフォルダにコピーとして残してあります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장 데이터를 가져왔습니다. 이전 저장 데이터는 Saves 폴더에 사본으로 보관했습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gravação importada. A gravação anterior foi guardada como cópia na pasta Saves."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранение импортировано. Предыдущее сохранение оставлено копией в папке Saves."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存档已导入。之前的存档已作为副本保留在 Saves 文件夹中。"
+          }
+        }
+      }
+    },
+    "Quit the game before importing its save." : {
+      "comment" : "Library: import refused while that game is running",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beende das Spiel, bevor du seinen Spielstand importierst."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sal del juego antes de importar su partida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quittez le jeu avant d’importer sa sauvegarde."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci dal gioco prima di importarne il salvataggio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セーブデータを読み込む前にゲームを終了してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장 데이터를 가져오기 전에 게임을 종료하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saia do jogo antes de importar a gravação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйдите из игры перед импортом её сохранения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先退出游戏，再导入它的存档。"
+          }
+        }
+      }
+    },
+    "Pick a .sav file (or a .zip with one inside) for this game." : {
+      "comment" : "Library: DS save import, wrong file picked",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle eine .sav-Datei (oder eine .zip-Datei, die eine enthält) für dieses Spiel."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige un archivo .sav (o un .zip que lo contenga) para este juego."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez un fichier .sav (ou un .zip qui en contient un) pour ce jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli un file .sav (o un .zip che ne contenga uno) per questo gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲーム用の .sav ファイル（または .sav を含む .zip）を選んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게임의 .sav 파일(또는 .sav가 들어 있는 .zip)을 선택하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha um ficheiro .sav (ou um .zip que contenha um) para este jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите файл .sav (или .zip с ним внутри) для этой игры."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请为此游戏选择一个 .sav 文件（或包含 .sav 的 .zip）。"
+          }
+        }
+      }
+    },
+    "That save is too large to be a game save." : {
+      "comment" : "Save import: file too big",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Datei ist zu groß für einen Spielstand."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ese archivo es demasiado grande para ser una partida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce fichier est trop volumineux pour être une sauvegarde de jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo file è troppo grande per essere un salvataggio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイルはセーブデータにしては大きすぎます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 파일은 게임 저장 데이터라기엔 너무 큽니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esse ficheiro é demasiado grande para ser uma gravação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот файл слишком велик для сохранения игры."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该文件太大，不可能是游戏存档。"
+          }
+        }
+      }
+    },
+    "The save couldn't be copied. Try again in a moment." : {
+      "comment" : "Save import: copy failed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Spielstand konnte nicht kopiert werden. Versuche es gleich noch einmal."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido copiar la partida. Vuelve a intentarlo en un momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sauvegarde n’a pas pu être copiée. Réessayez dans un instant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile copiare il salvataggio. Riprova tra un momento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セーブデータをコピーできませんでした。しばらくしてからもう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장 데이터를 복사하지 못했습니다. 잠시 후 다시 시도하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível copiar a gravação. Tente novamente daqui a pouco."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось скопировать сохранение. Повторите попытку чуть позже."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法复制存档。请稍后再试。"
           }
         }
       }

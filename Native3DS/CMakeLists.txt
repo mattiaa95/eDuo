@@ -3,6 +3,7 @@
 add_library(eduo3ds STATIC
     src/E3DS.h
     src/E3DS.mm
+    src/E3DSHomebrewTag.h
     src/input_manager.cpp
     src/input_manager.h
 )

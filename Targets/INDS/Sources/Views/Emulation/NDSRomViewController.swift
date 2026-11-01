@@ -356,6 +356,11 @@ final class NDSRomViewController: UIViewController {
                             selector: #selector(handleBatterySaverStateChanged),
                             name: ProcessInfo.thermalStateDidChangeNotification,
                             object: nil)
+        // ...and when the manual Battery Saver switch is flipped in Settings.
+        center.addObserver(self,
+                            selector: #selector(handleBatterySaverStateChanged),
+                            name: INDSBatterySaverPreferences.didChangeNotification,
+                            object: nil)
         // Settings > Audio's "Mute While Other Audio Plays" — see the
         // Mute While Other Audio Plays section below.
         center.addObserver(self,
@@ -923,7 +928,15 @@ final class NDSRomViewController: UIViewController {
 
     private func applyDisplayFilter(_ filter: NDSDisplayFilter) {
         displayFilter = filter
-        dualScreenView.applyDisplayFilter(filter)
+        dualScreenView.applyDisplayFilter(saverAdjustedFilter(filter))
+    }
+
+    /// While Battery Saver is on the scanlines overlay (the only extra
+    /// shader pass the DS view has) is shown as `.smooth`. Transient: the
+    /// stored/per-game choice is untouched and `displayFilter` keeps what the
+    /// user picked, so turning the saver off restores it.
+    private func saverAdjustedFilter(_ filter: NDSDisplayFilter) -> NDSDisplayFilter {
+        (filter == .scanlines && INDSBatterySaverPreferences.isEffectivelyActive) ? .smooth : filter
     }
 
     /// Applies + remembers a live change from the pause menu's filter card
@@ -952,20 +965,17 @@ final class NDSRomViewController: UIViewController {
     // what the user had (`requestedSpeed`, 60fps) the instant the condition
     // clears.
 
+    /// Speed clamp: the manual Battery Saver switch, Low Power Mode, or a
+    /// serious/critical thermal state (`INDSBatterySaverPreferences.isEffectivelyActive`).
     private var isBatterySpeedClampActive: Bool {
-        if INDSBatterySaverPreferences.respectLowPowerMode && ProcessInfo.processInfo.isLowPowerModeEnabled {
-            return true
-        }
-        if INDSBatterySaverPreferences.autoThrottleWhenHot {
-            switch ProcessInfo.processInfo.thermalState {
-            case .serious, .critical: return true
-            default: break
-            }
-        }
-        return false
+        INDSBatterySaverPreferences.isEffectivelyActive
     }
 
+    /// 30 Hz presentation: the manual switch, Low Power Mode, or a critical
+    /// thermal state. The emulation thread is paced by the core, not by this
+    /// display link, so the cap never slows the game.
     private var isBatteryPresentationThrottleActive: Bool {
+        if INDSBatterySaverPreferences.manualEnabled { return true }
         if INDSBatterySaverPreferences.respectLowPowerMode && ProcessInfo.processInfo.isLowPowerModeEnabled {
             return true
         }
@@ -1012,6 +1022,7 @@ final class NDSRomViewController: UIViewController {
 
     private func refreshBatterySaverState() {
         applyEffectiveSpeed()
+        dualScreenView.applyDisplayFilter(saverAdjustedFilter(displayFilter))
 
         displayLink?.preferredFrameRateRange = isBatteryPresentationThrottleActive
             ? CAFrameRateRange(minimum: 30, maximum: 30, preferred: 30)

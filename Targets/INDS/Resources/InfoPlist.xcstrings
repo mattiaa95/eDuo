@@ -60,7 +60,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "7-Zip 归档"
+            "value" : "7-Zip 压缩包"
           }
         }
       }
@@ -142,7 +142,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Игровой ROM"
+            "value" : "ROM игры"
           }
         },
         "zh-Hans" : {
@@ -276,7 +276,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gzip 归档"
+            "value" : "Gzip 压缩包"
           }
         }
       }
@@ -394,7 +394,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O eDuo só pede quando escolhe guardar um clipe de jogo, para que o vídeo fique na sua fototeca. Nunca lê as suas fotografias."
+            "value" : "O eDuo só pede quando escolhe guardar um clipe de jogo, para que o vídeo fique na sua biblioteca de fotografias. Nunca lê as suas fotografias."
           }
         },
         "ru" : {
@@ -406,7 +406,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅在您选择保存游戏片段时，eDuo 才会请求权限，以便视频存入照片图库。它从不读取您的照片。"
+            "value" : "仅在你选择保存游戏片段时，eDuo 才会请求权限，以便视频存入照片图库。它从不读取你的照片。"
           }
         }
       }
@@ -470,7 +470,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ROM 归档"
+            "value" : "ROM 压缩包"
           }
         }
       }

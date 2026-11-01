@@ -29,8 +29,10 @@ typedef enum {
     E3DSResultErrorEncrypted = 5,
     E3DSResultErrorInvalidFormat = 6,
     E3DSResultErrorSystemFiles = 10,
-    E3DSResultShutdownRequested = 17,
+    E3DSResultShutdownRequested = 16, ///< the game itself asked to exit (APT/HOME exit, homebrew "START to exit")
+    E3DSResultErrorUnknown = 17,
 } E3DSResult;
+// The values above are checked against Core::System::ResultStatus in E3DS.mm (static_assert).
 
 /// The two CAMetalLayers (top, bottom) and their drawable size in pixels.
 /// Call before E3DSRun and again whenever a layer resizes.
@@ -49,8 +51,10 @@ bool E3DSIsRunning(void);
 /// parked, i.e. no emulation/GPU work in flight, or the game ended. Returns
 /// true if parked/ended, false on timeout.
 bool E3DSWaitParked(int timeoutMs);
-/// Battery saver: vsync on and speed capped at 100 %. Applies live (vsync is
-/// re-read by the presenter each frame) and persists across E3DSRun.
+/// Battery saver: native resolution (resolution_factor 1), vsync off (non-blocking present,
+/// so a 30 Hz display cap does not slow the core) and speed capped at 100 %. Transient: the
+/// chosen resolution is restored exactly when turned off. Applies live (the rasterizer polls
+/// resolution_factor, the presenter polls vsync, each frame) and persists across E3DSRun.
 void E3DSSetBatterySaver(bool on);
 /// Save states (slots 0...11). Blocking (up to ~7 s, works while paused):
 /// call from a background thread, never the core thread. 0 = ok; Load returns

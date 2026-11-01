@@ -9,6 +9,7 @@
 
 #include "E3DS.h"
 #include "input_manager.h"
+#include "E3DSHomebrewTag.h"
 
 #include <algorithm>
 #include <atomic>
@@ -46,6 +47,7 @@
 
 #import <QuartzCore/CAMetalLayer.h>
 #import <objc/runtime.h>
+#import <os/log.h>
 
 #include <mach/mach.h>
 #include <mach/thread_info.h>
@@ -53,6 +55,19 @@
 #include <chrono>
 
 namespace {
+
+// E3DS.h mirrors these by hand: a drift here once made a game-requested exit (16) read as
+// ErrorUnknown, i.e. a "couldn't start this game" alert after a clean exit.
+#define E3DS_CHECK_RESULT(name) \
+    static_assert((unsigned)E3DSResult##name == (unsigned)Core::System::ResultStatus::name, #name)
+E3DS_CHECK_RESULT(Success);
+E3DS_CHECK_RESULT(ShutdownRequested);
+E3DS_CHECK_RESULT(ErrorUnknown);
+static_assert((unsigned)E3DSResultErrorGetLoader == (unsigned)Core::System::ResultStatus::ErrorGetLoader);
+static_assert((unsigned)E3DSResultErrorLoader == (unsigned)Core::System::ResultStatus::ErrorLoader);
+static_assert((unsigned)E3DSResultErrorEncrypted == (unsigned)Core::System::ResultStatus::ErrorLoader_ErrorEncrypted);
+static_assert((unsigned)E3DSResultErrorInvalidFormat == (unsigned)Core::System::ResultStatus::ErrorLoader_ErrorInvalidFormat);
+static_assert((unsigned)E3DSResultErrorSystemFiles == (unsigned)Core::System::ResultStatus::ErrorSystemFiles);
 
 class GraphicsContext_iOS final : public Frontend::GraphicsContext {
 public:
@@ -87,6 +102,9 @@ private:
 
 struct Session {
     std::mutex mutex;
+    // Guards the input factories: Shutdown (core thread) frees them while the UI thread may
+    // still be pressing a button (START on a game that is exiting).
+    std::mutex inputMutex;
     std::condition_variable cv;
     std::atomic_bool stop{false}, paused{false}, running{false};
     // True while the core thread sits in the paused wait (no GPU work in flight).
@@ -102,6 +120,8 @@ struct Session {
     CAMetalLayer* top = nil;
     CAMetalLayer* bottom = nil;
     u64 program_id = 0;
+    // The player's chosen internal resolution (Settings > 3DS). Never touched by the
+    // battery saver: the saver only overrides what is written to Settings::values.
     int resolution = 2;
     double topW = 400, topH = 240, bottomW = 320, bottomH = 240;
     std::unique_ptr<EmuWindow_iOS> window, secondary;
@@ -155,13 +175,13 @@ void ConfigureOnce() {
     v.graphics_api.SetValue(Settings::GraphicsAPI::Vulkan);
     v.layout_option.SetValue(Settings::LayoutOption::SeparateWindows);
     v.use_hw_shader.SetValue(true);
-    v.resolution_factor.SetValue(static_cast<u32>(g.resolution));
+    v.resolution_factor.SetValue(static_cast<u32>(g.batterySaver ? 1 : g.resolution));
     v.async_shader_compilation.SetValue(true);
     v.async_presentation.SetValue(true);
     if (g.vsync >= 0) v.use_vsync.SetValue(g.vsync != 0);
     v.frame_limit.SetValue(g.unlimited ? 0.0 : 100.0);
     if (g.batterySaver) {
-        v.use_vsync.SetValue(true);
+        v.use_vsync.SetValue(false);
         Settings::is_temporary_frame_limit = true;
         Settings::temporary_frame_limit = 100.0;
     }
@@ -207,6 +227,45 @@ void E3DSSetLayers(void* topLayer, double topWidth, double topHeight, void* bott
     if (g.secondary) g.secondary->Resize(bottomWidth, bottomHeight);
 }
 
+// ---- Per-game folders for what the core keys by program ID ------------------------------
+// A .3dsx has no program ID (the 3DSX loader doesn't implement ReadProgramId, so the core
+// uses 0), and the core names save states (<id>.<slot>.cst) and the cheat file (<id>.txt)
+// after it: every homebrew would share one set, and loading another homebrew's state would
+// run foreign memory in the wrong program. Homebrew keeps its own data under sdmc:/ and
+// never uses the program-ID save folder, so only these two folders need splitting. They are
+// pointed at a per-file folder derived from the file's content (path independent, so the same
+// homebrew keeps its states if the file is re-imported or moved). Real titles keep the
+// stock folders, so nothing existing moves.
+static void UsePerGameFolders(u64 program_id, const char* path) {
+    const std::string tag = program_id == 0 ? E3DSHomebrewTag(path) : std::string();
+    for (auto dir : {FileUtil::UserPath::StatesDir, FileUtil::UserPath::CheatsDir}) {
+        const std::string stock = FileUtil::GetDefaultUserPath(dir);
+        std::string target = tag.empty() ? stock : stock + tag + "/";
+        // Always set it: the previous game's folder must not leak into this one.
+        if (!FileUtil::CreateFullPath(target)) target = stock;
+        FileUtil::CreateFullPath(stock);
+        FileUtil::UpdateUserPath(dir, target);
+    }
+}
+
+// Save states are written in place by the core ("wb" truncates the slot first), so a failed
+// or interrupted write would cost the slot's previous state. The previous file is kept as
+// <slot>.prev until the new one is verified; a leftover .prev at the next boot means the
+// write never finished, so it goes back (see RestoreInterruptedStates).
+static std::string StatePath(int slot) {
+    return fmt::format("{}{:016X}.{:02d}.cst", FileUtil::GetUserPath(FileUtil::UserPath::StatesDir),
+                       g.program_id, slot);
+}
+
+static void RestoreInterruptedStates() {
+    for (int slot = 0; slot <= (int)Core::SaveStateSlotCount; ++slot) {
+        const std::string path = StatePath(slot), prev = path + ".prev";
+        if (!FileUtil::Exists(prev)) continue;
+        FileUtil::Delete(path);
+        FileUtil::Rename(prev, path);
+    }
+}
+
 int E3DSRun(const char* path) {
     if (!path || g.running.exchange(true)) return (int)Core::System::ResultStatus::ErrorUnknown;
     g.stop = false;
@@ -223,6 +282,7 @@ int E3DSRun(const char* path) {
     u64 program_id = 0;
     FileUtil::SetCurrentRomPath(path);
     auto loader = Loader::GetLoader(path);
+    g.program_id = 0;
     if (loader) {
         loader->ReadProgramId(program_id);
         g.program_id = program_id;
@@ -237,9 +297,14 @@ int E3DSRun(const char* path) {
         Settings::values.custom_textures.SetValue(FileUtil::ScanDirectoryTree(packs, entries) > 0);
         Settings::values.async_custom_loading.SetValue(true);
     }
+    UsePerGameFolders(program_id, path);
+    RestoreInterruptedStates();
     system.ApplySettings();
     Frontend::RegisterDefaultApplets(system);
-    InputManager::Init();
+    {
+        std::lock_guard lock(g.inputMutex);
+        InputManager::Init();
+    }
 
     auto result = system.Load(*g.window, path, g.secondary.get());
     if (result == Core::System::ResultStatus::Success) {
@@ -285,7 +350,15 @@ int E3DSRun(const char* path) {
 
     g.coreThread = MACH_PORT_NULL;
     system.Shutdown();
-    InputManager::Shutdown();
+    // The game's save files are plain stdio streams; a game that wrote without the flush flag
+    // and never closed the file leaves its data in the stream buffer. Shutdown normally closes
+    // every file, but a leaked handle would hold that data back from the next boot and from a
+    // kill. Flushes every open output stream of the process; harmless when nothing is pending.
+    fflush(nullptr);
+    {
+        std::lock_guard lock(g.inputMutex);
+        InputManager::Shutdown();
+    }
     {
         std::lock_guard lock(g.mutex);
         g.window.reset();
@@ -301,7 +374,13 @@ int E3DSRun(const char* path) {
     return (int)result;
 }
 
-void E3DSSetResolution(int factor) { g.resolution = std::clamp(factor, 1, 4); }
+void E3DSSetResolution(int factor) {
+    g.resolution = std::clamp(factor, 1, 4);
+    // Mid-game change (the player picked a new value while the saver is off): the rasterizer
+    // cache polls resolution_factor every frame, so this also applies live.
+    if (g.running && !g.batterySaver)
+        Settings::values.resolution_factor.SetValue(static_cast<u32>(g.resolution));
+}
 
 void E3DSStop(void) {
     g.stop = true;
@@ -319,17 +398,36 @@ bool E3DSWaitParked(int timeoutMs) {
     return g.parked || !g.running;
 }
 
+// Battery saver. Transient: the player's resolution stays in g.resolution (and the app's
+// stored prefs); only the live Settings::values entries are overridden and then restored
+// from it, so turning the saver off gives back exactly the chosen value.
+//  * resolution_factor -> 1 (native). The rasterizer cache polls it each frame and rebuilds
+//    its surfaces (one hitch), so it applies live, no renderer recreate and no restart.
+//  * use_vsync -> off, i.e. Azahar's immediate present mode. The presenter hands frames to
+//    the compositor without blocking the core, so the app can ask iOS for a 30 Hz display
+//    (see ThreeDSGameViewController) without halving the speed of 60 fps games. The core is
+//    still paced by the 100 % frame limiter, never by the display.
+//  * Not touched: cpu_clock_percentage, emulation speed, texture filter / post-processing
+//    (eDuo never changes them from Azahar's cheap defaults), async shader compilation (on).
 void E3DSSetBatterySaver(bool on) {
+    const bool was = g.batterySaver;
     g.batterySaver = on;
+    auto& v = Settings::values;
+    const u32 oldFactor = v.resolution_factor.GetValue();
     if (on) {
-        Settings::values.use_vsync.SetValue(true);
+        v.resolution_factor.SetValue(1);
+        v.use_vsync.SetValue(false);
         Settings::is_temporary_frame_limit = true;
         Settings::temporary_frame_limit = 100.0;
     } else {
+        v.resolution_factor.SetValue(static_cast<u32>(g.resolution));
         Settings::is_temporary_frame_limit = false;
         // Core default (true on iOS) unless diagnostics force a value.
-        Settings::values.use_vsync.SetValue(g.vsync >= 0 ? g.vsync != 0 : true);
+        v.use_vsync.SetValue(g.vsync >= 0 ? g.vsync != 0 : true);
     }
+    os_log(OS_LOG_DEFAULT, "[eDuo3DS] battery saver %{public}s -> %{public}s: resolution_factor %u -> %u, vsync %d, running %d",
+           was ? "on" : "off", on ? "on" : "off", oldFactor, v.resolution_factor.GetValue(),
+           (int)v.use_vsync.GetValue(), (int)g.running.load());
 }
 
 // Runs a save/load request on the core thread, even while paused. Blocks
@@ -352,12 +450,28 @@ int E3DSSaveState(int slot) {
     if (slot < 0 || slot > (int)Core::SaveStateSlotCount) return -1;
     const auto before = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
     const auto start = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    const std::string path = StatePath(slot), prev = path + ".prev";
+    const bool hadOld = before.slot != 0xFFFFFFFFu && FileUtil::Exists(path);
+    if (hadOld) {
+        FileUtil::Delete(prev);
+        if (!FileUtil::Copy(path, prev)) return -4; // can't protect the old one: don't risk it
+    }
     int r = RunStateOp(Core::System::Signal::Save, slot);
-    if (r != 0) return r;
     // Verify the file was written (the core gives up silently after 5 s of async ops).
-    const auto after = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
-    (void)before;
-    return (after.slot != 0xFFFFFFFFu && (long long)after.time >= (long long)start - 1) ? 0 : -4;
+    int result = r;
+    if (r == 0) {
+        const auto after = Core::GetSaveStateInfo(g.program_id, 0, (u32)slot);
+        result = (after.slot != 0xFFFFFFFFu && (long long)after.time >= (long long)start - 1) ? 0 : -4;
+    }
+    if (hadOld) {
+        if (result == 0) {
+            FileUtil::Delete(prev);
+        } else if (r != -3) { // -3 = the core may still write: leave .prev for the next boot
+            FileUtil::Delete(path);
+            FileUtil::Rename(prev, path);
+        }
+    }
+    return result;
 }
 
 int E3DSLoadState(int slot) {
@@ -379,11 +493,13 @@ bool E3DSStateInfo(int slot, long long* unixTime) {
 bool E3DSIsRunning(void) { return g.running; }
 
 void E3DSSetButton(int button, bool pressed) {
+    std::lock_guard lock(g.inputMutex);
     if (auto* handler = InputManager::ButtonHandler())
         pressed ? handler->PressKey(button) : handler->ReleaseKey(button);
 }
 
 void E3DSSetStick(int stick, float x, float y) {
+    std::lock_guard lock(g.inputMutex);
     if (auto* handler = InputManager::AnalogHandler()) handler->MoveJoystick(stick, x, y);
 }
 

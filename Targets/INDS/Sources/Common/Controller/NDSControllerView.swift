@@ -590,9 +590,11 @@ enum INDSControllerOverlayPreferences {
     private static let hudKey = "eNDSHidesHUDWithGamepad"
 
     /// Also hides the HUD buttons (Menu/Layout/Speed) while a controller is
-    /// connected and "Hide with a Controller" is on. Off by default.
+    /// connected and "Hide with a Controller" is on. On by default since
+    /// 1.2.0 (64): with a controller in hand the Menu button pauses, so the
+    /// touch HUD is just clutter. REC/mic badges are never hidden.
     static var hidesHUDWithGamepad: Bool {
-        get { UserDefaults.standard.bool(forKey: hudKey) }
+        get { UserDefaults.standard.object(forKey: hudKey) == nil || UserDefaults.standard.bool(forKey: hudKey) }
         set {
             UserDefaults.standard.set(newValue, forKey: hudKey)
             NotificationCenter.default.post(name: didChangeNotification, object: nil)

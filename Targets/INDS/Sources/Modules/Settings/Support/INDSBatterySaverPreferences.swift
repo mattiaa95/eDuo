@@ -15,6 +15,39 @@ import Foundation
 enum INDSBatterySaverPreferences {
     private static let respectLowPowerModeKey = "eNDSRespectLowPowerMode"
     private static let autoThrottleWhenHotKey = "eNDSAutoThrottleWhenHot"
+    private static let manualKey = "eNDSBatterySaverManual"
+
+    /// Posted when the manual toggle changes so an open game re-derives its
+    /// saver state live (same pattern as `INDSControllerOverlayPreferences`).
+    static let didChangeNotification = Notification.Name("INDSBatterySaverPreferencesDidChange")
+
+    /// Manual "Battery Saver" switch (Settings > Battery). Default OFF, unlike
+    /// the two automatic triggers below. Effective saver state is always
+    /// `manual || (respectLowPowerMode && lowPower) || (autoThrottleWhenHot && hot)`.
+    static var manualEnabled: Bool {
+        get { UserDefaults.standard.bool(forKey: manualKey) }
+        set {
+            guard newValue != UserDefaults.standard.bool(forKey: manualKey) else { return }
+            UserDefaults.standard.set(newValue, forKey: manualKey)
+            NotificationCenter.default.post(name: didChangeNotification, object: nil)
+        }
+    }
+
+    /// Low Power Mode (if respected) or a serious/critical thermal state (if
+    /// auto-throttle is on) — the automatic half of the effective state.
+    static var isAutomaticActive: Bool {
+        if respectLowPowerMode && ProcessInfo.processInfo.isLowPowerModeEnabled { return true }
+        if autoThrottleWhenHot {
+            switch ProcessInfo.processInfo.thermalState {
+            case .serious, .critical: return true
+            default: break
+            }
+        }
+        return false
+    }
+
+    /// The single definition of "Battery Saver is on" for both consoles.
+    static var isEffectivelyActive: Bool { manualEnabled || isAutomaticActive }
 
     static var respectLowPowerMode: Bool {
         get {

@@ -1,0 +1,25 @@
+diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
+index 68eb83f..538199f 100644
+--- a/src/core/CMakeLists.txt
++++ b/src/core/CMakeLists.txt
+@@ -480,8 +480,6 @@ add_library(citra_core STATIC EXCLUDE_FROM_ALL
+     memory.h
+     movie.cpp
+     movie.h
+-    nus_download.cpp
+-    nus_download.h
+     perf_stats.cpp
+     perf_stats.h
+     precompiled_headers.h
+diff --git a/src/core/hle/service/am/am.cpp b/src/core/hle/service/am/am.cpp
+index f424674..0494504 100644
+--- a/src/core/hle/service/am/am.cpp
++++ b/src/core/hle/service/am/am.cpp
+@@ -45,7 +45,6 @@
+ #include "core/hw/unique_data.h"
+ #include "core/loader/loader.h"
+ #include "core/loader/smdh.h"
+-#include "core/nus_download.h"
+ 
+ SERIALIZE_EXPORT_IMPL(Service::AM::Module)
+ SERVICE_CONSTRUCT_IMPL(Service::AM::Module)

@@ -419,6 +419,15 @@ enum ROMStorageManager {
             throw ROMStorageError.duplicateFile(destinationURL.lastPathComponent)
         }
 
+        // Replacing a battery save is the one import that destroys progress, and
+        // "Replace?" is answered in a second: keep what is being replaced beside it
+        // (`<name>.old.sav`, same naming as a replaced ROM's save) so a wrong pick is
+        // recoverable from Files. Skipped when the picked file IS the live save.
+        if replaceExisting, FileManager.default.fileExists(atPath: destinationURL.path),
+           sourceURL.standardizedFileURL.resolvingSymlinksInPath() != destinationURL.standardizedFileURL.resolvingSymlinksInPath() {
+            keepCopyOfBatterySave(baseName: matchedROMBaseName)
+        }
+
         try copyItem(from: sourceURL, to: destinationURL, replaceExisting: replaceExisting)
         return destinationURL
     }

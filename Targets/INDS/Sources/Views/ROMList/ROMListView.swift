@@ -16,6 +16,7 @@ struct ROMListView: View {
     @State private var showingBIOSSetup = false
     @State private var showingSettings = false
     @State private var showingWelcome = false
+    @StateObject private var saveTransfer = ROMSaveTransferController()
 
     /// Filenames (`ROMFile.id`) imported by the most recent successful
     /// import — drives the brief "new" cell highlight below. Cleared a beat
@@ -124,6 +125,7 @@ struct ROMListView: View {
         ) { result in
             handleROMImport(result)
         }
+        .romSaveTransfer(saveTransfer)
         .sheet(isPresented: $showingBIOSSetup, onDismiss: viewModel.reload) {
             BIOSSetupView()
         }
@@ -350,9 +352,25 @@ struct ROMListView: View {
             ShareLink(item: rom.fileURL) {
                 Label("Share ROM", systemImage: "square.and.arrow.up")
             }
-            if let saveURL = rom.saveFileURL, rom.hasSaveFile {
-                ShareLink(item: saveURL) {
-                    Label("Export Save", systemImage: "square.and.arrow.down")
+            if ROMSaveTransfer.hasSave(rom) {
+                if rom.isThreeDS {
+                    // A 3DS save is a folder: zipped on demand, then shared.
+                    Button {
+                        saveTransfer.exportSave(of: rom)
+                    } label: {
+                        Label("Export Save", systemImage: "square.and.arrow.down")
+                    }
+                } else if let saveURL = rom.saveFileURL {
+                    ShareLink(item: saveURL) {
+                        Label("Export Save", systemImage: "square.and.arrow.down")
+                    }
+                }
+            }
+            if ROMSaveTransfer.supportsTransfer(rom) {
+                Button {
+                    saveTransfer.beginImport(for: rom)
+                } label: {
+                    Label("Import Save", systemImage: "square.and.arrow.up.on.square")
                 }
             }
             Button(role: .destructive) {
