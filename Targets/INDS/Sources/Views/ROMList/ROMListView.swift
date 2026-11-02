@@ -1,5 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
+import PhotosUI
 
 struct ROMListView: View {
     @EnvironmentObject private var viewModel: ROMListViewModel
@@ -16,6 +17,10 @@ struct ROMListView: View {
     @State private var showingBIOSSetup = false
     @State private var showingSettings = false
     @State private var showingWelcome = false
+    /// "Change Cover…": the game the picked photo is for, the picker flag and its selection.
+    @State private var coverTarget: ROMFile?
+    @State private var isPickingCover = false
+    @State private var coverItem: PhotosPickerItem?
     @StateObject private var saveTransfer = ROMSaveTransferController()
 
     /// Filenames (`ROMFile.id`) imported by the most recent successful
@@ -203,6 +208,21 @@ struct ROMListView: View {
         } message: {
             Text("\"ROM Only\" keeps its battery save and save states in case you re-import it later. \"ROM + Save Data\" removes everything for this game.")
         }
+        .photosPicker(isPresented: $isPickingCover, selection: $coverItem, matching: .images)
+        .onChange(of: coverItem) { _, item in
+            guard let item, let rom = coverTarget else { return }
+            coverItem = nil
+            coverTarget = nil
+            Task {
+                guard let data = try? await item.loadTransferable(type: Data.self) else { return }
+                do {
+                    try ROMIconStore.setCover(data: data, baseName: rom.baseName)
+                    viewModel.reload()
+                } catch {
+                    viewModel.importErrorMessage = error.localizedDescription
+                }
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .romImported)) { notification in
             viewModel.reload()
             // "Open in eDuo" from Files/AirDrop: same toast + highlight as
@@ -371,6 +391,20 @@ struct ROMListView: View {
                     saveTransfer.beginImport(for: rom)
                 } label: {
                     Label("Import Save", systemImage: "square.and.arrow.up.on.square")
+                }
+            }
+            Button {
+                coverTarget = rom
+                isPickingCover = true
+            } label: {
+                Label("Change Cover…", systemImage: "photo")
+            }
+            if rom.hasCustomCover {
+                Button {
+                    ROMIconStore.removeCover(baseName: rom.baseName)
+                    viewModel.reload()
+                } label: {
+                    Label("Reset Cover", systemImage: "arrow.uturn.backward")
                 }
             }
             Button(role: .destructive) {

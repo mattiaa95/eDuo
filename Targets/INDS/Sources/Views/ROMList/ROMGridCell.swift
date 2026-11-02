@@ -14,7 +14,8 @@ struct ROMGridCell: View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .top) {
                 ROMIconView(rom: rom, cornerRadius: 0)
-                    .padding(20)
+                    // Banner art is 32 px pixel art with breathing room; a picked cover fills the tile.
+                    .padding(rom.hasCustomCover ? 0 : 20)
                     .aspectRatio(1, contentMode: .fit)
                     .frame(maxWidth: .infinity)
                     .background(iconBackground)

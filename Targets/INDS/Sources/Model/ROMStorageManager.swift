@@ -558,6 +558,7 @@ enum ROMStorageManager {
         // The icon and thumbnail belong to the file, not the name: a later
         // import under this filename must render its own.
         ROMIconStore.invalidate(baseName: rom.baseName)
+        ROMIconStore.removeCover(baseName: rom.baseName)
         ThumbnailManager.invalidate(baseName: rom.baseName)
         // Cheats go with the ROM either way. Action Replay codes poke fixed
         // addresses, so a different game imported later under this name

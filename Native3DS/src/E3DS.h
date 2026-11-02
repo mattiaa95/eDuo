@@ -74,6 +74,12 @@ void E3DSTouch(bool down, float x, float y);
 /// Title from the game's SMDH (UTF-8), or NULL. Caller frees.
 char *E3DSCopyTitle(const char *path);
 
+/// The game's SMDH icon (the large one, always 48x48) as RGBA8, 4 bytes per pixel, rows top to
+/// bottom, fully opaque (the SMDH stores RGB565). Writes the size to `width`/`height` (either may be
+/// NULL). NULL (sizes 0) when the file has no valid SMDH, e.g. a .3dsx without the icon
+/// extension. Loader only, no core needed. Caller frees with free().
+unsigned char *E3DSCopyIcon(const char *path, int *width, int *height);
+
 /// The game's program ID, 0 if the file can't be read.
 unsigned long long E3DSProgramID(const char *path);
 /// Where the core keeps a title's save instead of its SD layout. `folder` (absolute; created

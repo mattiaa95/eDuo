@@ -15,6 +15,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <codecvt>
+#include <cstdlib>
 #include <cstring>
 #include <locale>
 #include <memory>
@@ -528,6 +529,36 @@ char* E3DSCopyTitle(const char* path) {
     std::u16string title(reinterpret_cast<const char16_t*>(raw.data()));
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
     return strdup(convert.to_bytes(title).c_str());
+}
+
+unsigned char* E3DSCopyIcon(const char* path, int* width, int* height) {
+    if (width) *width = 0;
+    if (height) *height = 0;
+    if (!path) return nullptr;
+    auto loader = Loader::GetLoader(path);
+    if (!loader) return nullptr;
+    std::vector<u8> smdh_data;
+    loader->ReadIcon(smdh_data, true);
+    if (!Loader::IsValidSMDH(smdh_data)) return nullptr;
+    Loader::SMDH smdh;
+    std::memcpy(&smdh, smdh_data.data(), sizeof(Loader::SMDH));
+    constexpr int kSide = 48;
+    const std::vector<u16> rgb565 = smdh.GetIcon(true);  // untiled, row-major
+    if (rgb565.size() != static_cast<std::size_t>(kSide * kSide)) return nullptr;
+    auto* rgba = static_cast<unsigned char*>(std::malloc(rgb565.size() * 4));
+    if (!rgba) return nullptr;
+    // Expand each 5/6/5 channel to 8 bits by replicating the top bits (0x1F -> 0xFF).
+    for (std::size_t i = 0; i < rgb565.size(); ++i) {
+        const u16 p = rgb565[i];
+        const unsigned r = (p >> 11) & 0x1F, gr = (p >> 5) & 0x3F, b = p & 0x1F;
+        rgba[i * 4 + 0] = static_cast<unsigned char>((r << 3) | (r >> 2));
+        rgba[i * 4 + 1] = static_cast<unsigned char>((gr << 2) | (gr >> 4));
+        rgba[i * 4 + 2] = static_cast<unsigned char>((b << 3) | (b >> 2));
+        rgba[i * 4 + 3] = 0xFF;
+    }
+    if (width) *width = kSide;
+    if (height) *height = kSide;
+    return rgba;
 }
 
 unsigned long long E3DSProgramID(const char* path) {

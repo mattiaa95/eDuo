@@ -21,6 +21,9 @@ struct ROMFile: Identifiable, Equatable {
     /// replaced, so caches keyed by name (parsed header/banner, the icon a
     /// cell already shows) know to re-read.
     let contentKey: String
+    /// Stamp of the cover the user picked for this game ("" = none, banner art).
+    let coverStamp: String
+    var hasCustomCover: Bool { !coverStamp.isEmpty }
 
     /// Placeholder shown when the header carries no game code.
     static let unknownGameCode = "----"
@@ -124,6 +127,7 @@ struct ROMFile: Identifiable, Equatable {
         let key = "\(fileURL.path)|\(values?.contentModificationDate?.timeIntervalSince1970 ?? 0)|\(values?.fileSize ?? 0)"
         self.fileSize = values?.fileSize.map(Int64.init)
         self.contentKey = key
+        self.coverStamp = ROMIconStore.coverStamp(baseName: (fileURL.lastPathComponent as NSString).deletingPathExtension)
         Self.parsedCacheLock.lock()
         let cached = Self.parsedCache[key]
         Self.parsedCacheLock.unlock()
