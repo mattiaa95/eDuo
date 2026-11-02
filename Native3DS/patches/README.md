@@ -24,6 +24,7 @@ patched tree is a no-op. To get back to pristine upstream:
 | `0004-prefer-dumped-shared-font.patch` | `src/core/hle/service/apt/apt.cpp` | Use the system font the player dumped from their own console, when present, before the bundled open-source replacement. |
 | `0005-fixed-open-shared-font.patch` | `externals/open_source_archives/CMakeLists.txt` | Puts `Native3DS/open_source_archives/include` (open-source system font with 20 missing glyphs restored; see `Native3DS/licenses/OpenSharedFont-NOTICE.txt`) ahead of Azahar's own include path when `EDUO_FRONTEND_DIR` is set. |
 | `0006-drop-nus-download.patch` | `src/core/CMakeLists.txt`, `src/core/hle/service/am/am.cpp` | Removes `core/nus_download.cpp` (HTTP client for Nintendo's title CDN) from the build, and its unused include. The app cannot download anything from Nintendo. |
+| `0007-eduo-save-folder-override.patch` | `src/common/file_util.cpp`, `src/common/file_util.h`, `src/core/file_sys/archive_source_sd_savedata.cpp`, `src/core/file_sys/archive_source_sd_savedata.h`, `src/core/file_sys/savedata_archive.h` | Lets the app point a title's SaveData archive at a folder of its own (`Saves/<game>.3dssave`) instead of the stock `sdmc/Nintendo 3DS/<id0>/<id1>/title/<high>/<low>/data/` layout. Save states keep recording the stock path and map it back to the folder when loaded, so states made before or after the override still load. |
 
 The pinned commit is recorded both as the submodule gitlink and as `PIN`
 in `scripts/build_3ds_core.sh`; the script refuses to build any other

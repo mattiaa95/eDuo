@@ -1,23 +1,44 @@
 import Foundation
 
-/// Export / import of a 3DS game's save, usable from the library (core not
-/// running) and from the pause menu.
+/// Where a 3DS game's save lives, plus Export / Import (usable from the
+/// library with the core stopped, and from the pause menu).
 ///
-/// Where the save lives: the core keeps it under its user folder
-/// (`Documents/System/`, see Native3DS/patches/0003):
+/// Like a DS `.sav`, the save is a plain item in `Documents/Saves`, visible in
+/// Files › eDuo › Saves: the core writes it straight into an app-chosen
+/// "container" (`E3DSSetSaveDataFolder`, see `ThreeDSGameViewController.startIfNeeded`):
 ///
-///     sdmc/Nintendo 3DS/<id0>/<id1>/title/<high>/<low>/data/00000001/...   save files
-///     sdmc/Nintendo 3DS/<id0>/<id1>/title/<high>/<low>/data/00000001.metadata
+///     Documents/Saves/<name>.3dssave/00000001/            the save files
+///     Documents/Saves/<name>.3dssave/00000001.metadata    mirrors the stock `data/` folder
 ///
-/// (`id0` and `id1` are 32 zeros; `high`/`low` are the two halves of the
-/// program ID in 8 hex digits). `E3DSCopySaveFolder` builds exactly that from
-/// `FileUtil::GetUserPath(SDMCDir)`, which sets itself up on first use, so it
-/// answers before any game has booted. The program ID comes from the ROM's
-/// own header (`E3DSProgramID`, Loader only, no core), and is cached per ROM
-/// so the library does not reopen every image each time it builds a menu.
+/// Builds up to 1.2.0 (64) left it in the core's own SD layout
+/// (`Documents/System/sdmc/Nintendo 3DS/<0s>/<0s>/title/<hi>/<lo>/data/00000001/` +
+/// `data/00000001.metadata`, `E3DSCopyLegacySaveFolder`); `prepareContainer` moves
+/// such a save into the container the first time the game is opened or looked at.
+///
+/// Which folder a game uses (`container(programID:baseName:)`), in this order:
+///  a. `<baseName>.3dssave` exists and the registry (UserDefaults `eDuo3DSSaveFolders`,
+///     folder name -> program ID) has no entry for it or one for this program ID: that
+///     one, registered. This is what makes a folder copied in from another device work
+///     with nothing imported.
+///  b. Else a registered folder of this same program ID that exists: two images of one
+///     game (a .3ds and a .cia) share the first one's folder, as the old core folder,
+///     keyed by program ID, did.
+///  c. Else, `<baseName>.3dssave` exists but belongs to a different program ID (another
+///     game once had this file name, e.g. Replace ROM): `<baseName> (<16 hex ID>).3dssave`,
+///     so the other game's folder is never touched.
+///  d. Else `<baseName>.3dssave`, registered but not created: the core makes it on the
+///     game's first save, resolving never creates empty folders.
+/// The program ID comes from the ROM's own header (`E3DSProgramID`, Loader only, no core)
+/// and is cached per ROM so the library does not reopen every image each time it builds
+/// a menu.
 enum ThreeDSSaveTransfer {
 
     // MARK: - Locating the save
+
+    static let containerExtension = "3dssave"
+    private static let saveSubfolder = "00000001"
+    private static let registryKey = "eDuo3DSSaveFolders"
+    private static let registryLock = NSLock()
 
     /// 0 means the loader could not read the image; never cached.
     static func programID(for rom: ROMFile) -> UInt64? {
@@ -35,28 +56,298 @@ enum ThreeDSSaveTransfer {
         return id
     }
 
-    /// `.../data/00000001/` for this game.
-    static func saveFolder(for rom: ROMFile) -> URL? {
-        programID(for: rom).flatMap(saveFolder(forProgramID:))
+    private static func idString(_ programID: UInt64) -> String { String(format: "%016llX", programID) }
+
+    // The registry: folder name (no extension) -> program ID. Callers hold `registryLock`.
+    private static func loadRegistry() -> [String: String] {
+        UserDefaults.standard.dictionary(forKey: registryKey) as? [String: String] ?? [:]
     }
 
-    static func saveFolder(forProgramID programID: UInt64) -> URL? {
-        guard let path = E3DSCopySaveFolder(programID) else { return nil }
-        defer { free(path) }
-        return URL(fileURLWithPath: String(cString: path), isDirectory: true)
+    private static func storeRegistry(_ registry: [String: String]) {
+        UserDefaults.standard.set(registry, forKey: registryKey)
+    }
+
+    /// The registered program ID (16 hex digits) of a folder name, if any.
+    static func registeredID(forFolderName name: String) -> String? {
+        registryLock.lock(); defer { registryLock.unlock() }
+        return loadRegistry()[name]
+    }
+
+    static func forgetRegistration(ofFolderName name: String) {
+        registryLock.lock(); defer { registryLock.unlock() }
+        var registry = loadRegistry()
+        guard registry.removeValue(forKey: name) != nil else { return }
+        storeRegistry(registry)
+    }
+
+    private static func folderURL(_ name: String, in saves: URL) -> URL {
+        saves.appendingPathComponent("\(name).\(containerExtension)", isDirectory: true)
+    }
+
+    /// Rules a-d above, no side effects. Callers hold `registryLock`.
+    private static func resolveName(programID: UInt64, baseName: String, saves: URL, registry: [String: String]) -> String {
+        let fm = FileManager.default
+        let id = idString(programID)
+        let baseExists = fm.fileExists(atPath: folderURL(baseName, in: saves).path)
+        if baseExists, registry[baseName] == nil || registry[baseName] == id { return baseName }
+        for name in registry.keys.sorted() where registry[name] == id && fm.fileExists(atPath: folderURL(name, in: saves).path) {
+            return name
+        }
+        return baseExists ? "\(baseName) (\(id))" : baseName
+    }
+
+    /// `Saves/<name>.3dssave/` for this game (see the rules above). With `prepare`
+    /// (and no core running) the folder is also brought to the current layout and a
+    /// legacy save is migrated into it, and the choice is registered. `prepare: false`
+    /// is for callers that only need the name (delete, rename).
+    static func container(programID: UInt64, baseName: String, prepare: Bool = true) -> URL? {
+        guard let saves = try? ROMStorageManager.savesDirectoryURL() else { return nil }
+        registryLock.lock()
+        var registry = loadRegistry()
+        let name = resolveName(programID: programID, baseName: baseName, saves: saves, registry: registry)
+        let url = folderURL(name, in: saves)
+        if prepare, registry[name] != idString(programID) {
+            registry[name] = idString(programID)
+            storeRegistry(registry)
+        }
+        registryLock.unlock()
+        if prepare, !E3DSIsRunning() {
+            prepareContainer(programID: programID, name: name, container: url, saves: saves)
+        }
+        return url
+    }
+
+    /// nil for .3dsx / an unreadable program ID.
+    static func container(for rom: ROMFile, prepare: Bool = true) -> URL? {
+        programID(for: rom).flatMap { container(programID: $0, baseName: rom.baseName, prepare: prepare) }
+    }
+
+    /// `<container>/00000001/`: the save files.
+    static func saveFolder(for rom: ROMFile) -> URL? {
+        container(for: rom)?.appendingPathComponent(saveSubfolder, isDirectory: true)
     }
 
     static func metadataURL(forFolder folder: URL) -> URL {
         folder.deletingLastPathComponent().appendingPathComponent(ThreeDSSaveArchive.metadataName)
     }
 
+    /// Where builds up to 1.2.0 kept the save: `.../data/00000001/` (its metadata sits beside it).
+    static func legacySaveFolder(forProgramID programID: UInt64) -> URL? {
+        guard let path = E3DSCopyLegacySaveFolder(programID) else { return nil }
+        defer { free(path) }
+        var string = String(cString: path)
+        while string.count > 1, string.hasSuffix("/") { string.removeLast() }
+        return URL(fileURLWithPath: string, isDirectory: true)
+    }
+
     private static func children(of folder: URL) -> [URL] {
         (try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? []
     }
 
+    private static func visibleChildren(of folder: URL) -> [URL] {
+        (try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
+    }
+
     static func hasSave(for rom: ROMFile) -> Bool {
         guard let folder = saveFolder(for: rom) else { return false }
-        return !children(of: folder).isEmpty
+        return !visibleChildren(of: folder).isEmpty
+    }
+
+    // MARK: - Layout and migration
+
+    private static func isDirectory(_ url: URL) -> Bool {
+        var isDir: ObjCBool = false
+        return FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir) && isDir.boolValue
+    }
+
+    /// Removes a folder only if it holds nothing at all.
+    private static func removeIfEmpty(_ url: URL) -> Bool {
+        guard isDirectory(url), children(of: url).isEmpty else { return false }
+        return (try? FileManager.default.removeItem(at: url)) != nil
+    }
+
+    /// Newest modification date of any file under `folder`, and of the metadata file.
+    private static func latestModification(folder: URL, metadata: URL) -> Date {
+        let fm = FileManager.default
+        var latest = Date.distantPast
+        let keys: [URLResourceKey] = [.contentModificationDateKey, .isRegularFileKey]
+        if let items = fm.enumerator(at: folder, includingPropertiesForKeys: keys) {
+            for case let url as URL in items {
+                let values = try? url.resourceValues(forKeys: Set(keys))
+                if values?.isRegularFile == true, let date = values?.contentModificationDate, date > latest { latest = date }
+            }
+        }
+        if let date = (try? metadata.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate, date > latest {
+            latest = date
+        }
+        return latest
+    }
+
+    /// `Saves/<name>.old.3dssave` (`.old2...` if taken), not created.
+    private static func freeOldURL(name: String, saves: URL) -> URL {
+        let fm = FileManager.default
+        var counter = 1
+        var target = folderURL("\(name).old", in: saves)
+        while fm.fileExists(atPath: target.path) {
+            counter += 1
+            target = folderURL("\(name).old\(counter)", in: saves)
+        }
+        return target
+    }
+
+    /// A save = `<folder>` (files) + its metadata file; moves both (a rename, same
+    /// volume). If the metadata cannot follow, the files go back. False = nothing changed.
+    private static func moveSave(folder: URL, metadata: URL, toFolder: URL, toMetadata: URL) -> Bool {
+        let fm = FileManager.default
+        do {
+            try fm.createDirectory(at: toFolder.deletingLastPathComponent(), withIntermediateDirectories: true)
+            if fm.fileExists(atPath: toFolder.path), !removeIfEmpty(toFolder) {
+                debugLog("3DS save: \(toFolder.path) is not empty, nothing moved")
+                return false
+            }
+            try fm.moveItem(at: folder, to: toFolder)
+        } catch {
+            debugLog("3DS save: could not move \(folder.path): \(error.localizedDescription)")
+            return false
+        }
+        guard fm.fileExists(atPath: metadata.path) else { return true }
+        do {
+            if fm.fileExists(atPath: toMetadata.path) {
+                // Belongs to an empty save, which the move above just replaced.
+                _ = try fm.replaceItemAt(toMetadata, withItemAt: metadata)
+            } else {
+                try fm.moveItem(at: metadata, to: toMetadata)
+            }
+        } catch {
+            debugLog("3DS save: could not move \(metadata.path): \(error.localizedDescription); putting the files back")
+            try? fm.moveItem(at: toFolder, to: folder)
+            return false
+        }
+        return true
+    }
+
+    /// Brings a container to the current layout, then migrates a legacy save (build 64 or older) into it.
+    /// Loss-free and idempotent; only runs with the core stopped.
+    private static func prepareContainer(programID: UInt64, name: String, container: URL, saves: URL) {
+        normalizeFlatLayout(container)
+        migrateLegacySave(programID: programID, name: name, container: container, saves: saves)
+    }
+
+    /// Our Export zip (and a `.old.3dssave` copy from before the layout change) is
+    /// flat: save files + `00000001.metadata`. Wraps the files in `00000001/`.
+    private static func normalizeFlatLayout(_ container: URL) {
+        let fm = FileManager.default
+        let files = container.appendingPathComponent(saveSubfolder, isDirectory: true)
+        guard isDirectory(container), !fm.fileExists(atPath: files.path),
+              fm.fileExists(atPath: container.appendingPathComponent(ThreeDSSaveArchive.metadataName).path) else { return }
+        let items = visibleChildren(of: container).filter { $0.lastPathComponent != ThreeDSSaveArchive.metadataName }
+        var moved: [(from: URL, to: URL)] = []
+        do {
+            try fm.createDirectory(at: files, withIntermediateDirectories: false)
+            for item in items {
+                let target = files.appendingPathComponent(item.lastPathComponent)
+                try fm.moveItem(at: item, to: target)
+                moved.append((item, target))
+            }
+            debugLog("3DS save: wrapped \(items.count) item(s) of \(container.lastPathComponent) in \(saveSubfolder)/")
+        } catch {
+            debugLog("3DS save: could not normalize \(container.lastPathComponent): \(error.localizedDescription); undoing")
+            for pair in moved.reversed() { try? fm.moveItem(at: pair.to, to: pair.from) }
+            _ = removeIfEmpty(files)
+        }
+    }
+
+    private static func migrateLegacySave(programID: UInt64, name: String, container: URL, saves: URL) {
+        guard let legacyFiles = legacySaveFolder(forProgramID: programID),
+              !visibleChildren(of: legacyFiles).isEmpty else { return }
+        let legacyData = legacyFiles.deletingLastPathComponent()
+        let legacyMetadata = metadataURL(forFolder: legacyFiles)
+        let files = container.appendingPathComponent(saveSubfolder, isDirectory: true)
+        let metadata = metadataURL(forFolder: files)
+
+        func finish(_ what: String) {
+            _ = removeIfEmpty(legacyData)
+            debugLog("3DS save: \(what) (program \(idString(programID)) -> \(container.lastPathComponent))")
+        }
+
+        if visibleChildren(of: files).isEmpty {
+            if moveSave(folder: legacyFiles, metadata: legacyMetadata, toFolder: files, toMetadata: metadata) {
+                finish("migrated the legacy save")
+            }
+            return
+        }
+
+        // Both sides have a save: the one touched last stays live, the other is kept aside.
+        let containerDate = latestModification(folder: files, metadata: metadata)
+        let legacyDate = latestModification(folder: legacyFiles, metadata: legacyMetadata)
+        let old = freeOldURL(name: name, saves: saves)
+        let oldFiles = old.appendingPathComponent(saveSubfolder, isDirectory: true)
+        let oldMetadata = metadataURL(forFolder: oldFiles)
+        if legacyDate > containerDate {
+            guard moveSave(folder: files, metadata: metadata, toFolder: oldFiles, toMetadata: oldMetadata) else { return }
+            if moveSave(folder: legacyFiles, metadata: legacyMetadata, toFolder: files, toMetadata: metadata) {
+                finish("legacy save is newer, replaced the container's; the previous one is in \(old.lastPathComponent)")
+            } else {
+                _ = moveSave(folder: oldFiles, metadata: oldMetadata, toFolder: files, toMetadata: metadata)
+                _ = removeIfEmpty(old)
+                debugLog("3DS save: could not install the legacy save, left both in place")
+            }
+        } else if moveSave(folder: legacyFiles, metadata: legacyMetadata, toFolder: oldFiles, toMetadata: oldMetadata) {
+            finish("container is newer, the legacy save is kept in \(old.lastPathComponent)")
+        }
+    }
+
+    // MARK: - Delete / rename (called by ROMStorageManager)
+
+    /// "Delete ROM + Save Data": the container, its registry entry and a leftover legacy
+    /// folder. The caller checks that no other ROM shares this program ID. Never touches
+    /// `.old.3dssave` copies (the DS keeps `.old.sav` too).
+    static func deleteSave(programID: UInt64, baseName: String) {
+        let fm = FileManager.default
+        if let saves = try? ROMStorageManager.savesDirectoryURL() {
+            registryLock.lock()
+            let name = resolveName(programID: programID, baseName: baseName, saves: saves, registry: loadRegistry())
+            registryLock.unlock()
+            let url = folderURL(name, in: saves)
+            if fm.fileExists(atPath: url.path) {
+                do { try fm.removeItem(at: url); debugLog("3DS save: deleted \(url.lastPathComponent)") }
+                catch { debugLog("3DS save: could not delete \(url.lastPathComponent): \(error.localizedDescription)") }
+            }
+            forgetRegistration(ofFolderName: name)
+        }
+        if let legacy = legacySaveFolder(forProgramID: programID) {
+            let data = legacy.deletingLastPathComponent()
+            if fm.fileExists(atPath: data.path) {
+                do { try fm.removeItem(at: data); debugLog("3DS save: deleted the legacy folder for \(idString(programID))") }
+                catch { debugLog("3DS save: could not delete \(data.path): \(error.localizedDescription)") }
+            }
+        }
+    }
+
+    /// Rename: the container to move, if it is named after `oldBaseName` and exists
+    /// (a container shared with another ROM's name stays put). Throws when
+    /// `<new>.3dssave` is already there, like a `.sav` under the target name.
+    static func renamePlan(programID: UInt64, from oldBaseName: String, to newBaseName: String) throws -> (from: URL, to: URL)? {
+        guard let saves = try? ROMStorageManager.savesDirectoryURL() else { return nil }
+        registryLock.lock()
+        let name = resolveName(programID: programID, baseName: oldBaseName, saves: saves, registry: loadRegistry())
+        registryLock.unlock()
+        let from = folderURL(oldBaseName, in: saves)
+        guard name == oldBaseName, FileManager.default.fileExists(atPath: from.path) else { return nil }
+        let to = folderURL(newBaseName, in: saves)
+        if FileManager.default.fileExists(atPath: to.path) {
+            throw ROMStorageError.duplicateFile(to.lastPathComponent)
+        }
+        return (from, to)
+    }
+
+    /// The registry follows a container that was moved from `old` to `new`.
+    static func didRename(programID: UInt64, from oldBaseName: String, to newBaseName: String) {
+        registryLock.lock(); defer { registryLock.unlock() }
+        var registry = loadRegistry()
+        registry.removeValue(forKey: oldBaseName)
+        registry[newBaseName] = idString(programID)
+        storeRegistry(registry)
     }
 
     // MARK: - Export
@@ -86,7 +377,8 @@ enum ThreeDSSaveTransfer {
     }
 
     /// Replaces the save with the staged files. The previous save is copied
-    /// to `Documents/Saves/<game>.old.3dssave` (`.old2...` if taken) first.
+    /// to `Documents/Saves/<name>.old.3dssave` (`.old2...` if taken) first, in the
+    /// container layout.
     /// The core must not be running on this game: call it from the library, or
     /// from the pause menu once the core has stopped.
     static func install(staged: URL, for rom: ROMFile) throws {
@@ -97,7 +389,7 @@ enum ThreeDSSaveTransfer {
         let carriesMetadata = fm.fileExists(atPath: stagedMetadata.path)
         guard carriesMetadata || fm.fileExists(atPath: metadata.path) else { throw SaveTransferError.notFormatted }
 
-        keepCopyOfCurrentSave(for: rom, folder: folder, metadata: metadata)
+        keepCopyOfCurrentSave(folder: folder, metadata: metadata)
 
         // The live save steps aside (a rename, same volume) instead of being
         // deleted up front, and comes back if anything below fails, so an
@@ -133,22 +425,22 @@ enum ThreeDSSaveTransfer {
         try? fm.removeItem(at: staged)
     }
 
-    private static func keepCopyOfCurrentSave(for rom: ROMFile, folder: URL, metadata: URL) {
+    /// Copy of the live save as `Saves/<name>.old.3dssave` in the container layout
+    /// (`00000001/` + `00000001.metadata`), so renaming it to `<name>.3dssave` makes it live.
+    private static func keepCopyOfCurrentSave(folder: URL, metadata: URL) {
         let fm = FileManager.default
-        var items = children(of: folder)
-        if fm.fileExists(atPath: metadata.path) { items.append(metadata) }
-        guard !items.isEmpty, let saves = try? ROMStorageManager.savesDirectoryURL() else { return }
-        var counter = 1
-        var target = saves.appendingPathComponent("\(rom.baseName).old.3dssave", isDirectory: true)
-        while fm.fileExists(atPath: target.path) {
-            counter += 1
-            target = saves.appendingPathComponent("\(rom.baseName).old\(counter).3dssave", isDirectory: true)
-        }
+        let hasFiles = !children(of: folder).isEmpty
+        let hasMetadata = fm.fileExists(atPath: metadata.path)
+        guard hasFiles || hasMetadata, let saves = try? ROMStorageManager.savesDirectoryURL() else { return }
+        let name = folder.deletingLastPathComponent().deletingPathExtension().lastPathComponent
+        let target = freeOldURL(name: name, saves: saves)
+        let targetFiles = target.appendingPathComponent(saveSubfolder, isDirectory: true)
         do {
             try fm.createDirectory(at: target, withIntermediateDirectories: true)
-            for item in items { try fm.copyItem(at: item, to: target.appendingPathComponent(item.lastPathComponent)) }
+            if hasFiles { try fm.copyItem(at: folder, to: targetFiles) }
+            if hasMetadata { try fm.copyItem(at: metadata, to: metadataURL(forFolder: targetFiles)) }
         } catch {
-            debugLog("Could not keep a copy of the 3DS save for \(rom.baseName): \(error.localizedDescription)")
+            debugLog("Could not keep a copy of the 3DS save for \(name): \(error.localizedDescription)")
         }
     }
 }

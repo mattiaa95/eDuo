@@ -38,6 +38,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         DSMetalGoldenHarness.runIfRequested()
         // Drives a 3DS homebrew with synthetic d-pad taps (`-eDuoAutoplay3DS`), for the save checks.
         INDSDebugAutoplay.runIfRequested()
+        // The 3DS save container (core test + migration cases, no ROM), `-eDuo3DSSaveSelfTest`.
+        INDSSave3DSSelfTest.runIfRequested()
 #endif
         EntitlementManager.shared.startTransactionListener()
         EntitlementManager.shared.refreshEntitlementsAsync()
@@ -292,6 +294,188 @@ enum INDSDebugAutoplay {
                 DispatchQueue.main.async { UIApplication.shared.perform(NSSelectorFromString("suspend")) }
             }
         }
+    }
+}
+
+/// `-eDuo3DSSaveSelfTest` (Debug builds only; inert without the flag): checks the 3DS save
+/// container end to end without a ROM. (A) the core's own save path against
+/// `Saves/eDuoSelfTest.3dssave/` (`E3DSSaveSelfTest`); (B) `ThreeDSSaveTransfer`'s
+/// migration from the legacy core folder, the flat layout, folder sharing and a name
+/// taken by another game, with fake program IDs. Lines go to the log (`[3dssave]`) and to
+/// `Documents/eDuo-3dssave-selftest.txt`, ending in `RESULT PASS n/n` or `RESULT FAIL`.
+/// The resulting folders stay in `Documents/Saves` as evidence; every run starts by
+/// clearing the previous ones.
+enum INDSSave3DSSelfTest {
+    static func runIfRequested() {
+        guard ProcessInfo.processInfo.arguments.contains("-eDuo3DSSaveSelfTest") else { return }
+        DispatchQueue(label: "eDuo.3dssave.selftest").async { run() }
+    }
+
+    private static func run() {
+        let fm = FileManager.default
+        var lines: [String] = []
+        var passed = 0, total = 0
+        func log(_ line: String) { lines.append(line); NSLog("[3dssave] %@", line) }
+        func check(_ ok: Bool, _ what: String) {
+            total += 1
+            if ok { passed += 1 }
+            log("\(ok ? "ok  " : "FAIL") \(what)")
+        }
+        func finish() {
+            let result = passed == total && total > 0 ? "RESULT PASS \(passed)/\(total)" : "RESULT FAIL \(passed)/\(total)"
+            log(result)
+            if let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first {
+                try? (lines.map { "[3dssave] " + $0 }.joined(separator: "\n") + "\n")
+                    .write(to: docs.appendingPathComponent("eDuo-3dssave-selftest.txt"), atomically: true, encoding: .utf8)
+            }
+        }
+        guard !E3DSIsRunning(), let saves = try? ROMStorageManager.savesDirectoryURL() else {
+            check(false, "no core running and Saves available")
+            return finish()
+        }
+
+        // Clean the previous run: test folders, their registry entries, fake legacy folders.
+        let prefixes = ["eDuoSelfTest", "eDuoMigration", "eDuoFlat", "eDuoShare"]
+        for url in (try? fm.contentsOfDirectory(at: saves, includingPropertiesForKeys: nil)) ?? []
+        where url.pathExtension == "3dssave" && prefixes.contains(where: { url.lastPathComponent.hasPrefix($0) }) {
+            try? fm.removeItem(at: url)
+            ThreeDSSaveTransfer.forgetRegistration(ofFolderName: url.deletingPathExtension().lastPathComponent)
+        }
+        ThreeDSSaveTransfer.forgetRegistration(ofFolderName: "eDuoShareA (00040000000ED604)")
+        let pidMigrate: UInt64 = 0x00040000000ED600, pidBoth: UInt64 = 0x00040000000ED601
+        let pidFlat: UInt64 = 0x00040000000ED602, pidShare: UInt64 = 0x00040000000ED603
+        let pidOther: UInt64 = 0x00040000000ED604, pidKeep: UInt64 = 0x00040000000ED605
+        for pid in [pidMigrate, pidBoth, pidFlat, pidShare, pidOther, pidKeep] {
+            if let legacy = ThreeDSSaveTransfer.legacySaveFolder(forProgramID: pid) {
+                try? fm.removeItem(at: legacy.deletingLastPathComponent())
+            }
+        }
+
+        // (A) The core's own save path.
+        let coreFolder = saves.appendingPathComponent("eDuoSelfTest.3dssave", isDirectory: true)
+        var report = [CChar](repeating: 0, count: 4096)
+        let rc = E3DSSaveSelfTest(coreFolder.path + "/", &report, 4096)
+        let text = report.withUnsafeBufferPointer { String(cString: $0.baseAddress!) }
+        for line in text.split(separator: "\n") { log("core: \(line)") }
+        check(rc == 0, "E3DSSaveSelfTest returned \(rc)")
+
+        // (B) Migration and layout.
+        func bytes(_ n: Int) -> Data { Data((0..<n).map { _ in UInt8.random(in: 0...255) }) }
+        func put(_ data: Data, _ url: URL) {
+            try? fm.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try? data.write(to: url)
+        }
+        func same(_ url: URL, _ data: Data) -> Bool { (try? Data(contentsOf: url)) == data }
+        func exists(_ url: URL) -> Bool { fm.fileExists(atPath: url.path) }
+        func age(_ folder: URL, days: Double) {
+            let past = Date().addingTimeInterval(-days * 86400)
+            guard let items = fm.enumerator(at: folder, includingPropertiesForKeys: nil) else { return }
+            for case let url as URL in items {
+                try? fm.setAttributes([.modificationDate: past], ofItemAtPath: url.path)
+            }
+        }
+        func legacy(_ pid: UInt64) -> (files: URL, metadata: URL)? {
+            guard let files = ThreeDSSaveTransfer.legacySaveFolder(forProgramID: pid) else { return nil }
+            return (files, files.deletingLastPathComponent().appendingPathComponent("00000001.metadata"))
+        }
+        func legacyEmpty(_ pid: UInt64) -> Bool {
+            guard let l = legacy(pid) else { return false }
+            return !exists(l.files) || ((try? fm.contentsOfDirectory(atPath: l.files.path)) ?? []).isEmpty
+        }
+        func dir(_ name: String) -> URL { saves.appendingPathComponent("\(name).3dssave", isDirectory: true) }
+
+        // 1. Legacy save, empty container: moved byte-identical, legacy emptied, idempotent.
+        do {
+            let name = "eDuoMigrationTest", save = bytes(300), inner = bytes(77), meta = bytes(16)
+            if let l = legacy(pidMigrate) {
+                put(save, l.files.appendingPathComponent("save.bin"))
+                put(inner, l.files.appendingPathComponent("sub/inner.dat"))
+                put(meta, l.metadata)
+            }
+            let c = ThreeDSSaveTransfer.container(programID: pidMigrate, baseName: name)
+            check(c?.lastPathComponent == "\(name).3dssave", "migrate: container name")
+            if let c {
+                check(same(c.appendingPathComponent("00000001/save.bin"), save), "migrate: save.bin moved intact")
+                check(same(c.appendingPathComponent("00000001/sub/inner.dat"), inner), "migrate: subfolder file moved intact")
+                check(same(c.appendingPathComponent("00000001.metadata"), meta), "migrate: metadata moved intact")
+            }
+            check(legacyEmpty(pidMigrate), "migrate: legacy folder emptied")
+            check(legacy(pidMigrate).map { !exists($0.files.deletingLastPathComponent()) } ?? false, "migrate: legacy data folder removed")
+            _ = ThreeDSSaveTransfer.container(programID: pidMigrate, baseName: name)
+            check(!exists(dir("\(name).old")), "migrate: second run changes nothing")
+            check(ThreeDSSaveTransfer.registeredID(forFolderName: name) == "00040000000ED600", "migrate: registered")
+        }
+
+        // 2. Both sides have a save, legacy newer: legacy wins, the older container save goes to .old.3dssave.
+        do {
+            let name = "eDuoMigrationBoth", oldBytes = bytes(120), oldMeta = bytes(16), newBytes = bytes(220), newMeta = bytes(16)
+            let c = dir(name)
+            put(oldBytes, c.appendingPathComponent("00000001/old.bin"))
+            put(oldMeta, c.appendingPathComponent("00000001.metadata"))
+            age(c, days: 2)
+            if let l = legacy(pidBoth) {
+                put(newBytes, l.files.appendingPathComponent("new.bin"))
+                put(newMeta, l.metadata)
+            }
+            let got = ThreeDSSaveTransfer.container(programID: pidBoth, baseName: name)
+            check(got == c, "both(legacy newer): container is the existing folder")
+            check(same(c.appendingPathComponent("00000001/new.bin"), newBytes), "both(legacy newer): legacy file is live")
+            check(!exists(c.appendingPathComponent("00000001/old.bin")), "both(legacy newer): old file gone from container")
+            check(same(c.appendingPathComponent("00000001.metadata"), newMeta), "both(legacy newer): legacy metadata is live")
+            let old = dir("\(name).old")
+            check(same(old.appendingPathComponent("00000001/old.bin"), oldBytes), "both(legacy newer): old save kept in .old.3dssave")
+            check(same(old.appendingPathComponent("00000001.metadata"), oldMeta), "both(legacy newer): old metadata kept in .old.3dssave")
+            check(legacyEmpty(pidBoth), "both(legacy newer): legacy folder emptied")
+        }
+
+        // 3. Both sides have a save, container newer: container stays, legacy kept aside.
+        do {
+            let name = "eDuoMigrationKeep", liveBytes = bytes(90), liveMeta = bytes(16), oldBytes = bytes(150), oldMeta = bytes(16)
+            let c = dir(name)
+            put(liveBytes, c.appendingPathComponent("00000001/live.bin"))
+            put(liveMeta, c.appendingPathComponent("00000001.metadata"))
+            if let l = legacy(pidKeep) {
+                put(oldBytes, l.files.appendingPathComponent("legacy.bin"))
+                put(oldMeta, l.metadata)
+                age(l.files.deletingLastPathComponent(), days: 3)
+            }
+            _ = ThreeDSSaveTransfer.container(programID: pidKeep, baseName: name)
+            check(same(c.appendingPathComponent("00000001/live.bin"), liveBytes), "both(container newer): container save untouched")
+            check(!exists(c.appendingPathComponent("00000001/legacy.bin")), "both(container newer): legacy file not mixed in")
+            let old = dir("\(name).old")
+            check(same(old.appendingPathComponent("00000001/legacy.bin"), oldBytes), "both(container newer): legacy kept in .old.3dssave")
+            check(same(old.appendingPathComponent("00000001.metadata"), oldMeta), "both(container newer): legacy metadata kept")
+            check(legacyEmpty(pidKeep), "both(container newer): legacy folder emptied")
+        }
+
+        // 4. Flat layout (our Export zip): wrapped in 00000001/.
+        do {
+            let name = "eDuoFlatTest", slot = bytes(64), inner = bytes(33), meta = bytes(16)
+            let c = dir(name)
+            put(slot, c.appendingPathComponent("slot.bin"))
+            put(inner, c.appendingPathComponent("sub/x.dat"))
+            put(meta, c.appendingPathComponent("00000001.metadata"))
+            _ = ThreeDSSaveTransfer.container(programID: pidFlat, baseName: name)
+            check(same(c.appendingPathComponent("00000001/slot.bin"), slot), "flat: file wrapped in 00000001/")
+            check(same(c.appendingPathComponent("00000001/sub/x.dat"), inner), "flat: subfolder wrapped in 00000001/")
+            check(same(c.appendingPathComponent("00000001.metadata"), meta), "flat: metadata stays beside 00000001/")
+            check(!exists(c.appendingPathComponent("slot.bin")) && !exists(c.appendingPathComponent("sub")), "flat: nothing left at the top level")
+        }
+
+        // 5. Name resolution: sharing by program ID, and a name taken by another game.
+        do {
+            let a = "eDuoShareA", b = "eDuoShareB"
+            check(ThreeDSSaveTransfer.container(programID: pidShare, baseName: a, prepare: false)?.lastPathComponent == "\(a).3dssave", "resolve: fresh name")
+            check(!exists(dir(a)), "resolve: resolving creates nothing")
+            put(bytes(8), dir(a).appendingPathComponent("00000001/s.bin"))
+            _ = ThreeDSSaveTransfer.container(programID: pidShare, baseName: a)
+            check(ThreeDSSaveTransfer.container(programID: pidShare, baseName: b)?.lastPathComponent == "\(a).3dssave", "resolve: second image of the same game shares the first folder")
+            let other = ThreeDSSaveTransfer.container(programID: pidOther, baseName: a)?.lastPathComponent
+            check(other == "\(a) (00040000000ED604).3dssave", "resolve: name taken by another game gets the ID suffix (\(other ?? "nil"))")
+            check(!exists(dir("\(a) (00040000000ED604)")), "resolve: the other game's folder is not created")
+        }
+
+        finish()
     }
 }
 #endif

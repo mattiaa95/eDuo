@@ -76,8 +76,22 @@ char *E3DSCopyTitle(const char *path);
 
 /// The game's program ID, 0 if the file can't be read.
 unsigned long long E3DSProgramID(const char *path);
-/// Folder holding the game's save files (the core's SD layout). Caller frees.
-char *E3DSCopySaveFolder(unsigned long long programID);
+/// Where the core keeps a title's save instead of its SD layout. `folder` (absolute; created
+/// on demand by the game's first Format) holds `00000001/` (the save files) and
+/// `00000001.metadata`: exactly what the stock layout keeps in
+/// sdmc/Nintendo 3DS/<id0>/<id1>/title/<high>/<low>/data/. NULL or "" removes the override.
+/// Call before E3DSRun (the core reads it on every save access); it stays until changed.
+/// Save states keep recording the stock path, mapped to `folder` when loaded, so states
+/// made before or after an override load either way.
+void E3DSSetSaveDataFolder(unsigned long long programID, const char *folder);
+/// The stock save folder (`.../title/<high>/<low>/data/00000001/`), ignoring any override:
+/// where builds up to 1.2.0 (64) kept every save. Caller frees.
+char *E3DSCopyLegacySaveFolder(unsigned long long programID);
+/// Debug self-test (no ROM, no running core): points a fake title at `folder`, then runs the
+/// core's own save path (ArchiveSource_SDSaveData Format + Open, create, write, close) and
+/// checks the file and the metadata landed in `folder`, plus the save-state path mapping.
+/// Writes a line per check into `report` (NUL-terminated). 0 = all passed. Leaves the files.
+int E3DSSaveSelfTest(const char *folder, char *report, int reportLength);
 /// The game's cheat file (Gateway text, `*citra_enabled` marks enabled
 /// cheats). Caller frees.
 char *E3DSCopyCheatFile(unsigned long long programID);

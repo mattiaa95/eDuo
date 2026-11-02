@@ -15,11 +15,14 @@ struct ROMDetailView: View {
 
     private let thumbnail: UIImage?
     private let saveStates: [NDSSaveStateSlotInfo]
+    /// Computed once: for 3DS it can touch the disk (and migrate a save from build 64 or older).
+    private let hasSave: Bool
 
     init(rom: ROMFile) {
         self.rom = rom
         self.thumbnail = ThumbnailManager.thumbnail(baseName: rom.baseName)
         self.saveStates = NDSSaveStatePaths.slotInfos(forBaseName: rom.baseName)
+        self.hasSave = ROMSaveTransfer.supportsTransfer(rom) && ROMSaveTransfer.hasSave(rom)
     }
 
     private static let dateFormatter: DateFormatter = {
@@ -62,9 +65,12 @@ struct ROMDetailView: View {
                          label: "Save Data",
                          // 3DS homebrew keeps its data in its own sdmc folder: "—", not a misleading "None".
                          value: !ROMSaveTransfer.supportsTransfer(rom) ? "—"
-                            : ROMSaveTransfer.hasSave(rom)
+                            : hasSave
                             ? NSLocalizedString("Present", comment: "ROM preview stat value: the game has save data (in-game save)")
-                            : NSLocalizedString("None", comment: "ROM preview stat value: the game has no save data yet"))
+                            : NSLocalizedString("None", comment: "ROM preview stat value: the game has no save data yet"),
+                         detail: hasSave
+                            ? NSLocalizedString("Files › eDuo › Saves", comment: "ROM preview: where the save file is, in the Files app")
+                            : nil)
             }
 
             if !saveStates.isEmpty {
@@ -108,7 +114,7 @@ struct ROMDetailView: View {
     /// `label` is a `LocalizedStringKey` so the literals at the call sites
     /// localize; `value` stays a `String` because it is mostly runtime data
     /// (file size, date, game code) — call sites localize it when it isn't.
-    private func statItem(icon: String, label: LocalizedStringKey, value: String) -> some View {
+    private func statItem(icon: String, label: LocalizedStringKey, value: String, detail: String? = nil) -> some View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)
@@ -122,6 +128,13 @@ struct ROMDetailView: View {
                     .font(.caption)
                     .fontWeight(.medium)
                     .lineLimit(1)
+                if let detail {
+                    Text(verbatim: detail)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
             }
             Spacer(minLength: 0)
         }

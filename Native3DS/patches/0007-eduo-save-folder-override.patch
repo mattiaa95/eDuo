@@ -1,0 +1,220 @@
+diff --git a/src/common/file_util.cpp b/src/common/file_util.cpp
+index 8ad7ca1..4318656 100644
+--- a/src/common/file_util.cpp
++++ b/src/common/file_util.cpp
+@@ -10,8 +10,11 @@
+ #include <fstream>
+ #include <limits>
+ #include <memory>
++#include <mutex>
+ #include <sstream>
+ #include <unordered_map>
++#include <utility>
++#include <vector>
+ #include <boost/iostreams/device/file_descriptor.hpp>
+ #include <boost/iostreams/stream.hpp>
+ #include <cryptopp/aes.h>
+@@ -1055,12 +1058,53 @@ bool StringReplace(std::string& haystack, const std::string& a, const std::strin
+     return true;
+ }
+ 
++// eDuo: prefix aliases (from -> to), see SetSerializedPathAlias.
++namespace {
++std::mutex g_alias_mutex;
++std::vector<std::pair<std::string, std::string>> g_aliases;
++} // namespace
++
++void SetSerializedPathAlias(const std::string& from, const std::string& to) {
++    if (from.empty()) {
++        return;
++    }
++    std::lock_guard lock(g_alias_mutex);
++    std::erase_if(g_aliases, [&](const auto& alias) { return alias.first == from; });
++    if (!to.empty()) {
++        g_aliases.emplace_back(from, to);
++    }
++}
++
+ std::string SerializePath(const std::string& input, bool is_saving) {
+     auto result = input;
++    std::vector<std::pair<std::string, std::string>> aliases;
++    {
++        std::lock_guard lock(g_alias_mutex);
++        aliases = g_aliases;
++    }
++    // eDuo: saving, the real folder goes back to the stock one before the placeholders are
++    // swapped in (leading prefix only).
++    if (is_saving) {
++        for (const auto& [from, to] : aliases) {
++            if (result.compare(0, to.size(), to) == 0) {
++                result = from + result.substr(to.size());
++                break;
++            }
++        }
++    }
+     StringReplace(result, "%CITRA_ROM_FILE%", g_currentRomPath, is_saving);
+     StringReplace(result, "%CITRA_USER_DIR%", GetUserPath(UserPath::UserDir), is_saving);
+     StringReplace(result, "%CITRA_USER_SDMC%", GetUserPath(UserPath::SDMCDir), is_saving);
+     StringReplace(result, "%CITRA_USER_NAND%", GetUserPath(UserPath::NANDDir), is_saving);
++    // eDuo: loading, the stock folder a state recorded maps to the real one.
++    if (!is_saving) {
++        for (const auto& [from, to] : aliases) {
++            if (result.compare(0, from.size(), from) == 0) {
++                result = to + result.substr(from.size());
++                break;
++            }
++        }
++    }
+     return result;
+ }
+ 
+diff --git a/src/common/file_util.h b/src/common/file_util.h
+index ee21f22..1fcf71e 100644
+--- a/src/common/file_util.h
++++ b/src/common/file_util.h
+@@ -78,6 +78,12 @@ enum class UserPath {
+ // Replaces install-specific paths with standard placeholders, and back again
+ std::string SerializePath(const std::string& input, bool is_saving);
+ 
++// eDuo: registers (or, with an empty `to`, removes) a prefix alias for SerializePath. A path that
++// starts with `to` is stored as if it started with `from`, and a loaded path that starts with
++// `from` comes back as `to`. Save states keep recording the stock save folder while the core
++// reads and writes a per-game folder (see ArchiveSource_SDSaveData::SetSaveDataFolderOverride).
++void SetSerializedPathAlias(const std::string& from, const std::string& to);
++
+ // A serializable path string
+ struct Path : public boost::serialization::wrapper_traits<const Path> {
+     std::string& str;
+diff --git a/src/core/file_sys/archive_source_sd_savedata.cpp b/src/core/file_sys/archive_source_sd_savedata.cpp
+index 173868f..84d5717 100644
+--- a/src/core/file_sys/archive_source_sd_savedata.cpp
++++ b/src/core/file_sys/archive_source_sd_savedata.cpp
+@@ -2,6 +2,8 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the misc/licenses/gplv2.txt file included.
+ 
++#include <mutex>
++#include <unordered_map>
+ #include <fmt/format.h>
+ #include "common/archives.h"
+ #include "common/file_util.h"
+@@ -22,18 +24,42 @@ std::string GetSaveDataContainerPath(const std::string& sdmc_directory) {
+     return fmt::format("{}Nintendo 3DS/{}/{}/title/", sdmc_directory, SYSTEM_ID, SDCARD_ID);
+ }
+ 
++// eDuo: per-title save folder chosen by the app (program ID -> folder with a trailing '/').
++std::mutex g_override_mutex;
++std::unordered_map<u64, std::string> g_overrides;
++
++std::string GetOverride(u64 program_id) {
++    std::lock_guard lock(g_override_mutex);
++    const auto it = g_overrides.find(program_id);
++    return it == g_overrides.end() ? std::string() : it->second;
++}
++
+ std::string GetSaveDataPath(const std::string& mount_location, u64 program_id) {
++    if (const std::string folder = GetOverride(program_id); !folder.empty()) {
++        return folder + "00000001/"; // eDuo
++    }
+     u32 high = static_cast<u32>(program_id >> 32);
+     u32 low = static_cast<u32>(program_id & 0xFFFFFFFF);
+     return fmt::format("{}{:08x}/{:08x}/data/00000001/", mount_location, high, low);
+ }
+ 
+ std::string GetSaveDataMetadataPath(const std::string& mount_location, u64 program_id) {
++    if (const std::string folder = GetOverride(program_id); !folder.empty()) {
++        return folder + "00000001.metadata"; // eDuo
++    }
+     u32 high = static_cast<u32>(program_id >> 32);
+     u32 low = static_cast<u32>(program_id & 0xFFFFFFFF);
+     return fmt::format("{}{:08x}/{:08x}/data/00000001.metadata", mount_location, high, low);
+ }
+ 
++// eDuo: the stock `data/` folder of a title (save states record paths under it).
++std::string GetStockDataDir(const std::string& sdmc_directory, u64 program_id) {
++    u32 high = static_cast<u32>(program_id >> 32);
++    u32 low = static_cast<u32>(program_id & 0xFFFFFFFF);
++    return fmt::format("{}{:08x}/{:08x}/data/", GetSaveDataContainerPath(sdmc_directory), high,
++                       low);
++}
++
+ } // namespace
+ 
+ ArchiveSource_SDSaveData::ArchiveSource_SDSaveData(const std::string& sdmc_directory)
+@@ -143,4 +169,32 @@ std::string ArchiveSource_SDSaveData::GetSaveDataPathFor(const std::string& moun
+     return GetSaveDataPath(GetSaveDataContainerPath(mount_point), program_id);
+ }
+ 
++// eDuo
++std::string ArchiveSource_SDSaveData::GetStockSaveDataPathFor(const std::string& sdmc_directory,
++                                                              u64 program_id) {
++    return GetStockDataDir(sdmc_directory, program_id) + "00000001/";
++}
++
++// eDuo
++void ArchiveSource_SDSaveData::SetSaveDataFolderOverride(u64 program_id,
++                                                         const std::string& folder) {
++    std::string normalized = folder;
++    if (!normalized.empty() && normalized.back() != '/') {
++        normalized += '/';
++    }
++    {
++        std::lock_guard lock(g_override_mutex);
++        if (normalized.empty()) {
++            g_overrides.erase(program_id);
++        } else {
++            g_overrides[program_id] = normalized;
++        }
++    }
++    // Save states keep recording the stock path (portable through %CITRA_USER_SDMC%) and map it
++    // back to the override folder when loaded.
++    FileUtil::SetSerializedPathAlias(
++        GetStockDataDir(FileUtil::GetUserPath(FileUtil::UserPath::SDMCDir), program_id),
++        normalized);
++}
++
+ } // namespace FileSys
+diff --git a/src/core/file_sys/archive_source_sd_savedata.h b/src/core/file_sys/archive_source_sd_savedata.h
+index 1914983..dc04c4f 100644
+--- a/src/core/file_sys/archive_source_sd_savedata.h
++++ b/src/core/file_sys/archive_source_sd_savedata.h
+@@ -35,6 +35,16 @@ public:
+ 
+     static std::string GetSaveDataPathFor(const std::string& mount_point, u64 program_id);
+ 
++    /// eDuo: keeps `program_id`'s SaveData archive in `folder` instead of the stock
++    /// `<sdmc>/Nintendo 3DS/<id0>/<id1>/title/<high>/<low>/data/`. Inside it,
++    /// `<folder>/00000001/` is the archive root and `<folder>/00000001.metadata` the format
++    /// info, exactly like the stock `data/` folder. Empty `folder` clears the override.
++    /// Process-wide; read on every Open/Format/GetFormatInfo.
++    static void SetSaveDataFolderOverride(u64 program_id, const std::string& folder);
++
++    /// eDuo: the stock `.../data/00000001/` folder, ignoring any override.
++    static std::string GetStockSaveDataPathFor(const std::string& sdmc_directory, u64 program_id);
++
+     void RegisterArtic(std::shared_ptr<Network::ArticBase::Client>& client) {
+         artic_client = client;
+     }
+diff --git a/src/core/file_sys/savedata_archive.h b/src/core/file_sys/savedata_archive.h
+index 8b53e58..530b9ec 100644
+--- a/src/core/file_sys/savedata_archive.h
++++ b/src/core/file_sys/savedata_archive.h
+@@ -5,6 +5,7 @@
+ #pragma once
+ 
+ #include <string>
++#include "common/file_util.h"
+ #include "core/file_sys/archive_backend.h"
+ #include "core/file_sys/directory_backend.h"
+ #include "core/file_sys/file_backend.h"
+@@ -43,7 +44,9 @@ private:
+     template <class Archive>
+     void serialize(Archive& ar, const unsigned int) {
+         ar& boost::serialization::base_object<ArchiveBackend>(*this);
+-        ar & mount_point;
++        // eDuo: through SerializePath, so a state records the stock save path (see
++        // FileUtil::SetSerializedPathAlias). Same bytes on disk as a plain std::string.
++        ar& FileUtil::Path::make(mount_point);
+         ar & allow_zero_size_create;
+     }
+     friend class boost::serialization::access;

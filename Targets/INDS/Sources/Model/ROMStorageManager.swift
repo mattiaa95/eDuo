@@ -552,6 +552,8 @@ enum ROMStorageManager {
         guard !isOpen(baseName: rom.baseName) else {
             throw ROMStorageError.romInUse(rom.baseName)
         }
+        // Read before the file goes: the program ID comes from the image itself.
+        let threeDSProgramID = alsoDeleteSaveData && rom.isThreeDS ? ThreeDSSaveTransfer.programID(for: rom) : nil
         try FileManager.default.removeItem(at: rom.fileURL)
         // The icon and thumbnail belong to the file, not the name: a later
         // import under this filename must render its own.
@@ -568,6 +570,9 @@ enum ROMStorageManager {
         if let saveURL = rom.saveFileURL {
             try? FileManager.default.removeItem(at: saveURL)
         }
+        if let threeDSProgramID {
+            deleteThreeDSSave(programID: threeDSProgramID, of: rom)
+        }
         // The `.sav.bak` safety net too: left behind, a later ROM imported
         // under this name would be offered "Recover Cartridge Save" with
         // *this* game's SRAM.
@@ -581,6 +586,25 @@ enum ROMStorageManager {
         defaults.removeObject(forKey: "\(rom.filename)_isFavorite")
         defaults.removeObject(forKey: "\(rom.filename)_playTime")
         defaults.removeObject(forKey: "\(rom.filename)_lastPlayed")
+    }
+
+    /// A 3DS game's `<name>.3dssave` folder. Two images of one game (a .3ds and a .cia)
+    /// share a folder, so it stays while another ROM in the library has the same program
+    /// ID; if the library can't be listed it stays too. `.old.3dssave` copies are never
+    /// deleted (the DS keeps `.old.sav` too).
+    private static func deleteThreeDSSave(programID: UInt64, of rom: ROMFile) {
+        guard let roms = try? listROMs() else {
+            debugLog("3DS save of \(rom.baseName) kept: could not list the library")
+            return
+        }
+        let shared = roms.contains {
+            $0.filename != rom.filename && $0.isThreeDS && ThreeDSSaveTransfer.programID(for: $0) == programID
+        }
+        guard !shared else {
+            debugLog("3DS save of \(rom.baseName) kept: another ROM in the library has the same program ID")
+            return
+        }
+        ThreeDSSaveTransfer.deleteSave(programID: programID, baseName: rom.baseName)
     }
 
     // MARK: - Rename
@@ -631,6 +655,11 @@ enum ROMStorageManager {
         if NDSSaveStatePaths.hasAnySaveState(baseName: newBaseName) {
             throw ROMStorageError.duplicateFile(newBaseName)
         }
+        var threeDSMove: (programID: UInt64, plan: (from: URL, to: URL))?
+        if rom.isThreeDS, let id = ThreeDSSaveTransfer.programID(for: rom),
+           let plan = try ThreeDSSaveTransfer.renamePlan(programID: id, from: rom.baseName, to: newBaseName) {
+            threeDSMove = (id, plan)
+        }
 
         // The battery save moves first and for real: a rename that silently
         // left the `.sav` behind under the old name would look like lost
@@ -647,6 +676,20 @@ enum ROMStorageManager {
                 try? FileManager.default.moveItem(at: newSaveURL, to: oldSaveURL)
             }
             throw error
+        }
+        // 3DS: the `<name>.3dssave` folder follows, once the ROM move has worked. A
+        // folder that is not named after this ROM (shared with another image) stays.
+        if let threeDSMove {
+            do {
+                try FileManager.default.moveItem(at: threeDSMove.plan.from, to: threeDSMove.plan.to)
+                ThreeDSSaveTransfer.didRename(programID: threeDSMove.programID, from: rom.baseName, to: newBaseName)
+            } catch {
+                try? FileManager.default.moveItem(at: newROMURL, to: rom.fileURL)
+                if hasSave, let oldSaveURL {
+                    try? FileManager.default.moveItem(at: newSaveURL, to: oldSaveURL)
+                }
+                throw error
+            }
         }
 
         if let oldBackup = INDSSaveBackup.backupURL(baseName: rom.baseName),

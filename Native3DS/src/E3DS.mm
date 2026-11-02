@@ -34,6 +34,8 @@
 #include "core/hle/kernel/kernel.h"
 #include "core/savestate.h"
 #include "core/file_sys/archive_source_sd_savedata.h"
+#include "core/file_sys/file_backend.h"
+#include "core/hle/service/fs/archive.h"
 #include "core/frontend/applets/default_applets.h"
 #include "core/frontend/emu_window.h"
 #include "core/loader/loader.h"
@@ -534,10 +536,173 @@ unsigned long long E3DSProgramID(const char* path) {
     return id;
 }
 
-char* E3DSCopySaveFolder(unsigned long long programID) {
-    return strdup(FileSys::ArchiveSource_SDSaveData::GetSaveDataPathFor(
+// ---- Per-game save folder --------------------------------------------------------------
+// The core reads the folder on every save access (Open/Format/GetFormatInfo), so this can be
+// set before E3DSRun and stays until changed. A .3dsx (program ID 0) never gets one.
+void E3DSSetSaveDataFolder(unsigned long long programID, const char* folder) {
+    if (programID == 0) return;
+    FileSys::ArchiveSource_SDSaveData::SetSaveDataFolderOverride(programID,
+                                                                 folder ? folder : "");
+}
+
+char* E3DSCopyLegacySaveFolder(unsigned long long programID) {
+    return strdup(FileSys::ArchiveSource_SDSaveData::GetStockSaveDataPathFor(
                       FileUtil::GetUserPath(FileUtil::UserPath::SDMCDir), programID)
                       .c_str());
+}
+
+int E3DSSaveSelfTest(const char* folder, char* report, int reportLength) {
+    std::string out;
+    int failures = 0;
+    auto check = [&](bool ok, const char* what, const std::string& detail = std::string()) {
+        out += ok ? "PASS " : "FAIL ";
+        out += what;
+        if (!detail.empty()) { out += ' '; out += detail; }
+        out += '\n';
+        if (!ok) ++failures;
+    };
+    constexpr u64 kPid = 0x00040000000ED500ULL;  // fake title: never a real game
+    constexpr std::size_t kSize = 4096;
+    std::string base = folder ? folder : "";
+    bool overrideSet = false;
+    try {
+        ConfigureOnce();  // initializes logging; nothing else here needs a running System
+        if (base.empty()) {
+            check(false, "folder", "empty folder");
+            if (report && reportLength > 0) snprintf(report, (size_t)reportLength, "%s", out.c_str());
+            return failures;
+        }
+        if (base.back() != '/') base += '/';
+        const std::string sdmc = FileUtil::GetUserPath(FileUtil::UserPath::SDMCDir);
+        const std::string stock = FileSys::ArchiveSource_SDSaveData::GetStockSaveDataPathFor(sdmc, kPid);
+        const std::string dataFile = base + "00000001/eduo-selftest.bin";
+        const std::string metaFile = base + "00000001.metadata";
+
+        // Fresh run: nothing from a previous one, in the folder or in the stock place.
+        FileUtil::DeleteDirRecursively(base);
+        static const std::string kStockTail = "data/00000001/";
+        if (stock.size() > kStockTail.size() &&
+            stock.compare(stock.size() - kStockTail.size(), kStockTail.size(), kStockTail) == 0)
+            FileUtil::DeleteDirRecursively(stock.substr(0, stock.size() - kStockTail.size()));
+
+        std::vector<u8> pattern(kSize);
+        for (std::size_t i = 0; i < kSize; ++i) pattern[i] = (u8)((i * 31 + 7) ^ (i >> 8));
+
+        FileSys::ArchiveSource_SDSaveData::SetSaveDataFolderOverride(kPid, base);
+        overrideSet = true;
+
+        const FileSys::Path archivePath(FileSys::LowPathType::Empty, {});
+        const FileSys::Path filePath("/eduo-selftest.bin");
+        {
+            FileSys::ArchiveSource_SDSaveData src(sdmc);
+            FileSys::ArchiveFormatInfo info{};
+            info.total_size = 0x80000;
+            info.number_directories = 16;
+            info.number_files = 16;
+            info.duplicate_data = 0;
+            const Result fmtRes = src.Format(kPid, info, Service::FS::ArchiveIdCode::SaveData,
+                                             archivePath, 0, 0);
+            check(R_SUCCEEDED(fmtRes), "format", fmt::format("raw={:08x}", fmtRes.raw));
+
+            auto opened = src.Open(Service::FS::ArchiveIdCode::SaveData, archivePath, kPid);
+            check(opened.Succeeded(), "open", fmt::format("raw={:08x}", opened.Code().raw));
+            if (opened.Succeeded()) {
+                // What a game does: create, open, write without the flush flag, close.
+                std::unique_ptr<FileSys::ArchiveBackend> archive = std::move(opened.Unwrap());
+                const Result created = archive->CreateFile(filePath, kSize, 0);
+                FileSys::Mode mode;
+                mode.hex = 0;
+                mode.read_flag.Assign(1);
+                mode.write_flag.Assign(1);
+                mode.create_flag.Assign(1);
+                {
+                    auto file = archive->OpenFile(filePath, mode, 0);
+                    if (R_SUCCEEDED(created) && file.Succeeded()) {
+                        auto wrote = file.Unwrap()->Write(0, kSize, false, false, pattern.data());
+                        if (!wrote.Succeeded() || wrote.Unwrap() != kSize)
+                            check(false, "write", "short or failed write");
+                        file.Unwrap()->Close();
+                    } else {
+                        check(false, "create/open file",
+                              fmt::format("create={:08x} open={:08x}", created.raw,
+                                          file.Code().raw));
+                    }
+                }  // file backend destroyed here, then the archive
+                archive.reset();
+            }
+
+            // (3) the bytes are in the folder.
+            {
+                std::vector<u8> back(kSize + 1, 0);
+                std::size_t n = 0;
+                const bool exists = FileUtil::Exists(dataFile);
+                if (FILE* f = fopen(dataFile.c_str(), "rb")) {
+                    n = fread(back.data(), 1, back.size(), f);
+                    fclose(f);
+                }
+                const bool same = exists && n == kSize && memcmp(back.data(), pattern.data(), kSize) == 0;
+                check(same, "file-in-folder", fmt::format("{} exists={} bytes={}", dataFile, exists, n));
+            }
+            // (4) metadata is in the folder and readable through the core.
+            {
+                const bool exists = FileUtil::Exists(metaFile);
+                auto fi = src.GetFormatInfo(kPid, Service::FS::ArchiveIdCode::SaveData, archivePath);
+                const u32 total = fi.Succeeded() ? (u32)fi.Unwrap().total_size : 0;
+                check(exists && fi.Succeeded() && total == 0x80000, "metadata",
+                      fmt::format("{} exists={} total_size={:#x}", metaFile, exists, total));
+            }
+        }  // src destroyed: next boot starts from a fresh source
+
+        // (5) nothing went to the stock place.
+        check(!FileUtil::Exists(stock), "no-legacy-write", stock);
+
+        // (6) save states record the stock path, and it maps back to the folder.
+        {
+            const std::string saved = FileUtil::SerializePath(dataFile, true);
+            // Placeholder, not an absolute path (stock SerializePath swaps %CITRA_USER_DIR% first,
+            // and sdmc/ lives under it, so that is the one a state records).
+            const bool prefix = saved.rfind("%CITRA_USER_DIR%sdmc/Nintendo 3DS/", 0) == 0 ||
+                                saved.rfind("%CITRA_USER_SDMC%Nintendo 3DS/", 0) == 0;
+            const bool tail = saved.find("title/00040000/000ed500/data/00000001/eduo-selftest.bin") !=
+                              std::string::npos;
+            const std::string loaded = FileUtil::SerializePath(saved, false);
+            check(prefix && tail && loaded == dataFile, "state-path-map",
+                  fmt::format("saved={} loaded={}", saved, loaded));
+        }
+
+        // (7) a fresh source (next boot) finds and reads the file.
+        {
+            FileSys::ArchiveSource_SDSaveData src2(sdmc);
+            auto opened = src2.Open(Service::FS::ArchiveIdCode::SaveData, archivePath, kPid);
+            bool same = false;
+            if (opened.Succeeded()) {
+                std::unique_ptr<FileSys::ArchiveBackend> archive = std::move(opened.Unwrap());
+                auto file = archive->OpenFile(filePath, FileSys::Mode::ReadOnly(), 0);
+                if (file.Succeeded()) {
+                    std::vector<u8> back(kSize, 0);
+                    auto rd = file.Unwrap()->Read(0, kSize, back.data());
+                    same = rd.Succeeded() && rd.Unwrap() == kSize &&
+                           memcmp(back.data(), pattern.data(), kSize) == 0;
+                    file.Unwrap()->Close();
+                }
+            }
+            check(same, "reopen-after-restart");
+        }
+    } catch (...) {
+        check(false, "exception", "self-test aborted");
+    }
+    if (overrideSet) {
+        try {
+            FileSys::ArchiveSource_SDSaveData::SetSaveDataFolderOverride(kPid, "");
+        } catch (...) {
+        }
+    }
+    if (report && reportLength > 0) {
+        const std::size_t n = std::min<std::size_t>(out.size(), (std::size_t)reportLength - 1);
+        memcpy(report, out.data(), n);
+        report[n] = 0;
+    }
+    return failures;
 }
 
 char* E3DSCopyCheatFile(unsigned long long programID) {

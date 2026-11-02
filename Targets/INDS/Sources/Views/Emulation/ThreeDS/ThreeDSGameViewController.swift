@@ -153,6 +153,12 @@ final class ThreeDSGameViewController: UIViewController {
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
         applyDiagnostics()
         batterySaverStateChanged()
+        // The save lives in Documents/Saves/<name>.3dssave (visible in Files). Resolving
+        // it here also migrates a legacy save (build 64 or older) out of the core's SD layout. Every restart
+        // (resolution change, pause-menu import) comes back through here.
+        if let id = ThreeDSSaveTransfer.programID(for: rom), let container = ThreeDSSaveTransfer.container(for: rom) {
+            E3DSSetSaveDataFolder(id, container.path + "/")
+        }
         let thread = Thread { [weak self] in
             let result = E3DSRun(path)
             DispatchQueue.main.async { self?.emulationEnded(result: result) }
