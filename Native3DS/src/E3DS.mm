@@ -319,6 +319,13 @@ int E3DSRun(const char* path) {
 
         while (!g.stop) {
             if (g.paused && !g.stepping) {
+                // Parking means NO GPU work, not just no new frames: the scheduler worker and
+                // the present thread are still holding the last ones. iOS kills an app that
+                // submits Metal work from the background, so drain them first (also on the
+                // pause menu, where it costs one frame). The stdio flush gets whatever the
+                // game wrote to its save out of the buffers before iOS may suspend or kill us.
+                system.GPU().Renderer().Park();
+                fflush(nullptr);
                 std::unique_lock lock(g.mutex);
                 g.parked = true;
                 g.cv.wait(lock, [] { return !g.paused || g.stop || g.stepping; });

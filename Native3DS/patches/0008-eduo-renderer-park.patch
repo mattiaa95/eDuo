@@ -1,0 +1,51 @@
+diff --git a/src/video_core/renderer_base.h b/src/video_core/renderer_base.h
+index e17bfcb..3fd4061 100644
+--- a/src/video_core/renderer_base.h
++++ b/src/video_core/renderer_base.h
+@@ -60,6 +60,12 @@ public:
+     /// Cleans up after video dumping is ended
+     virtual void CleanupVideoDumping() {}
+ 
++    /// eDuo (iOS): drains every piece of GPU work still in flight (queued command chunks, frames
++    /// waiting for the present thread) and waits for the device to go idle. Called on the core
++    /// thread right before it parks, because iOS kills an app that submits Metal work from the
++    /// background. No-op by default.
++    virtual void Park() {}
++
+     /// This is called to notify the rendering backend of a surface change
+     // if second == true then it is the second screen
+     virtual void NotifySurfaceChanged(bool second) {}
+diff --git a/src/video_core/renderer_vulkan/renderer_vulkan.cpp b/src/video_core/renderer_vulkan/renderer_vulkan.cpp
+index 611e092..ff41351 100644
+--- a/src/video_core/renderer_vulkan/renderer_vulkan.cpp
++++ b/src/video_core/renderer_vulkan/renderer_vulkan.cpp
+@@ -135,6 +135,16 @@ RendererVulkan::RendererVulkan(Core::System& system, Pica::PicaCore& pica_,
+     }
+ }
+ 
++void RendererVulkan::Park() {
++    // Same drain as the destructor, without tearing anything down.
++    scheduler.Finish();
++    main_present_window.WaitPresent();
++    if (secondary_present_window_ptr) {
++        secondary_present_window_ptr->WaitPresent();
++    }
++    instance.GetDevice().waitIdle();
++}
++
+ RendererVulkan::~RendererVulkan() {
+     vk::Device device = instance.GetDevice();
+     scheduler.Finish();
+diff --git a/src/video_core/renderer_vulkan/renderer_vulkan.h b/src/video_core/renderer_vulkan/renderer_vulkan.h
+index cc027ea..accd315 100644
+--- a/src/video_core/renderer_vulkan/renderer_vulkan.h
++++ b/src/video_core/renderer_vulkan/renderer_vulkan.h
+@@ -80,6 +80,8 @@ public:
+ 
+     void NotifySurfaceChanged(bool second) override;
+ 
++    void Park() override;
++
+     void SwapBuffers() override;
+     void TryPresent(int timeout_ms, bool is_secondary) override {}
+ 

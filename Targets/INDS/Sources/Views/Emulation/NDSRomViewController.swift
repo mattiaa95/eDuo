@@ -1,4 +1,5 @@
 import AVFoundation
+import GameController
 import ReplayKit
 import UIKit
 
@@ -7,7 +8,11 @@ import UIKit
 /// already proven in the prototype (start/pause/resume/autosave, the
 /// reused-framebuffer display link) and layers the ported/adapted iGBA UI
 /// suite on top of it.
-final class NDSRomViewController: UIViewController {
+/// A `GCEventViewController` so the system does not ALSO deliver the pad's
+/// buttons to UIKit (A as Select, B as Menu/Back, the d-pad as focus moves)
+/// while the game reads them through `GCController`: one physical press must
+/// reach the game exactly once (`controllerUserInteractionEnabled = false`).
+final class NDSRomViewController: GCEventViewController {
     private var rom: ROMFile
     private let core = MelonDSCoreBridge()
 
@@ -144,6 +149,7 @@ final class NDSRomViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        controllerUserInteractionEnabled = false
         configureView()
         observeHinge()
     }

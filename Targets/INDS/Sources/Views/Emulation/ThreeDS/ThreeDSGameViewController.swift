@@ -10,7 +10,10 @@ import UniformTypeIdentifiers
 /// core renders into, the same on-screen controller and physical-controller
 /// mapping the DS screen uses, and a menu with cheats and save import/export.
 /// Rewind and the Duo-specific layouts are DS-only for now.
-final class ThreeDSGameViewController: UIViewController {
+///
+/// A `GCEventViewController` so the system does not ALSO deliver the pad's buttons to UIKit
+/// (A as Select, B as Menu/Back): one physical press must reach the game exactly once.
+final class ThreeDSGameViewController: GCEventViewController {
     private let rom: ROMFile
     private let onQuit: () -> Void
     /// The core finished for good (the player quit, or the game exited by itself): a layout pass
@@ -61,6 +64,7 @@ final class ThreeDSGameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        controllerUserInteractionEnabled = false
         view.backgroundColor = .black
         [topView, bottomView].forEach(view.addSubview)
 
@@ -176,10 +180,17 @@ final class ThreeDSGameViewController: UIViewController {
     }
 
     /// The physical left stick drives the Circle Pad directly — the DS
-    /// mapping only knows a d-pad.
+    /// mapping only knows a d-pad. Resolved like the buttons (extendedGamepad first, then by
+    /// name), and a pad that goes away with the stick deflected must not leave the Circle Pad
+    /// pushed: no stick means centred.
     @objc private func pollStick() {
-        guard let stick = GCController.current?.extendedGamepad?.leftThumbstick else { return }
-        let p = CGPoint(x: CGFloat(stick.xAxis.value), y: CGFloat(stick.yAxis.value))
+        let pad = gamepadManager.current ?? GCController.current
+        let p: CGPoint
+        if let pad, let stick = INDSControllerElements.thumbstick(on: pad) {
+            p = CGPoint(x: CGFloat(stick.xAxis.value), y: CGFloat(stick.yAxis.value))
+        } else {
+            p = .zero
+        }
         guard p != lastStick else { return }
         lastStick = p
         E3DSSetStick(Int32(E3DSStickCircle.rawValue), Float(p.x), Float(p.y))
@@ -229,16 +240,22 @@ final class ThreeDSGameViewController: UIViewController {
     }
 
     /// Metal work submitted from the background kills the app, so the core
-    /// must be parked (no GPU work in flight) before iOS takes the GPU away.
+    /// must be parked (no GPU work in flight: E3DS drains its scheduler and present thread
+    /// before it reports parked) before iOS takes the GPU away. Waited even when a menu
+    /// already paused the core a moment ago: its park may not be done yet. A save/load state
+    /// in progress keeps the core running until it ends, hence the generous wait; a normal
+    /// park takes a frame or two.
     @objc private func appWillResignActive() {
-        guard E3DSIsRunning(), !pausedByLifecycle, presentedViewController == nil else { return }
-        pausedByLifecycle = true
-        E3DSSetPaused(true)
+        guard E3DSIsRunning() else { return }
+        if !pausedByLifecycle, presentedViewController == nil {
+            pausedByLifecycle = true
+            E3DSSetPaused(true)
+        }
         var task = UIBackgroundTaskIdentifier.invalid
         task = UIApplication.shared.beginBackgroundTask(withName: "eDuo.3ds.park") {
             if task != .invalid { UIApplication.shared.endBackgroundTask(task); task = .invalid }
         }
-        _ = E3DSWaitParked(150)
+        _ = E3DSWaitParked(2000)
         if task != .invalid { UIApplication.shared.endBackgroundTask(task); task = .invalid }
     }
 

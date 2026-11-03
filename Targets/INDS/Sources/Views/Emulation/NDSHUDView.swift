@@ -545,14 +545,27 @@ final class NDSHUDView: UIView {
     }
 
     /// Settings > Controls > "Also Hide the HUD": hides the Menu/Layout/Speed
-    /// buttons (a controller has Menu/hotkeys). Never touches the recording
-    /// and microphone badges — those are privacy indicators.
+    /// buttons (a controller has Menu/hotkeys). The "Connected" badge flashes
+    /// for 3 s and the "Listening" badge goes (iOS shows its own mic dot);
+    /// the REC badge stays, it is the only sign a clip is being recorded.
     func setChromeHidden(_ hidden: Bool) {
+        let changed = chromeHidden != hidden
         chromeHidden = hidden
         applyChromeAlpha()
+        guard changed else { return }
+        // The pad was just recognised and the HUD went away with it: say so once, briefly.
+        if hidden { flashGamepadBadge() }
+        refreshStatusBadges()
     }
 
     private var chromeRevealed = false
+    /// What the game screen last asked for, kept apart from what is drawn: with the HUD hidden
+    /// the "Connected" badge only flashes and the "Listening" badge stays off (iOS draws its
+    /// own mic indicator), so the screen is clear. REC is never hidden.
+    private var gamepadConnected = false
+    private var micActive = false
+    private var gamepadFlashing = false
+    private var gamepadFlashWork: DispatchWorkItem?
     private var chromeHidden = false
 
     private func applyChromeAlpha() {
@@ -586,7 +599,11 @@ final class NDSHUDView: UIView {
     /// defaults to `connected`; it differs when the player keeps the touch
     /// overlay with a controller (Settings > Controls).
     func setGamepadConnected(_ connected: Bool, controlsHidden: Bool? = nil) {
-        setBadge(gamepadBadge, visible: connected)
+        let was = gamepadConnected
+        gamepadConnected = connected
+        if connected, !was, chromeHidden { flashGamepadBadge() }
+        if !connected { cancelGamepadFlash() }
+        refreshStatusBadges()
         let reserved = !(controlsHidden ?? connected)
         if controlsReserved != reserved {
             controlsReserved = reserved
@@ -599,7 +616,32 @@ final class NDSHUDView: UIView {
     /// `MelonDSCoreBridge.microphoneActive` reports the mic is actually
     /// capturing.
     func setMicActive(_ active: Bool) {
-        setBadge(micBadge, visible: active)
+        micActive = active
+        refreshStatusBadges()
+    }
+
+    private func refreshStatusBadges() {
+        setBadge(gamepadBadge, visible: gamepadConnected && (!chromeHidden || gamepadFlashing))
+        setBadge(micBadge, visible: micActive && !chromeHidden)
+    }
+
+    private func flashGamepadBadge() {
+        guard gamepadConnected else { return }
+        gamepadFlashWork?.cancel()
+        gamepadFlashing = true
+        let work = DispatchWorkItem { [weak self] in
+            self?.gamepadFlashing = false
+            self?.gamepadFlashWork = nil
+            self?.refreshStatusBadges()
+        }
+        gamepadFlashWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: work)
+    }
+
+    private func cancelGamepadFlash() {
+        gamepadFlashWork?.cancel()
+        gamepadFlashWork = nil
+        gamepadFlashing = false
     }
 
     /// Shows/hides the discrete "REC" badge. No auto-hide, same shape as
