@@ -359,6 +359,13 @@ enum INDSSave3DSSelfTest {
         for line in text.split(separator: "\n") { log("core: \(line)") }
         check(rc == 0, "E3DSSaveSelfTest returned \(rc)")
 
+        // (A2) Texture dumping: folders, flags and the PNG encoder, no ROM.
+        var texReport = [CChar](repeating: 0, count: 4096)
+        let texRC = E3DSTextureDumpSelfTest(&texReport, 4096)
+        let texText = texReport.withUnsafeBufferPointer { String(cString: $0.baseAddress!) }
+        for line in texText.split(separator: "\n") { log("textures: \(line)") }
+        check(texRC == 0, "E3DSTextureDumpSelfTest returned \(texRC)")
+
         // (B) Migration and layout.
         func bytes(_ n: Int) -> Data { Data((0..<n).map { _ in UInt8.random(in: 0...255) }) }
         func put(_ data: Data, _ url: URL) {

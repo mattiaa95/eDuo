@@ -38,6 +38,7 @@
 #include "core/file_sys/file_backend.h"
 #include "core/hle/service/fs/archive.h"
 #include "core/frontend/applets/default_applets.h"
+#include "core/frontend/image_interface.h"
 #include "core/frontend/emu_window.h"
 #include "core/loader/loader.h"
 #include "core/loader/smdh.h"
@@ -131,6 +132,8 @@ struct Session {
     // Diagnostics (see E3DSSetDiagnostics / E3DSSampleStats).
     int vsync = -1;
     bool unlimited = false;
+    // "Dump Textures" for the next E3DSRun (see E3DSSetDumpTextures).
+    bool dumpTextures = false;
     std::atomic_bool statsOn{false};
     std::atomic<mach_port_t> coreThread{MACH_PORT_NULL};
     std::atomic<unsigned long long> presents{0};
@@ -260,6 +263,31 @@ static std::string StatePath(int slot) {
                        g.program_id, slot);
 }
 
+// Texture packs (replacement) and texture dumping, both keyed by program ID:
+//   load/textures/<ID>/   packs the player drops in (Files > eDuo > System > load > textures)
+//   dump/textures/<ID>/   what "Dump Textures" writes (the core, Azahar's CustomTexManager)
+// Fills the three texture settings the core reads while it loads (the rasterizer cache and
+// CustomTexManager copy them once, so they only take effect on the next E3DSRun) and returns the
+// pack folder. The folder is made up front so players find it, with one exception: while dumping
+// and the folder is still empty it is removed, because the core's PrepareDumping treats an
+// existing pack folder without pack.json as a legacy pack and would dump with the OLD hash,
+// which a pack made from the dump (its pack.json says use_new_hash) would then never match.
+// The caller makes the folder again once the game has loaded.
+static std::string PrepareTexturePacks(u64 program_id, bool dump) {
+    const auto packs = fmt::format("{}textures/{:016X}/",
+                                   FileUtil::GetUserPath(FileUtil::UserPath::LoadDir), program_id);
+    FileUtil::FSTEntry entries;
+    const bool hasPack = FileUtil::ScanDirectoryTree(packs, entries) > 0;
+    if (dump && !hasPack && FileUtil::Exists(packs))
+        FileUtil::DeleteDir(packs);  // rmdir: only ever removes an empty folder
+    else
+        FileUtil::CreateFullPath(packs);
+    Settings::values.custom_textures.SetValue(hasPack);
+    Settings::values.async_custom_loading.SetValue(true);
+    Settings::values.dump_textures.SetValue(dump);
+    return packs;
+}
+
 static void RestoreInterruptedStates() {
     for (int slot = 0; slot <= (int)Core::SaveStateSlotCount; ++slot) {
         const std::string path = StatePath(slot), prev = path + ".prev";
@@ -283,6 +311,7 @@ int E3DSRun(const char* path) {
     }
 
     u64 program_id = 0;
+    std::string packs;
     FileUtil::SetCurrentRomPath(path);
     auto loader = Loader::GetLoader(path);
     g.program_id = 0;
@@ -290,15 +319,9 @@ int E3DSRun(const char* path) {
         loader->ReadProgramId(program_id);
         g.program_id = program_id;
         system.RegisterAppLoaderEarly(loader);
-        // Texture packs: Files → eDuo → System → load → textures → <program ID>.
-        // The folder is made up front so players find it; the loader (and its
-        // worker threads) only runs when there is a pack inside.
-        const auto packs = fmt::format("{}textures/{:016X}/",
-                                       FileUtil::GetUserPath(FileUtil::UserPath::LoadDir), program_id);
-        FileUtil::CreateFullPath(packs);
-        FileUtil::FSTEntry entries;
-        Settings::values.custom_textures.SetValue(FileUtil::ScanDirectoryTree(packs, entries) > 0);
-        Settings::values.async_custom_loading.SetValue(true);
+        packs = PrepareTexturePacks(program_id, g.dumpTextures);
+    } else {
+        Settings::values.dump_textures.SetValue(false);
     }
     UsePerGameFolders(program_id, path);
     RestoreInterruptedStates();
@@ -311,6 +334,7 @@ int E3DSRun(const char* path) {
 
     auto result = system.Load(*g.window, path, g.secondary.get());
     if (result == Core::System::ResultStatus::Success) {
+        if (!packs.empty()) FileUtil::CreateFullPath(packs);  // see PrepareTexturePacks
         system.GPU().ApplyPerProgramSettings(program_id);
         std::atomic_bool stop_loading{false};
         system.GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(stop_loading, nullptr);
@@ -390,6 +414,10 @@ void E3DSSetResolution(int factor) {
     // cache polls resolution_factor every frame, so this also applies live.
     if (g.running && !g.batterySaver)
         Settings::values.resolution_factor.SetValue(static_cast<u32>(g.resolution));
+}
+
+void E3DSSetDumpTextures(bool on) {
+    g.dumpTextures = on;
 }
 
 void E3DSStop(void) {
@@ -734,6 +762,78 @@ int E3DSSaveSelfTest(const char* folder, char* report, int reportLength) {
             FileSys::ArchiveSource_SDSaveData::SetSaveDataFolderOverride(kPid, "");
         } catch (...) {
         }
+    }
+    if (report && reportLength > 0) {
+        const std::size_t n = std::min<std::size_t>(out.size(), (std::size_t)reportLength - 1);
+        memcpy(report, out.data(), n);
+        report[n] = 0;
+    }
+    return failures;
+}
+
+int E3DSTextureDumpSelfTest(char* report, int reportLength) {
+    std::string out;
+    int failures = 0;
+    auto check = [&](bool ok, const char* what, const std::string& detail = std::string()) {
+        out += ok ? "PASS " : "FAIL ";
+        out += what;
+        if (!detail.empty()) { out += ' '; out += detail; }
+        out += '\n';
+        if (!ok) ++failures;
+    };
+    constexpr u64 kPid = 0x00040000000ED700ULL;  // fake title: never a real game
+    try {
+        ConfigureOnce();
+        const std::string load = FileUtil::GetUserPath(FileUtil::UserPath::LoadDir);
+        const std::string dump = FileUtil::GetUserPath(FileUtil::UserPath::DumpDir);
+        // Both must sit in Documents/System, the folder Files shows.
+        check(load.find("/Documents/System/load/") != std::string::npos, "load-dir-in-documents", load);
+        check(dump.find("/Documents/System/dump/") != std::string::npos, "dump-dir-in-documents", dump);
+
+        const std::string packs = fmt::format("{}textures/{:016X}/", load, kPid);
+        const std::string dumped = fmt::format("{}textures/{:016X}/", dump, kPid);
+        FileUtil::DeleteDirRecursively(packs);
+        FileUtil::DeleteDirRecursively(dumped);
+        auto& v = Settings::values;
+
+        // Empty pack folder + dump on: folder removed (old-hash trap), flags reach Settings.
+        FileUtil::CreateFullPath(packs);
+        PrepareTexturePacks(kPid, true);
+        check(v.dump_textures.GetValue() && !v.custom_textures.GetValue(), "dump-on-flags");
+        check(!FileUtil::Exists(packs), "dump-on-removes-empty-pack-folder");
+        // Dump off: folder made, nothing dumped.
+        PrepareTexturePacks(kPid, false);
+        check(!v.dump_textures.GetValue() && !v.custom_textures.GetValue(), "dump-off-flags");
+        check(FileUtil::IsDirectory(packs), "dump-off-makes-pack-folder");
+        // A real pack stays put and turns replacement on, with or without dumping.
+        {
+            FileUtil::IOFile f{packs + "tex1_8x8_0000000000000001_1_mip0.png", "wb"};
+            f.WriteString("x");
+        }
+        PrepareTexturePacks(kPid, true);
+        check(FileUtil::Exists(packs + "tex1_8x8_0000000000000001_1_mip0.png") &&
+                  v.custom_textures.GetValue() && v.dump_textures.GetValue(),
+              "dump-on-keeps-real-pack");
+
+        // The encoder the core's DumpTexture uses (default Frontend::ImageInterface), into the
+        // dump folder, and back.
+        FileUtil::CreateFullPath(dumped);
+        const std::string png = dumped + "tex1_2x2_selftest.png";
+        const std::vector<u8> rgba = {255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255, 9, 9, 9, 255};
+        Frontend::ImageInterface images;
+        check(images.EncodePNG(png, 2, 2, rgba) && FileUtil::Exists(png), "encode-png-into-dump-dir");
+        std::vector<u8> bytes(FileUtil::GetSize(png));
+        if (FileUtil::IOFile f{png, "rb"}; f.IsOpen()) f.ReadBytes(bytes.data(), bytes.size());
+        std::vector<u8> back;
+        u32 w = 0, h = 0;
+        check(images.DecodePNG(back, w, h, bytes) && w == 2 && h == 2 && back == rgba, "decode-png-roundtrip");
+
+        FileUtil::DeleteDirRecursively(packs);
+        FileUtil::DeleteDirRecursively(dumped);
+        v.dump_textures.SetValue(false);
+        v.custom_textures.SetValue(false);
+    } catch (...) {
+        check(false, "exception", "self-test aborted");
     }
     if (report && reportLength > 0) {
         const std::size_t n = std::min<std::size_t>(out.size(), (std::size_t)reportLength - 1);

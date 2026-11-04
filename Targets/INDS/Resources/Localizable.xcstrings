@@ -3006,6 +3006,301 @@
         }
       }
     },
+    "Dump Textures" : {
+      "comment" : "Switch: save the textures the game draws as PNG files so they can be edited",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texturen exportieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcar texturas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extraire les textures"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estrai le texture"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テクスチャを書き出す"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스처 추출"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extrair texturas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выгружать текстуры"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出纹理"
+          }
+        }
+      }
+    },
+    "Game ID" : {
+      "comment" : "The 3DS game's program ID, the name of its texture folders",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiel-ID"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID del juego"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID du jeu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID del gioco"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームID"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임 ID"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID do jogo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID игры"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏 ID"
+          }
+        }
+      }
+    },
+    "Open Dumped Textures" : {
+      "comment" : "Button: open the folder of dumped textures in the Files app",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportierte Texturen öffnen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir las texturas volcadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les textures extraites"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri le texture estratte"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "書き出したテクスチャを開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추출한 텍스처 열기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir as texturas extraídas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть выгруженные текстуры"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开已导出的纹理"
+          }
+        }
+      }
+    },
+    "Open Pack Folder" : {
+      "comment" : "Button: open the game's texture pack folder in the Files app",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paketordner öffnen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir la carpeta de paquetes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir le dossier des packs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri la cartella dei pacchetti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パックのフォルダを開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팩 폴더 열기"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir a pasta de pacotes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть папку паков"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开纹理包文件夹"
+          }
+        }
+      }
+    },
+    "Put a texture pack in Files › eDuo › System › load › textures › %@, then start the game again." : {
+      "comment" : "Footer of the texture packs sheet. %@ is the game's ID (16 hex digits). Files, eDuo, System, load, textures are folder names",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lege ein Texturpaket in Dateien › eDuo › System › load › textures › %@ ab und starte das Spiel danach neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pon un paquete de texturas en Archivos › eDuo › System › load › textures › %@ y vuelve a iniciar el juego."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place un pack de textures dans Fichiers › eDuo › System › load › textures › %@, puis relance le jeu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metti un pacchetto di texture in File › eDuo › System › load › textures › %@, poi riavvia il gioco."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テクスチャパックを「ファイル」› eDuo › System › load › textures › %@ に入れて、ゲームを起動し直してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스처 팩을 파일 › eDuo › System › load › textures › %@ 에 넣은 다음 게임을 다시 시작하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Põe um pacote de texturas em Ficheiros › eDuo › System › load › textures › %@ e volta a iniciar o jogo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Положите текстурный пак в Файлы › eDuo › System › load › textures › %@ и запустите игру заново."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把纹理包放进“文件”› eDuo › System › load › textures › %@，然后重新启动游戏。"
+          }
+        }
+      }
+    },
     "Reset Cover" : {
       "comment" : "Go back to the game's own icon in the library",
       "localizations" : {
@@ -16627,6 +16922,65 @@
         }
       }
     },
+    "Saves the textures the game draws as PNG files in Files › eDuo › System › dump › textures › %@. Edit them and copy the folder into the load folder. Applies the next time the game starts and slows the game down, so turn it off when you are done. Nintendo 3DS games only." : {
+      "comment" : "Footer of the Dump Textures switch. %@ is the game's ID (16 hex digits). Files, eDuo, System, dump, textures, load are folder names",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichert die Texturen, die das Spiel zeichnet, als PNG-Dateien in Dateien › eDuo › System › dump › textures › %@. Bearbeite sie und kopiere den Ordner in den Ordner „load“. Gilt ab dem nächsten Spielstart und bremst das Spiel, schalte es also wieder aus, wenn du fertig bist. Nur für Nintendo-3DS-Spiele."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda las texturas que dibuja el juego como archivos PNG en Archivos › eDuo › System › dump › textures › %@. Edítalas y copia la carpeta a la carpeta load. Se aplica la próxima vez que inicies el juego y lo ralentiza, así que apágalo cuando termines. Solo para juegos de Nintendo 3DS."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistre les textures dessinées par le jeu en fichiers PNG dans Fichiers › eDuo › System › dump › textures › %@. Modifie-les puis copie le dossier dans le dossier load. S'applique au prochain lancement du jeu et le ralentit : désactive l'option quand tu as fini. Jeux Nintendo 3DS uniquement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva le texture che il gioco disegna come file PNG in File › eDuo › System › dump › textures › %@. Modificale e copia la cartella nella cartella load. Vale dal prossimo avvio del gioco e lo rallenta, quindi disattivalo quando hai finito. Solo per i giochi Nintendo 3DS."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームが描画するテクスチャをPNGファイルとして「ファイル」› eDuo › System › dump › textures › %@ に保存します。編集したら、そのフォルダを load フォルダにコピーしてください。次にゲームを起動したときから有効になり、動作が重くなるので、終わったらオフにしてください。ニンテンドー3DSのゲームのみ。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임이 그리는 텍스처를 PNG 파일로 파일 › eDuo › System › dump › textures › %@ 에 저장합니다. 편집한 뒤 그 폴더를 load 폴더로 복사하세요. 다음에 게임을 시작할 때부터 적용되며 게임이 느려지므로, 끝나면 꺼 두세요. 닌텐도 3DS 게임 전용입니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda as texturas que o jogo desenha como ficheiros PNG em Ficheiros › eDuo › System › dump › textures › %@. Edita-as e copia a pasta para a pasta load. Aplica-se da próxima vez que o jogo arrancar e deixa-o mais lento, por isso desliga quando acabares. Apenas para jogos Nintendo 3DS."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохраняет текстуры, которые рисует игра, в виде PNG-файлов в Файлы › eDuo › System › dump › textures › %@. Отредактируйте их и скопируйте папку в папку load. Действует со следующего запуска игры и замедляет её, поэтому выключите, когда закончите. Только для игр Nintendo 3DS."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "把游戏绘制的纹理保存为 PNG 文件，位置在“文件”› eDuo › System › dump › textures › %@。编辑后，把该文件夹复制到 load 文件夹。下次启动游戏时生效，并会拖慢游戏，用完请关闭。仅适用于任天堂 3DS 游戏。"
+          }
+        }
+      }
+    },
     "Saving" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -19204,6 +19558,124 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "切换视图"
+          }
+        }
+      }
+    },
+    "Texture Packs" : {
+      "comment" : "Title of the texture packs sheet",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texturpakete"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paquetes de texturas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packs de textures"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pacchetti di texture"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テクスチャパック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스처 팩"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pacotes de texturas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текстурные паки"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纹理包"
+          }
+        }
+      }
+    },
+    "Texture Packs…" : {
+      "comment" : "Choose how to replace this game's textures: pack folder and texture dumping (3DS games)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texturpakete…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paquetes de texturas…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packs de textures…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pacchetti di texture…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テクスチャパック…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스처 팩…"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pacotes de texturas…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текстурные паки…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纹理包…"
           }
         }
       }

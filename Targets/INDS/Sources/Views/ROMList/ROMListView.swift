@@ -22,6 +22,8 @@ struct ROMListView: View {
     @State private var isPickingCover = false
     @State private var coverItem: PhotosPickerItem?
     @StateObject private var saveTransfer = ROMSaveTransferController()
+    /// "Texture Packs…" (3DS games): the game whose sheet is open.
+    @State private var texturePacksTarget: ROMFile?
 
     /// Filenames (`ROMFile.id`) imported by the most recent successful
     /// import — drives the brief "new" cell highlight below. Cleared a beat
@@ -131,6 +133,9 @@ struct ROMListView: View {
             handleROMImport(result)
         }
         .romSaveTransfer(saveTransfer)
+        .sheet(item: $texturePacksTarget) { rom in
+            ThreeDSTexturePacksView(rom: rom)
+        }
         .sheet(isPresented: $showingBIOSSetup, onDismiss: viewModel.reload) {
             BIOSSetupView()
         }
@@ -391,6 +396,13 @@ struct ROMListView: View {
                     saveTransfer.beginImport(for: rom)
                 } label: {
                     Label("Import Save", systemImage: "square.and.arrow.up.on.square")
+                }
+            }
+            if ThreeDSTexturePacks.supports(rom) {
+                Button {
+                    texturePacksTarget = rom
+                } label: {
+                    Label("Texture Packs…", systemImage: "paintbrush")
                 }
             }
             Button {

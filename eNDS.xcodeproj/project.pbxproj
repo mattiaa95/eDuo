@@ -25,6 +25,7 @@
 		214E57C446117905DC55A34C /* INDSLayoutEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8482D02C6F7598A67CE0D /* INDSLayoutEditorView.swift */; };
 		22B1D937B8B434AFF81888F3 /* INDSTurboPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */; };
 		236113C7282633A9A01C17E6 /* ROMGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98B95B098222B202A26D90 /* ROMGridCell.swift */; };
+		2466A1BFAA4CBC9448829E30 /* ThreeDSTexturePacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8CD175A21431C6B8950AEE /* ThreeDSTexturePacks.swift */; };
 		24EF2321ACC91FAA0E3B9F44 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = CDA5E0F40B465E480ED7B8C5 /* unzip.c */; };
 		26994392B1F473C9BE83D4A9 /* E3DS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19401C7935B121B05DBB7F90 /* E3DS.xcframework */; };
 		2701C1F0A9B6ED6A9676D847 /* INDSLaunchFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16BBD6076B0776B809C6E9E /* INDSLaunchFlags.swift */; };
@@ -34,6 +35,7 @@
 		2C2C4C6936F9381033E8FDE5 /* ROMIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63915A9A489BD4B09B48A302 /* ROMIconView.swift */; };
 		2D780836C2FC294DA4A5243B /* PurchaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30268FE4D70D96B8CF41C601 /* PurchaseModel.swift */; };
 		30F969EADB6CDF8F5D0EA452 /* ControlsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C6AF4A1F010932AAE0AA51 /* ControlsSettingsView.swift */; };
+		3513726F1238D47EB43F8F1A /* ThreeDSTexturePacksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46AD5F15FD3A601F63FF8 /* ThreeDSTexturePacksView.swift */; };
 		3793453687AB2CC9240944CC /* NDSHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1C57307F331CA0E3899717 /* NDSHUDView.swift */; };
 		38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD26D49C7D799C6EC6ADA193 /* 7zAlloc.c */; };
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
@@ -211,6 +213,7 @@
 		27E1F460C62B5073B08E488B /* INDSControllerMappingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerMappingLogic.swift; sourceTree = "<group>"; };
 		2999805555B0E26E258294DF /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		2A757FCC5A34401D5FA7E158 /* NDSSaveStatePaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSSaveStatePaths.swift; sourceTree = "<group>"; };
+		2AA46AD5F15FD3A601F63FF8 /* ThreeDSTexturePacksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSTexturePacksView.swift; sourceTree = "<group>"; };
 		2D994BD3D0CC29A8C3FB3D6F /* INDSAppearanceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSAppearanceStore.swift; sourceTree = "<group>"; };
 		2E55426D1400B9517D4B9755 /* Notification+Names.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Names.swift"; sourceTree = "<group>"; };
 		30268FE4D70D96B8CF41C601 /* PurchaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseModel.swift; sourceTree = "<group>"; };
@@ -287,6 +290,7 @@
 		A684EB48BA636E4B19D659D2 /* Delta.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Delta.c; sourceTree = "<group>"; };
 		A7D5B45A7A77F3C3BA1D5E8D /* INDSLayoutProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutProbe.swift; sourceTree = "<group>"; };
 		A991E1D084A864C4E5992455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA8CD175A21431C6B8950AEE /* ThreeDSTexturePacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSTexturePacks.swift; sourceTree = "<group>"; };
 		AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMappingView.swift; sourceTree = "<group>"; };
 		AC98B95B098222B202A26D90 /* ROMGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMGridCell.swift; sourceTree = "<group>"; };
 		AEF93AF9A9B668F16F548652 /* INDSSpeedPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSSpeedPreferences.swift; sourceTree = "<group>"; };
@@ -637,6 +641,7 @@
 				3C671B34D75660A6AEE56EB8 /* Sz7zShim.c */,
 				E2B8A5FF74740023A6D3970C /* ThreeDSSaveArchive.swift */,
 				BA9E5237AED440EF8EAA2F59 /* ThreeDSSaveTransfer.swift */,
+				AA8CD175A21431C6B8950AEE /* ThreeDSTexturePacks.swift */,
 				33603FF8DD00E3267B32D50D /* ThumbnailManager.swift */,
 			);
 			path = Model;
@@ -663,6 +668,7 @@
 				74336AADBA8EFD1E5EB9EB00 /* ROMListView.swift */,
 				12BFD3480A8B6F3479DFB063 /* ROMListViewModel.swift */,
 				6C7AB6C7D9A4914C9F23B046 /* ROMSaveTransferController.swift */,
+				2AA46AD5F15FD3A601F63FF8 /* ThreeDSTexturePacksView.swift */,
 			);
 			path = ROMList;
 			sourceTree = "<group>";
@@ -971,6 +977,7 @@
 				55892B949B94E49AC5CB9F89 /* Sz7zShim.c in Sources */,
 				3BF2327BAA43743D00AC3BF6 /* ThreeDSSaveArchive.swift in Sources */,
 				F2727497AA107840BDDA62A4 /* ThreeDSSaveTransfer.swift in Sources */,
+				2466A1BFAA4CBC9448829E30 /* ThreeDSTexturePacks.swift in Sources */,
 				F61DA6458086F1A05AF9DE14 /* ThumbnailManager.swift in Sources */,
 				0367714089D07BB2950DA10D /* ProGateAlert.swift in Sources */,
 				E9F4C2A0564C0BB12D50E3F2 /* PurchaseView.swift in Sources */,
@@ -1044,6 +1051,7 @@
 				ED9775610FE620C037F3EBE0 /* ROMListView.swift in Sources */,
 				0F1DB859AD024577C66B60C0 /* ROMListViewModel.swift in Sources */,
 				F8758A37217EBEEAC40E3D1C /* ROMSaveTransferController.swift in Sources */,
+				3513726F1238D47EB43F8F1A /* ThreeDSTexturePacksView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -155,6 +155,7 @@ final class ThreeDSGameViewController: GCEventViewController {
         try? AVAudioSession.sharedInstance().setActive(true)
         let path = rom.fileURL.path
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
+        ThreeDSTexturePacks.applyDumpSetting(for: rom)
         applyDiagnostics()
         batterySaverStateChanged()
         // The save lives in Documents/Saves/<name>.3dssave (visible in Files). Resolving
