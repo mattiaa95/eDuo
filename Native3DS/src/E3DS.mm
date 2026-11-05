@@ -45,6 +45,7 @@
 #include "core/frontend/input.h"
 #include "core/hle/service/service.h"
 #include "input_common/motion_emu.h"
+#include "video_core/custom_textures/custom_tex_manager.h"
 #include "video_core/gpu.h"
 #include "video_core/renderer_base.h"
 #include "video_core/rasterizer_interface.h"
@@ -263,29 +264,114 @@ static std::string StatePath(int slot) {
                        g.program_id, slot);
 }
 
-// Texture packs (replacement) and texture dumping, both keyed by program ID:
-//   load/textures/<ID>/   packs the player drops in (Files > eDuo > System > load > textures)
-//   dump/textures/<ID>/   what "Dump Textures" writes (the core, Azahar's CustomTexManager)
+// Texture packs (replacement) and texture dumping, one folder per game keyed by program ID
+// (the PPSSPP model):
+//   load/textures/<ID>/   the player's pack AND where "Dump Textures" writes (patch 0009)
+// Dumping adds the textures the folder does not hold yet (a file already there, edited or not, is
+// never dumped again), so dumps accumulate across sessions; the core loads what the player
+// edited or added in the same folder at the next boot, no copying. Dumps nobody has edited are
+// stamped by the core (IsUntouchedDump) and not loaded as replacements: thousands of identical
+// PNGs would only cost RAM and decode time.
+// Builds up to 1.2.0 (68) dumped into dump/textures/<ID>/ instead: MigrateLegacyTextureDump
+// moves that over.
+static bool IsTextureFile(const std::string& name) {
+    const auto dot = name.rfind('.');
+    if (dot == std::string::npos) return false;
+    std::string ext = name.substr(dot + 1);
+    for (auto& c : ext) c = (char)tolower((unsigned char)c);
+    return ext == "png" || ext == "dds" || ext == "ktx";
+}
+
+static std::string TexturePackFolder(u64 program_id) {
+    return fmt::format("{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::LoadDir),
+                       program_id);
+}
+
+struct PackScan {
+    int textures = 0;  // png/dds/ktx files, anywhere inside
+    int loadable = 0;  // ... of those, the ones the core will load (not untouched dumps)
+    bool hasConfig = false;
+};
+
+static PackScan ScanPack(const std::string& packs) {
+    PackScan scan;
+    scan.hasConfig = FileUtil::Exists(packs + "pack.json");
+    FileUtil::FSTEntry tree;
+    std::vector<FileUtil::FSTEntry> files;
+    FileUtil::ScanDirectoryTree(packs, tree, 64);
+    FileUtil::GetAllFilesFromNestedEntries(tree, files);
+    for (const auto& f : files) {
+        if (!IsTextureFile(f.virtualName)) continue;
+        ++scan.textures;
+        if (!VideoCore::IsUntouchedDump(f.physicalName)) ++scan.loadable;
+    }
+    return scan;
+}
+
+// What the core's old PrepareDumping wrote into the dump folder; now written here, into the
+// pack folder, and only when the folder holds no pack yet (see PrepareTexturePacks).
+static void WriteTemplatePackConfig(const std::string& packs) {
+    FileUtil::IOFile f{packs + "pack.json", "w"};
+    f.WriteString(
+        "{\n"
+        "    \"author\": \"eDuo\",\n"
+        "    \"version\": \"1.0.0\",\n"
+        "    \"description\": \"Textures dumped by eDuo\",\n"
+        "    \"options\": {\n"
+        "        \"skip_mipmap\": false,\n"
+        "        \"flip_png_files\": true,\n"
+        "        \"use_new_hash\": true\n"
+        "    }\n"
+        "}\n");
+}
+
+// Moves what a 1.2.0 (68) dump left in dump/textures/<ID>/ into the pack folder. Never
+// overwrites: a file the pack folder already has wins and the other stays where it was. A legacy
+// pack (textures but no pack.json) is left alone entirely, because the dump uses the new hash and
+// would never match it; pack.json only moves into a pack folder that has neither. Returns the
+// number of files moved.
+static int MigrateLegacyTextureDump(u64 program_id) {
+    const std::string dumped = fmt::format(
+        "{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::DumpDir), program_id);
+    if (!FileUtil::IsDirectory(dumped)) return 0;
+    const std::string packs = TexturePackFolder(program_id);
+    const PackScan before = ScanPack(packs);
+    if (before.textures > 0 && !before.hasConfig) return 0;  // legacy pack
+    FileUtil::CreateFullPath(packs);
+    FileUtil::FSTEntry tree;
+    FileUtil::ScanDirectoryTree(dumped, tree, 0);
+    int moved = 0;
+    for (const auto& f : tree.children) {
+        if (f.isDirectory) continue;
+        const bool isConfig = f.virtualName == "pack.json";
+        if (isConfig ? (before.hasConfig || before.textures > 0) : false) continue;
+        const std::string dest = packs + f.virtualName;
+        if (FileUtil::Exists(dest)) continue;
+        if (FileUtil::Rename(f.physicalName, dest)) ++moved;
+    }
+    FileUtil::DeleteDir(dumped);  // rmdir: only if nothing is left
+    return moved;
+}
+
 // Fills the three texture settings the core reads while it loads (the rasterizer cache and
-// CustomTexManager copy them once, so they only take effect on the next E3DSRun) and returns the
-// pack folder. The folder is made up front so players find it, with one exception: while dumping
-// and the folder is still empty it is removed, because the core's PrepareDumping treats an
-// existing pack folder without pack.json as a legacy pack and would dump with the OLD hash,
-// which a pack made from the dump (its pack.json says use_new_hash) would then never match.
-// The caller makes the folder again once the game has loaded.
-static std::string PrepareTexturePacks(u64 program_id, bool dump) {
-    const auto packs = fmt::format("{}textures/{:016X}/",
-                                   FileUtil::GetUserPath(FileUtil::UserPath::LoadDir), program_id);
-    FileUtil::FSTEntry entries;
-    const bool hasPack = FileUtil::ScanDirectoryTree(packs, entries) > 0;
-    if (dump && !hasPack && FileUtil::Exists(packs))
-        FileUtil::DeleteDir(packs);  // rmdir: only ever removes an empty folder
-    else
-        FileUtil::CreateFullPath(packs);
-    Settings::values.custom_textures.SetValue(hasPack);
+// CustomTexManager copy them once, so they only take effect on the next E3DSRun). The pack
+// folder is made up front so players find it.
+// Dumping needs the new hash, and the core only uses it when the pack folder has a pack.json
+// that says so (no pack.json = legacy pack = old hash). So while dumping into a folder that
+// holds no pack at all, the template pack.json goes in first. A pack.json that is already there
+// is never rewritten, and a legacy pack (textures, no pack.json) stays legacy, dumped with the
+// old hash to match its own.
+static void PrepareTexturePacks(u64 program_id, bool dump) {
+    MigrateLegacyTextureDump(program_id);
+    const auto packs = TexturePackFolder(program_id);
+    FileUtil::CreateFullPath(packs);
+    const PackScan scan = ScanPack(packs);
+    if (dump && !scan.hasConfig && scan.textures == 0) WriteTemplatePackConfig(packs);
+    // Replacement only when something would actually be loaded; with it on, every texture
+    // the game uploads is looked up (and logged when missing).
+    Settings::values.custom_textures.SetValue(scan.loadable > 0);
     Settings::values.async_custom_loading.SetValue(true);
     Settings::values.dump_textures.SetValue(dump);
-    return packs;
 }
 
 static void RestoreInterruptedStates() {
@@ -311,7 +397,6 @@ int E3DSRun(const char* path) {
     }
 
     u64 program_id = 0;
-    std::string packs;
     FileUtil::SetCurrentRomPath(path);
     auto loader = Loader::GetLoader(path);
     g.program_id = 0;
@@ -319,7 +404,7 @@ int E3DSRun(const char* path) {
         loader->ReadProgramId(program_id);
         g.program_id = program_id;
         system.RegisterAppLoaderEarly(loader);
-        packs = PrepareTexturePacks(program_id, g.dumpTextures);
+        PrepareTexturePacks(program_id, g.dumpTextures);
     } else {
         Settings::values.dump_textures.SetValue(false);
     }
@@ -334,7 +419,6 @@ int E3DSRun(const char* path) {
 
     auto result = system.Load(*g.window, path, g.secondary.get());
     if (result == Core::System::ResultStatus::Success) {
-        if (!packs.empty()) FileUtil::CreateFullPath(packs);  // see PrepareTexturePacks
         system.GPU().ApplyPerProgramSettings(program_id);
         std::atomic_bool stop_loading{false};
         system.GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(stop_loading, nullptr);
@@ -418,6 +502,11 @@ void E3DSSetResolution(int factor) {
 
 void E3DSSetDumpTextures(bool on) {
     g.dumpTextures = on;
+}
+
+int E3DSMigrateTextureDump(unsigned long long programID) {
+    ConfigureOnce();
+    return MigrateLegacyTextureDump(programID);
 }
 
 void E3DSStop(void) {
@@ -790,46 +879,134 @@ int E3DSTextureDumpSelfTest(char* report, int reportLength) {
         check(load.find("/Documents/System/load/") != std::string::npos, "load-dir-in-documents", load);
         check(dump.find("/Documents/System/dump/") != std::string::npos, "dump-dir-in-documents", dump);
 
+        // One folder per game: the pack folder is also where the dumps go (patch 0009).
         const std::string packs = fmt::format("{}textures/{:016X}/", load, kPid);
-        const std::string dumped = fmt::format("{}textures/{:016X}/", dump, kPid);
-        FileUtil::DeleteDirRecursively(packs);
-        FileUtil::DeleteDirRecursively(dumped);
+        const std::string legacy = fmt::format("{}textures/{:016X}/", dump, kPid);
+        check(packs == TexturePackFolder(kPid), "single-folder-path", packs);
+        const std::string json = packs + "pack.json";
+        const std::string pngA = "tex1_8x8_00000000000000A1_1_mip0.png";
+        const std::string pngB = "tex1_8x8_00000000000000B2_1_mip0.png";
         auto& v = Settings::values;
+        auto reset = [&] {
+            FileUtil::DeleteDirRecursively(packs);
+            FileUtil::DeleteDirRecursively(legacy);
+        };
+        auto put = [&](const std::string& path, const std::string& text) {
+            FileUtil::CreateFullPath(path);
+            FileUtil::IOFile f{path, "wb"};
+            f.WriteString(text);
+        };
+        auto read = [&](const std::string& path) {
+            std::string text(FileUtil::GetSize(path), '\0');
+            if (FileUtil::IOFile f{path, "rb"}; f.IsOpen()) f.ReadBytes(text.data(), text.size());
+            return text;
+        };
+        auto isNewHash = [&](const std::string& text) {
+            return text.find("\"use_new_hash\": true") != std::string::npos;
+        };
+        reset();
 
-        // Empty pack folder + dump on: folder removed (old-hash trap), flags reach Settings.
-        FileUtil::CreateFullPath(packs);
+        // Dump on, empty folder: the folder gets the template pack.json (new hash, so the core
+        // never falls back to the legacy hash); nothing to load yet, so replacement stays off.
         PrepareTexturePacks(kPid, true);
         check(v.dump_textures.GetValue() && !v.custom_textures.GetValue(), "dump-on-flags");
-        check(!FileUtil::Exists(packs), "dump-on-removes-empty-pack-folder");
-        // Dump off: folder made, nothing dumped.
+        check(FileUtil::IsDirectory(packs) && isNewHash(read(json)), "dump-on-writes-new-hash-config");
+        check(!FileUtil::Exists(legacy), "dump-on-leaves-old-dump-folder-unused");
+        // Dump off, empty folder: made, no config, nothing dumped.
+        reset();
         PrepareTexturePacks(kPid, false);
         check(!v.dump_textures.GetValue() && !v.custom_textures.GetValue(), "dump-off-flags");
-        check(FileUtil::IsDirectory(packs), "dump-off-makes-pack-folder");
-        // A real pack stays put and turns replacement on, with or without dumping.
-        {
-            FileUtil::IOFile f{packs + "tex1_8x8_0000000000000001_1_mip0.png", "wb"};
-            f.WriteString("x");
-        }
+        check(FileUtil::IsDirectory(packs) && !FileUtil::Exists(json), "dump-off-makes-folder-only");
+
+        // Accumulating: dumps (stamped untouched) are kept and not loaded; an edited one is
+        // loaded. The edit changes the file's modification time, even at the same size.
+        reset();
         PrepareTexturePacks(kPid, true);
-        check(FileUtil::Exists(packs + "tex1_8x8_0000000000000001_1_mip0.png") &&
-                  v.custom_textures.GetValue() && v.dump_textures.GetValue(),
-              "dump-on-keeps-real-pack");
+        const std::string dumpedText = "0123456789";
+        put(packs + pngA, dumpedText);
+        put(packs + pngB, dumpedText);
+        check(VideoCore::MarkUntouchedDump(packs + pngA) && VideoCore::MarkUntouchedDump(packs + pngB),
+              "mark-dumps");
+        check(VideoCore::IsUntouchedDump(packs + pngA), "marked-dump-is-untouched");
+        PrepareTexturePacks(kPid, true);
+        check(FileUtil::Exists(packs + pngA) && FileUtil::Exists(packs + pngB) &&
+                  read(packs + pngA) == dumpedText && !v.custom_textures.GetValue(),
+              "untouched-dumps-kept-not-loaded");
+        put(packs + pngB, "9876543210");  // same size, new content, new mtime
+        check(!VideoCore::IsUntouchedDump(packs + pngB), "edited-same-size-not-untouched");
+        PrepareTexturePacks(kPid, true);
+        check(v.custom_textures.GetValue() && v.dump_textures.GetValue() &&
+                  FileUtil::Exists(packs + pngA) && read(packs + pngB) == "9876543210",
+              "edited-texture-loads-with-dump-on");
+        PrepareTexturePacks(kPid, false);
+        check(v.custom_textures.GetValue() && !v.dump_textures.GetValue(), "edited-texture-loads-with-dump-off");
+
+        // A pack.json the player edited is never rewritten (even one asking for the old hash).
+        reset();
+        const std::string mine = "{\"options\":{\"skip_mipmap\":true,\"flip_png_files\":true,\"use_new_hash\":false}}";
+        put(json, mine);
+        PrepareTexturePacks(kPid, true);
+        check(read(json) == mine, "user-pack-json-not-overwritten");
+        // A legacy pack (textures, no pack.json) stays legacy: no config appears.
+        reset();
+        put(packs + pngA, "legacy");
+        PrepareTexturePacks(kPid, true);
+        check(!FileUtil::Exists(json) && v.custom_textures.GetValue(), "legacy-pack-gets-no-config");
+
+        // Migration from build 68: dump/textures/<ID> moves into the pack folder.
+        reset();
+        put(legacy + pngA, "dumpA");
+        put(legacy + pngB, "dumpB");
+        put(legacy + "pack.json", "{\"options\": {\"use_new_hash\": true}}");
+        check(MigrateLegacyTextureDump(kPid) == 3, "migrate-moves-everything");
+        check(read(packs + pngA) == "dumpA" && read(packs + pngB) == "dumpB" &&
+                  isNewHash(read(json)) && !FileUtil::Exists(legacy),
+              "migrate-result-and-old-folder-gone");
+        check(MigrateLegacyTextureDump(kPid) == 0, "migrate-idempotent");
+        // ... never over the player's files, nor the player's pack.json.
+        reset();
+        put(json, mine);
+        put(packs + pngB, "mine");
+        put(legacy + pngA, "dumpA");
+        put(legacy + pngB, "dumpB");
+        put(legacy + "pack.json", "{\"options\": {\"use_new_hash\": true}}");
+        check(MigrateLegacyTextureDump(kPid) == 1, "migrate-skips-existing");
+        check(read(packs + pngA) == "dumpA" && read(packs + pngB) == "mine" && read(json) == mine &&
+                  read(legacy + pngB) == "dumpB" && FileUtil::Exists(legacy + "pack.json"),
+              "migrate-never-overwrites");
+        // ... and never into a legacy pack (different hash): left where it was.
+        reset();
+        put(packs + pngA, "legacy");
+        put(legacy + pngB, "dumpB");
+        put(legacy + "pack.json", "{\"options\": {\"use_new_hash\": true}}");
+        check(MigrateLegacyTextureDump(kPid) == 0 && !FileUtil::Exists(json) &&
+                  FileUtil::Exists(legacy + pngB),
+              "migrate-leaves-legacy-pack-alone");
+        // Booting does the migration too.
+        reset();
+        put(legacy + pngA, "dumpA");
+        PrepareTexturePacks(kPid, false);
+        check(FileUtil::Exists(packs + pngA) && !FileUtil::Exists(legacy), "boot-migrates");
 
         // The encoder the core's DumpTexture uses (default Frontend::ImageInterface), into the
-        // dump folder, and back.
-        FileUtil::CreateFullPath(dumped);
-        const std::string png = dumped + "tex1_2x2_selftest.png";
+        // pack folder, and back.
+        reset();
+        FileUtil::CreateFullPath(packs);
+        const std::string png = packs + "tex1_2x2_selftest.png";
         const std::vector<u8> rgba = {255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255, 9, 9, 9, 255};
         Frontend::ImageInterface images;
-        check(images.EncodePNG(png, 2, 2, rgba) && FileUtil::Exists(png), "encode-png-into-dump-dir");
+        check(images.EncodePNG(png, 2, 2, rgba) && FileUtil::Exists(png), "encode-png-into-pack-folder");
         std::vector<u8> bytes(FileUtil::GetSize(png));
         if (FileUtil::IOFile f{png, "rb"}; f.IsOpen()) f.ReadBytes(bytes.data(), bytes.size());
         std::vector<u8> back;
         u32 w = 0, h = 0;
         check(images.DecodePNG(back, w, h, bytes) && w == 2 && h == 2 && back == rgba, "decode-png-roundtrip");
+        // What DumpTexture does right after encoding: stamp it; the scan then ignores it.
+        check(VideoCore::MarkUntouchedDump(png) && VideoCore::IsUntouchedDump(png) &&
+                  ScanPack(packs).loadable == 0 && ScanPack(packs).textures == 1,
+              "stamped-dump-is-skipped-by-scan");
 
-        FileUtil::DeleteDirRecursively(packs);
-        FileUtil::DeleteDirRecursively(dumped);
+        reset();
         v.dump_textures.SetValue(false);
         v.custom_textures.SetValue(false);
     } catch (...) {

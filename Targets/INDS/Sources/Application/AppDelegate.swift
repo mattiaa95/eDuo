@@ -359,7 +359,7 @@ enum INDSSave3DSSelfTest {
         for line in text.split(separator: "\n") { log("core: \(line)") }
         check(rc == 0, "E3DSSaveSelfTest returned \(rc)")
 
-        // (A2) Texture dumping: folders, flags and the PNG encoder, no ROM.
+        // (A2) Texture dumping: one folder, pack.json, accumulation, migration, PNG encoder; no ROM.
         var texReport = [CChar](repeating: 0, count: 4096)
         let texRC = E3DSTextureDumpSelfTest(&texReport, 4096)
         let texText = texReport.withUnsafeBufferPointer { String(cString: $0.baseAddress!) }

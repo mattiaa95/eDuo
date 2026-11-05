@@ -1,0 +1,135 @@
+diff --git a/src/video_core/custom_textures/custom_tex_manager.cpp b/src/video_core/custom_textures/custom_tex_manager.cpp
+index f289430..c66c054 100644
+--- a/src/video_core/custom_textures/custom_tex_manager.cpp
++++ b/src/video_core/custom_textures/custom_tex_manager.cpp
+@@ -2,6 +2,8 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the misc/licenses/gplv2.txt file included.
+ 
++#include <sys/stat.h>
++#include <sys/time.h>
+ #include <json.hpp>
+ #include "common/file_util.h"
+ #include "common/literals.h"
+@@ -20,6 +22,29 @@
+ 
+ namespace VideoCore {
+ 
++// eDuo: dumps and packs share one folder (load/textures/<ID>/). A dump is stamped with a
++// modification time of kUntouchedBase + its size in bytes, so the loader can tell the files it
++// wrote itself and that nobody has touched (loading them would only decode thousands of
++// identical PNGs into RAM) from the ones the player edited or added: any editor writes a new
++// modification time, so those load as replacements.
++static constexpr long long kUntouchedBase = 946684800; // 2000-01-01 UTC
++
++bool IsUntouchedDump(const std::string& path) {
++    struct stat st {};
++    return stat(path.c_str(), &st) == 0 && S_ISREG(st.st_mode) &&
++           static_cast<long long>(st.st_mtime) == kUntouchedBase + static_cast<long long>(st.st_size);
++}
++
++bool MarkUntouchedDump(const std::string& path) {
++    struct stat st {};
++    if (stat(path.c_str(), &st) != 0) {
++        return false;
++    }
++    const struct timeval times[2] = {{static_cast<time_t>(kUntouchedBase + st.st_size), 0},
++                                     {static_cast<time_t>(kUntouchedBase + st.st_size), 0}};
++    return utimes(path.c_str(), times) == 0;
++}
++
+ namespace {
+ 
+ MICROPROFILE_DEFINE(CustomTexManager_TickFrame, "CustomTexManager", "TickFrame",
+@@ -173,35 +198,16 @@ bool CustomTexManager::ParseFilename(const FileUtil::FSTEntry& file, CustomTextu
+ }
+ 
+ void CustomTexManager::PrepareDumping(u64 title_id) {
+-    // If a pack exists in the load folder that uses the old hash, dump textures using the old hash.
+-    // This occurs either if a configuration file doesn't exist or that file sets the old hash.
++    // eDuo: dumps go into the pack folder itself (load/textures/<ID>/), so a pack that exists
++    // there and uses the old hash (no pack.json, or one that says so) is dumped with the old hash
++    // too. The frontend writes the template pack.json (new hash) before the game loads whenever
++    // the folder holds no pack yet; this never writes one, so a pack the player edited or a
++    // legacy pack is never rewritten.
+     const std::string load_path =
+         fmt::format("{}textures/{:016X}/", GetUserPath(FileUtil::UserPath::LoadDir), title_id);
+     if (FileUtil::Exists(load_path) && !ReadConfig(title_id, true)) {
+         use_new_hash = false;
+     }
+-
+-    // Write template config file
+-    const std::string dump_path =
+-        fmt::format("{}textures/{:016X}/", GetUserPath(FileUtil::UserPath::DumpDir), title_id);
+-    const std::string pack_config = dump_path + "pack.json";
+-    if (FileUtil::Exists(pack_config)) {
+-        return;
+-    }
+-
+-    nlohmann::ordered_json json;
+-    json["author"] = "citra";
+-    json["version"] = "1.0.0";
+-    json["description"] = "A graphics pack";
+-
+-    auto& options = json["options"];
+-    options["skip_mipmap"] = false;
+-    options["flip_png_files"] = true;
+-    options["use_new_hash"] = true;
+-
+-    FileUtil::IOFile file{pack_config, "w"};
+-    const std::string output = json.dump(4);
+-    file.WriteString(output);
+ }
+ 
+ void CustomTexManager::PreloadTextures(const std::atomic_bool& stop_run,
+@@ -246,8 +252,10 @@ void CustomTexManager::DumpTexture(const SurfaceParams& params, u32 level, std::
+     const u32 height = params.height;
+     const PixelFormat format = params.pixel_format;
+ 
++    // eDuo: into the pack folder (see PrepareDumping): new textures accumulate there and the
++    // ones already in it, edited or not, are never dumped again.
+     std::string dump_path = fmt::format(
+-        "{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::DumpDir), program_id);
++        "{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::LoadDir), program_id);
+     if (!FileUtil::CreateFullPath(dump_path)) {
+         LOG_ERROR(Render, "Unable to create {}", dump_path);
+         return;
+@@ -278,7 +286,9 @@ void CustomTexManager::DumpTexture(const SurfaceParams& params, u32 level, std::
+         DecodeTexture(params, params.addr, params.end, encoded, decoded,
+                       params.type == SurfaceType::Color);
+         Common::FlipRGBA8Texture(decoded, width, height);
+-        image_interface.EncodePNG(dump_path, width, height, decoded);
++        if (image_interface.EncodePNG(dump_path, width, height, decoded)) {
++            MarkUntouchedDump(dump_path);
++        }
+     };
+     if (!workers) {
+         CreateWorkers();
+@@ -382,6 +392,10 @@ std::vector<FileUtil::FSTEntry> CustomTexManager::GetTextures(u64 title_id) {
+     std::vector<FileUtil::FSTEntry> textures;
+     FileUtil::ScanDirectoryTree(load_path, texture_dir, 64);
+     FileUtil::GetAllFilesFromNestedEntries(texture_dir, textures);
++    // Dumps nobody has edited stay on disk but are not loaded as replacements (see IsUntouchedDump).
++    std::erase_if(textures, [](const FileUtil::FSTEntry& file) {
++        return IsUntouchedDump(file.physicalName);
++    });
+     return textures;
+ }
+ 
+diff --git a/src/video_core/custom_textures/custom_tex_manager.h b/src/video_core/custom_textures/custom_tex_manager.h
+index fa94537..fdac44a 100644
+--- a/src/video_core/custom_textures/custom_tex_manager.h
++++ b/src/video_core/custom_textures/custom_tex_manager.h
+@@ -24,6 +24,12 @@ namespace VideoCore {
+ 
+ class SurfaceParams;
+ 
++/// eDuo: true if `path` is a texture the core dumped itself and nobody has touched since
++/// (see MarkUntouchedDump). Such files are skipped when the pack folder is loaded.
++bool IsUntouchedDump(const std::string& path);
++/// eDuo: stamps a freshly dumped file (modification time = fixed base + size in bytes).
++bool MarkUntouchedDump(const std::string& path);
++
+ struct AsyncUpload {
+     const Material* material;
+     std::function<bool()> func;

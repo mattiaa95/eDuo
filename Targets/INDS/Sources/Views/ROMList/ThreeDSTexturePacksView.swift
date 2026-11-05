@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Long-press a 3DS game › "Texture Packs…": where packs go, the game's ID and the
-/// "Dump Textures" switch. Same long-press-menu family as "Save Data" (ROMSaveTransferController).
+/// Long-press a 3DS game › "Texture Packs…": the game's one texture folder (packs and dumps
+/// both live there) and the "Dump Textures" switch. Same long-press-menu family as "Save Data" (ROMSaveTransferController).
 struct ThreeDSTexturePacksView: View {
     let rom: ROMFile
     @Environment(\.dismiss) private var dismiss
@@ -35,16 +35,12 @@ struct ThreeDSTexturePacksView: View {
                         Button("Open Pack Folder") { open(folder, create: true) }
                     }
                 } footer: {
-                    Text("Put a texture pack in Files › eDuo › System › load › textures › \(idText), then start the game again.")
+                    Text("Textures live in Files › eDuo › System › load › textures › \(idText). Edit them there and start the game again.")
                 }
                 Section {
                     Toggle("Dump Textures", isOn: $dumping)
-                    if ThreeDSTexturePacks.hasDumpedTextures(programID: programID),
-                       let folder = ThreeDSTexturePacks.dumpFolder(programID: programID) {
-                        Button("Open Dumped Textures") { open(folder, create: false) }
-                    }
                 } footer: {
-                    Text("Saves the textures the game draws as PNG files in Files › eDuo › System › dump › textures › \(idText). Edit them and copy the folder into the load folder. Applies the next time the game starts and slows the game down, so turn it off when you are done. Nintendo 3DS games only.")
+                    Text("Saves the textures the game draws into that same folder, adding new ones every time you play. Slows the game down, so turn it off when you are done. Nintendo 3DS games only.")
                 }
             }
             .navigationTitle("Texture Packs")
@@ -52,6 +48,7 @@ struct ThreeDSTexturePacksView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
             }
+            .onAppear { ThreeDSTexturePacks.migrateLegacyDump(programID: programID) }
             .onChange(of: dumping) { _, on in
                 ThreeDSTexturePacks.setDumping(on, programID: programID)
             }

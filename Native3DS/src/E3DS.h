@@ -45,12 +45,18 @@ int E3DSRun(const char *path);
 void E3DSStop(void);
 /// Internal render scale (1 = the console's 400x240). Read at E3DSRun.
 void E3DSSetResolution(int factor);
-/// "Dump Textures" (3DS only): the core writes every texture the game uploads as a PNG into
-/// Documents/System/dump/textures/<program ID as 16 hex digits>/ (plus a template pack.json), ready
-/// to edit and copy into Documents/System/load/textures/<same ID>/. Read at E3DSRun: the core
-/// copies the setting while it loads, so it cannot change while a game is running. Costs
-/// speed and storage while on; off (the default) changes nothing.
+/// "Dump Textures" (3DS only): the core writes every texture the game uploads that the folder
+/// does not hold yet as a PNG into Documents/System/load/textures/<program ID as 16 hex digits>/,
+/// the same folder packs are loaded from (one folder per game, like PPSSPP). Dumps accumulate
+/// across sessions; PNGs the player edits or adds there load at the next E3DSRun, untouched
+/// dumps are not loaded. A template pack.json (new hash) is written first if the folder holds no
+/// pack. Read at E3DSRun: the core copies the setting while it loads, so it cannot change while a
+/// game is running. Costs speed and storage while on; off (the default) changes nothing.
 void E3DSSetDumpTextures(bool on);
+/// Moves a 1.2.0 (68) dump (Documents/System/dump/textures/<ID>/) into the pack folder, never
+/// over a file already there and never into a legacy pack. E3DSRun does it too. Returns the
+/// number of files moved.
+int E3DSMigrateTextureDump(unsigned long long programID);
 void E3DSSetPaused(bool paused);
 bool E3DSIsRunning(void);
 /// After E3DSSetPaused(true): waits (1 ms steps) until the core thread is
@@ -104,10 +110,11 @@ char *E3DSCopyLegacySaveFolder(unsigned long long programID);
 /// checks the file and the metadata landed in `folder`, plus the save-state path mapping.
 /// Writes a line per check into `report` (NUL-terminated). 0 = all passed. Leaves the files.
 int E3DSSaveSelfTest(const char *folder, char *report, int reportLength);
-/// Debug self-test (no ROM, no running core) for texture dumping: both folders are inside
-/// Documents/System, the dump flag reaches Settings the way E3DSRun sets it, an empty pack
-/// folder is removed while dumping (kept otherwise, and a real pack always kept), and the core's PNG
-/// encoder writes into the dump folder and reads back. Same report contract as E3DSSaveSelfTest.
+/// Debug self-test (no ROM, no running core) for texture dumping: one folder for packs and dumps,
+/// the template pack.json (new hash) only into a folder without a pack and never over the
+/// player's, untouched dumps kept but not loaded while edited ones load, the migration from
+/// dump/textures (never overwriting, never into a legacy pack), and the core's PNG encoder
+/// writing into the pack folder. Same report contract as E3DSSaveSelfTest.
 int E3DSTextureDumpSelfTest(char *report, int reportLength);
 /// The game's cheat file (Gateway text, `*citra_enabled` marks enabled
 /// cheats). Caller frees.
