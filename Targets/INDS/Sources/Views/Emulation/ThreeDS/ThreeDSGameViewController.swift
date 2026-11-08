@@ -154,6 +154,12 @@ final class ThreeDSGameViewController: GCEventViewController {
         try? AVAudioSession.sharedInstance().setCategory(.playback, options: [.mixWithOthers])
         try? AVAudioSession.sharedInstance().setActive(true)
         let path = rom.fileURL.path
+        // Above 4x a game can run out of memory while booting. If the last high-res boot never
+        // got past its first seconds, fall back to 2x so the game can't crash on every launch.
+        let guardKey = "eduo.3ds.highResBooting"
+        if UserDefaults.standard.bool(forKey: guardKey) { ThreeDSScreenPrefs.resolution = 2 }
+        UserDefaults.standard.set(ThreeDSScreenPrefs.resolution > 4, forKey: guardKey)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15) { UserDefaults.standard.set(false, forKey: guardKey) }
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
         ThreeDSTexturePacks.applyDumpSetting(for: rom)
         applyDiagnostics()
@@ -432,8 +438,8 @@ final class ThreeDSGameViewController: GCEventViewController {
                 E3DSSetPaused(false)
             })
         }
-        for factor in 1...3 {
-            let title = NSLocalizedString("Resolution", comment: "3DS pause menu > Screens: internal render scale") + ": \(factor)x"
+        for factor in [1, 2, 3, 4, 6, 9] {  // 9x = 3600x2160 top screen (~4K); E3DSSetResolution clamps to 10
+            let title = NSLocalizedString("Resolution", comment: "3DS pause menu > Screens: internal render scale") + ": \(factor)x" + (factor == 9 ? " (4K)" : "")
             sheet.addAction(UIAlertAction(title: mark(ThreeDSScreenPrefs.resolution == factor, title), style: .default) { [weak self] _ in
                 guard let self, ThreeDSScreenPrefs.resolution != factor else { return E3DSSetPaused(false) }
                 ThreeDSScreenPrefs.resolution = factor

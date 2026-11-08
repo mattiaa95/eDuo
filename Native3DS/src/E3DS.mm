@@ -493,7 +493,7 @@ int E3DSRun(const char* path) {
 }
 
 void E3DSSetResolution(int factor) {
-    g.resolution = std::clamp(factor, 1, 4);
+    g.resolution = std::clamp(factor, 1, 10);  // Azahar allows up to 18; the menu tops out at 9x (~4K)
     // Mid-game change (the player picked a new value while the saver is off): the rasterizer
     // cache polls resolution_factor every frame, so this also applies live.
     if (g.running && !g.batterySaver)
