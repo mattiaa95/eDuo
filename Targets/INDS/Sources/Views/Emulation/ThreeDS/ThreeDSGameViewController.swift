@@ -419,7 +419,9 @@ final class ThreeDSGameViewController: GCEventViewController {
     }
 
     private func showScreenOptions() {
-        let sheet = UIAlertController(title: NSLocalizedString("Screens", comment: ""), message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: NSLocalizedString("Screens", comment: ""),
+                                      message: NSLocalizedString("Resolutions above 4x can make your iPhone or iPad get hot.", comment: "3DS pause menu > Screens: warning under the title"),
+                                      preferredStyle: .actionSheet)
         let mark = { (on: Bool, title: String) in on ? "✓ " + title : title }
         for option in INDSOrientationLock.allCases {
             let title = NSLocalizedString("Orientation", comment: "") + ": " + option.title

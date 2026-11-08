@@ -29953,6 +29953,65 @@
         }
       }
     },
+    "Resolutions above 4x can make your iPhone or iPad get hot." : {
+      "comment" : "3DS pause menu > Screens: warning under the title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auflösungen über 4x können dein iPhone oder iPad heiß werden lassen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las resoluciones por encima de 4x pueden calentar tu iPhone o iPad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les résolutions supérieures à 4x peuvent faire chauffer ton iPhone ou iPad."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le risoluzioni oltre 4x possono far scaldare il tuo iPhone o iPad."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4xを超える解像度ではiPhoneやiPadが熱くなることがあります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4x보다 높은 해상도에서는 iPhone 또는 iPad가 뜨거워질 수 있습니다."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resoluções acima de 4x podem aquecer o teu iPhone ou iPad."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешение выше 4x может сильно нагревать iPhone или iPad."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高于 4x 的分辨率可能会让你的 iPhone 或 iPad 发热。"
+          }
+        }
+      }
+    },
     "Import System Font" : {
       "comment" : "BIOS setup: imports shared_font.bin for 3D games",
       "localizations" : {
