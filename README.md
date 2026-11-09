@@ -10,6 +10,13 @@ built and distributed. It is published under the **GNU GPLv3** (see
 GPLv2-or-later — so that anyone who receives the
 app can study, build and modify exactly what runs on their device.
 
+## Try the beta
+
+The newest builds go to a public TestFlight beta before the App Store:
+**[join the eDuo beta on TestFlight](https://testflight.apple.com/join/2CtyRYet)**
+(iPhone or iPad, free; the TestFlight app is required). Each beta build has
+its own tag here (`v1.2.0-b72`, …) with the exact source it was built from.
+
 ## Built with AI assistance
 
 This project was written with heavy use of AI coding assistants (Anthropic's

@@ -378,7 +378,7 @@ final class ThreeDSGameViewController: GCEventViewController {
     }
 
     /// The core's own log (patch 0003: Documents/System/log/core_log.txt).
-    /// Nothing is sent anywhere: the player picks where it goes, usually Discord.
+    /// Nothing is sent anywhere: the player picks where it goes (a message to the developer, a bug report).
     static var logURL: URL? {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?
             .appendingPathComponent("System/log/core_log.txt")
