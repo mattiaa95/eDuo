@@ -35,6 +35,8 @@ struct ROMListView: View {
     @State private var importToastMessage: String?
     /// Slow ambient pulse behind the empty-state icon.
     @State private var emptyStateGlowPulse = false
+    /// Game being dragged in Custom sort.
+    @State private var draggingROM: ROMFile?
 
     // Note: `.data` instead of our own `.ndsROM` on purpose. If another
     // emulator that also exports `.nds` is installed (or the file comes from a
@@ -115,7 +117,14 @@ struct ROMListView: View {
             // banner here would contradict the onboarding's "no BIOS needed".
             .safeAreaInset(edge: .bottom) {
                 if !viewModel.filteredROMs.isEmpty {
-                    sortPicker
+                    VStack(spacing: 6) {
+                        if viewModel.canReorder {
+                            Text("Hold a game, then drag it to move it.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        sortPicker
+                    }
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         .background(.bar)
@@ -427,6 +436,7 @@ struct ROMListView: View {
         } preview: {
             ROMDetailView(rom: rom)
         }
+        .modifier(ROMReorderModifier(rom: rom, viewModel: viewModel, dragging: $draggingROM))
     }
 
     private var sortPicker: some View {
@@ -607,3 +617,36 @@ struct ROMListView: View {
     }
 }
 
+
+/// Custom sort: long-press lifts the game, dragging it over another moves it there.
+private struct ROMReorderModifier: ViewModifier {
+    let rom: ROMFile
+    @ObservedObject var viewModel: ROMListViewModel
+    @Binding var dragging: ROMFile?
+
+    func body(content: Content) -> some View {
+        if viewModel.canReorder {
+            content
+                .onDrag {
+                    dragging = rom
+                    return NSItemProvider(object: rom.filename as NSString)
+                }
+                .onDrop(of: [.text], delegate: Delegate(target: rom, viewModel: viewModel, dragging: $dragging))
+        } else {
+            content
+        }
+    }
+
+    private struct Delegate: DropDelegate {
+        let target: ROMFile
+        let viewModel: ROMListViewModel
+        @Binding var dragging: ROMFile?
+
+        func dropEntered(info: DropInfo) {
+            guard let dragging, dragging.id != target.id else { return }
+            withAnimation(.snappy) { viewModel.moveROM(dragging, to: target) }
+        }
+        func dropUpdated(info: DropInfo) -> DropProposal? { DropProposal(operation: .move) }
+        func performDrop(info: DropInfo) -> Bool { dragging = nil; return true }
+    }
+}

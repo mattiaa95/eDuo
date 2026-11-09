@@ -9,6 +9,7 @@ final class ROMListViewModel: ObservableObject {
         case lastPlayed = "Played"
         case size = "Size"
         case system = "System"
+        case custom = "Custom"
 
         var id: String { rawValue }
 
@@ -21,6 +22,7 @@ final class ROMListViewModel: ObservableObject {
             case .lastPlayed: return "Played"
             case .size: return "Size"
             case .system: return "System"
+            case .custom: return "Custom"
             }
         }
     }
@@ -121,9 +123,34 @@ final class ROMListViewModel: ObservableObject {
         applyFiltersAndSort()
     }
 
+    /// Filenames in the order the user dragged them into (Custom sort).
+    private static let customOrderKey = "eduo.romList.customOrder"
+    private var customOrder: [String] {
+        get { UserDefaults.standard.stringArray(forKey: Self.customOrderKey) ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Self.customOrderKey) }
+    }
+
+    /// Drag-to-reorder only makes sense on the full, unfiltered list.
+    var canReorder: Bool {
+        sortOption == .custom && searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Live reorder while a game is dragged over another one.
+    func moveROM(_ rom: ROMFile, to target: ROMFile) {
+        guard canReorder,
+              let from = filteredROMs.firstIndex(where: { $0.id == rom.id }),
+              let to = filteredROMs.firstIndex(where: { $0.id == target.id }), from != to else { return }
+        filteredROMs.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+        customOrder = filteredROMs.map(\.filename)
+    }
+
     func rename(_ rom: ROMFile, toBaseName newBaseName: String) {
         do {
             try ROMStorageManager.renameROM(rom, toBaseName: newBaseName)
+            // Keep the renamed game where the user put it.
+            let ext = (rom.filename as NSString).pathExtension
+            let newName = ext.isEmpty ? newBaseName : "\(newBaseName).\(ext)"
+            customOrder = customOrder.map { $0 == rom.filename ? newName : $0 }
             reload()
         } catch {
             debugLog("Failed to rename ROM \(rom.filename): \(error.localizedDescription)")
@@ -184,6 +211,18 @@ final class ROMListViewModel: ObservableObject {
                 lhs.isThreeDS != rhs.isThreeDS ? !lhs.isThreeDS
                     : lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName) == .orderedAscending
             }
+        case .custom:
+            // The user's order; games never placed (new imports) go last, newest first.
+            let rank = Dictionary(customOrder.enumerated().map { ($1, $0) }, uniquingKeysWith: { a, _ in a })
+            filteredROMs.sort { lhs, rhs in
+                switch (rank[lhs.filename], rank[rhs.filename]) {
+                case let (l?, r?): return l < r
+                case (.some, nil): return true
+                case (nil, .some): return false
+                case (nil, nil): return lhs.creationDate > rhs.creationDate
+                }
+            }
+            return  // the user's arrangement wins over the favourites-first rule
         }
 
         // Favourites float to the top of whichever sort is active. Until now
