@@ -8,6 +8,7 @@ final class ROMListViewModel: ObservableObject {
         case dateAdded = "Added"
         case lastPlayed = "Played"
         case size = "Size"
+        case system = "System"
 
         var id: String { rawValue }
 
@@ -19,6 +20,7 @@ final class ROMListViewModel: ObservableObject {
             case .dateAdded: return "Added"
             case .lastPlayed: return "Played"
             case .size: return "Size"
+            case .system: return "System"
             }
         }
     }
@@ -37,8 +39,12 @@ final class ROMListViewModel: ObservableObject {
     @Published var searchQuery = "" {
         didSet { applyFiltersAndSort() }
     }
-    @Published var sortOption: SortOption = .name {
-        didSet { applyFiltersAndSort() }
+    /// Remembered between launches (rawValue is the key, so it stays English).
+    @Published var sortOption = SortOption(rawValue: UserDefaults.standard.string(forKey: "eduo.romList.sort") ?? "") ?? .name {
+        didSet {
+            UserDefaults.standard.set(sortOption.rawValue, forKey: "eduo.romList.sort")
+            applyFiltersAndSort()
+        }
     }
     @Published var importErrorMessage: String?
     @Published var biosInstalled = BIOSManager.biosInstalled
@@ -172,6 +178,12 @@ final class ROMListViewModel: ObservableObject {
             }
         case .size:
             filteredROMs.sort { ($0.fileSize ?? 0) > ($1.fileSize ?? 0) }
+        case .system:
+            // DS games first, then 3DS, each by name.
+            filteredROMs.sort { lhs, rhs in
+                lhs.isThreeDS != rhs.isThreeDS ? !lhs.isThreeDS
+                    : lhs.displayName.localizedCaseInsensitiveCompare(rhs.displayName) == .orderedAscending
+            }
         }
 
         // Favourites float to the top of whichever sort is active. Until now
