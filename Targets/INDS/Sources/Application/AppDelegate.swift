@@ -98,7 +98,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 
-    private static let supportedExternalExtensions: Set<String> = ["nds", "zip", "7z", "gz", "sav"]
+    private static let supportedExternalExtensions: Set<String> =
+        Set(["nds", "zip", "7z", "gz", "sav"]).union(ROMStorageManager.threeDSExtensions)
 
     /// Routes a file opened externally ("Open in eDuo" from Files/Safari, or
     /// a plain double-tap on a `.nds`/`.zip`/`.7z`/`.sav`) through the same import

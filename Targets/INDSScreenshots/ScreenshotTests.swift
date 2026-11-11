@@ -497,4 +497,41 @@ final class ScreenshotTests: XCTestCase {
         attachment.lifetime = .keepAlways
         add(attachment)
     }
+
+    /// First-run path: fresh install, empty library,
+    /// "Try a Free Demo Game" -> JamClown downloads, imports and boots.
+    @MainActor
+    func testReviewDemoFlow() throws {
+        let app = launchApp()
+        let demo = app.buttons["Try a Free Demo Game"]
+        XCTAssertTrue(demo.waitForExistence(timeout: 8), "demo button missing (library not empty?)")
+        shoot("review-1-empty")
+        demo.tap()
+        // The empty-state caption also says "JamClown": match the library cell.
+        let cell = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "JamClown Lorenzo")).firstMatch
+        XCTAssertTrue(cell.waitForExistence(timeout: 60), "JamClown never reached the library")
+        sleep(2)
+        shoot("review-2-library")
+        cell.tap()
+        sleep(14)
+        shoot("review-3-playing")
+        XCTAssertFalse(cell.isHittable, "still on the library: game did not open")
+    }
+
+    /// Same, 3DS demo from the "+" menu.
+    @MainActor
+    func testReviewDemo3DS() throws {
+        let app = launchApp()
+        app.buttons["Import ROM"].firstMatch.tap()
+        let item = app.buttons["2048 (3DS demo)"].firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 5), "3DS demo menu item missing")
+        shoot("review-4-menu")
+        item.tap()
+        let cell = app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", "2048")).firstMatch
+        XCTAssertTrue(cell.waitForExistence(timeout: 60), "2048 never reached the library")
+        sleep(2)
+        cell.tap()
+        sleep(20)
+        shoot("review-5-3ds-playing")
+    }
 }

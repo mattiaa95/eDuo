@@ -18,6 +18,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.mls.nds-rom</string>
+				<string>com.mls.3ds-rom</string>
 			</array>
 		</dict>
 		<dict>
@@ -73,7 +74,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.2.0</string>
 	<key>CFBundleVersion</key>
-	<string>73</string>
+	<string>74</string>
 	<key>GCSupportedGameControllers</key>
 	<array>
 		<dict>
@@ -131,6 +132,26 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>nds</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>3DS Game</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.mls.3ds-rom</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>3ds</string>
+					<string>cci</string>
+					<string>cxi</string>
+					<string>3dsx</string>
 				</array>
 			</dict>
 		</dict>

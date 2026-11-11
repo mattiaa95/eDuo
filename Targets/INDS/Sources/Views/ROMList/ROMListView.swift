@@ -10,6 +10,10 @@ struct ROMListView: View {
     /// thread — drives the "Importing…" overlay so a big `.7z` doesn't look
     /// like the picker silently did nothing.
     @State private var importInProgress = false
+    /// Label of that overlay — "Downloading…" while a demo/link is fetched.
+    @State private var importProgressLabel: LocalizedStringKey = "Importing…"
+    @State private var isAskingDownloadLink = false
+    @State private var downloadLinkText = ""
     @State private var pendingDuplicateURL: URL?
     @State private var romToDelete: ROMFile?
     @State private var romToRename: ROMFile?
@@ -68,7 +72,7 @@ struct ROMListView: View {
             }
             .overlay {
                 if importInProgress {
-                    ProgressView("Importing…")
+                    ProgressView(importProgressLabel)
                         .padding(20)
                         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
                         .transition(.opacity)
@@ -102,8 +106,30 @@ struct ROMListView: View {
                     }
                     .accessibilityLabel("Switch layout")
 
-                    Button {
-                        isImportingROM = true
+                    Menu {
+                        Button {
+                            isImportingROM = true
+                        } label: {
+                            Label("Import from Files", systemImage: "folder")
+                        }
+                        Button {
+                            downloadLinkText = ""
+                            isAskingDownloadLink = true
+                        } label: {
+                            Label("Download from Link…", systemImage: "link")
+                        }
+                        Section("Free Demo Games") {
+                            Button {
+                                downloadAndImport(ROMDownloader.jamClown)
+                            } label: {
+                                Label("JamClown (DS demo)", systemImage: "gift")
+                            }
+                            Button {
+                                downloadAndImport(ROMDownloader.game2048)
+                            } label: {
+                                Label("2048 (3DS demo)", systemImage: "gift")
+                            }
+                        }
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -156,6 +182,22 @@ struct ROMListView: View {
             WelcomeView {
                 isImportingROM = true
             }
+        }
+        .alert("Download from Link", isPresented: $isAskingDownloadLink) {
+            TextField("https://…", text: $downloadLinkText)
+                .keyboardType(.URL)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+            Button("Download") {
+                if let url = ROMDownloader.parseLink(downloadLinkText) {
+                    downloadAndImport(url)
+                } else {
+                    viewModel.importErrorMessage = ROMDownloader.DownloadError.invalidLink.localizedDescription
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Paste the web link of a game file (.nds, .3ds, .zip…).")
         }
         .alert("Already Exists", isPresented: Binding(
             get: { pendingDuplicateURL != nil },
@@ -471,6 +513,28 @@ struct ROMListView: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .pressableScale()
+
+            VStack(spacing: 6) {
+                Button {
+                    downloadAndImport(ROMDownloader.jamClown)
+                } label: {
+                    Label("Try a Free Demo Game", systemImage: "arrow.down.circle")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                Text("JamClown — free open-source homebrew (MIT License) by Lorenzo Langlois.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 32)
+
+            Text("1. Download a game file (.nds, .3ds, .zip…) in Safari — it goes to Files > Downloads.\n2. Tap Import ROMs.\n3. Pick the file. Or open the file in Files and share it to eDuo.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 32)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
@@ -547,6 +611,24 @@ struct ROMListView: View {
             runImport(urls, replaceExisting: false)
         case .failure(let error):
             viewModel.importErrorMessage = error.localizedDescription
+        }
+    }
+
+    /// Downloads a game (demo menu / pasted link) and feeds it to `runImport`,
+    /// so dedupe, toast and error handling are the same as the file picker.
+    private func downloadAndImport(_ url: URL) {
+        importProgressLabel = "Downloading…"
+        withMotion(INDSMotion.gentle) { importInProgress = true }
+        Task {
+            do {
+                let fileURL = try await ROMDownloader.download(url)
+                importProgressLabel = "Importing…"
+                runImport([fileURL], replaceExisting: false)
+            } catch {
+                importProgressLabel = "Importing…"
+                withMotion(INDSMotion.gentle) { importInProgress = false }
+                viewModel.importErrorMessage = error.localizedDescription
+            }
         }
     }
 
