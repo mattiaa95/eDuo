@@ -73,6 +73,19 @@ struct NDSSaveStateSlotsView: View {
         return formatter
     }()
 
+    /// In iPhone landscape the sheet is full screen with no drag handle: without
+    /// this button there is no way back to the game.
+    private var closeButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark.circle.fill")
+                .font(.title2)
+                .symbolRenderingMode(.hierarchical)
+                .foregroundColor(.secondary)
+        }
+        .padding(.leading, 16)
+        .accessibilityLabel(NSLocalizedString("Close", comment: ""))
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Capsule()
@@ -84,6 +97,8 @@ struct NDSSaveStateSlotsView: View {
             Text(mode.title)
                 .font(.headline)
                 .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .leading) { closeButton }
                 .padding(.bottom, 12)
 
             ScrollView {

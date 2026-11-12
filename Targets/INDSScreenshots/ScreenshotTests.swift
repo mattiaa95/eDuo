@@ -125,6 +125,31 @@ final class ScreenshotTests: XCTestCase {
         shoot("save-states")
     }
 
+    /// Landscape iPhone: Cheats and Save State sheets come up full screen, and
+    /// their close button must bring the player back.
+    @MainActor func testLandscapeSheetsClose() throws {
+        let app = launchApp()
+        defer { XCUIDevice.shared.orientation = .portrait }
+        XCUIDevice.shared.orientation = .landscapeLeft
+        sleep(2)
+        bootJamClown(app)
+        for label in ["Cheats", "Save State", "Load State"] {
+            openPauseMenu(app)
+            let row = app.buttons[label].firstMatch
+            XCTAssertTrue(row.waitForExistence(timeout: 4), "\(label) row missing")
+            row.tap(); sleep(2)
+            shoot("landscape-\(label)")
+            let close = app.buttons["Close"].firstMatch
+            XCTAssertTrue(close.waitForExistence(timeout: 4), "\(label): no Close button")
+            close.tap(); sleep(2)
+            XCTAssertFalse(close.exists && close.isHittable, "\(label): sheet still up")
+            shoot("landscape-\(label)-closed")
+            // back to the game: close the pause menu too if it stayed up
+            let resume = app.buttons["Resume"].firstMatch
+            if resume.exists && resume.isHittable { resume.tap(); sleep(1) }
+        }
+    }
+
     @MainActor
     func test06_Cheats() throws {
         let app = launchApp()
