@@ -126,6 +126,9 @@ void E3DSReloadCheats(void);
 /// vsync: -1 core default, 0 off, 1 on. unlimitedSpeed: frame limit 0 instead of 100 %.
 /// Read at E3DSRun.
 void E3DSSetDiagnostics(int vsync, bool unlimitedSpeed);
+/// Vertex shaders: -1 auto (hardware, software for games known to lose models), 0 software, 1 hardware.
+/// Read at E3DSRun.
+void E3DSSetHardwareShaders(int mode);
 /// Starts/stops collecting stats; while off nothing is counted or hooked.
 void E3DSSetStatsEnabled(bool enabled);
 

@@ -56,6 +56,7 @@ struct SettingsView: View {
     @AppStorage("eDuoPerfOverlay") private var perfOverlay = false
     @AppStorage("eDuo3DSVSync") private var vsync3DS = -1
     @AppStorage("eDuo3DSUnlimited") private var unlimited3DS = false
+    @AppStorage("eDuo3DSHardwareShaders") private var hwShaders3DS = -1
     @State private var showingBIOSSetup = false
     @State private var showProSheet = false
     @State private var showManageSubscription = false
@@ -167,6 +168,11 @@ struct SettingsView: View {
                             Text(verbatim: "Off").tag(0)
                         } label: { Text(verbatim: "3DS VSync") }
                         Toggle(isOn: $unlimited3DS) { Text(verbatim: "3DS unlimited speed (no 100% limit)") }
+                        Picker(selection: $hwShaders3DS) {
+                            Text(verbatim: "Auto").tag(-1)
+                            Text(verbatim: "Hardware").tag(1)
+                            Text(verbatim: "Software").tag(0)
+                        } label: { Text(verbatim: "3DS vertex shaders") }
                     } header: {
                         Text(verbatim: "TestFlight diagnostics")
                     } footer: {

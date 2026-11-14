@@ -122,6 +122,7 @@ struct Session {
     std::condition_variable doneCv;
     std::mutex opMutex;
     bool batterySaver = false;
+    int hwShader = -1;  // -1 auto, 0 software vertex shaders, 1 hardware
     CAMetalLayer* top = nil;
     CAMetalLayer* bottom = nil;
     u64 program_id = 0;
@@ -383,6 +384,19 @@ static void RestoreInterruptedStates() {
     }
 }
 
+// Skinned models vanish on MoltenVK in these games with hardware vertex shaders while the
+// scenery draws fine; the software vertex shader (same as Azahar's reference) draws them.
+// Matched by title too: regional program IDs are not all known.
+// ponytail: list by hand; add games as reports come in.
+static bool UseHardwareShaders(u64 program_id, const std::string& title) {
+    if (g.hwShader >= 0) return g.hwShader != 0;
+    const bool software = program_id == 0x0004000000061300 ||  // Tales of the Abyss
+                          title.find("Abyss") != std::string::npos ||
+                          title.find("アビス") != std::string::npos;
+    if (software) LOG_INFO(Frontend, "eDuo: software vertex shaders for {:016X} {}", program_id, title);
+    return !software;
+}
+
 int E3DSRun(const char* path) {
     if (!path || g.running.exchange(true)) return (int)Core::System::ResultStatus::ErrorUnknown;
     g.stop = false;
@@ -397,11 +411,13 @@ int E3DSRun(const char* path) {
     }
 
     u64 program_id = 0;
+    std::string title;
     FileUtil::SetCurrentRomPath(path);
     auto loader = Loader::GetLoader(path);
     g.program_id = 0;
     if (loader) {
         loader->ReadProgramId(program_id);
+        loader->ReadTitle(title, false);
         g.program_id = program_id;
         system.RegisterAppLoaderEarly(loader);
         PrepareTexturePacks(program_id, g.dumpTextures);
@@ -409,6 +425,7 @@ int E3DSRun(const char* path) {
         Settings::values.dump_textures.SetValue(false);
     }
     UsePerGameFolders(program_id, path);
+    Settings::values.use_hw_shader.SetValue(UseHardwareShaders(program_id, title));
     RestoreInterruptedStates();
     system.ApplySettings();
     Frontend::RegisterDefaultApplets(system);
@@ -1045,6 +1062,8 @@ void E3DSSetDiagnostics(int vsync, bool unlimitedSpeed) {
     g.vsync = vsync;
     g.unlimited = unlimitedSpeed;
 }
+
+void E3DSSetHardwareShaders(int mode) { g.hwShader = mode; }
 
 void E3DSSetStatsEnabled(bool enabled) {
     if (enabled) {

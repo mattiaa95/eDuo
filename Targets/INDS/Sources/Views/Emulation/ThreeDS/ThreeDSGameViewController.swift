@@ -315,6 +315,8 @@ final class ThreeDSGameViewController: GCEventViewController {
         if DSPerfProbe.isTestBuild {
             let vsync = defaults.object(forKey: "eDuo3DSVSync") == nil ? -1 : defaults.integer(forKey: "eDuo3DSVSync")
             E3DSSetDiagnostics(Int32(vsync), defaults.bool(forKey: "eDuo3DSUnlimited"))
+            let hw = defaults.object(forKey: "eDuo3DSHardwareShaders") == nil ? -1 : defaults.integer(forKey: "eDuo3DSHardwareShaders")
+            E3DSSetHardwareShaders(Int32(hw))
         }
         guard defaults.bool(forKey: DSPerfProbe.overlayKey) else { E3DSSetStatsEnabled(false); return }
         E3DSSetStatsEnabled(true)
