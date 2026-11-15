@@ -1,0 +1,207 @@
+diff --git a/src/core/arm/fastinterp/handlers/arm_vfp.inc b/src/core/arm/fastinterp/handlers/arm_vfp.inc
+index 3ab215f..048573e 100644
+--- a/src/core/arm/fastinterp/handlers/arm_vfp.inc
++++ b/src/core/arm/fastinterp/handlers/arm_vfp.inc
+@@ -26,6 +26,32 @@
+     std::memcpy(&state_.vfp_regs[(idx) * 2], &vfp_d_tmp_, sizeof(vfp_d_tmp_)); \
+ } while(0)
+ 
++// VFPv2 short-vector mode. When FPSCR.LEN != 0 and the destination register is
++// outside the scalar bank, data-processing instructions run LEN+1 times over
++// circular register banks (8 singles / 4 doubles), stepping by FPSCR.STRIDE; a
++// second operand in the scalar bank stays fixed. Same rules as Dynarmic's
++// EmitVfpVectorOperation. BODY sees the register indices as d, n and m.
++#define VFP_VEC_OP(BANK, SCALAR_MASK, BODY) do { \
++    u32 d = inst->vfp.sd, n = inst->vfp.sn, m = inst->vfp.sm; \
++    (void)n; \
++    if (__builtin_expect((state_.fpscr & 0x00070000) == 0 || (d & (SCALAR_MASK)) == 0, 1)) { \
++        BODY; \
++    } else { \
++        const u32 vfp_vec_len_ = ((state_.fpscr >> 16) & 7) + 1; \
++        const u32 vfp_vec_stride_ = ((state_.fpscr >> 20) & 3) == 3 ? 2 : 1; \
++        const bool vfp_m_scalar_ = (m & (SCALAR_MASK)) == 0; \
++        for (u32 vfp_vec_i_ = 0; vfp_vec_i_ < vfp_vec_len_; ++vfp_vec_i_) { \
++            BODY; \
++            d = (d & ~((BANK) - 1)) | ((d + vfp_vec_stride_) & ((BANK) - 1)); \
++            n = (n & ~((BANK) - 1)) | ((n + vfp_vec_stride_) & ((BANK) - 1)); \
++            if (!vfp_m_scalar_) \
++                m = (m & ~((BANK) - 1)) | ((m + vfp_vec_stride_) & ((BANK) - 1)); \
++        } \
++    } \
++} while (0)
++#define VFP_VEC_S(BODY) VFP_VEC_OP(8u, 0x18u, BODY)
++#define VFP_VEC_D(BODY) VFP_VEC_OP(4u, 0x0Cu, BODY)
++
+ // VFP Register Transfer: VMOV ARM to single VFP
+ handle_VmovArmToS:
+     CHECK_COND();
+@@ -66,67 +92,67 @@ handle_Vmsr:
+ 
+ handle_VaddS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sn) + VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(n) + VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VsubS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sn) - VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(n) - VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmulS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(n) * VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VdivS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sn) / VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(n) / VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmlaS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sd) + VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(d) + VFP_S_READ(n) * VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmlsS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, VFP_S_READ(inst->vfp.sd) - VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, VFP_S_READ(d) - VFP_S_READ(n) * VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmlaS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, -VFP_S_READ(inst->vfp.sd) - VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, -VFP_S_READ(d) - VFP_S_READ(n) * VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmlsS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, -VFP_S_READ(inst->vfp.sd) + VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, -VFP_S_READ(d) + VFP_S_READ(n) * VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmulS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, -(VFP_S_READ(inst->vfp.sn) * VFP_S_READ(inst->vfp.sm)));
++    VFP_VEC_S(VFP_S_WRITE(d, -(VFP_S_READ(n) * VFP_S_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VabsS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, std::fabs(VFP_S_READ(inst->vfp.sm)));
++    VFP_VEC_S(VFP_S_WRITE(d, std::fabs(VFP_S_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnegS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, -VFP_S_READ(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE(d, -VFP_S_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VsqrtS:
+     CHECK_COND();
+-    VFP_S_WRITE(inst->vfp.sd, std::sqrt(VFP_S_READ(inst->vfp.sm)));
++    VFP_VEC_S(VFP_S_WRITE(d, std::sqrt(VFP_S_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmovS:
+     CHECK_COND();
+-    VFP_S_WRITE_U32(inst->vfp.sd, VFP_S_READ_U32(inst->vfp.sm));
++    VFP_VEC_S(VFP_S_WRITE_U32(d, VFP_S_READ_U32(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ // Expanded constant precomputed at decode into vimm.lo
+@@ -137,68 +163,67 @@ handle_VmovImmS:
+ 
+ handle_VaddD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sn) + VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(n) + VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VsubD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sn) - VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(n) - VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmulD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(n) * VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VdivD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sn) / VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(n) / VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmlaD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sd) + VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(d) + VFP_D_READ(n) * VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmlsD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, VFP_D_READ(inst->vfp.sd) - VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, VFP_D_READ(d) - VFP_D_READ(n) * VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmlaD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, -VFP_D_READ(inst->vfp.sd) - VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, -VFP_D_READ(d) - VFP_D_READ(n) * VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmlsD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, -VFP_D_READ(inst->vfp.sd) + VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, -VFP_D_READ(d) + VFP_D_READ(n) * VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnmulD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, -(VFP_D_READ(inst->vfp.sn) * VFP_D_READ(inst->vfp.sm)));
++    VFP_VEC_D(VFP_D_WRITE(d, -(VFP_D_READ(n) * VFP_D_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VabsD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, std::fabs(VFP_D_READ(inst->vfp.sm)));
++    VFP_VEC_D(VFP_D_WRITE(d, std::fabs(VFP_D_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VnegD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, -VFP_D_READ(inst->vfp.sm));
++    VFP_VEC_D(VFP_D_WRITE(d, -VFP_D_READ(m)));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VsqrtD:
+     CHECK_COND();
+-    VFP_D_WRITE(inst->vfp.sd, std::sqrt(VFP_D_READ(inst->vfp.sm)));
++    VFP_VEC_D(VFP_D_WRITE(d, std::sqrt(VFP_D_READ(m))));
+     ADVANCE_AND_DISPATCH();
+ 
+ handle_VmovD:
+     CHECK_COND();
+-    state_.vfp_regs[inst->vfp.sd * 2] = state_.vfp_regs[inst->vfp.sm * 2];
+-    state_.vfp_regs[inst->vfp.sd * 2 + 1] = state_.vfp_regs[inst->vfp.sm * 2 + 1];
++    VFP_VEC_D(state_.vfp_regs[d * 2] = state_.vfp_regs[m * 2]; state_.vfp_regs[d * 2 + 1] = state_.vfp_regs[m * 2 + 1]);
+     ADVANCE_AND_DISPATCH();
+ 
+ // Expanded constant precomputed at decode into vimm.lo/hi
+@@ -488,3 +513,6 @@ handle_VstmD:
+ #undef VFP_S_WRITE_U32
+ #undef VFP_D_READ
+ #undef VFP_D_WRITE
++#undef VFP_VEC_OP
++#undef VFP_VEC_S
++#undef VFP_VEC_D

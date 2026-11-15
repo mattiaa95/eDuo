@@ -40,6 +40,7 @@
 #include "core/frontend/applets/default_applets.h"
 #include "core/frontend/image_interface.h"
 #include "core/frontend/emu_window.h"
+#include "core/frontend/framebuffer_layout.h"
 #include "core/loader/loader.h"
 #include "core/loader/smdh.h"
 #include "core/frontend/input.h"
@@ -384,17 +385,59 @@ static void RestoreInterruptedStates() {
     }
 }
 
-// Skinned models vanish on MoltenVK in these games with hardware vertex shaders while the
-// scenery draws fine; the software vertex shader (same as Azahar's reference) draws them.
-// Matched by title too: regional program IDs are not all known.
-// ponytail: list by hand; add games as reports come in.
-static bool UseHardwareShaders(u64 program_id, const std::string& title) {
-    if (g.hwShader >= 0) return g.hwShader != 0;
-    const bool software = program_id == 0x0004000000061300 ||  // Tales of the Abyss
-                          title.find("Abyss") != std::string::npos ||
-                          title.find("アビス") != std::string::npos;
-    if (software) LOG_INFO(Frontend, "eDuo: software vertex shaders for {:016X} {}", program_id, title);
-    return !software;
+// Reproduction harness for rendering reports, run on a Mac ("Designed for iPad"). Driven by
+// environment variables, which an App Store or TestFlight install never has:
+//   EDUO_3DS_CPU=dyncom     reference ARM interpreter instead of FastInterp
+//   EDUO_3DS_ASYNC=0|1      async shader compilation
+//   EDUO_3DS_HWSHADER=0|1   hardware vertex shaders
+//   EDUO_3DS_DISKCACHE=0|1  disk shader cache
+//   EDUO_3DS_SWRENDER=1     software renderer
+//   EDUO_3DS_SHOTS=<dir>    top-screen BMP every 3 s into <dir>
+//   EDUO_3DS_MASH=1         taps A twice a second (intros, dialogue)
+static void ApplyDebugEnv() {
+    auto& v = Settings::values;
+    if (const char* e = getenv("EDUO_3DS_CPU")) v.use_fastinterp.SetValue(strcmp(e, "dyncom") != 0);
+    if (const char* e = getenv("EDUO_3DS_ASYNC")) v.async_shader_compilation.SetValue(atoi(e) != 0);
+    if (const char* e = getenv("EDUO_3DS_HWSHADER")) v.use_hw_shader.SetValue(atoi(e) != 0);
+    if (const char* e = getenv("EDUO_3DS_DISKCACHE")) v.use_disk_shader_cache.SetValue(atoi(e) != 0);
+    if (getenv("EDUO_3DS_SWRENDER")) v.graphics_api.SetValue(Settings::GraphicsAPI::Software);
+    // Always logged: a tester's log then says what the core really ran with.
+    LOG_INFO(Frontend, "eDuo settings: fastinterp={} hw_shader={} async_shaders={} disk_cache={} api={} res={}",
+             v.use_fastinterp.GetValue(), v.use_hw_shader.GetValue(),
+             v.async_shader_compilation.GetValue(), v.use_disk_shader_cache.GetValue(),
+             static_cast<int>(v.graphics_api.GetValue()), v.resolution_factor.GetValue());
+}
+
+static void StartDebugCapture() {
+    const char* dirEnv = getenv("EDUO_3DS_SHOTS");
+    const bool mash = getenv("EDUO_3DS_MASH") != nullptr;
+    if (!dirEnv && !mash) return;
+    std::thread([dir = std::string(dirEnv ? dirEnv : ""), mash] {
+        const auto layout = Layout::SeparateWindowsLayout(400, 240, false, false);
+        const size_t bytes = (400 * 240 * 4 + 0x3FFF) & ~size_t(0x3FFF);
+        u8* px = static_cast<u8*>(aligned_alloc(0x4000, bytes));  // page aligned: host-memory import
+        static std::atomic_bool busy{false};
+        for (int tick = 1, n = 0; g.running && !g.stop; ++tick) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+            if (g.paused || !Core::System::GetInstance().IsPoweredOn()) continue;
+            if (mash) E3DSSetButton(E3DSButtonA, tick & 1);
+            if (dir.empty() || tick % 12 || busy.exchange(true)) continue;
+            const std::string path = fmt::format("{}/shot_{:04d}.bmp", dir, n++);
+            Core::System::GetInstance().GPU().Renderer().RequestScreenshot(px, [px, path](bool) {
+                // 32-bit top-down BMP; the renderer hands back BGRA.
+                u8 h[54] = {'B', 'M'};
+                const u32 size = 54 + 400 * 240 * 4, off = 54, hs = 40, w = 400, bpp = 32 << 16 | 1;
+                const s32 hgt = -240;
+                memcpy(h + 2, &size, 4); memcpy(h + 10, &off, 4); memcpy(h + 14, &hs, 4);
+                memcpy(h + 18, &w, 4); memcpy(h + 22, &hgt, 4); memcpy(h + 26, &bpp, 4);
+                if (FILE* f = fopen(path.c_str(), "wb")) {
+                    fwrite(h, 1, 54, f); fwrite(px, 1, 400 * 240 * 4, f); fclose(f);
+                }
+                busy = false;
+            }, layout);
+        }
+        // ponytail: px leaks once per run (a capture may still be in flight); debug harness only.
+    }).detach();
 }
 
 int E3DSRun(const char* path) {
@@ -411,13 +454,11 @@ int E3DSRun(const char* path) {
     }
 
     u64 program_id = 0;
-    std::string title;
     FileUtil::SetCurrentRomPath(path);
     auto loader = Loader::GetLoader(path);
     g.program_id = 0;
     if (loader) {
         loader->ReadProgramId(program_id);
-        loader->ReadTitle(title, false);
         g.program_id = program_id;
         system.RegisterAppLoaderEarly(loader);
         PrepareTexturePacks(program_id, g.dumpTextures);
@@ -425,7 +466,8 @@ int E3DSRun(const char* path) {
         Settings::values.dump_textures.SetValue(false);
     }
     UsePerGameFolders(program_id, path);
-    Settings::values.use_hw_shader.SetValue(UseHardwareShaders(program_id, title));
+    Settings::values.use_hw_shader.SetValue(g.hwShader != 0);
+    ApplyDebugEnv();
     RestoreInterruptedStates();
     system.ApplySettings();
     Frontend::RegisterDefaultApplets(system);
@@ -441,6 +483,7 @@ int E3DSRun(const char* path) {
         system.GPU().Renderer().Rasterizer()->LoadDefaultDiskResources(stop_loading, nullptr);
         system.RegisterCoreLoopThreadId();
         g.coreThread = pthread_mach_thread_np(pthread_self());
+        StartDebugCapture();
 
         while (!g.stop) {
             if (g.paused && !g.stepping) {
