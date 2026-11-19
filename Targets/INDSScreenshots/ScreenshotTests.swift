@@ -559,4 +559,48 @@ final class ScreenshotTests: XCTestCase {
         sleep(20)
         shoot("review-5-3ds-playing")
     }
+
+    /// A tester asked for DS cheats to "be saved as well". The real flow: add
+    /// a cheat in the sheet, kill the app, come back — the row and its switch
+    /// must be there (Documents/Saves/<rom>.mch via NDSCheatFileStore).
+    @MainActor
+    func test99_CheatPersistsAcrossRelaunch() throws {
+        let name = "Persist\(Int(Date().timeIntervalSince1970) % 100000)"
+        var app = launchApp()
+        sleep(2)
+        bootJamClown(app)
+        openPauseMenu(app)
+        tapAny(app, labels: ["Cheats"])
+        sleep(2)
+        let add = app.buttons["Add Cheat"].firstMatch
+        XCTAssertTrue(add.waitForExistence(timeout: 4), "no Add Cheat button")
+        add.tap()
+        let nameField = app.textFields["Cheat Name"].firstMatch
+        XCTAssertTrue(nameField.waitForExistence(timeout: 4), "no name field")
+        nameField.tap(); sleep(1)
+        nameField.typeText(name)
+        let editor = app.textViews.firstMatch
+        XCTAssertTrue(editor.waitForExistence(timeout: 4), "no code editor")
+        editor.tap(); sleep(1)
+        editor.typeText("023FE000 00000063")
+        let save = app.buttons["Save"].firstMatch
+        XCTAssertTrue(save.waitForExistence(timeout: 4) && save.isEnabled, "Save not enabled")
+        save.tap(); sleep(2)
+        XCTAssertTrue(app.staticTexts[name].waitForExistence(timeout: 4), "row missing right after saving")
+        shoot("cheat-saved")
+
+        app.terminate()
+        sleep(2)
+        app = launchApp()
+        sleep(2)
+        bootJamClown(app)
+        openPauseMenu(app)
+        tapAny(app, labels: ["Cheats"])
+        sleep(2)
+        XCTAssertTrue(app.staticTexts[name].waitForExistence(timeout: 6), "cheat gone after relaunch")
+        let sw = app.switches[name].firstMatch   // Toggle carries accessibilityLabel(cheat.name)
+        XCTAssertTrue(sw.waitForExistence(timeout: 4), "no switch after relaunch")
+        XCTAssertEqual(sw.value as? String, "1", "cheat came back switched off")
+        shoot("cheat-after-relaunch")
+    }
 }
