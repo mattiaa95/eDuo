@@ -25,6 +25,13 @@ final class ThreeDSGameViewController: GCEventViewController {
     private let controllerView = NDSControllerView()
     private let gamepadManager = INDSGamepadManager()
     private let menuButton = UIButton(type: .system)
+    /// Same Speed latch as the DS HUD: each tap steps through `INDSSpeedPreferences.fastForwardSpeeds`
+    /// and the one after the fastest switches it off. The rate is the DS's stored one, so the
+    /// controller's Fast Forward hold, Settings > Controls and this button all share it.
+    private let speedButton = UIButton(type: .system)
+    /// nil = normal speed; a controller hold or the latch sets it (see `applySpeed`).
+    private var latchedSpeed: Double?
+    private var heldSpeed: Double?
     private var stickLink: CADisplayLink?
     /// Effective Battery Saver state last pushed to the core (see `batterySaverStateChanged`).
     private var batterySaverActive = false
@@ -97,6 +104,13 @@ final class ThreeDSGameViewController: GCEventViewController {
         menuButton.addAction(UIAction { [weak self] _ in self?.showMenu() }, for: .touchUpInside)
         view.addSubview(menuButton)
 
+        speedButton.setImage(UIImage(systemName: "forward.fill"), for: .normal)
+        speedButton.tintColor = .white.withAlphaComponent(0.7)
+        speedButton.titleLabel?.font = .monospacedSystemFont(ofSize: 12, weight: .semibold)
+        speedButton.accessibilityLabel = NSLocalizedString("Fast forward", comment: "VoiceOver label for the speed toggle")
+        speedButton.addAction(UIAction { [weak self] _ in self?.cycleSpeed() }, for: .touchUpInside)
+        view.addSubview(speedButton)
+
         let touch = UILongPressGestureRecognizer(target: self, action: #selector(bottomTouched(_:)))
         touch.minimumPressDuration = 0
         bottomView.addGestureRecognizer(touch)
@@ -111,6 +125,7 @@ final class ThreeDSGameViewController: GCEventViewController {
         controllerView.frame = view.bounds
         controllerView.screenLayoutMode = bounds.width > bounds.height ? .sideBySide : .stacked
         menuButton.frame = CGRect(x: bounds.maxX - 44, y: bounds.minY + 4, width: 40, height: 40)
+        speedButton.frame = CGRect(x: bounds.maxX - 44 - 64, y: bounds.minY + 4, width: 60, height: 40)
         pushLayers()
         startIfNeeded()
     }
@@ -346,6 +361,25 @@ final class ThreeDSGameViewController: GCEventViewController {
         }
     }
 
+    /// What the core runs at: a controller hold wins over the latch, battery saver still clamps in the core.
+    private func applySpeed() {
+        let speed = heldSpeed ?? latchedSpeed
+        E3DSSetSpeed(speed ?? 1)
+        speedButton.setTitle(speed.map { " " + INDSSpeedPreferences.label($0) }, for: .normal)
+        speedButton.tintColor = speed == nil ? .white.withAlphaComponent(0.7) : .systemYellow
+        speedButton.accessibilityValue = speed.map(INDSSpeedPreferences.label)
+    }
+
+    private func cycleSpeed() {
+        guard let next = INDSSpeedPreferences.nextFastForwardSpeed(after: latchedSpeed) else {
+            latchedSpeed = nil
+            return applySpeed()
+        }
+        INDSSpeedPreferences.fastForwardSpeed = next
+        latchedSpeed = next
+        applySpeed()
+    }
+
     private func quit() {
         perfTimer?.invalidate()
         stickLink?.invalidate()
@@ -353,6 +387,7 @@ final class ThreeDSGameViewController: GCEventViewController {
     }
 
     private func emulationEnded(result: Int32) {
+        E3DSSetSpeed(1)
         perfTimer?.invalidate(); perfTimer = nil
         stickLink?.invalidate()
         emulationThread = nil
@@ -642,9 +677,22 @@ extension ThreeDSGameViewController: INDSGamepadManagerDelegate {
         input(button, pressed: pressed, source: "gamepad", graced: true)
     }
     func gamepadManager(_ manager: INDSGamepadManager, perform action: INDSControllerAppAction) {
-        if case .pause = action { showMenu() }
+        switch action {
+        case .pause: showMenu()
+        case .fastForwardToggle:
+            latchedSpeed = latchedSpeed == nil ? INDSSpeedPreferences.fastForwardSpeed : nil
+            applySpeed()
+        case .nextFastForwardSpeed:
+            let speeds = INDSSpeedPreferences.fastForwardSpeeds
+            let index = speeds.firstIndex(of: INDSSpeedPreferences.fastForwardSpeed) ?? 0
+            INDSSpeedPreferences.fastForwardSpeed = speeds[(index + 1) % speeds.count]
+        default: break
+        }
     }
-    func gamepadManager(_ manager: INDSGamepadManager, setFastForwardActive active: Bool) {}
+    func gamepadManager(_ manager: INDSGamepadManager, setFastForwardActive active: Bool) {
+        heldSpeed = active ? INDSSpeedPreferences.fastForwardSpeed : nil
+        applySpeed()
+    }
     func gamepadManagerDidChangeConnection(_ manager: INDSGamepadManager, connected: Bool) {
         applyGamepadConnectionState()
     }

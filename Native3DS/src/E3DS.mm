@@ -135,6 +135,8 @@ struct Session {
     // Diagnostics (see E3DSSetDiagnostics / E3DSSampleStats).
     int vsync = -1;
     bool unlimited = false;
+    // Fast forward (see E3DSSetSpeed): 1 = normal.
+    std::atomic<double> speed{1.0};
     // "Dump Textures" for the next E3DSRun (see E3DSSetDumpTextures).
     bool dumpTextures = false;
     std::atomic_bool statsOn{false};
@@ -142,6 +144,33 @@ struct Session {
     std::atomic<unsigned long long> presents{0};
     __weak CAMetalLayer* countedLayer = nil;
 } g;
+
+// The core paces itself with Settings::GetFrameLimit() (percent of real time, read every
+// frame), and the audio sink time-stretches to whatever speed that gives. Fast forward is
+// therefore just a temporary limit of 100 * speed; the battery saver always wins (100 %).
+// Diagnostics "unlimited" keeps its own 0 in values.frame_limit while the speed is 1x.
+static void ApplyFrameLimit() {
+    const double speed = g.speed.load();
+    auto& v = Settings::values;
+    if (g.batterySaver) {
+        Settings::is_temporary_frame_limit = true;
+        Settings::temporary_frame_limit = 100.0;
+        v.use_vsync.SetValue(false);
+    } else if (speed > 1.0) {
+        Settings::is_temporary_frame_limit = true;
+        Settings::temporary_frame_limit = 100.0 * speed;
+        // Vsync would block the present at the display rate and cap the core at ~1x.
+        v.use_vsync.SetValue(false);
+        // Present only frames the game actually drew: a 30 fps game then needs 30 presents a
+        // second at 1x instead of 60 (every vblank), which is what leaves room for 2x+ on
+        // a display that cannot take more than its refresh rate.
+        v.use_skip_duplicate_frames.SetValue(true);
+    } else {
+        Settings::is_temporary_frame_limit = false;
+        v.use_vsync.SetValue(g.vsync >= 0 ? g.vsync != 0 : true);
+    }
+    if (g.batterySaver || speed <= 1.0) v.use_skip_duplicate_frames.SetValue(false);
+}
 
 // Counts nextDrawable calls on the top layer (MoltenVK calls it once per
 // presented frame). Installed the first time stats are switched on; a Bool
@@ -189,11 +218,8 @@ void ConfigureOnce() {
     v.async_presentation.SetValue(true);
     if (g.vsync >= 0) v.use_vsync.SetValue(g.vsync != 0);
     v.frame_limit.SetValue(g.unlimited ? 0.0 : 100.0);
-    if (g.batterySaver) {
-        v.use_vsync.SetValue(false);
-        Settings::is_temporary_frame_limit = true;
-        Settings::temporary_frame_limit = 100.0;
-    }
+    if (g.batterySaver) v.use_vsync.SetValue(false);
+    ApplyFrameLimit();
     v.output_type.SetValue(AudioCore::SinkType::Auto);
 
     static const int buttons[Settings::NativeButton::NumButtons] = {
@@ -400,6 +426,7 @@ static void ApplyDebugEnv() {
     if (const char* e = getenv("EDUO_3DS_ASYNC")) v.async_shader_compilation.SetValue(atoi(e) != 0);
     if (const char* e = getenv("EDUO_3DS_HWSHADER")) v.use_hw_shader.SetValue(atoi(e) != 0);
     if (const char* e = getenv("EDUO_3DS_DISKCACHE")) v.use_disk_shader_cache.SetValue(atoi(e) != 0);
+    if (getenv("EDUO_3DS_NOAUDIO")) v.output_type.SetValue(AudioCore::SinkType::Null);
     if (getenv("EDUO_3DS_SWRENDER")) v.graphics_api.SetValue(Settings::GraphicsAPI::Software);
     // Always logged: a tester's log then says what the core really ran with.
     LOG_INFO(Frontend, "eDuo settings: fastinterp={} hw_shader={} async_shaders={} disk_cache={} api={} res={}",
@@ -408,7 +435,28 @@ static void ApplyDebugEnv() {
              static_cast<int>(v.graphics_api.GetValue()), v.resolution_factor.GetValue());
 }
 
+//   EDUO_3DS_SPEED_TEST=<sec>  phases of <sec> s at 1x, 2x, 4x, 1x through E3DSSetSpeed; logs the
+//                           measured emulation speed / game fps every 2 s (stats must be off)
+static void StartSpeedTest() {
+    const char* e = getenv("EDUO_3DS_SPEED_TEST");
+    if (!e) return;
+    std::thread([sec = std::max(2, atoi(e))] {
+        const double plan[4] = {1.0, 2.0, 4.0, 1.0};
+        for (int phase = 0; phase < 4 && g.running && !g.stop; ++phase) {
+            E3DSSetSpeed(plan[phase]);
+            Core::System::GetInstance().GetAndResetPerfStats();
+            for (int t = 0; t < sec / 2 && g.running && !g.stop; ++t) {
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                const auto perf = Core::System::GetInstance().GetAndResetPerfStats();
+                LOG_INFO(Frontend, "eDuo speedtest: phase {} set {}x (limit {:.0f}%) -> speed {:.0f}% game_fps {:.1f} system_fps {:.1f}",
+                         phase, plan[phase], Settings::GetFrameLimit(), perf.emulation_speed * 100.0, perf.game_fps, perf.system_fps);
+            }
+        }
+    }).detach();
+}
+
 static void StartDebugCapture() {
+    StartSpeedTest();
     const char* dirEnv = getenv("EDUO_3DS_SHOTS");
     const bool mash = getenv("EDUO_3DS_MASH") != nullptr;
     if (!dirEnv && !mash) return;
@@ -604,14 +652,12 @@ void E3DSSetBatterySaver(bool on) {
     if (on) {
         v.resolution_factor.SetValue(1);
         v.use_vsync.SetValue(false);
-        Settings::is_temporary_frame_limit = true;
-        Settings::temporary_frame_limit = 100.0;
     } else {
         v.resolution_factor.SetValue(static_cast<u32>(g.resolution));
-        Settings::is_temporary_frame_limit = false;
         // Core default (true on iOS) unless diagnostics force a value.
         v.use_vsync.SetValue(g.vsync >= 0 ? g.vsync != 0 : true);
     }
+    ApplyFrameLimit();
     os_log(OS_LOG_DEFAULT, "[eDuo3DS] battery saver %{public}s -> %{public}s: resolution_factor %u -> %u, vsync %d, running %d",
            was ? "on" : "off", on ? "on" : "off", oldFactor, v.resolution_factor.GetValue(),
            (int)v.use_vsync.GetValue(), (int)g.running.load());
@@ -1104,6 +1150,12 @@ extern "C" {
 void E3DSSetDiagnostics(int vsync, bool unlimitedSpeed) {
     g.vsync = vsync;
     g.unlimited = unlimitedSpeed;
+}
+
+void E3DSSetSpeed(double multiplier) {
+    g.speed.store(std::clamp(multiplier, 1.0, 4.0));
+    ApplyFrameLimit();
+    os_log(OS_LOG_DEFAULT, "[eDuo3DS] speed %.1fx (frame limit %.0f %%)", g.speed.load(), Settings::GetFrameLimit());
 }
 
 void E3DSSetHardwareShaders(int mode) { g.hwShader = mode; }
