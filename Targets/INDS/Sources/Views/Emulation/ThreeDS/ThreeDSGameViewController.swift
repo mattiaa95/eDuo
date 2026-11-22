@@ -179,6 +179,9 @@ final class ThreeDSGameViewController: GCEventViewController {
         ThreeDSTexturePacks.applyDumpSetting(for: rom)
         applyDiagnostics()
         batterySaverStateChanged()
+        // emulationEnded drops the core to 1x; a restart (resolution change, save import) keeps the
+        // Speed button lit, so the core must follow it again.
+        applySpeed()
         // The save lives in Documents/Saves/<name>.3dssave (visible in Files). Resolving
         // it here also migrates a legacy save (build 64 or older) out of the core's SD layout. Every restart
         // (resolution change, pause-menu import) comes back through here.

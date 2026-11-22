@@ -161,9 +161,10 @@ static void ApplyFrameLimit() {
         Settings::temporary_frame_limit = 100.0 * speed;
         // Vsync would block the present at the display rate and cap the core at ~1x.
         v.use_vsync.SetValue(false);
-        // Present only frames the game actually drew: a 30 fps game then needs 30 presents a
-        // second at 1x instead of 60 (every vblank), which is what leaves room for 2x+ on
-        // a display that cannot take more than its refresh rate.
+        // Present only frames the game actually drew (a 30 fps game needs 30 presents a second
+        // at 1x instead of 60). Whatever the display still cannot take is dropped by the renderer
+        // (patch 0011) instead of blocking the core: MoltenVK only offers FIFO, so a 60 fps game
+        // was held at 100 % by the refresh rate.
         v.use_skip_duplicate_frames.SetValue(true);
     } else {
         Settings::is_temporary_frame_limit = false;
@@ -1156,6 +1157,8 @@ void E3DSSetSpeed(double multiplier) {
     g.speed.store(std::clamp(multiplier, 1.0, 4.0));
     ApplyFrameLimit();
     os_log(OS_LOG_DEFAULT, "[eDuo3DS] speed %.1fx (frame limit %.0f %%)", g.speed.load(), Settings::GetFrameLimit());
+    // Also in core_log.txt, so a tester's log says whether fast forward was on.
+    LOG_INFO(Frontend, "eDuo speed: {}x (frame limit {:.0f}%)", g.speed.load(), Settings::GetFrameLimit());
 }
 
 void E3DSSetHardwareShaders(int mode) { g.hwShader = mode; }

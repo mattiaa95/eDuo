@@ -1,0 +1,95 @@
+diff --git a/src/video_core/renderer_vulkan/renderer_vulkan.cpp b/src/video_core/renderer_vulkan/renderer_vulkan.cpp
+--- a/src/video_core/renderer_vulkan/renderer_vulkan.cpp
++++ b/src/video_core/renderer_vulkan/renderer_vulkan.cpp
+@@ -248,7 +248,26 @@
+                                     bool flipped) {
+     if (!Settings::values.use_skip_duplicate_frames.GetValue() ||
+         Core::PerfStats::game_frames_updated) {
+-        Frame* frame = window.GetRenderFrame();
++        // eDuo: when the core runs faster than real time (fast forward, unthrottled) it must not
++        // wait for the display. MoltenVK only offers FIFO and takes the CAMetalDrawable inside
++        // vkQueueSubmit, which the present thread calls under the scheduler's submit mutex: at one
++        // present per refresh every present waits for a free drawable and stalls all GPU work, and
++        // the core with it (a 60 fps game stayed at 100 %, a 30 fps one at 200 %). Fast forward
++        // therefore presents at most every 25 ms, so a drawable is always free, and never waits
++        // for a free frame: the frame is dropped instead. A dropped frame only flushes the GPU
++        // work; SwapBuffers would otherwise Finish() and wait for the device on every one.
++        const double frame_limit = Settings::GetFrameLimit();
++        const bool ahead_of_display = frame_limit == 0 || frame_limit > 100;
++        Frame* frame = nullptr;
++        if (!ahead_of_display || std::chrono::steady_clock::now() - window.LastPresentTime() >=
++                                     std::chrono::milliseconds(25)) {
++            frame = window.GetRenderFrame(!ahead_of_display);
++        }
++        if (!frame) {
++            scheduler.Flush();
++            screenRendered = true;
++            return;
++        }
+ 
+         if (layout.width != frame->width || layout.height != frame->height) {
+             window.WaitPresent();
+diff --git a/src/video_core/renderer_vulkan/vk_present_window.cpp b/src/video_core/renderer_vulkan/vk_present_window.cpp
+--- a/src/video_core/renderer_vulkan/vk_present_window.cpp
++++ b/src/video_core/renderer_vulkan/vk_present_window.cpp
+@@ -244,11 +244,14 @@
+     frame->height = height;
+ }
+ 
+-Frame* PresentWindow::GetRenderFrame() {
++Frame* PresentWindow::GetRenderFrame(bool block) {
+     MICROPROFILE_SCOPE(Vulkan_WaitPresent);
+ 
+     // Wait for free presentation frames
+     std::unique_lock lock{free_mutex};
++    if (!block && free_queue.empty()) {
++        return nullptr;
++    }
+     free_cv.wait(lock, [this] { return !free_queue.empty(); });
+ 
+     // Take the frame from the queue
+@@ -283,6 +286,7 @@
+ }
+ 
+ void PresentWindow::Present(Frame* frame) {
++    last_present = std::chrono::steady_clock::now();
+     if (!use_present_thread) {
+         scheduler.WaitWorker();
+         CopyToSwapchain(frame);
+diff --git a/src/video_core/renderer_vulkan/vk_present_window.h b/src/video_core/renderer_vulkan/vk_present_window.h
+--- a/src/video_core/renderer_vulkan/vk_present_window.h
++++ b/src/video_core/renderer_vulkan/vk_present_window.h
+@@ -3,6 +3,7 @@
+ // Refer to the misc/licenses/gplv2.txt file included.
+ 
+ #include <atomic>
++#include <chrono>
+ #include <condition_variable>
+ #include <mutex>
+ #include <queue>
+@@ -43,9 +44,15 @@
+     /// Waits for all queued frames to finish presenting.
+     void WaitPresent();
+ 
+-    /// Returns the last used render frame.
+-    Frame* GetRenderFrame();
++    /// Returns the last used render frame. With block == false it returns nullptr instead of
++    /// blocking when every frame is still queued for presentation.
++    Frame* GetRenderFrame(bool block = true);
+ 
++    /// eDuo: when the last frame was handed to Present() (fast forward pacing).
++    std::chrono::steady_clock::time_point LastPresentTime() const {
++        return last_present;
++    }
++
+     /// Recreates the render frame to match provided parameters.
+     void RecreateFrame(Frame* frame, u32 width, u32 height);
+ 
+@@ -97,6 +104,7 @@
+     std::mutex free_mutex;
+     std::jthread present_thread;
+     bool vsync_enabled{};
++    std::chrono::steady_clock::time_point last_present{};
+     bool blit_supported;
+     bool use_present_thread{true};
+     void* last_render_surface{};
