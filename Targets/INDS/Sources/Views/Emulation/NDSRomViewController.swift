@@ -905,6 +905,9 @@ final class NDSRomViewController: GCEventViewController {
         guard let url = NDSCheatFileStore.fileURL(forBaseName: rom.baseName) else { return }
         // A list saved by an earlier version may hold CodeBreaker/CodeFreak
         // codes as typed; rewrite it in today's (translated) form first.
+        // The per-game text in System/cheats is the source of truth: it is
+        // read (an old .mch is migrated into one) and the .mch rewritten from it.
+        NDSCheatTextStore.load(forBaseName: rom.baseName)
         NDSCheatFileStore.migrateIfNeeded(forBaseName: rom.baseName)
         core.reloadCheats(fromFile: url.path, enabled: true)
     }

@@ -43,6 +43,13 @@ struct NDSCheatsView: View {
         .accessibilityLabel(NSLocalizedString("Close", comment: ""))
     }
 
+    /// Where the list lives in Files (On My iPhone > eDuo), so it can be edited or dropped in.
+    private var fileHint: String? {
+        let url = threeDSProgramID.map(ThreeDSCheatStore.fileURL) ?? NDSCheatTextStore.fileURL(forBaseName: romBaseName)
+        guard let name = url?.lastPathComponent else { return nil }
+        return "System/cheats/\(name)"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Capsule()
@@ -72,6 +79,15 @@ struct NDSCheatsView: View {
             }
             .padding(.bottom, 10)
 
+            if let hint = fileHint {
+                Text(hint)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                    .accessibilityIdentifier("cheatsFileHint")
+            }
+
             if cheats.isEmpty {
                 emptyState
                 Spacer()
@@ -83,7 +99,7 @@ struct NDSCheatsView: View {
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.hidden)
         .onAppear {
-            cheats = threeDSProgramID.map(ThreeDSCheatStore.load) ?? NDSCheatFileStore.load(forBaseName: romBaseName)
+            cheats = threeDSProgramID.map(ThreeDSCheatStore.load) ?? NDSCheatTextStore.load(forBaseName: romBaseName)
         }
         .sheet(isPresented: $isAddingNew) {
             NDSCheatEditorView(cheat: nil, gateway: threeDSProgramID != nil) { newCheat in
@@ -204,7 +220,7 @@ struct NDSCheatsView: View {
         if let id = threeDSProgramID {
             ThreeDSCheatStore.save(cheats, programID: id)
         } else {
-            NDSCheatFileStore.save(cheats, forBaseName: romBaseName)
+            NDSCheatTextStore.save(cheats, forBaseName: romBaseName)
         }
         onCheatsChanged()
     }

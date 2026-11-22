@@ -28,6 +28,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "516BCBA34021706DD5DB7A7D"
+               BuildableName = "INDSTests.xctest"
+               BlueprintName = "INDSTests"
+               ReferencedContainer = "container:eNDS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "B3F7D594B8BC6915E9BD0E78"
                BuildableName = "eNDS.app"
                BlueprintName = "eNDS"
@@ -49,6 +63,16 @@
                BlueprintIdentifier = "F96EF72A5F03F1FBD2C675AF"
                BuildableName = "INDSScreenshots.xctest"
                BlueprintName = "INDSScreenshots"
+               ReferencedContainer = "container:eNDS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "516BCBA34021706DD5DB7A7D"
+               BuildableName = "INDSTests.xctest"
+               BlueprintName = "INDSTests"
                ReferencedContainer = "container:eNDS.xcodeproj">
             </BuildableReference>
          </TestableReference>

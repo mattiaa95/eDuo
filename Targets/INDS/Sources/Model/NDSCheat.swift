@@ -4,11 +4,10 @@
 //
 //  New (no iGBA equivalent — GBA cheats are a different, simpler format).
 //  Swift-side model + on-disk persistence for melonDS Action Replay codes.
-//  There is no separate database: the on-disk `.mch` file *is* the model
-//  (per-cheat `enabled` included), written in melonDS's own ARCodeFile text
-//  format (see Vendor/melonDS/src/ARCodeFile.cpp Load/Save) so it stays
-//  loadable by `-[MelonDSCoreBridge reloadCheatsFromFile:enabled:]` — and,
-//  if anyone ever pulled it out, by upstream melonDS itself.
+//  The source of truth is the per-game Gateway text in System/cheats
+//  (`NDSCheatTextStore`); the melonDS `.mch` (`NDSCheatFileStore`, ARCodeFile
+//  format, see Vendor/melonDS/src/ARCodeFile.cpp) is the copy that
+//  `-[MelonDSCoreBridge reloadCheatsFromFile:enabled:]` loads.
 //
 
 import Foundation
@@ -179,7 +178,7 @@ enum NDSCheatFileStore {
 
     // MARK: - melonDS ARCodeFile text format
 
-    private static func serialize(_ cheats: [NDSCheat]) -> String {
+    static func serialize(_ cheats: [NDSCheat]) -> String {
         var text = "ROOT\n\n"
         for cheat in cheats {
             let lines = NDSCheatValidation.normalizedLines(cheat.code)
@@ -204,7 +203,7 @@ enum NDSCheatFileStore {
     /// stray text, ...) are just skipped rather than failing the whole parse
     /// — this only ever needs to round-trip what `serialize(_:)` itself
     /// wrote, and must never crash/throw on a hand-edited file.
-    private static func parse(_ text: String) -> [NDSCheat] {
+    static func parse(_ text: String) -> [NDSCheat] {
         var cheats: [NDSCheat] = []
         var pendingName: String?
         var pendingEnabled = false
@@ -239,12 +238,45 @@ enum NDSCheatFileStore {
     }
 }
 
-/// The 3DS core's own cheat file (Gateway format: `[Name]`, an optional
-/// `*citra_enabled` line, then `AAAAAAAA VVVVVVVV` lines). Kept in the
-/// core's file so a list dropped into System/cheats via Files also works.
-enum ThreeDSCheatStore {
-    private static let enabledMark = "*citra_enabled"
+/// Gateway/Citra cheat text, the one list format of the app: `[Name]`, an optional
+/// `*citra_enabled` line, then `AAAAAAAA VVVVVVVV` lines. Used for the 3DS core's own
+/// file (`ThreeDSCheatStore`) and for the DS per-game list (`NDSCheatTextStore`).
+/// Lenient on read: comments (`*`, `#`, `;`, `//`), text outside a cheat and lines
+/// that are not a code pair are skipped, never an error; they are not written back.
+enum GatewayCheatText {
+    static let enabledMark = "*citra_enabled"
 
+    static func parse(_ text: String) -> [NDSCheat] {
+        var cheats: [NDSCheat] = []
+        for raw in text.components(separatedBy: .newlines) {
+            let line = raw.trimmingCharacters(in: .whitespaces)
+            if line.hasPrefix("["), line.hasSuffix("]") {
+                cheats.append(NDSCheat(name: String(line.dropFirst().dropLast()), code: "", enabled: false))
+            } else if line.lowercased() == enabledMark, !cheats.isEmpty {
+                cheats[cheats.count - 1].enabled = true
+            } else if let data = NDSCheatValidation.normalizedLine(line), !cheats.isEmpty {
+                cheats[cheats.count - 1].code += (cheats[cheats.count - 1].code.isEmpty ? "" : "\n") + data
+            }
+        }
+        return cheats
+    }
+
+    /// Cheats with no valid code line are left out (a name alone is no cheat).
+    static func serialize(_ cheats: [NDSCheat]) -> String {
+        var text = ""
+        for cheat in cheats {
+            let lines = ThreeDSCheatStore.normalizedLines(cheat.code)
+            guard !lines.isEmpty else { continue }
+            let name = cheat.name.replacingOccurrences(of: "]", with: ")").components(separatedBy: .newlines).joined(separator: " ")
+            text += "[\(name)]\n" + (cheat.enabled ? enabledMark + "\n" : "") + lines.joined(separator: "\n") + "\n"
+        }
+        return text
+    }
+}
+
+/// The 3DS core's own cheat file. Kept in the core's file so a list dropped into
+/// System/cheats via Files also works.
+enum ThreeDSCheatStore {
     static func fileURL(programID: UInt64) -> URL? {
         guard let path = E3DSCopyCheatFile(programID) else { return nil }
         defer { free(path) }
@@ -265,31 +297,100 @@ enum ThreeDSCheatStore {
     static func load(programID: UInt64) -> [NDSCheat] {
         guard let url = fileURL(programID: programID),
               let text = try? String(contentsOf: url, encoding: .utf8) else { return [] }
-        var cheats: [NDSCheat] = []
-        for raw in text.components(separatedBy: .newlines) {
-            let line = raw.trimmingCharacters(in: .whitespaces)
-            if line.hasPrefix("["), line.hasSuffix("]") {
-                cheats.append(NDSCheat(name: String(line.dropFirst().dropLast()), code: "", enabled: false))
-            } else if line == enabledMark, !cheats.isEmpty {
-                cheats[cheats.count - 1].enabled = true
-            } else if let data = NDSCheatValidation.normalizedLine(line), !cheats.isEmpty {
-                cheats[cheats.count - 1].code += (cheats[cheats.count - 1].code.isEmpty ? "" : "\n") + data
-            }
-            // ponytail: other `*` comment lines are dropped on the next save.
-        }
-        return cheats
+        return GatewayCheatText.parse(text)
     }
 
     static func save(_ cheats: [NDSCheat], programID: UInt64) {
         guard let url = fileURL(programID: programID) else { return }
-        var text = ""
-        for cheat in cheats {
-            let lines = normalizedLines(cheat.code)
-            guard !lines.isEmpty else { continue }
-            let name = cheat.name.replacingOccurrences(of: "]", with: ")").components(separatedBy: .newlines).joined(separator: " ")
-            text += "[\(name)]\n" + (cheat.enabled ? enabledMark + "\n" : "") + lines.joined(separator: "\n") + "\n"
-        }
         try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        try? text.write(to: url, atomically: true, encoding: .utf8)
+        try? GatewayCheatText.serialize(cheats).write(to: url, atomically: true, encoding: .utf8)
+    }
+}
+
+/// DS cheats as a per-game text in the 3DS format, next to the 3DS ones and managed
+/// the same way from Files: `Documents/System/cheats/<game code>.txt`. The 3DS core
+/// only opens `<16 hex program ID>.txt` there and this only opens `<4-char game code>.txt`,
+/// so neither sees the other's files. The game code is the 4 ASCII characters at 0x0C
+/// of the ROM header (the DS equivalent of the program ID: same game, same code, whatever
+/// the file is called; the last letter is the region). A ROM whose header can't be read
+/// falls back to the ROM name. This text is the source of truth (edited from the app or
+/// from Files). The melonDS `.mch` in Saves is only the copy the core reads, rewritten
+/// from the text (CodeBreaker translated to Action Replay) before every load. An
+/// existing `.mch` with no text yet is migrated into one. The text outlives the ROM
+/// (cheats are per game, not per file).
+enum NDSCheatTextStore {
+    /// The file stem for this ROM: its game code, or `baseName` as a fallback.
+    static func gameID(forBaseName baseName: String) -> String {
+        guard let roms = try? ROMStorageManager.romsDirectoryURL() else { return baseName }
+        for ext in ["nds", "NDS", "dsi", "DSI"] {
+            let url = roms.appendingPathComponent(baseName).appendingPathExtension(ext)
+            if let code = gameCode(at: url) { return code }
+        }
+        return baseName
+    }
+
+    static func gameCode(at url: URL) -> String? {
+        guard let handle = try? FileHandle(forReadingFrom: url) else { return nil }
+        defer { try? handle.close() }
+        try? handle.seek(toOffset: 0x0C)
+        guard let data = try? handle.read(upToCount: 4), data.count == 4 else { return nil }
+        let code = String(decoding: data, as: UTF8.self)
+        let ok = code.unicodeScalars.allSatisfy { $0.isASCII && (CharacterSet.alphanumerics.contains($0)) }
+        return ok && code.count == 4 ? code : nil
+    }
+
+    static func fileURL(forBaseName baseName: String) -> URL? {
+        guard !baseName.isEmpty,
+              let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        return fileURL(gameID: gameID(forBaseName: baseName), documents: documents)
+    }
+
+    static func fileURL(gameID: String, documents: URL) -> URL {
+        documents.appendingPathComponent("System/cheats", isDirectory: true)
+            .appendingPathComponent(gameID).appendingPathExtension("txt")
+    }
+
+    /// Brings text and `.mch` in line (text wins) and returns the cheats. Never throws.
+    /// `mayMigrate`: a missing text is born from the `.mch` (once per game; after
+    /// that a missing text means the user deleted it from Files: no cheats).
+    @discardableResult
+    static func sync(txt: URL, mch: URL?, mayMigrate: Bool = true) -> [NDSCheat] {
+        var cheats: [NDSCheat] = []
+        if let text = try? String(contentsOf: txt, encoding: .utf8) {
+            cheats = GatewayCheatText.parse(text)
+        } else if mayMigrate, let mch, let old = try? String(contentsOf: mch, encoding: .utf8) {
+            cheats = NDSCheatFileStore.parse(old)
+            if !cheats.isEmpty { write(cheats, to: txt) }
+        }
+        if let mch, FileManager.default.fileExists(atPath: mch.path) || !cheats.isEmpty {
+            let fresh = NDSCheatFileStore.serialize(cheats)
+            if (try? String(contentsOf: mch, encoding: .utf8)) != fresh {
+                try? fresh.write(to: mch, atomically: true, encoding: .utf8)
+            }
+        }
+        return cheats
+    }
+
+    private static func markerKey(_ baseName: String) -> String { "eduo.dscheats.txt.\(gameID(forBaseName: baseName))" }
+
+    static func load(forBaseName baseName: String) -> [NDSCheat] {
+        guard let txt = fileURL(forBaseName: baseName) else { return [] }
+        let defaults = UserDefaults.standard
+        let cheats = sync(txt: txt, mch: NDSCheatFileStore.fileURL(forBaseName: baseName),
+                          mayMigrate: !defaults.bool(forKey: markerKey(baseName)))
+        defaults.set(true, forKey: markerKey(baseName))
+        return cheats
+    }
+
+    static func save(_ cheats: [NDSCheat], forBaseName baseName: String) {
+        guard let txt = fileURL(forBaseName: baseName) else { return }
+        write(cheats, to: txt)
+        UserDefaults.standard.set(true, forKey: markerKey(baseName))
+        sync(txt: txt, mch: NDSCheatFileStore.fileURL(forBaseName: baseName))
+    }
+
+    private static func write(_ cheats: [NDSCheat], to txt: URL) {
+        try? FileManager.default.createDirectory(at: txt.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try? GatewayCheatText.serialize(cheats).write(to: txt, atomically: true, encoding: .utf8)
     }
 }

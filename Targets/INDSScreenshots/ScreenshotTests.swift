@@ -33,6 +33,9 @@ final class ScreenshotTests: XCTestCase {
     }
 
     private func bootJamClown(_ app: XCUIApplication) {
+        // A fresh simulator has an empty library: install the bundled demo first.
+        let demo = app.buttons["Try a Free Demo Game"].firstMatch
+        if demo.waitForExistence(timeout: 3) { demo.tap(); sleep(6) }
         let pred = NSPredicate(format: "label CONTAINS[c] %@", "clown")
         let cell = app.staticTexts.matching(pred).firstMatch
         XCTAssertTrue(cell.waitForExistence(timeout: 8), "JamClown cell not found")
@@ -562,7 +565,7 @@ final class ScreenshotTests: XCTestCase {
 
     /// A tester asked for DS cheats to "be saved as well". The real flow: add
     /// a cheat in the sheet, kill the app, come back — the row and its switch
-    /// must be there (Documents/Saves/<rom>.mch via NDSCheatFileStore).
+    /// must be there (Documents/System/cheats/<game code>.txt via NDSCheatTextStore).
     @MainActor
     func test99_CheatPersistsAcrossRelaunch() throws {
         let name = "Persist\(Int(Date().timeIntervalSince1970) % 100000)"

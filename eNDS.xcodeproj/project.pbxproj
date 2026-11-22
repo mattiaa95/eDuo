@@ -38,6 +38,7 @@
 		3513726F1238D47EB43F8F1A /* ThreeDSTexturePacksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46AD5F15FD3A601F63FF8 /* ThreeDSTexturePacksView.swift */; };
 		3793453687AB2CC9240944CC /* NDSHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1C57307F331CA0E3899717 /* NDSHUDView.swift */; };
 		38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD26D49C7D799C6EC6ADA193 /* 7zAlloc.c */; };
+		39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */; };
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
 		3AE2BA96ABD0AA0349B38390 /* Bcj2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDACB16860CF2ECC472174B0 /* Bcj2.c */; };
 		3BE2C9CA7F82A80484ED1B7D /* INDSExternalDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */; };
@@ -62,6 +63,7 @@
 		6111F49067A07A508103E73E /* TurboSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135F11D0F697685D3261524 /* TurboSettingsSection.swift */; };
 		669D16C6D78FBA89E44FA99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A991E1D084A864C4E5992455 /* AppDelegate.swift */; };
 		66D574B8F6DC55880891E00A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 162A33D9E7E74DF13BAB00F2 /* QuartzCore.framework */; };
+		66DF378C5D9234E95DEE94CD /* ROMDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE15EB9AF051E4D39B9D284F /* ROMDownloader.swift */; };
 		6C1D219A0E653B33A7D64828 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D949A90A580DED9DB96AA /* AboutSettingsView.swift */; };
 		6D97C25F4F827FEA820653A9 /* DSHinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939BD45E462980BEC807C4A0 /* DSHinge.swift */; };
 		6E815950B0A142F228E374DB /* INDSControllerLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */; };
@@ -166,6 +168,13 @@
 			remoteGlobalIDString = B3F7D594B8BC6915E9BD0E78;
 			remoteInfo = eNDS;
 		};
+		665FE13A5349CA3C3F657F86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25DCB86552D9213497C09A73 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3F7D594B8BC6915E9BD0E78;
+			remoteInfo = eNDS;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -181,6 +190,16 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4CB2D907E56211F2244D7645 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCC7BE4D97779311F2B8ECD4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
@@ -264,6 +283,7 @@
 		7FCA48080A0D91400722F48C /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSTurboPreferences.swift; sourceTree = "<group>"; };
 		8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSettingsView.swift; sourceTree = "<group>"; };
+		8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCheatTextTests.swift; sourceTree = "<group>"; };
 		8EBC2B6BCAE919D63D3BF3FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91C904010B7AD91405065430 /* BatterySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySettingsView.swift; sourceTree = "<group>"; };
 		939BD45E462980BEC807C4A0 /* DSHinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSHinge.swift; sourceTree = "<group>"; };
@@ -301,11 +321,13 @@
 		B7219F8FE31A771BB55DFB19 /* INDSMPLoopback.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = INDSMPLoopback.mm; sourceTree = "<group>"; };
 		B789BA70623CD927FED9DB1F /* Localizable.xcstrings */ = {isa = PBXFileReference; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B79114A85DE92146A92D33E8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B82DAD768F80003C6F3544D8 /* INDSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INDSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9E5237AED440EF8EAA2F59 /* ThreeDSSaveTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSSaveTransfer.swift; sourceTree = "<group>"; };
 		BB124E8593E5A3AAB1CF4180 /* INDSLayoutSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutSweep.swift; sourceTree = "<group>"; };
 		BC8417730C667A846DFE82B3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		BDACB16860CF2ECC472174B0 /* Bcj2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bcj2.c; sourceTree = "<group>"; };
 		BE01AC7366341C63635ABDBE /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		BE15EB9AF051E4D39B9D284F /* ROMDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMDownloader.swift; sourceTree = "<group>"; };
 		BEB5624AA1E29AD0ED68BE75 /* CpuArch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CpuArch.c; sourceTree = "<group>"; };
 		C135F11D0F697685D3261524 /* TurboSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurboSettingsSection.swift; sourceTree = "<group>"; };
 		C6773641AFE7D4CDAF9BB347 /* Lzma2Dec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Lzma2Dec.c; sourceTree = "<group>"; };
@@ -320,6 +342,7 @@
 		D17D4BD373B8C7BAE4E63975 /* INDSBackgroundSkinStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSBackgroundSkinStore.swift; sourceTree = "<group>"; };
 		D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSExternalDisplayController.swift; sourceTree = "<group>"; };
 		D35C709888F71280574511B9 /* TuistAssets+ENDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistAssets+ENDS.swift"; sourceTree = "<group>"; };
+		D43AEB94575DF2BB6989A0E6 /* INDSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "INDSTests-Info.plist"; sourceTree = "<group>"; };
 		D8040537B258B60012CDFCD7 /* 7zDec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zDec.c; sourceTree = "<group>"; };
 		DBF11C643DEBCEA9B266202E /* DSScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSScreenLayout.swift; sourceTree = "<group>"; };
 		DCDD22163D73BED3D91DA98A /* Bra.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bra.c; sourceTree = "<group>"; };
@@ -349,6 +372,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		05C16B3C81A3E7A4636CAA1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E80464F5BA5BC5542BB7DCB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -414,6 +444,14 @@
 				B5F4E073693E71160ED123DC /* THIRD_PARTY.md */,
 			);
 			path = Legal;
+			sourceTree = "<group>";
+		};
+		1B1879E86588DA86A7B58591 /* INDSTests */ = {
+			isa = PBXGroup;
+			children = (
+				8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */,
+			);
+			path = INDSTests;
 			sourceTree = "<group>";
 		};
 		1C93FBCF0260209B66AECE5D /* BIOS */ = {
@@ -527,6 +565,7 @@
 			children = (
 				90C81682E44FEE7B52E7B190 /* INDS */,
 				5BC41A410A70E7AFCA47F656 /* INDSScreenshots */,
+				1B1879E86588DA86A7B58591 /* INDSTests */,
 			);
 			path = Targets;
 			sourceTree = "<group>";
@@ -546,6 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				F01FC4ACDF0FD77BA556A895 /* INDSScreenshots-Info.plist */,
+				D43AEB94575DF2BB6989A0E6 /* INDSTests-Info.plist */,
 			);
 			path = InfoPlists;
 			sourceTree = "<group>";
@@ -635,6 +675,7 @@
 				76E7016BB1B280EC4B4EF169 /* NDSHeader.swift */,
 				2A757FCC5A34401D5FA7E158 /* NDSSaveStatePaths.swift */,
 				5B79A677DD13EC8EE25DB305 /* NDSZipExtractor.swift */,
+				BE15EB9AF051E4D39B9D284F /* ROMDownloader.swift */,
 				5341F365B8B21AF49BE96BF2 /* ROMFile.swift */,
 				713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */,
 				E97C9863C3B2A57CED6BEE5A /* ROMStorageManager.swift */,
@@ -817,6 +858,7 @@
 			children = (
 				0B2E9E846C1F5E2D0BE567F6 /* eNDS.app */,
 				19D1170BD7F7A6E584F98A27 /* INDSScreenshots.xctest */,
+				B82DAD768F80003C6F3544D8 /* INDSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -824,6 +866,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		516BCBA34021706DD5DB7A7D /* INDSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEA37D27F7C8F316B3403AA5 /* Build configuration list for PBXNativeTarget "INDSTests" */;
+			buildPhases = (
+				E1A48A087F2CEBEB087CB5B5 /* Sources */,
+				FC02103648B1007C56CA4A23 /* Resources */,
+				DCC7BE4D97779311F2B8ECD4 /* Embed Frameworks */,
+				8E80464F5BA5BC5542BB7DCB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFCCF201D4DE8966AEE8DCD7 /* PBXTargetDependency */,
+			);
+			name = INDSTests;
+			productName = INDSTests;
+			productReference = B82DAD768F80003C6F3544D8 /* INDSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B3F7D594B8BC6915E9BD0E78 /* eNDS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17D5FDD8294DD2AE4D660D5A /* Build configuration list for PBXNativeTarget "eNDS" */;
@@ -869,6 +930,9 @@
 			attributes = {
 				ORGANIZATIONNAME = MLS;
 				TargetAttributes = {
+					516BCBA34021706DD5DB7A7D = {
+						TestTargetID = B3F7D594B8BC6915E9BD0E78;
+					};
 					F96EF72A5F03F1FBD2C675AF = {
 						TestTargetID = B3F7D594B8BC6915E9BD0E78;
 					};
@@ -888,6 +952,7 @@
 			projectRoot = "";
 			targets = (
 				B3F7D594B8BC6915E9BD0E78 /* eNDS */,
+				516BCBA34021706DD5DB7A7D /* INDSTests */,
 				F96EF72A5F03F1FBD2C675AF /* INDSScreenshots */,
 			);
 		};
@@ -913,6 +978,13 @@
 				0FD3EE37A132F300E131806D /* THIRD_PARTY.md in Resources */,
 				8501D2E4230B8227244B33CC /* Localizable.xcstrings in Resources */,
 				F3F902CB4DD04E3BF75AC1C7 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC02103648B1007C56CA4A23 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +1043,7 @@
 				938D8A2423FA8CCA7E67E3ED /* NDSHeader.swift in Sources */,
 				805E2E8D858FEA502F906660 /* NDSSaveStatePaths.swift in Sources */,
 				C7A5E1DE75AE11E83FA64F1B /* NDSZipExtractor.swift in Sources */,
+				66DF378C5D9234E95DEE94CD /* ROMDownloader.swift in Sources */,
 				3FE90FF42DA9227EB7788FA5 /* ROMFile.swift in Sources */,
 				14D5D7924C8CBA1EEB6FC7E7 /* ROMIconStore.swift in Sources */,
 				3CCBB0C95D9AE10FD70361A9 /* ROMStorageManager.swift in Sources */,
@@ -1063,6 +1136,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1A48A087F2CEBEB087CB5B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1072,9 +1153,88 @@
 			target = B3F7D594B8BC6915E9BD0E78 /* eNDS */;
 			targetProxy = 106B31FC95BD78D0CB630835 /* PBXContainerItemProxy */;
 		};
+		BFCCF201D4DE8966AEE8DCD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = eNDS;
+			target = B3F7D594B8BC6915E9BD0E78 /* eNDS */;
+			targetProxy = 665FE13A5349CA3C3F657F86 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		02A5EA9E6F406F6E48CF6150 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = CPJ98JGHA8;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Vendor/melonDS/src",
+					"$(SRCROOT)/Vendor/melonDS/src/teakra/include",
+					"$(SRCROOT)/Build/melonDS-ios/src",
+					"$(SRCROOT)/Build/melonDS-ios-sim/src",
+					"$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+					"$(SRCROOT)/Native3DS/src",
+				);
+				INFOPLIST_FILE = "Derived/InfoPlists/INDSTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mls.inds.tests;
+				PRODUCT_NAME = INDSTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eNDS.app/eNDS";
+				TEST_TARGET_NAME = eNDS;
+			};
+			name = Release;
+		};
+		079D347D217605C29FB3D461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = CPJ98JGHA8;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Vendor/melonDS/src",
+					"$(SRCROOT)/Vendor/melonDS/src/teakra/include",
+					"$(SRCROOT)/Build/melonDS-ios/src",
+					"$(SRCROOT)/Build/melonDS-ios-sim/src",
+					"$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+					"$(SRCROOT)/Native3DS/src",
+				);
+				INFOPLIST_FILE = "Derived/InfoPlists/INDSTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mls.inds.tests;
+				PRODUCT_NAME = INDSTests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eNDS.app/eNDS";
+				TEST_TARGET_NAME = eNDS;
+			};
+			name = Debug;
+		};
 		224CEE89C17225901837B792 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1362,6 +1522,15 @@
 			buildConfigurations = (
 				8DD2F3B97FFFA93DEDD55CFC /* Debug */,
 				F3960BD069B26D03C77833D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AEA37D27F7C8F316B3403AA5 /* Build configuration list for PBXNativeTarget "INDSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				079D347D217605C29FB3D461 /* Debug */,
+				02A5EA9E6F406F6E48CF6150 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

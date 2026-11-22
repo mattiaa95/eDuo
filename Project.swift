@@ -61,6 +61,32 @@ let project = Project(
                 "SWIFT_OBJC_BRIDGING_HEADER": "Targets/INDS/Sources/eNDS-Bridging-Header.h"
             ])
         ),
+        // Logic tests hosted by the app (cheat text parser/store).
+        Target(
+            name: "INDSTests",
+            platform: .iOS,
+            product: .unitTests,
+            bundleId: "com.mls.inds.tests",
+            deploymentTarget: .iOS(targetVersion: "17.0", devices: [.iphone, .ipad]),
+            infoPlist: .default,
+            sources: ["Targets/INDSTests/**"],
+            dependencies: [.target(name: "eNDS")],
+            settings: .settings(base: [
+                "DEVELOPMENT_TEAM": "CPJ98JGHA8",
+                "SWIFT_VERSION": "5.0",
+                "CLANG_CXX_LANGUAGE_STANDARD": "gnu++17",
+                "CLANG_CXX_LIBRARY": "libc++",
+                // The app's bridging header is read when importing the app module.
+                "HEADER_SEARCH_PATHS": [
+                    "$(SRCROOT)/Vendor/melonDS/src",
+                    "$(SRCROOT)/Vendor/melonDS/src/teakra/include",
+                    "$(SRCROOT)/Build/melonDS-ios/src",
+                    "$(SRCROOT)/Build/melonDS-ios-sim/src",
+                    "$(SRCROOT)/Targets/INDS/Sources/Vendor/lzma",
+                    "$(SRCROOT)/Native3DS/src"
+                ]
+            ])
+        ),
         // App Store screenshot harness (see Targets/INDSScreenshots) — it is
         // launched with -eNDSScreenshotHarness and is not part of the archive.
         Target(
