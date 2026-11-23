@@ -32644,6 +32644,124 @@
           }
         }
       }
+    },
+    "Couldn't download the game. Check the internet connection and try again. You can also add a game from a file: tap + then Import from Files." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Spiel konnte nicht geladen werden. Prüfe die Internetverbindung und versuche es erneut. Du kannst ein Spiel auch aus einer Datei hinzufügen: tippe auf + und dann auf „Aus Dateien importieren“."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo descargar el juego. Revisa la conexión a internet e inténtalo de nuevo. También puedes añadir un juego desde un archivo: toca + y luego Importar desde Archivos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de télécharger le jeu. Vérifie la connexion internet et réessaie. Tu peux aussi ajouter un jeu depuis un fichier : touche + puis Importer depuis Fichiers."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile scaricare il gioco. Controlla la connessione internet e riprova. Puoi anche aggiungere un gioco da un file: tocca + e poi Importa da File."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームをダウンロードできませんでした。インターネット接続を確認してもう一度お試しください。ファイルから追加することもできます:+をタップして「ファイルから読み込む」を選んでください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임을 다운로드하지 못했습니다. 인터넷 연결을 확인하고 다시 시도하세요. 파일에서 추가할 수도 있습니다: +를 누른 다음 '파일에서 가져오기'를 선택하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível transferir o jogo. Verifica a ligação à internet e tenta novamente. Também podes adicionar um jogo a partir de um ficheiro: toca em + e depois em Importar de Ficheiros."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось скачать игру. Проверьте подключение к интернету и повторите попытку. Игру можно добавить и из файла: нажмите + и выберите «Импорт из Файлов»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法下载游戏。请检查网络连接后重试。你也可以从文件添加游戏:点按 + 然后选择“从文件导入”。"
+          }
+        }
+      }
+    },
+    "The link did not return a game file (a network login page or filter may be in the way). Tap + then Import from Files to add a game from a file instead." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Link hat keine Spieldatei geliefert (eine Netzwerk-Anmeldeseite oder ein Filter könnte im Weg sein). Tippe auf + und dann auf „Aus Dateien importieren“, um ein Spiel aus einer Datei hinzuzufügen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El enlace no devolvió un archivo de juego (puede haber una página de acceso a la red o un filtro). Toca + y luego Importar desde Archivos para añadir un juego desde un archivo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le lien n'a pas renvoyé de fichier de jeu (une page de connexion réseau ou un filtre peut gêner). Touche + puis Importer depuis Fichiers pour ajouter un jeu depuis un fichier."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il link non ha restituito un file di gioco (potrebbe esserci una pagina di accesso alla rete o un filtro). Tocca + e poi Importa da File per aggiungere un gioco da un file."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リンクからゲームファイルを取得できませんでした(ネットワークのログインページやフィルタが原因の可能性があります)。+をタップして「ファイルから読み込む」でファイルから追加してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "링크에서 게임 파일을 받지 못했습니다(네트워크 로그인 페이지나 필터 때문일 수 있습니다). +를 누른 다음 '파일에서 가져오기'로 파일에서 게임을 추가하세요."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ligação não devolveu um ficheiro de jogo (pode haver uma página de início de sessão da rede ou um filtro). Toca em + e depois em Importar de Ficheiros para adicionar um jogo a partir de um ficheiro."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ссылка не вернула файл игры (возможно, мешает страница входа в сеть или фильтр). Нажмите + и выберите «Импорт из Файлов», чтобы добавить игру из файла."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该链接没有返回游戏文件(可能是网络登录页或过滤器造成的)。请点按 + 然后选择“从文件导入”,从文件添加游戏。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

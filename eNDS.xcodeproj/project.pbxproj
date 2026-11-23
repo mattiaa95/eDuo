@@ -22,6 +22,7 @@
 		14D5D7924C8CBA1EEB6FC7E7 /* ROMIconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */; };
 		19426B550FCCCFE9D3CDB27F /* INDSAudioPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF19BE6740F2C40E41E8C1 /* INDSAudioPreferences.swift */; };
 		1EA52A8FFAC48E034AB4AFA5 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */; };
+		5EC1A0DE00000000000000C2 /* ReviewerFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */; };
 		214E57C446117905DC55A34C /* INDSLayoutEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8482D02C6F7598A67CE0D /* INDSLayoutEditorView.swift */; };
 		22B1D937B8B434AFF81888F3 /* INDSTurboPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */; };
 		236113C7282633A9A01C17E6 /* ROMGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98B95B098222B202A26D90 /* ROMGridCell.swift */; };
@@ -39,6 +40,8 @@
 		3793453687AB2CC9240944CC /* NDSHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1C57307F331CA0E3899717 /* NDSHUDView.swift */; };
 		38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD26D49C7D799C6EC6ADA193 /* 7zAlloc.c */; };
 		39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */; };
+		5EC1A0DE00000000000000A2 /* ZipImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000A1 /* ZipImportTests.swift */; };
+		5EC1A0DE00000000000000B2 /* ROMDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */; };
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
 		3AE2BA96ABD0AA0349B38390 /* Bcj2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDACB16860CF2ECC472174B0 /* Bcj2.c */; };
 		3BE2C9CA7F82A80484ED1B7D /* INDSExternalDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */; };
@@ -284,6 +287,8 @@
 		832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSTurboPreferences.swift; sourceTree = "<group>"; };
 		8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSettingsView.swift; sourceTree = "<group>"; };
 		8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCheatTextTests.swift; sourceTree = "<group>"; };
+		5EC1A0DE00000000000000A1 /* ZipImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipImportTests.swift; sourceTree = "<group>"; };
+		5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMDownloaderTests.swift; sourceTree = "<group>"; };
 		8EBC2B6BCAE919D63D3BF3FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91C904010B7AD91405065430 /* BatterySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySettingsView.swift; sourceTree = "<group>"; };
 		939BD45E462980BEC807C4A0 /* DSHinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSHinge.swift; sourceTree = "<group>"; };
@@ -302,6 +307,7 @@
 		A16BBD6076B0776B809C6E9E /* INDSLaunchFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLaunchFlags.swift; sourceTree = "<group>"; };
 		A1D0F4AF234EC8156F1005DF /* INDSButtonStyleEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSButtonStyleEditorSheet.swift; sourceTree = "<group>"; };
 		A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
+		5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerFlowUITests.swift; sourceTree = "<group>"; };
 		A2BAB440FAF621E1857D36A6 /* 7zBuf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zBuf.c; sourceTree = "<group>"; };
 		A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerLayoutManager.swift; sourceTree = "<group>"; };
 		A40D6EB2FD5B26FD67797B60 /* ROMClassicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMClassicCell.swift; sourceTree = "<group>"; };
@@ -450,6 +456,8 @@
 			isa = PBXGroup;
 			children = (
 				8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */,
+				5EC1A0DE00000000000000A1 /* ZipImportTests.swift */,
+				5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */,
 			);
 			path = INDSTests;
 			sourceTree = "<group>";
@@ -542,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */,
+				5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */,
 			);
 			path = INDSScreenshots;
 			sourceTree = "<group>";
@@ -1133,6 +1142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EA52A8FFAC48E034AB4AFA5 /* ScreenshotTests.swift in Sources */,
+				5EC1A0DE00000000000000C2 /* ReviewerFlowUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1141,6 +1151,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */,
+				5EC1A0DE00000000000000A2 /* ZipImportTests.swift in Sources */,
+				5EC1A0DE00000000000000B2 /* ROMDownloaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
