@@ -176,7 +176,7 @@ final class ThreeDSGameViewController: GCEventViewController {
         UserDefaults.standard.set(ThreeDSScreenPrefs.resolution > 4, forKey: guardKey)
         DispatchQueue.main.asyncAfter(deadline: .now() + 15) { UserDefaults.standard.set(false, forKey: guardKey) }
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
-        E3DSSetTextureSampling(Int32(ThreeDSScreenPrefs.textureSampling))
+        E3DSSetTextureSampling(Int32(ThreeDSScreenPrefs.effectiveSampling(titleID: programID)))
         ThreeDSTexturePacks.applyDumpSetting(for: rom)
         applyDiagnostics()
         batterySaverStateChanged()
@@ -501,7 +501,7 @@ final class ThreeDSGameViewController: GCEventViewController {
             let title = NSLocalizedString("Texture sampling", comment: "3DS pause menu > Screens: texture filter") + ": " + name
             sheet.addAction(UIAlertAction(title: mark(ThreeDSScreenPrefs.textureSampling == mode, title), style: .default) { _ in
                 ThreeDSScreenPrefs.textureSampling = mode
-                E3DSSetTextureSampling(Int32(mode))  // live, no restart
+                E3DSSetTextureSampling(Int32(ThreeDSScreenPrefs.effectiveSampling(titleID: self.programID, pref: mode)))  // live, no restart
                 E3DSSetPaused(false)
             })
         }
@@ -744,6 +744,15 @@ enum ThreeDSScreenPrefs {
     static var textureSampling: Int {
         get { (UserDefaults.standard.object(forKey: "eduo.3ds.textureSampling") as? Int) ?? 0 }
         set { UserDefaults.standard.set(newValue, forKey: "eduo.3ds.textureSampling") }
+    }
+
+    /// ponytail: one-entry per-title override table. Super Robot Wars BX shows a stray line over the
+    /// dialog box unless textures are sampled Nearest (tester-confirmed, b83).
+    static let samplingOverrides: [UInt64: Int] = [0x0004000000127900: 1]
+
+    /// The user's explicit choice (1/2) always wins; only "Game default" (0) takes the title override.
+    static func effectiveSampling(titleID: UInt64, pref: Int = textureSampling) -> Int {
+        pref == 0 ? (samplingOverrides[titleID] ?? 0) : pref
     }
 
     static var landscapeStacked: Bool {

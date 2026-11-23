@@ -22,7 +22,6 @@
 		14D5D7924C8CBA1EEB6FC7E7 /* ROMIconStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713DD5B57D680F322DBF3CCE /* ROMIconStore.swift */; };
 		19426B550FCCCFE9D3CDB27F /* INDSAudioPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF19BE6740F2C40E41E8C1 /* INDSAudioPreferences.swift */; };
 		1EA52A8FFAC48E034AB4AFA5 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */; };
-		5EC1A0DE00000000000000C2 /* ReviewerFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */; };
 		214E57C446117905DC55A34C /* INDSLayoutEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8482D02C6F7598A67CE0D /* INDSLayoutEditorView.swift */; };
 		22B1D937B8B434AFF81888F3 /* INDSTurboPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */; };
 		236113C7282633A9A01C17E6 /* ROMGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC98B95B098222B202A26D90 /* ROMGridCell.swift */; };
@@ -40,8 +39,6 @@
 		3793453687AB2CC9240944CC /* NDSHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1C57307F331CA0E3899717 /* NDSHUDView.swift */; };
 		38E6254E91F50DE3F94B4420 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD26D49C7D799C6EC6ADA193 /* 7zAlloc.c */; };
 		39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */; };
-		5EC1A0DE00000000000000A2 /* ZipImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000A1 /* ZipImportTests.swift */; };
-		5EC1A0DE00000000000000B2 /* ROMDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */; };
 		3A099795E239CE85F4370327 /* INDSControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3E35B4AF0768257272A8C /* INDSControllerLayout.swift */; };
 		3AE2BA96ABD0AA0349B38390 /* Bcj2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDACB16860CF2ECC472174B0 /* Bcj2.c */; };
 		3BE2C9CA7F82A80484ED1B7D /* INDSExternalDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D184CCFAD11337DDD6EDB5D6 /* INDSExternalDisplayController.swift */; };
@@ -111,6 +108,7 @@
 		A7FD93EC1DD923F855AD87C5 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66093551E57D7F2366017F2E /* LicensesView.swift */; };
 		A9655D665D23578FAC99F041 /* INDSSavingPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D337D1C81BF653BCDBE43A /* INDSSavingPreferences.swift */; };
 		AA4245683E1C300B525595A2 /* DSMetalGoldenHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE114EA10A4BFE4900A6E6 /* DSMetalGoldenHarness.swift */; };
+		AB09EA2DFD37DE1B40E23AFF /* ROMDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB22DD442602226556BC0D /* ROMDownloaderTests.swift */; };
 		AC60045162E58C9ECAB251C2 /* INDSMPTransport.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED3F225A5EEE0994D14C26AE /* INDSMPTransport.mm */; };
 		ADB3476806689E6547BE753B /* PurchaseProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8419AE9ABE89601263FE3A /* PurchaseProductDetails.swift */; };
 		AFA7C3A4F52BC8FA3AB9C5EA /* 7zStream.c in Sources */ = {isa = PBXBuildFile; fileRef = CAE29EF2985114A2A2637956 /* 7zStream.c */; };
@@ -123,6 +121,7 @@
 		C255D295ABFF60D2571C01FF /* INDSConsolePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702B9DB47C1592FC6A1B103 /* INDSConsolePreferences.swift */; };
 		C346DA69CBEC5D91557BAC96 /* MoltenVK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF2756B537D8978053AA3AE8 /* MoltenVK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A5E1DE75AE11E83FA64F1B /* NDSZipExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79A677DD13EC8EE25DB305 /* NDSZipExtractor.swift */; };
+		C839EA3E92AAD9EB1E9505C4 /* ReviewerFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451740C1DAF8B395F2F6FFB3 /* ReviewerFlowUITests.swift */; };
 		C8C5A853CCA1CBA1A86423F7 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1364600AC006B7697D61E124 /* ReplayKit.framework */; };
 		C8F9D6CDFD0B68767B97A23D /* INDSDuoSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94561B6BA004ABA2E3AFC5C /* INDSDuoSweep.swift */; };
 		CAFC795486C5F8E42D5A0049 /* NDSCheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04371E0A508587EC8BD350 /* NDSCheat.swift */; };
@@ -136,6 +135,7 @@
 		DB6098C9A24BEEF6CA8F0195 /* BatterySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91C904010B7AD91405065430 /* BatterySettingsView.swift */; };
 		DBD7B1D4152ADA397D360F59 /* Delta.c in Sources */ = {isa = PBXBuildFile; fileRef = A684EB48BA636E4B19D659D2 /* Delta.c */; };
 		DC60AC19B8E9B3E1F6C7AD5B /* MelonDSCoreBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 32C1EAFD1973E8DC394CBA48 /* MelonDSCoreBridge.mm */; };
+		DE98026F777DBB1C4405470A /* ZipImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C45AEF1CC9D5EBF4CF3C6C8 /* ZipImportTests.swift */; };
 		DFB2E2F7FA097D6820428E50 /* INDSHoneymoon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3A407B35815197407A6DED /* INDSHoneymoon.swift */; };
 		E066A371317213D9EA011A5C /* NDSCodeBreaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42537CBE699464F57A104DFA /* NDSCodeBreaker.swift */; };
 		E2DE0E3575049A1D87DBDF04 /* eNDSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BF3C246ADD1320E8093E9 /* eNDSApp.swift */; };
@@ -159,6 +159,7 @@
 		F91F12C15C6A9E0B7D28A39C /* TuistBundle+ENDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7976503C72801E12D5B07 /* TuistBundle+ENDS.swift */; };
 		FA4A12CBF8A66A00D178CE8F /* INDSVisualSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B65064657F95120CC6FE300 /* INDSVisualSweep.swift */; };
 		FB361EA39ACC953C5A1A14FC /* ThreeDSGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A506159C11BD85AD0228B4AB /* ThreeDSGameViewController.swift */; };
+		FBEC119EC064C42470F29153 /* ThreeDSSamplingOverrideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58B3E696A2CAEB8C8136224 /* ThreeDSSamplingOverrideTests.swift */; };
 		FC6758D8808AE665504E02C3 /* Bra.c in Sources */ = {isa = PBXBuildFile; fileRef = DCDD22163D73BED3D91DA98A /* Bra.c */; };
 		FF031F0B6CA360423440F38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EBC2B6BCAE919D63D3BF3FB /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -247,10 +248,12 @@
 		33603FF8DD00E3267B32D50D /* ThumbnailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailManager.swift; sourceTree = "<group>"; };
 		33A7976503C72801E12D5B07 /* TuistBundle+ENDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TuistBundle+ENDS.swift"; sourceTree = "<group>"; };
 		3AA49210A86CF7CAD350D5D8 /* NDSDisplayFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSDisplayFilter.swift; sourceTree = "<group>"; };
+		3C45AEF1CC9D5EBF4CF3C6C8 /* ZipImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipImportTests.swift; sourceTree = "<group>"; };
 		3C671B34D75660A6AEE56EB8 /* Sz7zShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Sz7zShim.c; sourceTree = "<group>"; };
 		42537CBE699464F57A104DFA /* NDSCodeBreaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCodeBreaker.swift; sourceTree = "<group>"; };
 		43BDA80E44199C5D5F771072 /* Bra86.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Bra86.c; sourceTree = "<group>"; };
 		44497849F70DBBB6CB1AC685 /* 7zArcIn.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zArcIn.c; sourceTree = "<group>"; };
+		451740C1DAF8B395F2F6FFB3 /* ReviewerFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerFlowUITests.swift; sourceTree = "<group>"; };
 		4641BA678622C68C1CF4D729 /* 7zCrcOpt.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zCrcOpt.c; sourceTree = "<group>"; };
 		46D8BE41E3A39F7CDAF9019E /* DebugLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLog.swift; sourceTree = "<group>"; };
 		47FA73DBFA559D00E0B78D2C /* INDSStyledButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSStyledButtonView.swift; sourceTree = "<group>"; };
@@ -287,8 +290,6 @@
 		832C9E7B82057B4070014001 /* INDSTurboPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSTurboPreferences.swift; sourceTree = "<group>"; };
 		8909A1957DA2CE7DD6C24E48 /* SavingSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSettingsView.swift; sourceTree = "<group>"; };
 		8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSCheatTextTests.swift; sourceTree = "<group>"; };
-		5EC1A0DE00000000000000A1 /* ZipImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipImportTests.swift; sourceTree = "<group>"; };
-		5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMDownloaderTests.swift; sourceTree = "<group>"; };
 		8EBC2B6BCAE919D63D3BF3FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91C904010B7AD91405065430 /* BatterySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatterySettingsView.swift; sourceTree = "<group>"; };
 		939BD45E462980BEC807C4A0 /* DSHinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSHinge.swift; sourceTree = "<group>"; };
@@ -307,7 +308,6 @@
 		A16BBD6076B0776B809C6E9E /* INDSLaunchFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLaunchFlags.swift; sourceTree = "<group>"; };
 		A1D0F4AF234EC8156F1005DF /* INDSButtonStyleEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSButtonStyleEditorSheet.swift; sourceTree = "<group>"; };
 		A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
-		5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewerFlowUITests.swift; sourceTree = "<group>"; };
 		A2BAB440FAF621E1857D36A6 /* 7zBuf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zBuf.c; sourceTree = "<group>"; };
 		A37EA795881E2A9F9594CF48 /* INDSControllerLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSControllerLayoutManager.swift; sourceTree = "<group>"; };
 		A40D6EB2FD5B26FD67797B60 /* ROMClassicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMClassicCell.swift; sourceTree = "<group>"; };
@@ -320,6 +320,7 @@
 		AC2ED674FBDC904651E8EA9E /* ButtonMappingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMappingView.swift; sourceTree = "<group>"; };
 		AC98B95B098222B202A26D90 /* ROMGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMGridCell.swift; sourceTree = "<group>"; };
 		AEF93AF9A9B668F16F548652 /* INDSSpeedPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSSpeedPreferences.swift; sourceTree = "<group>"; };
+		B3FB22DD442602226556BC0D /* ROMDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ROMDownloaderTests.swift; sourceTree = "<group>"; };
 		B4B2F616B4DA20E61FFAB807 /* 7zCrc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 7zCrc.c; sourceTree = "<group>"; };
 		B4E6BCDFFB9BA55C5E8E9C0D /* INDSButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSButtonStyle.swift; sourceTree = "<group>"; };
 		B5F4E073693E71160ED123DC /* THIRD_PARTY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = THIRD_PARTY.md; sourceTree = "<group>"; };
@@ -369,6 +370,7 @@
 		F01FC4ACDF0FD77BA556A895 /* INDSScreenshots-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "INDSScreenshots-Info.plist"; sourceTree = "<group>"; };
 		F1127BEA433B1763B37E5422 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
 		F2A1493B6F6FCC13277DA166 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		F58B3E696A2CAEB8C8136224 /* ThreeDSSamplingOverrideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDSSamplingOverrideTests.swift; sourceTree = "<group>"; };
 		F9F8482D02C6F7598A67CE0D /* INDSLayoutEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSLayoutEditorView.swift; sourceTree = "<group>"; };
 		FAD05AFAE55CBF5AB70870F2 /* INDSBatterySaverPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INDSBatterySaverPreferences.swift; sourceTree = "<group>"; };
 		FB1C57307F331CA0E3899717 /* NDSHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDSHUDView.swift; sourceTree = "<group>"; };
@@ -456,8 +458,9 @@
 			isa = PBXGroup;
 			children = (
 				8A2F05CEEB8E00010A0D32E1 /* NDSCheatTextTests.swift */,
-				5EC1A0DE00000000000000A1 /* ZipImportTests.swift */,
-				5EC1A0DE00000000000000B1 /* ROMDownloaderTests.swift */,
+				B3FB22DD442602226556BC0D /* ROMDownloaderTests.swift */,
+				F58B3E696A2CAEB8C8136224 /* ThreeDSSamplingOverrideTests.swift */,
+				3C45AEF1CC9D5EBF4CF3C6C8 /* ZipImportTests.swift */,
 			);
 			path = INDSTests;
 			sourceTree = "<group>";
@@ -549,8 +552,8 @@
 		5BC41A410A70E7AFCA47F656 /* INDSScreenshots */ = {
 			isa = PBXGroup;
 			children = (
+				451740C1DAF8B395F2F6FFB3 /* ReviewerFlowUITests.swift */,
 				A1FB81B6B4E3569968180C9B /* ScreenshotTests.swift */,
-				5EC1A0DE00000000000000C1 /* ReviewerFlowUITests.swift */,
 			);
 			path = INDSScreenshots;
 			sourceTree = "<group>";
@@ -1141,8 +1144,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C839EA3E92AAD9EB1E9505C4 /* ReviewerFlowUITests.swift in Sources */,
 				1EA52A8FFAC48E034AB4AFA5 /* ScreenshotTests.swift in Sources */,
-				5EC1A0DE00000000000000C2 /* ReviewerFlowUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,8 +1154,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				39A75C531280919BA8805D30 /* NDSCheatTextTests.swift in Sources */,
-				5EC1A0DE00000000000000A2 /* ZipImportTests.swift in Sources */,
-				5EC1A0DE00000000000000B2 /* ROMDownloaderTests.swift in Sources */,
+				AB09EA2DFD37DE1B40E23AFF /* ROMDownloaderTests.swift in Sources */,
+				FBEC119EC064C42470F29153 /* ThreeDSSamplingOverrideTests.swift in Sources */,
+				DE98026F777DBB1C4405470A /* ZipImportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
