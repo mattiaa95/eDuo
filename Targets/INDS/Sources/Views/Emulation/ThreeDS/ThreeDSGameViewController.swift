@@ -176,6 +176,7 @@ final class ThreeDSGameViewController: GCEventViewController {
         UserDefaults.standard.set(ThreeDSScreenPrefs.resolution > 4, forKey: guardKey)
         DispatchQueue.main.asyncAfter(deadline: .now() + 15) { UserDefaults.standard.set(false, forKey: guardKey) }
         E3DSSetResolution(Int32(ThreeDSScreenPrefs.resolution))
+        E3DSSetTextureSampling(Int32(ThreeDSScreenPrefs.textureSampling))
         ThreeDSTexturePacks.applyDumpSetting(for: rom)
         applyDiagnostics()
         batterySaverStateChanged()
@@ -335,6 +336,9 @@ final class ThreeDSGameViewController: GCEventViewController {
             E3DSSetDiagnostics(Int32(vsync), defaults.bool(forKey: "eDuo3DSUnlimited"))
             let hw = defaults.object(forKey: "eDuo3DSHardwareShaders") == nil ? -1 : defaults.integer(forKey: "eDuo3DSHardwareShaders")
             E3DSSetHardwareShaders(Int32(hw))
+            let cpu = defaults.object(forKey: "eDuo3DSCPU") == nil ? -1 : defaults.integer(forKey: "eDuo3DSCPU")
+            let mul = defaults.object(forKey: "eDuo3DSAccurateMul") == nil ? -1 : defaults.integer(forKey: "eDuo3DSAccurateMul")
+            E3DSSetCoreOptions(Int32(cpu), Int32(mul))
         }
         guard defaults.bool(forKey: DSPerfProbe.overlayKey) else { E3DSSetStatsEnabled(false); return }
         E3DSSetStatsEnabled(true)
@@ -488,6 +492,17 @@ final class ThreeDSGameViewController: GCEventViewController {
                 // ponytail: the core reads the scale at boot, so the game restarts (unsaved progress is lost; the save file is not).
                 self.restartAfterStop = true
                 E3DSStop()
+            })
+        }
+        let samplingNames = [NSLocalizedString("Game default", comment: "3DS texture sampling: as the game asks"),
+                             NSLocalizedString("Nearest", comment: "3DS texture sampling: sharp pixels"),
+                             NSLocalizedString("Linear", comment: "3DS texture sampling: smooth")]
+        for (mode, name) in samplingNames.enumerated() {
+            let title = NSLocalizedString("Texture sampling", comment: "3DS pause menu > Screens: texture filter") + ": " + name
+            sheet.addAction(UIAlertAction(title: mark(ThreeDSScreenPrefs.textureSampling == mode, title), style: .default) { _ in
+                ThreeDSScreenPrefs.textureSampling = mode
+                E3DSSetTextureSampling(Int32(mode))  // live, no restart
+                E3DSSetPaused(false)
             })
         }
         sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in E3DSSetPaused(false) })
@@ -723,6 +738,12 @@ enum ThreeDSScreenPrefs {
     static var resolution: Int {
         get { (UserDefaults.standard.object(forKey: "eduo.3ds.resolution") as? Int) ?? 2 }
         set { UserDefaults.standard.set(newValue, forKey: "eduo.3ds.resolution") }
+    }
+
+    /// 0 = as the game asks, 1 = nearest, 2 = linear (Azahar's Renderer_TextureSampling).
+    static var textureSampling: Int {
+        get { (UserDefaults.standard.object(forKey: "eduo.3ds.textureSampling") as? Int) ?? 0 }
+        set { UserDefaults.standard.set(newValue, forKey: "eduo.3ds.textureSampling") }
     }
 
     static var landscapeStacked: Bool {

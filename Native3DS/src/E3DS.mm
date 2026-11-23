@@ -123,6 +123,8 @@ struct Session {
     std::condition_variable doneCv;
     std::mutex opMutex;
     bool batterySaver = false;
+    int fastInterp = -1;    // -1 auto (FastInterp), 0 accurate interpreter (dyncom), 1 FastInterp
+    int accurateMul = -1;   // -1 auto (on), 0 off, 1 on (shaders_accurate_mul)
     int hwShader = -1;  // -1 auto, 0 software vertex shaders, 1 hardware
     CAMetalLayer* top = nil;
     CAMetalLayer* bottom = nil;
@@ -130,6 +132,7 @@ struct Session {
     // The player's chosen internal resolution (Settings > 3DS). Never touched by the
     // battery saver: the saver only overrides what is written to Settings::values.
     int resolution = 2;
+    int textureSampling = 0;  // Settings::TextureSampling: 0 game controlled, 1 nearest, 2 linear
     double topW = 400, topH = 240, bottomW = 320, bottomH = 240;
     std::unique_ptr<EmuWindow_iOS> window, secondary;
     // Diagnostics (see E3DSSetDiagnostics / E3DSSampleStats).
@@ -215,6 +218,7 @@ void ConfigureOnce() {
     v.layout_option.SetValue(Settings::LayoutOption::SeparateWindows);
     v.use_hw_shader.SetValue(true);
     v.resolution_factor.SetValue(static_cast<u32>(g.batterySaver ? 1 : g.resolution));
+    v.texture_sampling.SetValue(static_cast<Settings::TextureSampling>(g.textureSampling));
     v.async_shader_compilation.SetValue(true);
     v.async_presentation.SetValue(true);
     if (g.vsync >= 0) v.use_vsync.SetValue(g.vsync != 0);
@@ -430,10 +434,11 @@ static void ApplyDebugEnv() {
     if (getenv("EDUO_3DS_NOAUDIO")) v.output_type.SetValue(AudioCore::SinkType::Null);
     if (getenv("EDUO_3DS_SWRENDER")) v.graphics_api.SetValue(Settings::GraphicsAPI::Software);
     // Always logged: a tester's log then says what the core really ran with.
-    LOG_INFO(Frontend, "eDuo settings: fastinterp={} hw_shader={} async_shaders={} disk_cache={} api={} res={}",
+    LOG_INFO(Frontend, "eDuo settings: fastinterp={} hw_shader={} async_shaders={} disk_cache={} api={} res={} sampling={} accurate_mul={}",
              v.use_fastinterp.GetValue(), v.use_hw_shader.GetValue(),
              v.async_shader_compilation.GetValue(), v.use_disk_shader_cache.GetValue(),
-             static_cast<int>(v.graphics_api.GetValue()), v.resolution_factor.GetValue());
+             static_cast<int>(v.graphics_api.GetValue()), v.resolution_factor.GetValue(),
+             static_cast<int>(v.texture_sampling.GetValue()), v.shaders_accurate_mul.GetValue());
 }
 
 //   EDUO_3DS_SPEED_TEST=<sec>  phases of <sec> s at 1x, 2x, 4x, 1x through E3DSSetSpeed; logs the
@@ -516,6 +521,8 @@ int E3DSRun(const char* path) {
     }
     UsePerGameFolders(program_id, path);
     Settings::values.use_hw_shader.SetValue(g.hwShader != 0);
+    Settings::values.use_fastinterp.SetValue(g.fastInterp != 0);
+    Settings::values.shaders_accurate_mul.SetValue(g.accurateMul != 0);
     ApplyDebugEnv();
     RestoreInterruptedStates();
     system.ApplySettings();
@@ -607,6 +614,12 @@ void E3DSSetResolution(int factor) {
     // cache polls resolution_factor every frame, so this also applies live.
     if (g.running && !g.batterySaver)
         Settings::values.resolution_factor.SetValue(static_cast<u32>(g.resolution));
+}
+
+void E3DSSetTextureSampling(int mode) {
+    g.textureSampling = std::clamp(mode, 0, 2);
+    // The sampler is looked up per draw from Settings::values, so this applies live.
+    Settings::values.texture_sampling.SetValue(static_cast<Settings::TextureSampling>(g.textureSampling));
 }
 
 void E3DSSetDumpTextures(bool on) {
@@ -1162,6 +1175,10 @@ void E3DSSetSpeed(double multiplier) {
 }
 
 void E3DSSetHardwareShaders(int mode) { g.hwShader = mode; }
+void E3DSSetCoreOptions(int fastInterp, int accurateMul) {
+    g.fastInterp = fastInterp;
+    g.accurateMul = accurateMul;
+}
 
 void E3DSSetStatsEnabled(bool enabled) {
     if (enabled) {

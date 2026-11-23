@@ -57,6 +57,8 @@ struct SettingsView: View {
     @AppStorage("eDuo3DSVSync") private var vsync3DS = -1
     @AppStorage("eDuo3DSUnlimited") private var unlimited3DS = false
     @AppStorage("eDuo3DSHardwareShaders") private var hwShaders3DS = -1
+    @AppStorage("eDuo3DSCPU") private var cpu3DS = -1
+    @AppStorage("eDuo3DSAccurateMul") private var accurateMul3DS = -1
     @State private var showingBIOSSetup = false
     @State private var showProSheet = false
     @State private var showManageSubscription = false
@@ -173,10 +175,20 @@ struct SettingsView: View {
                             Text(verbatim: "Hardware").tag(1)
                             Text(verbatim: "Software").tag(0)
                         } label: { Text(verbatim: "3DS vertex shaders") }
+                        Picker(selection: $cpu3DS) {
+                            Text(verbatim: "Auto (Fast)").tag(-1)
+                            Text(verbatim: "Fast (FastInterp)").tag(1)
+                            Text(verbatim: "Accurate (dyncom)").tag(0)
+                        } label: { Text(verbatim: "3DS CPU") }
+                        Picker(selection: $accurateMul3DS) {
+                            Text(verbatim: "Auto (On)").tag(-1)
+                            Text(verbatim: "On").tag(1)
+                            Text(verbatim: "Off").tag(0)
+                        } label: { Text(verbatim: "3DS accurate multiplication") }
                     } header: {
                         Text(verbatim: "TestFlight diagnostics")
                     } footer: {
-                        Text(verbatim: "Apply on the next game launch.")
+                        Text(verbatim: "Apply on the next game launch. Texture sampling is in the game pause menu > Screens.")
                     }
                 }
 

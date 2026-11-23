@@ -45,6 +45,11 @@ int E3DSRun(const char *path);
 void E3DSStop(void);
 /// Internal render scale (1 = the console's 400x240). Read at E3DSRun.
 void E3DSSetResolution(int factor);
+/// Texture filtering: 0 = as the game asks (default), 1 = nearest, 2 = linear. Applies live.
+void E3DSSetTextureSampling(int mode);
+/// TestFlight diagnostics, read at E3DSRun: CPU (-1 auto, 0 accurate dyncom interpreter, 1 FastInterp)
+/// and accurate shader multiplication (-1 auto = on, 0 off, 1 on).
+void E3DSSetCoreOptions(int fastInterp, int accurateMul);
 /// "Dump Textures" (3DS only): the core writes every texture the game uploads that the folder
 /// does not hold yet as a PNG into Documents/System/load/textures/<program ID as 16 hex digits>/,
 /// the same folder packs are loaded from (one folder per game, like PPSSPP). Dumps accumulate
