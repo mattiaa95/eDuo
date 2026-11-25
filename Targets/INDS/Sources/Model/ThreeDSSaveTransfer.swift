@@ -502,6 +502,9 @@ enum ROMSaveTransfer {
         default:
             throw SaveTransferError.notASav
         }
+        if let data = try? Data(contentsOf: staged, options: .mappedIfSafe), DSSaveImport.hasDeSmuMEFooter(data) {
+            try? DSSaveImport.stripDeSmuMEFooter(data).write(to: staged)
+        }
         let size = (try? fm.attributesOfItem(atPath: staged.path)[.size] as? Int64) ?? 0
         guard size > 0 else { throw SaveTransferError.notASav }
         return staged
@@ -527,6 +530,7 @@ enum ROMSaveTransfer {
         }
         do {
             try fm.createDirectory(at: save.deletingLastPathComponent(), withIntermediateDirectories: true)
+            DSSaveImport.setAsideAutoResumeState(baseName: rom.baseName)
             if fm.fileExists(atPath: save.path) {
                 _ = try fm.replaceItemAt(save, withItemAt: staged)
             } else {
@@ -535,5 +539,38 @@ enum ROMSaveTransfer {
         } catch {
             throw SaveTransferError.failed
         }
+    }
+}
+
+
+/// DS `.sav` import details. A raw dump from a cartridge (GodMode9, Checkpoint, a
+/// flash cart) is the chip's bytes as they are; the core pads or truncates to the size
+/// the game's save chip has, so the only thing to clean up is DeSmuME's footer.
+enum DSSaveImport {
+    private static let footerMarker = Data("|-DESMUME SAVE-|".utf8)
+    /// DeSmuME `.dsv`: raw save + 122 bytes ending in `|-DESMUME SAVE-|`.
+    private static let footerLength = 122
+
+    static func hasDeSmuMEFooter(_ data: Data) -> Bool {
+        data.count > footerLength && data.suffix(footerMarker.count) == footerMarker
+    }
+
+    static func stripDeSmuMEFooter(_ data: Data) -> Data {
+        hasDeSmuMEFooter(data) ? data.prefix(data.count - footerLength) : data
+    }
+
+    /// "Resume Where You Left Off" loads `SaveStates/<name>/auto.mln` on launch, and a DS
+    /// state carries the cartridge save RAM, which the core then writes over the `.sav`:
+    /// an imported save would be replaced by the old one at the next launch. The autosave
+    /// is renamed (not deleted) so it stays recoverable.
+    static func setAsideAutoResumeState(baseName: String) {
+        let fm = FileManager.default
+        guard let docs = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let dir = docs.appendingPathComponent("SaveStates", isDirectory: true).appendingPathComponent(baseName, isDirectory: true)
+        let auto = dir.appendingPathComponent("auto.mln")
+        guard fm.fileExists(atPath: auto.path) else { return }
+        let aside = dir.appendingPathComponent("auto.before-import.mln")
+        try? fm.removeItem(at: aside)
+        try? fm.moveItem(at: auto, to: aside)
     }
 }

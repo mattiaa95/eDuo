@@ -131,7 +131,10 @@ enum ThreeDSSaveArchive {
             let isDirectory = (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? url.hasDirectoryPath
             var sources: [URL]
             if isDirectory {
-                sources = contents(of: unwrapped(url))
+                // One folder picked = a backup folder (its contents are the save). Several
+                // picked at once = the save's own sub-folders (e.g. `TOA_000/`): each is kept
+                // whole, never emptied into the top level.
+                sources = urls.count == 1 ? contents(of: unwrapped(url)) : [url]
             } else if isZip(url) {
                 let target = scratch.appendingPathComponent("\(index)", isDirectory: true)
                 try fm.createDirectory(at: target, withIntermediateDirectories: true)
