@@ -79,6 +79,23 @@ enum ThreeDSSaveArchive {
         return destination
     }
 
+    /// A plain folder `<name>/` holding each item directly at its top level (no
+    /// wrapper folder, no zip): what Checkpoint / JKSM restore to a game card is the
+    /// contents of a backup folder, copied into the card's save root as is.
+    static func makeFlatFolder(containing items: [URL], named name: String) throws -> URL {
+        let fm = FileManager.default
+        let root = fm.temporaryDirectory.appendingPathComponent("save-export-card", isDirectory: true)
+        let folder = root.appendingPathComponent(sanitized(name), isDirectory: true)
+        try? fm.removeItem(at: root)
+        do {
+            try fm.createDirectory(at: folder, withIntermediateDirectories: true)
+            for item in items { try fm.copyItem(at: item, to: folder.appendingPathComponent(item.lastPathComponent)) }
+        } catch {
+            throw SaveTransferError.failed
+        }
+        return folder
+    }
+
     /// File-name safe: no separators, no control characters, never empty.
     static func sanitized(_ name: String) -> String {
         let bad = CharacterSet(charactersIn: "/\\:*?\"<>|").union(.controlCharacters).union(.newlines)

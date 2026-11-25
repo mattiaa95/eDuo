@@ -315,6 +315,9 @@ final class ThreeDSGameViewController: GCEventViewController {
         sheet.addAction(UIAlertAction(title: NSLocalizedString("Export Save", comment: "3DS pause menu: copy the game's save out to Files"), style: .default) { [weak self] _ in
             self?.exportSave()
         })
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("Export Save for 3DS Card", comment: "3DS pause menu: save folder for Checkpoint/JKSM"), style: .default) { [weak self] _ in
+            self?.exportSave(forSaveManager: true)
+        })
         sheet.addAction(UIAlertAction(title: NSLocalizedString("Share Log", comment: "Shares the emulator log file so a tester can send it"), style: .default) { [weak self] _ in
             self?.shareLog(from: self?.menuButton) { E3DSSetPaused(false) }
         })
@@ -578,8 +581,8 @@ final class ThreeDSGameViewController: GCEventViewController {
         present(picker, animated: true)
     }
 
-    private func exportSave() {
-        guard let archive = try? ThreeDSSaveTransfer.exportArchive(for: rom) else {
+    private func exportSave(forSaveManager: Bool = false) {
+        guard let archive = try? (forSaveManager ? ThreeDSSaveTransfer.exportForSaveManager(for: rom) : ThreeDSSaveTransfer.exportArchive(for: rom)) else {
             return notice(NSLocalizedString("This game has no save yet.", comment: "3DS save export"))
         }
         let picker = UIDocumentPickerViewController(forExporting: [archive], asCopy: true)

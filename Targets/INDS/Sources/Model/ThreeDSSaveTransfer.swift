@@ -362,6 +362,16 @@ enum ThreeDSSaveTransfer {
         return try ThreeDSSaveArchive.makeZip(containing: items, named: name)
     }
 
+    /// `<Game> save (3DS card)/` in a temp folder: only the save files, at the top level
+    /// (no zip, no wrapper, no `00000001.metadata`), the layout Checkpoint / JKSM
+    /// back up and restore for a game card. Our own Export zip would put a wrapper
+    /// folder and the metadata file into the card's save and the game would reformat it.
+    static func exportForSaveManager(for rom: ROMFile) throws -> URL {
+        guard let folder = saveFolder(for: rom), !children(of: folder).isEmpty else { throw SaveTransferError.noSave }
+        let name = String(format: NSLocalizedString("%@ save (3DS card)", comment: "Exported 3DS save folder for Checkpoint/JKSM"), rom.displayName)
+        return try ThreeDSSaveArchive.makeFlatFolder(containing: children(of: folder), named: name)
+    }
+
     // MARK: - Import
 
     /// Picked zip / folder / files → staging folder, checked against this game.
@@ -460,7 +470,8 @@ enum ROMSaveTransfer {
     }
 
     /// A file to hand to the share sheet.
-    static func exportFile(for rom: ROMFile) throws -> URL {
+    static func exportFile(for rom: ROMFile, forSaveManager: Bool = false) throws -> URL {
+        if rom.isThreeDS, forSaveManager { return try ThreeDSSaveTransfer.exportForSaveManager(for: rom) }
         if rom.isThreeDS { return try ThreeDSSaveTransfer.exportArchive(for: rom) }
         guard let save = rom.saveFileURL, rom.hasSaveFile else { throw SaveTransferError.noSave }
         return save

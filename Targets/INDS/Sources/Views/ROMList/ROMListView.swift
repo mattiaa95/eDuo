@@ -436,6 +436,11 @@ struct ROMListView: View {
                     } label: {
                         Label("Export Save", systemImage: "square.and.arrow.down")
                     }
+                    Button {
+                        saveTransfer.exportSave(of: rom, forSaveManager: true)
+                    } label: {
+                        Label("Export Save for 3DS Card", systemImage: "sdcard")
+                    }
                 } else if let saveURL = rom.saveFileURL {
                     ShareLink(item: saveURL) {
                         Label("Export Save", systemImage: "square.and.arrow.down")

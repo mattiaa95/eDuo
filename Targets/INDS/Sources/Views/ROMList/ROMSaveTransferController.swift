@@ -31,11 +31,11 @@ final class ROMSaveTransferController: ObservableObject {
     /// Same picker types for both handhelds: a `.sav`, a `.zip`, or a folder.
     let importContentTypes: [UTType] = [.zip, .folder, .data]
 
-    func exportSave(of rom: ROMFile) {
+    func exportSave(of rom: ROMFile, forSaveManager: Bool = false) {
         Task {
             do {
                 // Zipping runs off the main thread; a DS `.sav` is shared as is.
-                let url = try await Task.detached(priority: .userInitiated) { try ROMSaveTransfer.exportFile(for: rom) }.value
+                let url = try await Task.detached(priority: .userInitiated) { try ROMSaveTransfer.exportFile(for: rom, forSaveManager: forSaveManager) }.value
                 sharedFile = SharedFile(url: url)
             } catch {
                 message = Message(title: rom.displayName, text: error.localizedDescription)
