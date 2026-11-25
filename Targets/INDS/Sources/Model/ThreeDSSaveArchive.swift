@@ -7,6 +7,7 @@ enum SaveTransferError: LocalizedError {
     case notFormatted
     case unusable
     case notASav
+    case rawCardSave
     case tooLarge
     case gameRunning
     case failed
@@ -21,6 +22,8 @@ enum SaveTransferError: LocalizedError {
             return NSLocalizedString("That isn't a save eDuo can use. Pick the folder your save manager exported, with the save files inside.", comment: "3DS save import error")
         case .notASav:
             return NSLocalizedString("Pick a .sav file (or a .zip with one inside) for this game.", comment: "DS save import error")
+        case .rawCardSave:
+            return NSLocalizedString("This is an encrypted card save image (.sav), not a save eDuo can read. In GodMode9 mount the save and copy out its files (or use Checkpoint / JKSM to back up the save as a folder), then import that folder.", comment: "3DS save import error: GodMode9 .sav / .dec.sav picked")
         case .tooLarge:
             return NSLocalizedString("That save is too large to be a game save.", comment: "Save import error")
         case .gameRunning:
@@ -135,6 +138,9 @@ enum ThreeDSSaveArchive {
                 try unzip(url, to: target)
                 sources = contents(of: unwrapped(target))
             } else {
+                // A loose .sav is a chip image (GodMode9): encrypted, or a DISA container.
+                // Copying it into the save folder would corrupt the save.
+                if url.pathExtension.lowercased() == "sav" { throw SaveTransferError.rawCardSave }
                 sources = [url]
             }
             sources = sources.filter { !$0.lastPathComponent.hasPrefix(".") && $0.lastPathComponent != "__MACOSX" }
