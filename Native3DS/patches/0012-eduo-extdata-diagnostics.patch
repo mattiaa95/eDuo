@@ -1,0 +1,48 @@
+diff --git a/src/core/file_sys/archive_extsavedata.cpp b/src/core/file_sys/archive_extsavedata.cpp
+index d1dd583..d4f0285 100644
+--- a/src/core/file_sys/archive_extsavedata.cpp
++++ b/src/core/file_sys/archive_extsavedata.cpp
+@@ -3,6 +3,7 @@
+ // Refer to the misc/licenses/gplv2.txt file included.
+ 
+ #include <algorithm>
++#include <atomic>
+ #include <memory>
+ #include <vector>
+ #include <fmt/format.h>
+@@ -22,6 +23,16 @@ SERIALIZE_EXPORT_IMPL(FileSys::ArchiveFactory_ExtSaveData)
+ 
+ namespace FileSys {
+ 
++// eDuo diagnostics: ExtSaveData open/format outcomes at Info level, rate limited (a game that
++// keeps its settings in extdata, e.g. a per-unit BGM choice, can be traced from core_log).
++static void EduoExtLog(const char* what, const std::string& path, bool ok) {
++    static std::atomic<int> count{0};
++    if (count.fetch_add(1) < 60) {
++        LOG_INFO(Service_FS, "eDuo extdata {}: {} ({})", what, path, ok ? "ok" : "FAILED");
++    }
++}
++
++
+ /**
+  * A modified version of DiskFile for fixed-size file used by ExtSaveData
+  * The file size can't be changed by SetSize or Write.
+@@ -278,7 +289,9 @@ ResultVal<std::unique_ptr<ArchiveBackend>> ArchiveFactory_ExtSaveData::Open(cons
+     } else {
+         const auto directory = type == ExtSaveDataType::Boss ? "boss/" : "user/";
+         const auto fullpath = GetExtSaveDataPath(mount_point, GetCorrectedPath(path)) + directory;
+-        if (!FileUtil::Exists(fullpath)) {
++        const bool eduo_exists = FileUtil::Exists(fullpath);
++        EduoExtLog("open", fullpath, eduo_exists);
++        if (!eduo_exists) {
+             // TODO(Subv): Verify the archive behavior of SharedExtSaveData compared to ExtSaveData.
+             // ExtSaveData seems to return FS_NotFound (120) when the archive doesn't exist.
+             if (type != ExtSaveDataType::Shared) {
+@@ -335,6 +348,7 @@ Result ArchiveFactory_ExtSaveData::FormatAsExtData(const Path& path,
+         std::string metadata_path = GetExtSaveDataPath(mount_point, corrected_path) + "metadata";
+         FileUtil::IOFile file(metadata_path, "wb");
+ 
++        EduoExtLog("format", metadata_path, file.IsOpen());
+         if (!file.IsOpen()) {
+             // TODO(Subv): Find the correct error code
+             return ResultUnknown;

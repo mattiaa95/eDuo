@@ -33,3 +33,4 @@ patched tree is a no-op. To get back to pristine upstream:
 The pinned commit is recorded both as the submodule gitlink and as `PIN`
 in `scripts/build_3ds_core.sh`; the script refuses to build any other
 commit.
+| `0012-eduo-extdata-diagnostics.patch` | `src/core/file_sys/archive_extsavedata.cpp` | Logs ExtSaveData open/format outcomes and host paths at Info level (at most 60 lines per session). Diagnostics only, no behaviour change. |
